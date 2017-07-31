@@ -12,14 +12,14 @@ import UIKit
 /// It relies on you to build UIView subclasses and use those instead of implementing UITableViewCell subclasses. This has the side effect of building better more reusable view components. This greatly simplifies composition by combining several host-cells into more complex layouts. It also makes equality simpler and more "Swifty" by requiring that anything provided as State only requires that the State object conform to the Equatable protocol. The View portion of the generic only requires it to be a UIView subclass.
 public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, State: Equatable, Layout: TableItemLayout {
 	public let key: String
-	public var style: Style?
+	public var style: CellStyle?
 	public let actions: CellActions
 	/// Contains the state information of a cell.
 	public let state: State
 	/// A function that updates a cell's view to match the current state. It receives two values, the view instance and an optional state instance. The purpose of this function is to update the view to reflect that of the given state. The reason that the state is optional is because cells may move into the reuse queue. When this happens they no longer have a state and the updater function is called giving the opportunity to reset the view to its default value.
 	public let cellUpdater: (_ view: View, _ state: State?) -> Void
 
-	public init(key: String, style: Style? = nil, actions: CellActions = CellActions(), state: State, cellUpdater: @escaping (_ view: View, _ state: State?) -> Void) {
+	public init(key: String, style: CellStyle? = nil, actions: CellActions = CellActions(), state: State, cellUpdater: @escaping (_ view: View, _ state: State?) -> Void) {
 		self.key = key
 		self.style = style
 		self.actions = actions
@@ -75,7 +75,7 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 }
 
 extension HostCell {
-	public init<T: RawRepresentable>(key: T, style: Style? = nil, actions: CellActions = CellActions(), state: State, cellUpdater: @escaping (_ view: View, _ state: State?) -> Void) where T.RawValue == String {
+	public init<T: RawRepresentable>(key: T, style: CellStyle? = nil, actions: CellActions = CellActions(), state: State, cellUpdater: @escaping (_ view: View, _ state: State?) -> Void) where T.RawValue == String {
 		self.init(key: key.rawValue, style: style, actions: actions, state: state, cellUpdater: cellUpdater)
 	}
 }

@@ -88,12 +88,12 @@ public struct TableSection: Sequence, TableSectionType {
 	/// Attempts to merge the separator's style provided by a `TableSection` with the separator's style provided by an instance of `CellConfigType`.
 	///
 	/// - Parameter row: Integer identifying the position of the row in the section.
-	/// - Returns: The `Style` of the cell merged with the style of the section.
-	public func mergedStyle(for row: Int) -> Style? {
+	/// - Returns: The `CellStyle` of the cell merged with the style of the section.
+	public func mergedStyle(for row: Int) -> CellStyle? {
 		var rowStyle = rows[row].style
 
 		if rowStyle == nil && style != nil {
-			rowStyle = Style()
+			rowStyle = CellStyle()
 		}
 
 		switch (row, rows.index(after: row)) {

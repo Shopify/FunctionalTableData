@@ -1,5 +1,5 @@
 //
-//  Style.swift
+//  CellStyle.swift
 //  FunctionalTableData
 //
 //  Created by Raul Riera on 2017-07-25.
@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-public struct Style {
+public struct CellStyle {
 	public static var selectionColor: UIColor? = nil // TODO: make this not a static like this
 	public var bottomSeparator: Separator.Style?
 	public var topSeparator: Separator.Style?
 	public var highlight: Bool?
 	public var accessoryType: UITableViewCellAccessoryType = .none
-	public var selectionColor: UIColor? = Style.selectionColor
+	public var selectionColor: UIColor? = CellStyle.selectionColor
 	public var backgroundColor: UIColor?
 	public var tintColor: UIColor?
 	public var layoutMargins: UIEdgeInsets?
@@ -24,7 +24,7 @@ public struct Style {
 	            bottomSeparator: Separator.Style? = nil,
 	            highlight: Bool? = nil,
 	            accessoryType: UITableViewCellAccessoryType = .none,
-	            selectionColor: UIColor? = Style.selectionColor,
+	            selectionColor: UIColor? = CellStyle.selectionColor,
 	            backgroundColor: UIColor? = nil,
 	            tintColor: UIColor? = nil,
 	            layoutMargins: UIEdgeInsets? = nil) {
@@ -77,8 +77,8 @@ public struct Style {
 	}
 }
 
-extension Style: Equatable {
-	public static func ==(lhs: Style, rhs: Style) -> Bool {
+extension CellStyle: Equatable {
+	public static func ==(lhs: CellStyle, rhs: CellStyle) -> Bool {
 		var equality = lhs.bottomSeparator == rhs.bottomSeparator
 		equality = equality && lhs.topSeparator == rhs.topSeparator
 		equality = equality && lhs.highlight == rhs.highlight

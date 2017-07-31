@@ -17,7 +17,7 @@
 		4C7A277F1F2FB55D00360E9B /* ObjCExceptionRethrower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */; };
 		4C7A27801F2FB55D00360E9B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27741F2FB55D00360E9B /* Reusable.swift */; };
 		4C7A27811F2FB55D00360E9B /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27751F2FB55D00360E9B /* Separator.swift */; };
-		4C7A27821F2FB55D00360E9B /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27761F2FB55D00360E9B /* Style.swift */; };
+		4C7A27821F2FB55D00360E9B /* CellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27761F2FB55D00360E9B /* CellStyle.swift */; };
 		4C7A27831F2FB55D00360E9B /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27771F2FB55D00360E9B /* TableCell.swift */; };
 		4C7A27841F2FB55D00360E9B /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27781F2FB55D00360E9B /* TableSection.swift */; };
 		4C7A27851F2FB55D00360E9B /* TableSectionChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */; };
@@ -50,7 +50,7 @@
 		4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjCExceptionRethrower.swift; sourceTree = "<group>"; };
 		4C7A27741F2FB55D00360E9B /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		4C7A27751F2FB55D00360E9B /* Separator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
-		4C7A27761F2FB55D00360E9B /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		4C7A27761F2FB55D00360E9B /* CellStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellStyle.swift; sourceTree = "<group>"; };
 		4C7A27771F2FB55D00360E9B /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 		4C7A27781F2FB55D00360E9B /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionChangeSet.swift; sourceTree = "<group>"; };
@@ -121,12 +121,12 @@
 				4C7A27871F2FB68400360E9B /* Extensions */,
 				4C7A276F1F2FB55D00360E9B /* CellActions.swift */,
 				4C7A27701F2FB55D00360E9B /* CellConfigType.swift */,
+				4C7A27761F2FB55D00360E9B /* CellStyle.swift */,
 				4C7A27711F2FB55D00360E9B /* FunctionalTableData.swift */,
 				4C7A27721F2FB55D00360E9B /* HostCell.swift */,
 				4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */,
 				4C7A27741F2FB55D00360E9B /* Reusable.swift */,
 				4C7A27751F2FB55D00360E9B /* Separator.swift */,
-				4C7A27761F2FB55D00360E9B /* Style.swift */,
 				4C7A27771F2FB55D00360E9B /* TableCell.swift */,
 				4C7A27781F2FB55D00360E9B /* TableSection.swift */,
 				4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */,
@@ -270,7 +270,7 @@
 				4C7A277D1F2FB55D00360E9B /* FunctionalTableData.swift in Sources */,
 				4C7A277E1F2FB55D00360E9B /* HostCell.swift in Sources */,
 				4C7A27851F2FB55D00360E9B /* TableSectionChangeSet.swift in Sources */,
-				4C7A27821F2FB55D00360E9B /* Style.swift in Sources */,
+				4C7A27821F2FB55D00360E9B /* CellStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
