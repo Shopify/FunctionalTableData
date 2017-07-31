@@ -10,6 +10,18 @@
 		4C7A27061F2FA0F800360E9B /* FunctionalTableData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */; };
 		4C7A270B1F2FA0F800360E9B /* FunctionalTableDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A270A1F2FA0F800360E9B /* FunctionalTableDataTests.swift */; };
 		4C7A270D1F2FA0F800360E9B /* FunctionalTableData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A26FF1F2FA0F800360E9B /* FunctionalTableData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7A277B1F2FB55D00360E9B /* CellActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A276F1F2FB55D00360E9B /* CellActions.swift */; };
+		4C7A277C1F2FB55D00360E9B /* CellConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27701F2FB55D00360E9B /* CellConfigType.swift */; };
+		4C7A277D1F2FB55D00360E9B /* FunctionalTableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27711F2FB55D00360E9B /* FunctionalTableData.swift */; };
+		4C7A277E1F2FB55D00360E9B /* HostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27721F2FB55D00360E9B /* HostCell.swift */; };
+		4C7A277F1F2FB55D00360E9B /* ObjCExceptionRethrower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */; };
+		4C7A27801F2FB55D00360E9B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27741F2FB55D00360E9B /* Reusable.swift */; };
+		4C7A27811F2FB55D00360E9B /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27751F2FB55D00360E9B /* Separator.swift */; };
+		4C7A27821F2FB55D00360E9B /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27761F2FB55D00360E9B /* Style.swift */; };
+		4C7A27831F2FB55D00360E9B /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27771F2FB55D00360E9B /* TableCell.swift */; };
+		4C7A27841F2FB55D00360E9B /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27781F2FB55D00360E9B /* TableSection.swift */; };
+		4C7A27851F2FB55D00360E9B /* TableSectionChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */; };
+		4C7A27861F2FB55D00360E9B /* TableSectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A277A1F2FB55D00360E9B /* TableSectionFooter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +41,18 @@
 		4C7A27051F2FA0F800360E9B /* FunctionalTableDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FunctionalTableDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7A270A1F2FA0F800360E9B /* FunctionalTableDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalTableDataTests.swift; sourceTree = "<group>"; };
 		4C7A270C1F2FA0F800360E9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C7A276F1F2FB55D00360E9B /* CellActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellActions.swift; sourceTree = "<group>"; };
+		4C7A27701F2FB55D00360E9B /* CellConfigType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellConfigType.swift; sourceTree = "<group>"; };
+		4C7A27711F2FB55D00360E9B /* FunctionalTableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalTableData.swift; sourceTree = "<group>"; };
+		4C7A27721F2FB55D00360E9B /* HostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostCell.swift; sourceTree = "<group>"; };
+		4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjCExceptionRethrower.swift; sourceTree = "<group>"; };
+		4C7A27741F2FB55D00360E9B /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		4C7A27751F2FB55D00360E9B /* Separator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
+		4C7A27761F2FB55D00360E9B /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		4C7A27771F2FB55D00360E9B /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
+		4C7A27781F2FB55D00360E9B /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
+		4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionChangeSet.swift; sourceTree = "<group>"; };
+		4C7A277A1F2FB55D00360E9B /* TableSectionFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionFooter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +114,18 @@
 		4C7A27161F2FA10A00360E9B /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4C7A276F1F2FB55D00360E9B /* CellActions.swift */,
+				4C7A27701F2FB55D00360E9B /* CellConfigType.swift */,
+				4C7A27711F2FB55D00360E9B /* FunctionalTableData.swift */,
+				4C7A27721F2FB55D00360E9B /* HostCell.swift */,
+				4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */,
+				4C7A27741F2FB55D00360E9B /* Reusable.swift */,
+				4C7A27751F2FB55D00360E9B /* Separator.swift */,
+				4C7A27761F2FB55D00360E9B /* Style.swift */,
+				4C7A27771F2FB55D00360E9B /* TableCell.swift */,
+				4C7A27781F2FB55D00360E9B /* TableSection.swift */,
+				4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */,
+				4C7A277A1F2FB55D00360E9B /* TableSectionFooter.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -157,6 +193,7 @@
 					4C7A26FB1F2FA0F800360E9B = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = A7XGC83MZE;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					4C7A27041F2FA0F800360E9B = {
@@ -206,6 +243,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7A27831F2FB55D00360E9B /* TableCell.swift in Sources */,
+				4C7A27801F2FB55D00360E9B /* Reusable.swift in Sources */,
+				4C7A277B1F2FB55D00360E9B /* CellActions.swift in Sources */,
+				4C7A27861F2FB55D00360E9B /* TableSectionFooter.swift in Sources */,
+				4C7A277C1F2FB55D00360E9B /* CellConfigType.swift in Sources */,
+				4C7A27811F2FB55D00360E9B /* Separator.swift in Sources */,
+				4C7A277F1F2FB55D00360E9B /* ObjCExceptionRethrower.swift in Sources */,
+				4C7A27841F2FB55D00360E9B /* TableSection.swift in Sources */,
+				4C7A277D1F2FB55D00360E9B /* FunctionalTableData.swift in Sources */,
+				4C7A277E1F2FB55D00360E9B /* HostCell.swift in Sources */,
+				4C7A27851F2FB55D00360E9B /* TableSectionChangeSet.swift in Sources */,
+				4C7A27821F2FB55D00360E9B /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +381,7 @@
 		4C7A27111F2FA0F800360E9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = A7XGC83MZE;
@@ -344,6 +394,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.FunctionalTableData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -351,6 +402,7 @@
 		4C7A27121F2FA0F800360E9B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = A7XGC83MZE;
@@ -370,6 +422,7 @@
 		4C7A27141F2FA0F800360E9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = A7XGC83MZE;
 				INFOPLIST_FILE = FunctionalTableDataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -382,6 +435,7 @@
 		4C7A27151F2FA0F800360E9B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = A7XGC83MZE;
 				INFOPLIST_FILE = FunctionalTableDataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -410,6 +464,7 @@
 				4C7A27121F2FA0F800360E9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4C7A27131F2FA0F800360E9B /* Build configuration list for PBXNativeTarget "FunctionalTableDataTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +473,7 @@
 				4C7A27151F2FA0F800360E9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
