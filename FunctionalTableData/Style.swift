@@ -56,7 +56,9 @@ public struct Style {
 		backgroundView.backgroundColor = cell.backgroundColor
 		cell.backgroundView = backgroundView
 		
-		cell.contentView.layoutMargins = layoutMargins ?? UXMetrics.defaultLayoutMargins
+		if let layoutMargins = layoutMargins {
+			cell.contentView.layoutMargins = layoutMargins
+		}
 		
 		if let tintColor = tintColor {
 			cell.tintColor = tintColor
