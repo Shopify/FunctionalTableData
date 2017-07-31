@@ -53,8 +53,11 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 	// MARK: - CellConfigType
 	
 	public func update(cell: UITableViewCell, in tableView: UITableView) {
-		if let cell = cell as? TableCell<View, Layout> {
-			cellUpdater(cell.view, state)
+		guard let cell = cell as? TableCell<View, Layout> else { return }
+		
+		cellUpdater(cell.view, state)
+		// Only layout cells that aren't in the reuse pool
+		if cell.superview != nil && !cell.isHidden {
 			UIView.performWithoutAnimation {
 				cell.layoutIfNeeded()
 			}
