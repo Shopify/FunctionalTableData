@@ -9,6 +9,13 @@
 import UIKit
 
 extension UIView {
+	func addSubviewsForAutolayout(_ views: UIView...) {
+		views.forEach { view in
+			view.translatesAutoresizingMaskIntoConstraints = false
+			addSubview(view)
+		}
+	}
+	
 	func constraintsToFillView(_ otherView: UIView, respectingLayoutMargins: Bool = false) -> [NSLayoutConstraint] {
 		return constraintsToFillViewHorizontally(otherView, respectingLayoutMargins: respectingLayoutMargins) + constraintsToFillViewVertically(otherView, respectingLayoutMargins: respectingLayoutMargins)
 	}
