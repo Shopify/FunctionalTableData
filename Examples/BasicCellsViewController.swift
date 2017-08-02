@@ -27,7 +27,7 @@ class BasicCellsViewController: UITableViewController {
 		let cells: [CellConfigType] = [
 			// Since this cell is more complex than `LabelCell`, pass the updateView method into cellUpdater instead of making any updates inline.
 			SubtitleCell(key: "subtitleCell",
-			             state: SubtitleState(title: "Functional Table Data", subtitle: "Functional Table Data takes a complete, idempotent description of your table state, compares it with the previous render call to compute which cells have changed, and updates the UITableView."),
+			             state: SubtitleState(title: "Subtitle Cell", subtitle: "A cell that can display a title in bolded text and a subtitle with smaller font size."),
 			             cellUpdater: SubtitleState.updateView)
 		]
 		
