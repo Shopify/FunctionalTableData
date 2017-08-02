@@ -73,9 +73,9 @@ After assigning the variable `rows` to our previously created `section`, all tha
 functionalTableData.renderAndDiff([section])
 ```
 
-[IMAGE OF RESULT IN HERE]
+<img src="/Images/Example1.png" />
 
-Check out the __LINK TO DEMO PROJECT__ for more examples.
+Check out the [example project](/Examples/) for more examples.
 
 ### Building new Cells
 Knowing that a cell consists for a view and state let's start with a simple example, a cell that displays a label. By specifying the generic requirements of `HostCell`, the simplest possible example is one that takes an `UILabel` as its view, a `String` as its state and `LayoutMarginsTableItemLayout` as the layout (See `TableItemLayout` for more info).
