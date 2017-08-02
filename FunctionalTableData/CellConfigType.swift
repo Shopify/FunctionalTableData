@@ -18,8 +18,8 @@ import Foundation
 public protocol CellConfigType: TableItemConfigType {
 	/// Unique identifier for the cell.
 	var key: String { get }
-	/// Indicates a cell style. See `Style` for more information.
-	var style: Style? { get set }
+	/// Indicates a cell style. See `CellStyle` for more information.
+	var style: CellStyle? { get set }
 	/// Indicates all the possible actions a cell can perform. See `CellActions` for more information.
 	var actions: CellActions { get }
 	

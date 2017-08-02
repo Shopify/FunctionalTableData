@@ -29,49 +29,17 @@ public protocol TableSectionType {
 }
 
 public struct TableSection: Sequence, TableSectionType {
-	public struct Style: Equatable {
-		public struct Separators: Equatable {
-			public static let `default` = Separators(top: .full, bottom: .full, interitem: .inset)
-			public static let topAndBottom = Separators(top: .full, bottom: .full, interitem: nil)
-			public static let full = Separators(top: .full, bottom: .full, interitem: .full)
-
-			public var top: Separator.Style?
-			public var bottom: Separator.Style?
-			public var interitem: Separator.Style?
-
-			public init(top: Separator.Style? = nil, bottom: Separator.Style? = nil, interitem: Separator.Style? = nil) {
-				self.top = top
-				self.bottom = bottom
-				self.interitem = interitem
-			}
-
-			public static func ==(lhs: Separators, rhs: Separators) -> Bool {
-				return lhs.top == rhs.top &&
-					lhs.bottom == rhs.bottom &&
-					lhs.interitem == rhs.interitem
-			}
-		}
-		public var separators: Separators
-
-		public init(separators: Separators) {
-			self.separators = separators
-		}
-
-		public static func ==(lhs: Style, rhs: Style) -> Bool {
-			return lhs.separators == rhs.separators
-		}
-	}
 	public let key: String
 	public var header: TableHeaderConfigType? = nil
 	public var footer: TableItemConfigType? = nil
 	public var rows: [CellConfigType]
 	/// Specifies visual attributes to be applied to the section. This includes row separators to use at the top, bottom, and between items of the section.
-	public var style: Style?
+	public var style: SectionStyle?
 	public var headerVisibilityAction: ((_ view: UIView, _ visible: Bool) -> Void)? = nil
 	/// Callback executed when a row is manually moved by the user. It specifies the before and after index position.
 	public var didMoveRow: ((_ from: Int, _ to: Int) -> Void)?
 
-	public init(key: String, rows: [CellConfigType] = [], header: TableHeaderConfigType? = nil, footer: TableItemConfigType? = nil, style: Style? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) {
+	public init(key: String, rows: [CellConfigType] = [], header: TableHeaderConfigType? = nil, footer: TableItemConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) {
 		self.key = key
 		self.rows = rows
 		self.header = header
@@ -117,17 +85,15 @@ public struct TableSection: Sequence, TableSectionType {
 		return key + rows[index].key
 	}
 
-	/// __FIXME: Replace this module with the final module for the new framework. Or rename either of the Style structs.__
-	///
 	/// Attempts to merge the separator's style provided by a `TableSection` with the separator's style provided by an instance of `CellConfigType`.
 	///
 	/// - Parameter row: Integer identifying the position of the row in the section.
-	/// - Returns: The `Style` of the cell merged with the style of the section.
-	public func mergedStyle(for row: Int) -> ShopifyUX.Style? {
+	/// - Returns: The `CellStyle` of the cell merged with the style of the section.
+	public func mergedStyle(for row: Int) -> CellStyle? {
 		var rowStyle = rows[row].style
 
 		if rowStyle == nil && style != nil {
-			rowStyle = ShopifyUX.Style()
+			rowStyle = CellStyle()
 		}
 
 		switch (row, rows.index(after: row)) {
@@ -147,8 +113,41 @@ public struct TableSection: Sequence, TableSectionType {
 	}
 }
 
+public struct SectionStyle: Equatable {
+	public struct Separators: Equatable {
+		public static let `default` = Separators(top: .full, bottom: .full, interitem: .inset)
+		public static let topAndBottom = Separators(top: .full, bottom: .full, interitem: nil)
+		public static let full = Separators(top: .full, bottom: .full, interitem: .full)
+		
+		public var top: Separator.Style?
+		public var bottom: Separator.Style?
+		public var interitem: Separator.Style?
+		
+		public init(top: Separator.Style? = nil, bottom: Separator.Style? = nil, interitem: Separator.Style? = nil) {
+			self.top = top
+			self.bottom = bottom
+			self.interitem = interitem
+		}
+		
+		public static func ==(lhs: Separators, rhs: Separators) -> Bool {
+			return lhs.top == rhs.top &&
+				lhs.bottom == rhs.bottom &&
+				lhs.interitem == rhs.interitem
+		}
+	}
+	public var separators: Separators
+	
+	public init(separators: Separators) {
+		self.separators = separators
+	}
+	
+	public static func ==(lhs: SectionStyle, rhs: SectionStyle) -> Bool {
+		return lhs.separators == rhs.separators
+	}
+}
+
 extension TableSection {
-	public init<T: RawRepresentable>(key: T, rows: [CellConfigType] = [], header: TableHeaderConfigType? = nil, footer: TableItemConfigType? = nil, style: Style? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) where T.RawValue == String {
+	public init<T: RawRepresentable>(key: T, rows: [CellConfigType] = [], header: TableHeaderConfigType? = nil, footer: TableItemConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) where T.RawValue == String {
 		self.init(key: key.rawValue, rows: rows, header: header, footer: footer, style: style, didMoveRow: didMoveRow)
 	}
 }
