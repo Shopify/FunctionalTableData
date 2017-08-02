@@ -108,8 +108,8 @@ struct LabelState: Equatable {
 
 // Usage
 LabelCell(key: "company", state: LabelState(text: "Shopify",
-		                                              alignment: .center,
-		                                              color: .green)) { view, state in
+		                            alignment: .center,
+		                            color: .green)) { view, state in
 		guard let state = state else {
 				// If the state is `nil`, prepare this view to be reused
 				view.text = ""
