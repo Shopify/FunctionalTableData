@@ -24,6 +24,8 @@
 		4C7A27861F2FB55D00360E9B /* TableSectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A277A1F2FB55D00360E9B /* TableSectionFooter.swift */; };
 		4C7A27891F2FB69C00360E9B /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27881F2FB69C00360E9B /* UIView+AutoLayout.swift */; };
 		4C7A278B1F2FB89400360E9B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A278A1F2FB89400360E9B /* UIView+Extensions.swift */; };
+		4CA356751F322D7F0081BE90 /* TableSectionChangeSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA356731F322D7F0081BE90 /* TableSectionChangeSetTests.swift */; };
+		4CA356761F322D7F0081BE90 /* TableSectionStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		4C7A277A1F2FB55D00360E9B /* TableSectionFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionFooter.swift; sourceTree = "<group>"; };
 		4C7A27881F2FB69C00360E9B /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		4C7A278A1F2FB89400360E9B /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		4CA356731F322D7F0081BE90 /* TableSectionChangeSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionChangeSetTests.swift; sourceTree = "<group>"; };
+		4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionStyleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,8 @@
 			isa = PBXGroup;
 			children = (
 				4C7A270A1F2FA0F800360E9B /* FunctionalTableDataTests.swift */,
+				4CA356731F322D7F0081BE90 /* TableSectionChangeSetTests.swift */,
+				4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */,
 				4C7A270C1F2FA0F800360E9B /* Info.plist */,
 			);
 			path = FunctionalTableDataTests;
@@ -278,6 +284,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CA356761F322D7F0081BE90 /* TableSectionStyleTests.swift in Sources */,
+				4CA356751F322D7F0081BE90 /* TableSectionChangeSetTests.swift in Sources */,
 				4C7A270B1F2FA0F800360E9B /* FunctionalTableDataTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
