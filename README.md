@@ -1,10 +1,12 @@
 # Functional Table Data
 
-Instead of trying to build many different UITableViewCells and implement a UITableView(DataSource|Delegate) for each view that then needs to understand all possible state transformations. Provide a system that let’s you express this as a series of states describing the cells themselves.
+Functional Table Data takes a complete, idempotent description of your table state, compares it with the previous render call to compute which cells have changed, and updates the UITableView.  Table state can be declared idempotentely and functionally, simplifying state management of complex UI.
+
+Instead of trying to build many different UITableViewCells and implement a UITableView(DataSource|Delegate) for each view that then needs to understand all possible state transformations. Provide a system that lets you express this as a series of states describing the cells themselves.
 
 |         | Noteworthy features       |
 ----------|---------------------
-💯 | Functional approach for creating cells
+💯 | Functional approach for maintaining table state
 👷‍ | Reusable views and states
 ✅ | Snapshot and Unit tests
 🔀 | Automatic diff in your states
