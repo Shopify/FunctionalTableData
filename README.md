@@ -87,7 +87,7 @@ typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
 
 // Usage
 LabelCell(key: "company", state: "Shopify") { view, state in
-		view.text = state
+	view.text = state
 }
 ```
 
@@ -108,18 +108,18 @@ struct LabelState: Equatable {
 
 // Usage
 LabelCell(key: "company", state: LabelState(text: "Shopify",
-		                                              alignment: .center,
-		                                              color: .green)) { view, state in
-		guard let state = state else {
-				// If the state is `nil`, prepare this view to be reused
-				view.text = ""
-				view.textAlignment = .natural
-				view.textColor = .black
-				return
-		}
-		view.text = state.text
-		view.textAlignment = state.alignment
-		view.textColor = state.color
+                                            alignment: .center,
+                                            color: .green)) { view, state in
+	guard let state = state else {
+		// If the state is `nil`, prepare this view to be reused
+		view.text = ""
+		view.textAlignment = .natural
+		view.textColor = .black
+		return
+	}
+	view.text = state.text
+	view.textAlignment = state.alignment
+	view.textColor = state.color
 }
 ```
 
