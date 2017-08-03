@@ -37,7 +37,7 @@ github "Shopify/FunctionalTableData"
 ```
 
 ## Getting started
-To use the Functional Table Data (FTD) two things are required, one instance of HostCell, and an instance of the FTD itself. Once both are available, typically in a view controller's `viewDidLoad`, they are connected together using
+To use the Functional Table Data (FTD) two things are required, one instance of UITableView, and an instance of the FTD itself. Once both are available, typically in a view controller's `viewDidLoad`, they are connected together using
 `functionalTableData.tableView = myTableViewInstance`. After this, every time we want to display/update the data we simply call `functionalTableData.renderAndDiff(sections)`.
 
 ## Usage
@@ -53,7 +53,7 @@ let section = TableSection(key: "header-unique-key", rows: [])
 Each section contains a series of rows where each row value must conform to the `CellConfigType` protocol.
 
 ```swift
-/// The simplest possible version of a cell that displays a label. Useful to get started, in most cases a more robust state should be used allowing more customization.
+/// The simplest possible version of a cell that displays a label. Useful to get started, but in most cases a more robust state should be used allowing more customization.
 typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
 
 let cells: [CellConfigType] = [
@@ -80,7 +80,7 @@ functionalTableData.renderAndDiff([section])
 Check out the [example project](/Examples/) for more examples.
 
 ### Building new Cells
-Knowing that a cell consists for a view and state let's start with a simple example, a cell that displays a label. By specifying the generic requirements of `HostCell`, the simplest possible example is one that takes an `UILabel` as its view, a `String` as its state and `LayoutMarginsTableItemLayout` as the layout (See `TableItemLayout` for more info).
+Knowing that a cell consists of a view and state let's start with a simple example, a cell that displays a label. By specifying the generic requirements of `HostCell`, the simplest possible example is one that takes an `UILabel` as its view, a `String` as its state and `LayoutMarginsTableItemLayout` as the layout (See `TableItemLayout` for more info).
 
 ```swift
 typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
