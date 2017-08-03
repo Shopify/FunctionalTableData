@@ -24,14 +24,17 @@
 		4C7A27861F2FB55D00360E9B /* TableSectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A277A1F2FB55D00360E9B /* TableSectionFooter.swift */; };
 		4C7A27891F2FB69C00360E9B /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27881F2FB69C00360E9B /* UIView+AutoLayout.swift */; };
 		4C7A278B1F2FB89400360E9B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A278A1F2FB89400360E9B /* UIView+Extensions.swift */; };
-		4CA356751F322D7F0081BE90 /* TableSectionChangeSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA356731F322D7F0081BE90 /* TableSectionChangeSetTests.swift */; };
-		4CA356761F322D7F0081BE90 /* TableSectionStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */; };
 		4CA3562E1F3208F70081BE90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA3562D1F3208F70081BE90 /* AppDelegate.swift */; };
 		4CA356301F3208F70081BE90 /* ExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA3562F1F3208F70081BE90 /* ExamplesViewController.swift */; };
 		4CA356351F3208F70081BE90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CA356341F3208F70081BE90 /* Assets.xcassets */; };
 		4CA356381F3208F70081BE90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CA356361F3208F70081BE90 /* LaunchScreen.storyboard */; };
 		4CA356501F3214670081BE90 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA3564F1F3214670081BE90 /* SubtitleCell.swift */; };
 		4CA356521F3216DB0081BE90 /* BasicCellsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA356511F3216DB0081BE90 /* BasicCellsViewController.swift */; };
+		4CA356751F322D7F0081BE90 /* TableSectionChangeSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA356731F322D7F0081BE90 /* TableSectionChangeSetTests.swift */; };
+		4CA356761F322D7F0081BE90 /* TableSectionStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */; };
+		4CA3571C1F33AF2A0081BE90 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA3571B1F33AF2A0081BE90 /* LabelCell.swift */; };
+		4CA3571E1F33AFB40081BE90 /* SpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA3571D1F33AFB40081BE90 /* SpacerCell.swift */; };
+		4CA357221F33B4800081BE90 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA357211F33B4800081BE90 /* ImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +68,6 @@
 		4C7A277A1F2FB55D00360E9B /* TableSectionFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionFooter.swift; sourceTree = "<group>"; };
 		4C7A27881F2FB69C00360E9B /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		4C7A278A1F2FB89400360E9B /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
-		4CA356731F322D7F0081BE90 /* TableSectionChangeSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionChangeSetTests.swift; sourceTree = "<group>"; };
-		4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionStyleTests.swift; sourceTree = "<group>"; };
 		4CA3562B1F3208F70081BE90 /* Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Examples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA3562D1F3208F70081BE90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CA3562F1F3208F70081BE90 /* ExamplesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +76,11 @@
 		4CA356391F3208F70081BE90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CA3564F1F3214670081BE90 /* SubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		4CA356511F3216DB0081BE90 /* BasicCellsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCellsViewController.swift; sourceTree = "<group>"; };
+		4CA356731F322D7F0081BE90 /* TableSectionChangeSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionChangeSetTests.swift; sourceTree = "<group>"; };
+		4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionStyleTests.swift; sourceTree = "<group>"; };
+		4CA3571B1F33AF2A0081BE90 /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
+		4CA3571D1F33AFB40081BE90 /* SpacerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpacerCell.swift; sourceTree = "<group>"; };
+		4CA357211F33B4800081BE90 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +196,9 @@
 		4CA3564D1F3211520081BE90 /* Basic Cells */ = {
 			isa = PBXGroup;
 			children = (
+				4CA357211F33B4800081BE90 /* ImageCell.swift */,
+				4CA3571B1F33AF2A0081BE90 /* LabelCell.swift */,
+				4CA3571D1F33AFB40081BE90 /* SpacerCell.swift */,
 				4CA3564F1F3214670081BE90 /* SubtitleCell.swift */,
 			);
 			name = "Basic Cells";
@@ -372,7 +381,10 @@
 				4CA356301F3208F70081BE90 /* ExamplesViewController.swift in Sources */,
 				4CA356521F3216DB0081BE90 /* BasicCellsViewController.swift in Sources */,
 				4CA356501F3214670081BE90 /* SubtitleCell.swift in Sources */,
+				4CA3571C1F33AF2A0081BE90 /* LabelCell.swift in Sources */,
 				4CA3562E1F3208F70081BE90 /* AppDelegate.swift in Sources */,
+				4CA357221F33B4800081BE90 /* ImageCell.swift in Sources */,
+				4CA3571E1F33AFB40081BE90 /* SpacerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

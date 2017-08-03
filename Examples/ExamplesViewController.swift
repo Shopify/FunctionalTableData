@@ -10,8 +10,6 @@ import UIKit
 import FunctionalTableData
 
 class ExamplesViewController: UITableViewController {
-	// The simplest possible version of a cell that displays a label.
-	typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
 	private let tableData = FunctionalTableData()
 	
 	override func viewDidLoad() {
