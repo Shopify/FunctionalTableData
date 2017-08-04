@@ -15,6 +15,7 @@ struct ImageState: Equatable {
 
 	static func updateView(_ view: UIImageView, state: ImageState?) {
 		guard let state = state else {
+			// State is empty, reset the view to prepare it for reuse.
 			view.image = nil
 			view.contentMode = .scaleToFill
 			return
