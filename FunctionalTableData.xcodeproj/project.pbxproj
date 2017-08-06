@@ -24,6 +24,8 @@
 		4C7A27861F2FB55D00360E9B /* TableSectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A277A1F2FB55D00360E9B /* TableSectionFooter.swift */; };
 		4C7A27891F2FB69C00360E9B /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27881F2FB69C00360E9B /* UIView+AutoLayout.swift */; };
 		4C7A278B1F2FB89400360E9B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A278A1F2FB89400360E9B /* UIView+Extensions.swift */; };
+		4C7BFE591F376B3B00F09CE6 /* FunctionalTableData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */; };
+		4C7BFE5A1F376B3B00F09CE6 /* FunctionalTableData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CA3562E1F3208F70081BE90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA3562D1F3208F70081BE90 /* AppDelegate.swift */; };
 		4CA356301F3208F70081BE90 /* ExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA3562F1F3208F70081BE90 /* ExamplesViewController.swift */; };
 		4CA356351F3208F70081BE90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CA356341F3208F70081BE90 /* Assets.xcassets */; };
@@ -45,7 +47,28 @@
 			remoteGlobalIDString = 4C7A26FB1F2FA0F800360E9B;
 			remoteInfo = FunctionalTableData;
 		};
+		4C7BFE5B1F376B3B00F09CE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C7A26F31F2FA0F800360E9B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C7A26FB1F2FA0F800360E9B;
+			remoteInfo = FunctionalTableData;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4C7BFE5D1F376B3C00F09CE6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4C7BFE5A1F376B3B00F09CE6 /* FunctionalTableData.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FunctionalTableData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7BFE591F376B3B00F09CE6 /* FunctionalTableData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,10 +285,12 @@
 				4CA356271F3208F70081BE90 /* Sources */,
 				4CA356281F3208F70081BE90 /* Frameworks */,
 				4CA356291F3208F70081BE90 /* Resources */,
+				4C7BFE5D1F376B3C00F09CE6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4C7BFE5C1F376B3B00F09CE6 /* PBXTargetDependency */,
 			);
 			name = Examples;
 			productName = Examples;
@@ -395,6 +421,11 @@
 			isa = PBXTargetDependency;
 			target = 4C7A26FB1F2FA0F800360E9B /* FunctionalTableData */;
 			targetProxy = 4C7A27071F2FA0F800360E9B /* PBXContainerItemProxy */;
+		};
+		4C7BFE5C1F376B3B00F09CE6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4C7A26FB1F2FA0F800360E9B /* FunctionalTableData */;
+			targetProxy = 4C7BFE5B1F376B3B00F09CE6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -581,6 +612,7 @@
 		4CA3563A1F3208F70081BE90 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Examples/Info.plist;
@@ -594,6 +626,7 @@
 		4CA3563B1F3208F70081BE90 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Examples/Info.plist;
