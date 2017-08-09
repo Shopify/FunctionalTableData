@@ -1,4 +1,4 @@
-# Functional Table Data
+<img src="/Images/Banner.png" />
 
 Functional Table Data takes a complete, idempotent description of your table state, compares it with the previous render call to compute which cells have changed, and updates the UITableView. Table state is declared in an idempotent and functional manner, simplifying state management of complex UI.
 
