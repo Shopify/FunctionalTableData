@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4C7A27061F2FA0F800360E9B /* FunctionalTableData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */; };
-		4C7A270B1F2FA0F800360E9B /* FunctionalTableDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A270A1F2FA0F800360E9B /* FunctionalTableDataTests.swift */; };
 		4C7A270D1F2FA0F800360E9B /* FunctionalTableData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A26FF1F2FA0F800360E9B /* FunctionalTableData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7A277B1F2FB55D00360E9B /* CellActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A276F1F2FB55D00360E9B /* CellActions.swift */; };
 		4C7A277C1F2FB55D00360E9B /* CellConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27701F2FB55D00360E9B /* CellConfigType.swift */; };
@@ -75,7 +74,6 @@
 		4C7A26FF1F2FA0F800360E9B /* FunctionalTableData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FunctionalTableData.h; sourceTree = "<group>"; };
 		4C7A27001F2FA0F800360E9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C7A27051F2FA0F800360E9B /* FunctionalTableDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FunctionalTableDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C7A270A1F2FA0F800360E9B /* FunctionalTableDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalTableDataTests.swift; sourceTree = "<group>"; };
 		4C7A270C1F2FA0F800360E9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C7A276F1F2FB55D00360E9B /* CellActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellActions.swift; sourceTree = "<group>"; };
 		4C7A27701F2FB55D00360E9B /* CellConfigType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellConfigType.swift; sourceTree = "<group>"; };
@@ -166,7 +164,6 @@
 		4C7A27091F2FA0F800360E9B /* FunctionalTableDataTests */ = {
 			isa = PBXGroup;
 			children = (
-				4C7A270A1F2FA0F800360E9B /* FunctionalTableDataTests.swift */,
 				4CA356731F322D7F0081BE90 /* TableSectionChangeSetTests.swift */,
 				4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */,
 				4C7A270C1F2FA0F800360E9B /* Info.plist */,
@@ -396,7 +393,6 @@
 			files = (
 				4CA356761F322D7F0081BE90 /* TableSectionStyleTests.swift in Sources */,
 				4CA356751F322D7F0081BE90 /* TableSectionChangeSetTests.swift in Sources */,
-				4C7A270B1F2FA0F800360E9B /* FunctionalTableDataTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
