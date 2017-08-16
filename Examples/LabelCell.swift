@@ -1,6 +1,6 @@
 //
 //  LabelCell.swift
-//  FunctionalTableData
+//  Examples
 //
 //  Created by Raul Riera on 2017-08-03.
 //  Copyright © 2017 Shopify. All rights reserved.

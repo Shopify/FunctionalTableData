@@ -25,7 +25,7 @@ class ExamplesViewController: UITableViewController {
 	
 	private func section() -> TableSection {
 		let cells: [CellConfigType] = [
-			LabelCell(key: "basicCells",
+			LabelCell(key: "basic",
 			          style: CellStyle(accessoryType: .disclosureIndicator),
 			          actions: CellActions(selectionAction: { [weak self] _ in
 						  self?.openBasicCells()
@@ -33,6 +33,15 @@ class ExamplesViewController: UITableViewController {
 					  }),
 			          state: "Basic cells") { view, state in
 				view.text = state
+			},
+			LabelCell(key: "advanced",
+			          style: CellStyle(accessoryType: .disclosureIndicator),
+			          actions: CellActions(selectionAction: { [weak self] _ in
+						self?.openAdvancedCells()
+						return .deselected
+					}),
+			          state: "Advanced cells") { view, state in
+						view.text = state
 			}
 		]
 		
@@ -42,5 +51,9 @@ class ExamplesViewController: UITableViewController {
 	
 	private func openBasicCells() {
 		navigationController?.pushViewController(BasicCellsViewController(), animated: true)
+	}
+	
+	private func openAdvancedCells() {
+		navigationController?.pushViewController(AdvancedCellsViewController(), animated: true)
 	}
 }

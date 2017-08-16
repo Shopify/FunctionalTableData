@@ -1,6 +1,6 @@
 //
 //  SubtitleCell.swift
-//  FunctionalTableData
+//  Examples
 //
 //  Created by Raul Riera on 2017-08-02.
 //  Copyright © 2017 Shopify. All rights reserved.

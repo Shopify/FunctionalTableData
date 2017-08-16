@@ -1,6 +1,6 @@
 //
 //  ImageCell.swift
-//  FunctionalTableData
+//  Examples
 //
 //  Created by Raul Riera on 2017-08-03.
 //  Copyright © 2017 Shopify. All rights reserved.
@@ -8,6 +8,7 @@
 
 import FunctionalTableData
 
+// Simple cell that displays an image using it's actual file dimensions.
 typealias ImageCell = HostCell<UIImageView, ImageState, EdgeBasedTableItemLayout>
 
 struct ImageState: Equatable {

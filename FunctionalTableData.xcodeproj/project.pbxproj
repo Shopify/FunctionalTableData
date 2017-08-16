@@ -36,6 +36,8 @@
 		4CA3571C1F33AF2A0081BE90 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA3571B1F33AF2A0081BE90 /* LabelCell.swift */; };
 		4CA3571E1F33AFB40081BE90 /* SpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA3571D1F33AFB40081BE90 /* SpacerCell.swift */; };
 		4CA357221F33B4800081BE90 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA357211F33B4800081BE90 /* ImageCell.swift */; };
+		4CA5579B1F44842000A11B5C /* CombinedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5579A1F44842000A11B5C /* CombinedCell.swift */; };
+		4CA5579D1F4484E400A11B5C /* AdvancedCellsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5579C1F4484E400A11B5C /* AdvancedCellsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +104,8 @@
 		4CA3571B1F33AF2A0081BE90 /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		4CA3571D1F33AFB40081BE90 /* SpacerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpacerCell.swift; sourceTree = "<group>"; };
 		4CA357211F33B4800081BE90 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		4CA5579A1F44842000A11B5C /* CombinedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedCell.swift; sourceTree = "<group>"; };
+		4CA5579C1F4484E400A11B5C /* AdvancedCellsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedCellsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +210,8 @@
 				4CA3562D1F3208F70081BE90 /* AppDelegate.swift */,
 				4CA3562F1F3208F70081BE90 /* ExamplesViewController.swift */,
 				4CA356511F3216DB0081BE90 /* BasicCellsViewController.swift */,
+				4CA5579C1F4484E400A11B5C /* AdvancedCellsViewController.swift */,
+				4CA557891F4483EB00A11B5C /* Advanced Cells */,
 				4CA3564D1F3211520081BE90 /* Basic Cells */,
 				4CA356341F3208F70081BE90 /* Assets.xcassets */,
 				4CA356361F3208F70081BE90 /* LaunchScreen.storyboard */,
@@ -223,6 +229,14 @@
 				4CA3564F1F3214670081BE90 /* SubtitleCell.swift */,
 			);
 			name = "Basic Cells";
+			sourceTree = "<group>";
+		};
+		4CA557891F4483EB00A11B5C /* Advanced Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4CA5579A1F44842000A11B5C /* CombinedCell.swift */,
+			);
+			name = "Advanced Cells";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,6 +420,8 @@
 				4CA3571C1F33AF2A0081BE90 /* LabelCell.swift in Sources */,
 				4CA3562E1F3208F70081BE90 /* AppDelegate.swift in Sources */,
 				4CA357221F33B4800081BE90 /* ImageCell.swift in Sources */,
+				4CA5579D1F4484E400A11B5C /* AdvancedCellsViewController.swift in Sources */,
+				4CA5579B1F44842000A11B5C /* CombinedCell.swift in Sources */,
 				4CA3571E1F33AFB40081BE90 /* SpacerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

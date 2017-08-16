@@ -1,6 +1,6 @@
 //
 //  SpacerCell.swift
-//  FunctionalTableData
+//  Examples
 //
 //  Created by Raul Riera on 2017-08-03.
 //  Copyright © 2017 Shopify. All rights reserved.
@@ -8,6 +8,7 @@
 
 import FunctionalTableData
 
+// A cell to add spaces between other cells.
 typealias SpacerCell = HostCell<SpacerView, SpacerState, EdgeBasedTableItemLayout>
 
 class SpacerView: UIView {
