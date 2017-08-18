@@ -126,6 +126,7 @@ public class FunctionalTableData: NSObject {
 	public var scrollViewDidEndDragging: ((_ scrollView: UIScrollView, _ decelerate: Bool) -> Void)?
 	public var scrollViewDidEndDecelerating: ((_ scrollView: UIScrollView) -> Void)?
 	public var scrollViewDidChangeContentSize: ((_ scrollView: UIScrollView) -> Void)?
+	public var scrollViewDidEndScrollingAnimation: ((_ scrollView: UIScrollView) -> Void)?
 	
 	/// The type of animation when rows and sections are inserted or deleted.
 	public struct TableAnimations {
@@ -706,5 +707,9 @@ extension FunctionalTableData: UITableViewDelegate {
 
 	public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		scrollViewDidEndDecelerating?(scrollView)
+	}
+	
+	public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+		scrollViewDidEndScrollingAnimation?(scrollView)
 	}
 }
