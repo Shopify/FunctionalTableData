@@ -42,6 +42,15 @@ class ExamplesViewController: UITableViewController {
 					}),
 			          state: "Advanced cells") { view, state in
 						view.text = state
+			},
+			LabelCell(key: "todo",
+			          style: CellStyle(accessoryType: .disclosureIndicator),
+			          actions: CellActions(selectionAction: { [weak self] _ in
+									self?.openTodoList()
+									return .deselected
+								}),
+			          state: "TODO List") { view, state in
+									view.text = state
 			}
 		]
 		
@@ -55,5 +64,9 @@ class ExamplesViewController: UITableViewController {
 	
 	private func openAdvancedCells() {
 		navigationController?.pushViewController(AdvancedCellsViewController(), animated: true)
+	}
+	
+	private func openTodoList() {
+		navigationController?.pushViewController(TodoListViewController(), animated: true)
 	}
 }
