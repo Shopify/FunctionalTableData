@@ -65,22 +65,6 @@ public class FunctionalTableData: NSObject {
 	/// Index path for the previously selected row.
 	public var indexPathForPreviouslySelectedRow: IndexPath?
 	
-	fileprivate var minimumInfiniteHeaderViewHeight: CGFloat = 0
-	
-	/// View that will shrink and expand when the enclosing `UITableView` is being
-	/// pulled down further than its initial origin.
-	public var infiniteHeaderView: UIView? {
-		willSet {
-			if newValue == infiniteHeaderView {
-				return
-			}
-			infiniteHeaderView?.removeFromSuperview()
-		}
-		didSet {
-			installInfiniteHeaderView()
-		}
-	}
-	
 	/// Enclosing `UITableView` that presents all the `TableSection` data.
 	///
 	/// `FunctionalTableData` will take care of setting its own `UITableViewDelegate` and
@@ -93,34 +77,13 @@ public class FunctionalTableData: NSObject {
 			tableView.rowHeight = UITableViewAutomaticDimension
 			tableView.tableFooterView = UIView(frame: .zero)
 			tableView.separatorStyle = .none
-			
-			installInfiniteHeaderView()
 		}
 	}
 	
 	public subscript(indexPath: IndexPath) -> CellConfigType? {
 		return sections[indexPath]
 	}
-	
-	private func installInfiniteHeaderView() {
-		guard let tableView = tableView else { return }
-		guard let infiniteHeaderView = infiniteHeaderView else {
-			var contentInset = tableView.contentInset
-			contentInset.top = 0
-			tableView.contentInset = contentInset
-			return
-		}
-		if infiniteHeaderView.superview != tableView {
-			tableView.addSubview(infiniteHeaderView)
-			tableView.sendSubview(toBack: infiniteHeaderView)
-			infiniteHeaderView.autoresizingMask = .flexibleWidth
-			minimumInfiniteHeaderViewHeight = infiniteHeaderView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-			var contentInset = tableView.contentInset
-			contentInset.top = minimumInfiniteHeaderViewHeight
-			tableView.contentInset = contentInset
-		}
-	}
-	
+
 	public var scrollViewDidScroll: ((_ scrollView: UIScrollView) -> Void)?
 	public var scrollViewWillBeginDragging: ((_ scrollView: UIScrollView) -> Void)?
 	public var scrollViewDidEndDragging: ((_ scrollView: UIScrollView, _ decelerate: Bool) -> Void)?
@@ -685,15 +648,6 @@ extension FunctionalTableData: UITableViewDelegate {
 	}
 	
 	public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		let bounds = scrollView.bounds
-		if let infiniteHeaderView = infiniteHeaderView {
-			let y = scrollView.contentOffset.y + scrollView.contentInset.top - minimumInfiniteHeaderViewHeight
-			let height = max(minimumInfiniteHeaderViewHeight, -y)
-			if height >= 0 && infiniteHeaderView.frame.height != height {
-				scrollView.sendSubview(toBack: infiniteHeaderView)
-				infiniteHeaderView.frame = CGRect(x: bounds.minX, y: y, width: bounds.width, height: height)
-			}
-		}
 		scrollViewDidScroll?(scrollView)
 	}
 	
