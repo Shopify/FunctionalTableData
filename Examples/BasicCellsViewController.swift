@@ -20,10 +20,10 @@ class BasicCellsViewController: UITableViewController {
 		// Assign the table view that will display the data.
 		tableData.tableView = tableView
 		// Generate the section, diff and display the changes.
-		tableData.renderAndDiff([section()])
+		tableData.renderAndDiff([tableState()])
 	}
 	
-	private func section() -> TableSection {
+	private func tableState() -> TableSection {
 		let cells: [CellConfigType] = [
 			// A simple one line cell.
 			LabelCell(key: "labelCell",
