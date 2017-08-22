@@ -135,6 +135,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C11E5231F4CCC8F00D9A89D /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				4CA356511F3216DB0081BE90 /* BasicCellsViewController.swift */,
+				4CA3564D1F3211520081BE90 /* Cells */,
+			);
+			name = Basic;
+			sourceTree = "<group>";
+		};
+		4C11E5241F4CCCA000D9A89D /* Advanced */ = {
+			isa = PBXGroup;
+			children = (
+				4CA5579C1F4484E400A11B5C /* AdvancedCellsViewController.swift */,
+				4CA557891F4483EB00A11B5C /* Cells */,
+			);
+			name = Advanced;
+			sourceTree = "<group>";
+		};
 		4C7A26F21F2FA0F800360E9B = {
 			isa = PBXGroup;
 			children = (
@@ -207,20 +225,18 @@
 		4CA3562C1F3208F70081BE90 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				4CA356391F3208F70081BE90 /* Info.plist */,
 				4CA3562D1F3208F70081BE90 /* AppDelegate.swift */,
 				4CA3562F1F3208F70081BE90 /* ExamplesViewController.swift */,
-				4CA356511F3216DB0081BE90 /* BasicCellsViewController.swift */,
-				4CA5579C1F4484E400A11B5C /* AdvancedCellsViewController.swift */,
-				4CA557891F4483EB00A11B5C /* Advanced Cells */,
-				4CA3564D1F3211520081BE90 /* Basic Cells */,
 				4CA356341F3208F70081BE90 /* Assets.xcassets */,
+				4C11E5241F4CCCA000D9A89D /* Advanced */,
+				4C11E5231F4CCC8F00D9A89D /* Basic */,
 				4CA356361F3208F70081BE90 /* LaunchScreen.storyboard */,
-				4CA356391F3208F70081BE90 /* Info.plist */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
 		};
-		4CA3564D1F3211520081BE90 /* Basic Cells */ = {
+		4CA3564D1F3211520081BE90 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				4CA357211F33B4800081BE90 /* ImageCell.swift */,
@@ -228,15 +244,15 @@
 				4CA3571D1F33AFB40081BE90 /* SpacerCell.swift */,
 				4CA3564F1F3214670081BE90 /* SubtitleCell.swift */,
 			);
-			name = "Basic Cells";
+			name = Cells;
 			sourceTree = "<group>";
 		};
-		4CA557891F4483EB00A11B5C /* Advanced Cells */ = {
+		4CA557891F4483EB00A11B5C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				4CA5579A1F44842000A11B5C /* CombinedCell.swift */,
 			);
-			name = "Advanced Cells";
+			name = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
