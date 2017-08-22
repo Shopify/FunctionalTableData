@@ -6,7 +6,7 @@ Instead of trying to build many different UITableViewCells and implement a UITab
 
 |         | Noteworthy features       |
 ----------|---------------------
-💯 | Functional approach for maintaining table state
+💯 | Declarative approach for maintaining table state
 👷‍ | Reusable views and states
 ✅ | Snapshot and Unit tests
 🔀 | Automatic diff in your states
@@ -40,13 +40,13 @@ github "Shopify/FunctionalTableData"
 
 ### Configure the UITableView
 
-To use the Functional Table Data (FTD) you need an instance of UITableView, and an instance of FunctionalTableData. Once both are available, typically in a view controller's `viewDidLoad`, they are connected together using
-`functionalTableData.tableView = myTableViewInstance`. After this, every time we want to display/update the data we simply call `functionalTableData.renderAndDiff(sections)`.
+To use the FunctionalTableData you need an instance of UITableView, and an instance of FunctionalTableData. Once both are available, typically in a view controller's `viewDidLoad`, they are connected together using
+`functionalTableData.tableView = myTableViewInstance`. After this, every time we want to update the table, we simply call `functionalTableData.renderAndDiff(tableState)`.
 
-Here's a complete example:
+Here's an example setting up FunctionalTableData:
 ```swift
 class MyViewController : UITableViewController {
-  let functionalTableData = new FunctionalTableData()
+  let functionalTableData = FunctionalTableData()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -57,28 +57,28 @@ class MyViewController : UITableViewController {
 
 ### Build Table Cells
 
-FunctionalTableData holds UITableView cells that conform to the CellConfigType protocol.  The CellConfigType protocol provides a bit of additional functionality to the cells:
-- The cells are backed by a state object.  A cell's state must conform to Equatable so FunctionalTableData can update the cell  when the cell's state has changed.
-- a method must exist that takes the cell's state, and updates the UI.
+FunctionalTableData holds UITableView cells that conform to the ViewStateUpdatable protocol.  The ViewStateUpdatable protocol provides a bit of additional functionality to the cells:
+- The cells are backed by a state object.  A cell's State must conform to Equatable, so FunctionalTableData can update the cell when the cell's state has changed.
+- a `updateWithViewData` method must exist that takes the cell's state, and updates the UI.
 
-Included in FunctionalTableData is a generic helper called `HostCell`.  `HostCell` is a UITableViewCell that accepts a UIView, state object, and a field to determine if the HostCell should honor LayoutMargins or not.
+Included in FunctionalTableData is a generic helper called `HostCell`.  `HostCell` is a UITableViewCell that accepts a UIView, state object, and a field to determine if the HostCell should honor LayoutMargins or not.  It implements `ViewStateUpdatable` in a reusable fashion by allowing the State struct to be defined as part of the Generic declaration, and the `updateWithViewData` method is defined as a parameter in the cell's initializer.
 
 ```swift
 /// The simplest possible version of a cell that displays a label. Useful to get started, but in most cases a more robust state should be used allowing more customization.
 typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
 ```
 
-Developers can otherwise build their own UITableViewCells directly and conform to the `CellConfigType` protocol to use them directly with FunctionalTableData.
+Developers can otherwise build their own UITableViewCells directly and conform to the `ViewStateUpdatable` protocol for use with FunctionalTableData if they need more control than what is provided by `HostCell`.
 
 ### Declare the Table State
 
-Any time you want to update the data currently being displayed you generate the new table state and pass it off to your instance of the FunctionalTableData. FunctionalTableData will compute the differences between the previous table state and the new state, and updating itself as necessary.
+To update the table, generate the new table state and pass it off to the FunctionalTableData instance. FunctionalTableData will compute the differences between the previous table state and the new state, and update the backing UITableView as necessary.
 
-The Table state is made up of many sections.  The sections need a unique `key`.  FunctionalTableData uses the key to detect when sections or rows are added, removed, or reordered within the table.  
+The table state is made up of many sections.  Each section requires a unique `key`.  FunctionalTableData uses the section key to determine when sections or rows are added, removed, or reordered within the table.  
 
-Each section contains a series of rows where each row value must conform to the `CellConfigType` protocol.  Each row also needs a key that is unique within the row's section.
+Each section contains a series of rows. Each row must conform to the `CellConfigType` protocol.  Each row also needs a key that is unique within the row's section.
 
-Each row is also given an instance of that Cell's state.  When a row's state changes between subsequent calls to `renderAndDiff`, FunctionalTableData will update the row.
+Each row is also given an instance of that Cell's state.  When a row's state changes between subsequent calls to `renderAndDiff`, FunctionalTableData will call the
 
 Here is a declaration of a simple table:
 
