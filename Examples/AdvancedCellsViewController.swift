@@ -20,10 +20,10 @@ class AdvancedCellsViewController: UITableViewController {
 		// Assign the table view that will display the data.
 		tableData.tableView = tableView
 		// Generate the section, diff and display the changes.
-		tableData.renderAndDiff([section()])
+		tableData.renderAndDiff([tableState()])
 	}
 	
-	private func section() -> TableSection {
+	private func tableState() -> TableSection {
 		let cells: [CellConfigType] = [
 			// A composite cell by joining two previously created cells together. This one is a bit more complex
 			// but shows the power of composition by joining `ImageCell` and `SubtitleCell` into a completely new cell.
