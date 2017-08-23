@@ -10,7 +10,6 @@ import Foundation
 
 extension NSException {
 	public static func catchAndRethrow(_ block: () -> Void, failure: (_ exception: NSException) -> Void) {
-		// FIXME: Remove of bring from ShopifyUX?
-		//catchAndRethrowException(block, failure)
+		catchAndRethrowException(block, failure)
 	}
 }
