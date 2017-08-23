@@ -15,5 +15,16 @@ FOUNDATION_EXPORT double FunctionalTableDataVersionNumber;
 FOUNDATION_EXPORT const unsigned char FunctionalTableDataVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <FunctionalTableData/PublicHeader.h>
+NS_ASSUME_NONNULL_BEGIN
 
+__attribute__((visibility("hidden")))
+static inline void catchAndRethrowException(__attribute__((noescape)) void (^ __nonnull inBlock)(), __attribute__((noescape)) void (^ __nonnull rethrow)(NSException *)) {
+	@try {
+		inBlock();
+	} @catch (NSException *exception) {
+		rethrow(exception);
+		@throw;
+	}
+}
 
+NS_ASSUME_NONNULL_END
