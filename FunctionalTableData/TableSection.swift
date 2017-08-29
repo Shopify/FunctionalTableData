@@ -15,9 +15,9 @@ public protocol TableSectionType {
 	/// Unique identifier for the section.
 	var key: String { get }
 	/// View object to display in the header of this section.
-	var header: TableHeaderConfigType? { get }
+	var header: TableHeaderFooterConfigType? { get }
 	/// View object to display in the footer of this section.
-	var footer: TableItemConfigType? { get }
+	var footer: TableHeaderFooterConfigType? { get }
 	/// Instances of `CellConfigType` that represent the rows in the table view.
 	var rows: [CellConfigType] { get }
 	/// Action to perform when the header view comes in or out of view.
@@ -30,8 +30,8 @@ public protocol TableSectionType {
 
 public struct TableSection: Sequence, TableSectionType {
 	public let key: String
-	public var header: TableHeaderConfigType? = nil
-	public var footer: TableItemConfigType? = nil
+	public var header: TableHeaderFooterConfigType? = nil
+	public var footer: TableHeaderFooterConfigType? = nil
 	public var rows: [CellConfigType]
 	/// Specifies visual attributes to be applied to the section. This includes row separators to use at the top, bottom, and between items of the section.
 	public var style: SectionStyle?
@@ -39,7 +39,7 @@ public struct TableSection: Sequence, TableSectionType {
 	/// Callback executed when a row is manually moved by the user. It specifies the before and after index position.
 	public var didMoveRow: ((_ from: Int, _ to: Int) -> Void)?
 
-	public init(key: String, rows: [CellConfigType] = [], header: TableHeaderConfigType? = nil, footer: TableItemConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) {
+	public init(key: String, rows: [CellConfigType] = [], header: TableHeaderFooterConfigType? = nil, footer: TableHeaderFooterConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) {
 		self.key = key
 		self.rows = rows
 		self.header = header
@@ -147,7 +147,7 @@ public struct SectionStyle: Equatable {
 }
 
 extension TableSection {
-	public init<T: RawRepresentable>(key: T, rows: [CellConfigType] = [], header: TableHeaderConfigType? = nil, footer: TableItemConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) where T.RawValue == String {
+	public init<T: RawRepresentable>(key: T, rows: [CellConfigType] = [], header: TableHeaderFooterConfigType? = nil, footer: TableHeaderFooterConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) where T.RawValue == String {
 		self.init(key: key.rawValue, rows: rows, header: header, footer: footer, style: style, didMoveRow: didMoveRow)
 	}
 }

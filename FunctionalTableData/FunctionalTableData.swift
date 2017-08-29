@@ -476,35 +476,19 @@ extension FunctionalTableData: UITableViewDataSource {
 	}
 	
 	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let sectionData = sections[section]
-		var rows = sectionData.rows.count
-		if rows > 0 && sectionData.footer != nil {
-			rows += 1
-		}
-		return rows
+		return sections[section].rows.count
 	}
 	
 	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let sectionData = sections[indexPath.section]
-		
 		let row = indexPath.row
-		if row < sectionData.rows.count {
-			let cellConfig = sectionData[row]
-			let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
-			cellConfig.update(cell: cell, in: tableView)
-			
-			sectionData.mergedStyle(for: row)?.configure(cell: cell, in: tableView)
-			
-			return cell
-		}
+		let cellConfig = sectionData[row]
+		let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
 		
-		guard let footer = sectionData.footer else {
-			let rowKeys = sectionData.rows.map { $0.key }.joined(separator: ", ")
-			let reason = "indexPath.row [\(indexPath)] exceeds section key: \(sectionData.key), row count [\(sectionData.rows.count)], rows: \(rowKeys)"
-			NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: nil).raise()
-			return UITableViewCell()
-		}
-		return footer.dequeueCell(from: tableView, at: indexPath)
+		cellConfig.update(cell: cell, in: tableView)
+		sectionData.mergedStyle(for: row)?.configure(cell: cell, in: tableView)
+		
+		return cell
 	}
 
 	public func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -528,6 +512,14 @@ extension FunctionalTableData: UITableViewDelegate {
 		return header.height
 	}
 	
+	public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		guard let footer = sections[section].footer else {
+			// When given a height of zero grouped style UITableView's use their default value instead of zero. By returning CGFloat.min we get around this behavior and force UITableView to end up using a height of zero after all.
+			return tableView.style == .grouped ? CGFloat.leastNormalMagnitude : 0
+		}
+		return footer.height
+	}
+	
 	public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 		guard indexPath.section < sections.count else { return UITableViewAutomaticDimension }
 		if let indexKeyPath = sections[indexPath.section].sectionKeyPathForRow(indexPath.row), let height = heightAtIndexKeyPath[indexKeyPath] {
@@ -540,6 +532,11 @@ extension FunctionalTableData: UITableViewDelegate {
 	public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		guard let header = sections[section].header else { return nil }
 		return header.dequeueHeaderFooter(from: tableView)
+	}
+	
+	public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+		guard let footer = sections[section].footer else { return nil }
+		return footer.dequeueHeaderFooter(from: tableView)
 	}
 	
 	public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {

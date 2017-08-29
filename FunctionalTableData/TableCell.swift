@@ -80,7 +80,7 @@ public class TableCell<ViewType: UIView, Layout: TableItemLayout>: UITableViewCe
 	}
 }
 
-public class TableHeader<ViewType: UIView, Layout: TableItemLayout>: UITableViewHeaderFooterView {
+public class TableHeaderFooter<ViewType: UIView, Layout: TableItemLayout>: UITableViewHeaderFooterView {
 	public let view: ViewType
 	public let topSeparator = Separator(style: Separator.Style.full)
 	public let bottomSeparator = Separator(style: Separator.Style.full)
