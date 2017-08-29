@@ -1,5 +1,5 @@
 //
-//  TableSectionFooter.swift
+//  TableSectionHeaderFooter.swift
 //  FunctionalTableData
 //
 //  Created by Geoffrey Foster on 2016-09-10.
