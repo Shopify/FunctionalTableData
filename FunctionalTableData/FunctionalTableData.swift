@@ -224,7 +224,9 @@ public class FunctionalTableData: NSObject {
 	public func renderAndDiff(_ newSections: [TableSection], keyPath: KeyPath? = nil, animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
 		let blockOperation = BlockOperation { [weak self] in
 			guard let strongSelf = self else {
-				completion?()
+				if let completion = completion {
+					DispatchQueue.main.async(execute: completion)
+				}
 				return
 			}
 			
@@ -251,7 +253,9 @@ public class FunctionalTableData: NSObject {
 	
 	private func doRenderAndDiff(_ newSections: [TableSection], keyPath: KeyPath? = nil, animated: Bool = true, animations: TableAnimations, completion: (() -> Void)? = nil) {
 		guard let tableView = tableView else {
-			completion?()
+			if let completion = completion {
+				DispatchQueue.main.async(execute: completion)
+			}
 			return
 		}
 		
@@ -311,13 +315,17 @@ public class FunctionalTableData: NSObject {
 	
 	private func applyTableChanges(_ changes: TableSectionChangeSet, localSections: [TableSection], animations: TableAnimations, completion: (() -> Void)?) {
 		guard let tableView = tableView else {
-			completion?()
+			if let completion = completion {
+				DispatchQueue.main.async(execute: completion)
+			}
 			return
 		}
 		
 		if changes.isEmpty {
 			sections = localSections
-			completion?()
+			if let completion = completion {
+				DispatchQueue.main.async(execute: completion)
+			}
 			return
 		}
 		
