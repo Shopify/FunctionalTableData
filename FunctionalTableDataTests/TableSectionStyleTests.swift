@@ -11,7 +11,7 @@ import XCTest
 
 class TableSectionStyleTests: XCTestCase {
 	func cell(key: String, state: String, style: CellStyle? = nil) -> HostCell<UIView, String, LayoutMarginsTableItemLayout> {
-		return HostCell<UIView, String, LayoutMarginsTableItemLayout>(key: key, style: style, state: state, cellUpdater: { _ in })
+		return HostCell<UIView, String, LayoutMarginsTableItemLayout>(key: key, style: style, state: state, cellUpdater: { _,_  in })
 	}
 	
 	func testModifyingItemSeparatorStyleProducesChange() {
