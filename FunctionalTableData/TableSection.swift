@@ -96,17 +96,21 @@ public struct TableSection: Sequence, TableSectionType {
 			rowStyle = CellStyle()
 		}
 
+		let top = rowStyle?.topSeparator ?? style?.separators.top
+		let bottom = rowStyle?.bottomSeparator ?? style?.separators.bottom
+		let interitem = rowStyle?.bottomSeparator ?? style?.separators.interitem
+		
 		switch (row, rows.index(after: row)) {
 		case (rows.startIndex, rows.endIndex):
-			rowStyle?.topSeparator = rowStyle?.topSeparator ?? style?.separators.top
-			rowStyle?.bottomSeparator = rowStyle?.bottomSeparator ?? style?.separators.bottom
+			rowStyle?.topSeparator = top
+			rowStyle?.bottomSeparator = bottom
 		case (rows.startIndex, _):
-			rowStyle?.topSeparator = rowStyle?.topSeparator ?? style?.separators.top
-			rowStyle?.bottomSeparator = rowStyle?.bottomSeparator ?? style?.separators.interitem
+			rowStyle?.topSeparator = top
+			rowStyle?.bottomSeparator = interitem
 		case (_, rows.endIndex):
-			rowStyle?.bottomSeparator = rowStyle?.bottomSeparator ?? style?.separators.bottom
+			rowStyle?.bottomSeparator = bottom
 		case (_, _):
-			rowStyle?.bottomSeparator = rowStyle?.bottomSeparator ?? style?.separators.interitem
+			rowStyle?.bottomSeparator = interitem
 		}
 
 		return rowStyle

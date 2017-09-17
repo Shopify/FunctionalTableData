@@ -56,15 +56,16 @@ public struct TableSectionChangeSet {
 	}
 
 	var count: Int {
-		return deletedSections.count
-			+ insertedSections.count
-			+ reloadedSections.count
-			+ movedSections.count
-			+ deletedRows.count
-			+ insertedRows.count
-			+ reloadedRows.count
-			+ movedRows.count
-			+ updates.count
+		var total = deletedSections.count
+		total += insertedSections.count
+		total += reloadedSections.count
+		total += movedSections.count
+		total += deletedRows.count
+		total += insertedRows.count
+		total += reloadedRows.count
+		total += movedRows.count
+		total += updates.count
+		return total
 	}
 
 	init(old: [TableSection] = [], new: [TableSection] = [], visibleIndexPaths: [IndexPath] = []) {

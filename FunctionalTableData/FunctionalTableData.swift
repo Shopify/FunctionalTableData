@@ -293,13 +293,13 @@ public class FunctionalTableData: NSObject {
 				CATransaction.commit()
 			} else {
 				if strongSelf.unitTesting {
-					strongSelf.applyTableChanges(changes, localSections: localSections, animations: animations, completion: { _ in
+					strongSelf.applyTableChanges(changes, localSections: localSections, animations: animations, completion: {
 						strongSelf.finishRenderAndDiff(keyPath: keyPath)
 						completion?()
 					})
 				} else {
 					NSException.catchAndRethrow({
-						strongSelf.applyTableChanges(changes, localSections: localSections, animations: animations, completion: { _ in
+						strongSelf.applyTableChanges(changes, localSections: localSections, animations: animations, completion: {
 							strongSelf.finishRenderAndDiff(keyPath: keyPath)
 							completion?()
 						})
@@ -648,7 +648,7 @@ extension FunctionalTableData: UITableViewDelegate {
 	
 	// MARK: - UIScrollViewDelegate
 	
-	public func scrollViewDidChangeContentSize(_ scrollView: UIScrollView) {
+	@objc public func scrollViewDidChangeContentSize(_ scrollView: UIScrollView) {
 		scrollViewDidChangeContentSize?(scrollView)
 	}
 	
