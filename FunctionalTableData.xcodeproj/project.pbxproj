@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C63250B1F8AA89B00B2B74B /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8441F8AA7CD00C73258 /* TableCell.swift */; };
+		4C63250C1F8AA89D00B2B74B /* TableItemConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8451F8AA7CD00C73258 /* TableItemConfigType.swift */; };
+		4C63250D1F8AA8A000B2B74B /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */; };
+		4C6325111F8AA8A400B2B74B /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE83F1F8AA7B200C73258 /* CollectionCell.swift */; };
+		4C6325121F8AA8A400B2B74B /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8401F8AA7B200C73258 /* UICollectionView+Reusable.swift */; };
+		4C6325131F8AA8A400B2B74B /* FunctionalCollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8411F8AA7B200C73258 /* FunctionalCollectionData.swift */; };
+		4C6325141F8AA8A400B2B74B /* CollectionItemConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8421F8AA7B200C73258 /* CollectionItemConfigType.swift */; };
 		4C7A27061F2FA0F800360E9B /* FunctionalTableData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */; };
 		4C7A270D1F2FA0F800360E9B /* FunctionalTableData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A26FF1F2FA0F800360E9B /* FunctionalTableData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7A277B1F2FB55D00360E9B /* CellActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A276F1F2FB55D00360E9B /* CellActions.swift */; };
@@ -17,7 +24,6 @@
 		4C7A27801F2FB55D00360E9B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27741F2FB55D00360E9B /* Reusable.swift */; };
 		4C7A27811F2FB55D00360E9B /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27751F2FB55D00360E9B /* Separator.swift */; };
 		4C7A27821F2FB55D00360E9B /* CellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27761F2FB55D00360E9B /* CellStyle.swift */; };
-		4C7A27831F2FB55D00360E9B /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27771F2FB55D00360E9B /* TableCell.swift */; };
 		4C7A27841F2FB55D00360E9B /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27781F2FB55D00360E9B /* TableSection.swift */; };
 		4C7A27851F2FB55D00360E9B /* TableSectionChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */; };
 		4C7A27861F2FB55D00360E9B /* TableSectionHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A277A1F2FB55D00360E9B /* TableSectionHeaderFooter.swift */; };
@@ -38,6 +44,7 @@
 		4CA357221F33B4800081BE90 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA357211F33B4800081BE90 /* ImageCell.swift */; };
 		4CA5579B1F44842000A11B5C /* CombinedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5579A1F44842000A11B5C /* CombinedCell.swift */; };
 		4CA5579D1F4484E400A11B5C /* AdvancedCellsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5579C1F4484E400A11B5C /* AdvancedCellsViewController.swift */; };
+		4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +92,6 @@
 		4C7A27741F2FB55D00360E9B /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		4C7A27751F2FB55D00360E9B /* Separator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 		4C7A27761F2FB55D00360E9B /* CellStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellStyle.swift; sourceTree = "<group>"; };
-		4C7A27771F2FB55D00360E9B /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 		4C7A27781F2FB55D00360E9B /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionChangeSet.swift; sourceTree = "<group>"; };
 		4C7A277A1F2FB55D00360E9B /* TableSectionHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionHeaderFooter.swift; sourceTree = "<group>"; };
@@ -106,6 +112,14 @@
 		4CA357211F33B4800081BE90 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		4CA5579A1F44842000A11B5C /* CombinedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedCell.swift; sourceTree = "<group>"; };
 		4CA5579C1F4484E400A11B5C /* AdvancedCellsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedCellsViewController.swift; sourceTree = "<group>"; };
+		4CCCE83F1F8AA7B200C73258 /* CollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
+		4CCCE8401F8AA7B200C73258 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
+		4CCCE8411F8AA7B200C73258 /* FunctionalCollectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalCollectionData.swift; sourceTree = "<group>"; };
+		4CCCE8421F8AA7B200C73258 /* CollectionItemConfigType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItemConfigType.swift; sourceTree = "<group>"; };
+		4CCCE8441F8AA7CD00C73258 /* TableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
+		4CCCE8451F8AA7CD00C73258 /* TableItemConfigType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemConfigType.swift; sourceTree = "<group>"; };
+		4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
+		4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,15 +214,16 @@
 				4C7A276F1F2FB55D00360E9B /* CellActions.swift */,
 				4C7A27701F2FB55D00360E9B /* CellConfigType.swift */,
 				4C7A27761F2FB55D00360E9B /* CellStyle.swift */,
-				4C7A27711F2FB55D00360E9B /* FunctionalTableData.swift */,
 				4C7A27721F2FB55D00360E9B /* HostCell.swift */,
 				4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */,
 				4C7A27741F2FB55D00360E9B /* Reusable.swift */,
 				4C7A27751F2FB55D00360E9B /* Separator.swift */,
-				4C7A27771F2FB55D00360E9B /* TableCell.swift */,
 				4C7A27781F2FB55D00360E9B /* TableSection.swift */,
 				4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */,
 				4C7A277A1F2FB55D00360E9B /* TableSectionHeaderFooter.swift */,
+				4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */,
+				4CCCE8431F8AA7CD00C73258 /* TableView */,
+				4CCCE83E1F8AA7B200C73258 /* CollectionView */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -253,6 +268,28 @@
 				4CA5579A1F44842000A11B5C /* CombinedCell.swift */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		4CCCE83E1F8AA7B200C73258 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				4CCCE83F1F8AA7B200C73258 /* CollectionCell.swift */,
+				4CCCE8401F8AA7B200C73258 /* UICollectionView+Reusable.swift */,
+				4CCCE8411F8AA7B200C73258 /* FunctionalCollectionData.swift */,
+				4CCCE8421F8AA7B200C73258 /* CollectionItemConfigType.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		4CCCE8431F8AA7CD00C73258 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				4C7A27711F2FB55D00360E9B /* FunctionalTableData.swift */,
+				4CCCE8441F8AA7CD00C73258 /* TableCell.swift */,
+				4CCCE8451F8AA7CD00C73258 /* TableItemConfigType.swift */,
+				4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */,
+			);
+			path = TableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,18 +439,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C7A278B1F2FB89400360E9B /* UIView+Extensions.swift in Sources */,
-				4C7A27831F2FB55D00360E9B /* TableCell.swift in Sources */,
+				4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */,
+				4C63250B1F8AA89B00B2B74B /* TableCell.swift in Sources */,
 				4C7A27801F2FB55D00360E9B /* Reusable.swift in Sources */,
+				4C63250D1F8AA8A000B2B74B /* UITableView+Reusable.swift in Sources */,
 				4C7A277B1F2FB55D00360E9B /* CellActions.swift in Sources */,
+				4C6325131F8AA8A400B2B74B /* FunctionalCollectionData.swift in Sources */,
 				4C7A27861F2FB55D00360E9B /* TableSectionHeaderFooter.swift in Sources */,
 				4C7A277C1F2FB55D00360E9B /* CellConfigType.swift in Sources */,
 				4C7A27811F2FB55D00360E9B /* Separator.swift in Sources */,
 				4C7A277F1F2FB55D00360E9B /* ObjCExceptionRethrower.swift in Sources */,
 				4C7A27891F2FB69C00360E9B /* UIView+AutoLayout.swift in Sources */,
+				4C6325121F8AA8A400B2B74B /* UICollectionView+Reusable.swift in Sources */,
+				4C6325111F8AA8A400B2B74B /* CollectionCell.swift in Sources */,
 				4C7A27841F2FB55D00360E9B /* TableSection.swift in Sources */,
 				4C7A277D1F2FB55D00360E9B /* FunctionalTableData.swift in Sources */,
 				4C7A277E1F2FB55D00360E9B /* HostCell.swift in Sources */,
+				4C63250C1F8AA89D00B2B74B /* TableItemConfigType.swift in Sources */,
 				4C7A27851F2FB55D00360E9B /* TableSectionChangeSet.swift in Sources */,
+				4C6325141F8AA8A400B2B74B /* CollectionItemConfigType.swift in Sources */,
 				4C7A27821F2FB55D00360E9B /* CellStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

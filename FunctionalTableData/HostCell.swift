@@ -9,7 +9,7 @@
 import UIKit
 
 /// Defines the view, state and layout information of a row item inside a TableSection.
-/// It relies on you to build UIView subclasses and use those instead of implementing UITableViewCell subclasses. This has the side effect of building better more reusable view components. This greatly simplifies composition by combining several host-cells into more complex layouts. It also makes equality simpler and more "Swifty" by requiring that anything provided as State only requires that the State object conform to the Equatable protocol. The View portion of the generic only requires it to be a UIView subclass.
+/// It relies on you to build UIView subclasses and use those instead of implementing UITableViewCell or UICollectionViewCell subclasses. This has the side effect of building better more reusable view components. This greatly simplifies composition by combining several host-cells into more complex layouts. It also makes equality simpler and more "Swifty" by requiring that anything provided as State only requires that the State object conform to the Equatable protocol. The View portion of the generic only requires it to be a UIView subclass.
 public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, State: Equatable, Layout: TableItemLayout {
 	public let key: String
 	public var style: CellStyle?
@@ -18,7 +18,7 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 	public let state: State
 	/// A function that updates a cell's view to match the current state. It receives two values, the view instance and an optional state instance. The purpose of this function is to update the view to reflect that of the given state. The reason that the state is optional is because cells may move into the reuse queue. When this happens they no longer have a state and the updater function is called giving the opportunity to reset the view to its default value.
 	public let cellUpdater: (_ view: View, _ state: State?) -> Void
-
+	
 	public init(key: String, style: CellStyle? = nil, actions: CellActions = CellActions(), state: State, cellUpdater: @escaping (_ view: View, _ state: State?) -> Void) {
 		self.key = key
 		self.style = style
@@ -36,6 +36,13 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 		tableView.registerReusableCell(TableCell<View, Layout>.self)
 	}
 	
+	/// Registers the instance of this HostCell for use in creating new table cells.
+	///
+	/// - Parameter collectionView: the `UICollectionView` to register the cell with.
+	public func register(with collectionView: UICollectionView) {
+		collectionView.registerReusableCell(CollectionCell<View, Layout>.self)
+	}
+	
 	/// Returns a reusable `UITableView` cell object for the specified reuse identifier and adds it to the table.
 	///
 	/// - Parameters:
@@ -50,10 +57,36 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 		return cell
 	}
 	
+	/// Returns a reusable `UICollectionView` cell object for the specified reuse identifier and adds it to the collection.
+	///
+	/// - Parameters:
+	///   - collectionView: the `UICollectionView` holding the cells.
+	///   - indexPath: The index path specifying the location of the cell.
+	/// - Returns: A UICollectionViewCell object that exists in the reusable-cell queue.
+	public func dequeueCell(from collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(CollectionCell<View, Layout>.self, indexPath: indexPath)
+		cell.prepare = { [cellUpdater] view in
+			cellUpdater(view, nil)
+		}
+		return cell
+	}
+	
 	// MARK: - CellConfigType
 	
 	public func update(cell: UITableViewCell, in tableView: UITableView) {
 		guard let cell = cell as? TableCell<View, Layout> else { return }
+		
+		cellUpdater(cell.view, state)
+		// Only layout cells that aren't in the reuse pool
+		if cell.superview != nil && !cell.isHidden {
+			UIView.performWithoutAnimation {
+				cell.layoutIfNeeded()
+			}
+		}
+	}
+	
+	public func update(cell: UICollectionViewCell, in collectionView: UICollectionView) {
+		guard let cell = cell as? CollectionCell<View, Layout> else { return }
 		
 		cellUpdater(cell.view, state)
 		// Only layout cells that aren't in the reuse pool
