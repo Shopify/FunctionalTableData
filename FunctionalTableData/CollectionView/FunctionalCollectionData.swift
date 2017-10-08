@@ -11,7 +11,7 @@ import UIKit
 
 public class FunctionalCollectionData: NSObject {
 	/// Specifies the desired exception handling behaviour.
-	//public static var exceptionHandler: FunctionalTableDataExceptionHandler?
+	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
 	
 	/// Represents the unique path to a given item in the `FunctionalTableData`.
 	///
@@ -50,9 +50,6 @@ public class FunctionalCollectionData: NSObject {
 			guard let collectionView = collectionView else { return }
 			collectionView.dataSource = self
 			collectionView.delegate = self
-//			if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-//				layout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
-//			}
 		}
 	}
 	public var layout: UICollectionViewLayout? {
@@ -317,8 +314,6 @@ public class FunctionalCollectionData: NSObject {
 		}
 		
 		collectionView.performBatchUpdates({
-			// #4629 - There is an issue where on some occasions calling beginUpdates() will cause a heightForRowAtIndexPath() call to be made. If the sections have been changed already we may no longer find the cells
-			// in the model causing a crash. To prevent this from happening, only load the new model AFTER beginUpdates() has run
 			sections = localSections
 			applyTableSectionChanges(changes)
 		}) { finished in
