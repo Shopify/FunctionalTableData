@@ -210,7 +210,9 @@
 		4C7A27161F2FA10A00360E9B /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4CCCE83E1F8AA7B200C73258 /* CollectionView */,
 				4C7A27871F2FB68400360E9B /* Extensions */,
+				4CCCE8431F8AA7CD00C73258 /* TableView */,
 				4C7A276F1F2FB55D00360E9B /* CellActions.swift */,
 				4C7A27701F2FB55D00360E9B /* CellConfigType.swift */,
 				4C7A27761F2FB55D00360E9B /* CellStyle.swift */,
@@ -218,12 +220,10 @@
 				4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */,
 				4C7A27741F2FB55D00360E9B /* Reusable.swift */,
 				4C7A27751F2FB55D00360E9B /* Separator.swift */,
+				4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */,
 				4C7A27781F2FB55D00360E9B /* TableSection.swift */,
 				4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */,
 				4C7A277A1F2FB55D00360E9B /* TableSectionHeaderFooter.swift */,
-				4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */,
-				4CCCE8431F8AA7CD00C73258 /* TableView */,
-				4CCCE83E1F8AA7B200C73258 /* CollectionView */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -274,9 +274,9 @@
 			isa = PBXGroup;
 			children = (
 				4CCCE83F1F8AA7B200C73258 /* CollectionCell.swift */,
-				4CCCE8401F8AA7B200C73258 /* UICollectionView+Reusable.swift */,
-				4CCCE8411F8AA7B200C73258 /* FunctionalCollectionData.swift */,
 				4CCCE8421F8AA7B200C73258 /* CollectionItemConfigType.swift */,
+				4CCCE8411F8AA7B200C73258 /* FunctionalCollectionData.swift */,
+				4CCCE8401F8AA7B200C73258 /* UICollectionView+Reusable.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
