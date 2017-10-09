@@ -52,12 +52,6 @@ public class FunctionalCollectionData: NSObject {
 			collectionView.delegate = self
 		}
 	}
-	public var layout: UICollectionViewLayout? {
-		didSet {
-			guard let layout = layout else { return }
-			collectionView?.collectionViewLayout = layout
-		}
-	}
 	
 	public subscript(indexPath: IndexPath) -> CellConfigType? {
 		return sections[indexPath]
