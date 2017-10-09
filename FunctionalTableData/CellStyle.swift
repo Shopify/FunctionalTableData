@@ -38,7 +38,7 @@ public struct CellStyle {
 		self.layoutMargins = layoutMargins
 	}
 	
-	func configure(cell: UICollectionViewCell, in tableView: UICollectionView) {
+	func configure(cell: UICollectionViewCell, in collectionView: UICollectionView) {
 		cell.backgroundColor = backgroundColor ?? UIColor.white
 		let backgroundView = UIView()
 		backgroundView.backgroundColor = cell.backgroundColor

@@ -210,8 +210,8 @@
 		4C7A27161F2FA10A00360E9B /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4CCCE83E1F8AA7B200C73258 /* CollectionView */,
 				4C7A27871F2FB68400360E9B /* Extensions */,
+				4CCCE83E1F8AA7B200C73258 /* CollectionView */,
 				4CCCE8431F8AA7CD00C73258 /* TableView */,
 				4C7A276F1F2FB55D00360E9B /* CellActions.swift */,
 				4C7A27701F2FB55D00360E9B /* CellConfigType.swift */,

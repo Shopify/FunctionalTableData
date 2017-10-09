@@ -13,7 +13,7 @@ public class FunctionalCollectionData: NSObject {
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
 	
-	/// Represents the unique path to a given item in the `FunctionalTableData`.
+	/// Represents the unique path to a given item in the `FunctionalCollectionData`.
 	///
 	/// Think of it as a readable implementation of `IndexPath`, that can be used to locate a given cell
 	/// or `TableSection` in the data set.
@@ -157,14 +157,13 @@ public class FunctionalCollectionData: NSObject {
 		renderAndDiff(newSections, keyPath: keyPath, animated: animated, completion: completion)
 	}
 	
-	/// Populates the table with the specified sections, and asynchronously updates the table view to reflect the cells and sections that have changed.
+	/// Populates the collection with the specified sections, and asynchronously updates the collection view to reflect the cells and sections that have changed.
 	///
 	/// - Parameters:
-	///   - newSections: An array of TableSection instances to populate the table with. These will replace the previous sections and update any cells that have changed between the old and new sections.
+	///   - newSections: An array of TableSection instances to populate the collection with. These will replace the previous sections and update any cells that have changed between the old and new sections.
 	///   - keyPath: A key path identifying which cell to scroll into view after the render occurs.
-	///   - animated: `true` to animate the changes to the table cells, or `false` if the `UITableView` should be updated with no animation.
-	///   - animations: Type of animation to perform. See `FunctionalTableData.TableAnimations` for more info.
-	///   - completion: Callback that will be called on the main thread once the `UITableView` has finished updating and animating any changes.
+	///   - animated: `true` to animate the changes to the collection cells, or `false` if the `UICollectionView` should be updated with no animation.
+	///   - completion: Callback that will be called on the main thread once the `UICollectionView` has finished updating and animating any changes.
 	public func renderAndDiff(_ newSections: [TableSection], keyPath: KeyPath? = nil, animated: Bool = true, completion: (() -> Void)? = nil) {
 		let blockOperation = BlockOperation { [weak self] in
 			guard let strongSelf = self else {
@@ -216,7 +215,7 @@ public class FunctionalCollectionData: NSObject {
 		let localSections = newSections.filter { $0.rows.count > 0 }
 		let changes = calculateTableChanges(oldSections: oldSections, newSections: localSections, visibleIndexPaths: visibleIndexPaths)
 		
-		// Use dispatch_sync because the table updates have to be processed before this function returns
+		// Use dispatch_sync because the collection updates have to be processed before this function returns
 		// or another queued renderAndDiff could get the incorrect state to diff against.
 		DispatchQueue.main.sync { [weak self] in
 			guard let strongSelf = self else {
@@ -331,12 +330,12 @@ public class FunctionalCollectionData: NSObject {
 		renderAndDiffQueue.isSuspended = false
 	}
 	
-	/// Selects a row in the table view identified by a key path.
+	/// Selects a row in the collection view identified by a key path.
 	///
 	/// - Parameters:
-	///   - keyPath: A key path identifying a row in the table view.
+	///   - keyPath: A key path identifying a row in the collection view.
 	///   - animated: `true` if you want to animate the selection, and `false` if the change should be immediate.
-	///   - triggerDelegate: `true` to trigger the `tableView:didSelectRowAt:` delegate from `UITableView` or `false` to skip it. Skipping it is the default `UITableView` behavior.
+	///   - triggerDelegate: `true` to trigger the `collection:didSelectItemAt:` delegate from `UICollectionView` or `false` to skip it. Skipping it is the default `UICollectionView` behavior.
 	public func select(keyPath: KeyPath, animated: Bool = true, triggerDelegate: Bool = false) {
 		guard let aCollectionView = collectionView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 
@@ -368,17 +367,12 @@ extension UICollectionView {
 		}
 	}
 	
-	/// Initiates a layout pass of UITableView and its items. Necessary for calculating new
+	/// Initiates a layout pass of UICollectionView and its items. Necessary for calculating new
 	/// cell heights and animations when the internal state of a cell changes and needs to reflect
 	/// them immediately.
 	public func render() {
 		OperationQueue.main.addOperation { [weak self] in
-			// Don't trigger an update if the table has already left the view hierarchy.
-			// This avoids a crash if an update is queued while the table view's controller is being dismissed.
-			// q.v. https://github.com/Shopify/mobile-shopify/issues/7372
-			if let strongSelf = self, strongSelf.window != nil {
-				strongSelf.performBatchUpdates(nil, completion: nil)
-			}
+			self?.performBatchUpdates(nil, completion: nil)
 		}
 	}
 	
@@ -391,10 +385,10 @@ extension UICollectionView {
 		}
 	}
 	
-	/// Find the `IndexPath` for a particular view. Returns `nil` if the view is not an instance of, or a subview of `UITableViewCell`, or if that cell is not a child of `self`
+	/// Find the `IndexPath` for a particular view. Returns `nil` if the view is not an instance of, or a subview of `UICollectionViewCell`, or if that cell is not a child of `self`
 	///
 	/// - Parameter view: The view to find the `IndexPath`.
-	/// - Returns: The `IndexPath` of the view in the `UITableView` or `nil` if it could not be found.
+	/// - Returns: The `IndexPath` of the view in the `UICollectionView` or `nil` if it could not be found.
 	public func indexPath(for view: UIView) -> IndexPath? {
 		guard let cell: UICollectionViewCell = view.typedSuperview() else { return nil }
 		return self.indexPath(for: cell)
