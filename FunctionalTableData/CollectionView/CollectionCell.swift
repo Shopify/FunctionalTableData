@@ -31,7 +31,7 @@ public class CollectionCell<ViewType: UIView, Layout: TableItemLayout>: UICollec
 	
 	public override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
 		layoutIfNeeded()
-		layoutAttributes.bounds.size.height = systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+		layoutAttributes.size = systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 		return layoutAttributes
 	}
 }
