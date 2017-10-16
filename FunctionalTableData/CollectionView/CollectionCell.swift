@@ -28,10 +28,4 @@ public class CollectionCell<ViewType: UIView, Layout: TableItemLayout>: UICollec
 		prepare?(view)
 		prepare = nil
 	}
-	
-	public override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-		layoutIfNeeded()
-		layoutAttributes.size = systemLayoutSizeFitting(UILayoutFittingCompressedSize)
-		return layoutAttributes
-	}
 }
