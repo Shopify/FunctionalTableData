@@ -17,6 +17,7 @@ public struct CellStyle {
 	public var accessoryType: UITableViewCellAccessoryType = .none
 	public var selectionColor: UIColor? = CellStyle.selectionColor
 	public var backgroundColor: UIColor?
+	public var backgroundView: UIView?
 	public var tintColor: UIColor?
 	public var layoutMargins: UIEdgeInsets?
 	
@@ -26,6 +27,7 @@ public struct CellStyle {
 	            accessoryType: UITableViewCellAccessoryType = .none,
 	            selectionColor: UIColor? = CellStyle.selectionColor,
 	            backgroundColor: UIColor? = nil,
+	            backgroundView: UIView? = nil,
 	            tintColor: UIColor? = nil,
 	            layoutMargins: UIEdgeInsets? = nil) {
 		self.bottomSeparator = bottomSeparator
@@ -34,23 +36,26 @@ public struct CellStyle {
 		self.accessoryType = accessoryType
 		self.selectionColor = selectionColor
 		self.backgroundColor = backgroundColor
+		self.backgroundView = backgroundView
 		self.tintColor = tintColor
 		self.layoutMargins = layoutMargins
 	}
 	
 	func configure(cell: UICollectionViewCell, in collectionView: UICollectionView) {
-		cell.backgroundColor = backgroundColor ?? UIColor.white
-		let backgroundView = UIView()
-		backgroundView.backgroundColor = cell.backgroundColor
-		cell.backgroundView = backgroundView
+		if let backgroundView = backgroundView {
+			cell.backgroundView = backgroundView
+		} else {
+			cell.backgroundColor = backgroundColor ?? UIColor.white
+			let backgroundView = UIView()
+			backgroundView.backgroundColor = cell.backgroundColor
+			cell.backgroundView = backgroundView
+		}
 		
 		if let layoutMargins = layoutMargins {
 			cell.contentView.layoutMargins = layoutMargins
 		}
 		
-		if let tintColor = tintColor {
-			cell.tintColor = tintColor
-		}
+		cell.tintColor = tintColor
 		
 		if let selectionColor = selectionColor {
 			let selectedBackgroundView = UIView()
@@ -74,18 +79,20 @@ public struct CellStyle {
 			cell.removeSeparator(Separator.Tag.top)
 		}
 		
-		cell.backgroundColor = backgroundColor ?? UIColor.white
-		let backgroundView = UIView()
-		backgroundView.backgroundColor = cell.backgroundColor
-		cell.backgroundView = backgroundView
+		if let backgroundView = backgroundView {
+			cell.backgroundView = backgroundView
+		} else {
+			cell.backgroundColor = backgroundColor ?? UIColor.white
+			let backgroundView = UIView()
+			backgroundView.backgroundColor = cell.backgroundColor
+			cell.backgroundView = backgroundView
+		}
 		
 		if let layoutMargins = layoutMargins {
 			cell.contentView.layoutMargins = layoutMargins
 		}
 		
-		if let tintColor = tintColor {
-			cell.tintColor = tintColor
-		}
+		cell.tintColor = tintColor
 		
 		cell.selectionStyle = (highlight ?? false) ? .default : .none
 		if let selectionColor = selectionColor {
@@ -108,6 +115,7 @@ extension CellStyle: Equatable {
 		equality = equality && lhs.accessoryType == rhs.accessoryType
 		equality = equality && lhs.selectionColor == rhs.selectionColor
 		equality = equality && lhs.backgroundColor == rhs.backgroundColor
+		equality = equality && lhs.backgroundView == rhs.backgroundView
 		equality = equality && lhs.tintColor == rhs.tintColor
 		equality = equality && lhs.layoutMargins == rhs.layoutMargins
 		return equality
