@@ -66,8 +66,12 @@ public class Separator: UIView {
 
 	fileprivate func applyHorizontalConstraints(_ view: UIView) {
 		trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-		let constant = style.insetDistance
-		leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: constant).isActive = true
+		switch style {
+		case .full, .moreInset:
+			leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: style.insetDistance).isActive = true
+		case .inset:
+			leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+		}
 	}
 }
 
