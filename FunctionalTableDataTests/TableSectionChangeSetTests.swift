@@ -456,14 +456,3 @@ class TableSectionChangeSetTests: XCTestCase {
 }
 
 fileprivate typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
-fileprivate typealias TestCaseCell = HostCell<UIView, TestCaseState, LayoutMarginsTableItemLayout>
-
-fileprivate struct TestCaseState: Equatable {
-	var data: String
-	
-	static func ==(lhs: TestCaseState, rhs: TestCaseState) -> Bool {
-		return lhs.data == rhs.data
-	}
-	
-	public static func updateView(_ view: UIView, state: TestCaseState?) -> Void {}
-}

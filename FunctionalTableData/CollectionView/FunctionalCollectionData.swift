@@ -334,7 +334,7 @@ public class FunctionalCollectionData: NSObject {
 		}
 	}
 	
-	private func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
+	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
 		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
 			return IndexPath(row: rowIndex, section: sectionIndex)
 		}
