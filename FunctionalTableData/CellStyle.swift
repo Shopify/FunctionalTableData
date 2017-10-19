@@ -38,6 +38,29 @@ public struct CellStyle {
 		self.layoutMargins = layoutMargins
 	}
 	
+	func configure(cell: UICollectionViewCell, in collectionView: UICollectionView) {
+		cell.backgroundColor = backgroundColor ?? UIColor.white
+		let backgroundView = UIView()
+		backgroundView.backgroundColor = cell.backgroundColor
+		cell.backgroundView = backgroundView
+		
+		if let layoutMargins = layoutMargins {
+			cell.contentView.layoutMargins = layoutMargins
+		}
+		
+		if let tintColor = tintColor {
+			cell.tintColor = tintColor
+		}
+		
+		if let selectionColor = selectionColor {
+			let selectedBackgroundView = UIView()
+			selectedBackgroundView.backgroundColor = selectionColor
+			cell.selectedBackgroundView = selectedBackgroundView
+		} else {
+			cell.selectedBackgroundView = nil
+		}
+	}
+	
 	func configure(cell: UITableViewCell, in tableView: UITableView) {
 		if let separator = bottomSeparator {
 			cell.applyBottomSeparator(separator)

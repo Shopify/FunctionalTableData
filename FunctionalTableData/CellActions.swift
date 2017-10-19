@@ -16,11 +16,11 @@ public struct CellActions {
 		case deselected
 	}
 	
-	public typealias SelectionAction = (_ sender: UITableViewCell) -> SelectionState
+	public typealias SelectionAction = (_ sender: UIView) -> SelectionState
 	public typealias CanPerformAction = (_ selector: Selector) -> Bool
-	public typealias VisibilityAction = (_ cell: UITableViewCell, _ visible: Bool) -> Void
+	public typealias VisibilityAction = (_ cell: UIView, _ visible: Bool) -> Void
 	public typealias PreviewingViewControllerAction = () -> UIViewController?
-
+	
 	/// The action to perform when the cell is selected
 	public let selectionAction: SelectionAction?
 	/// All the available row actions this cell can perform. See [UITableViewRowAction](https://developer.apple.com/documentation/uikit/uitableviewrowaction) for more info.
