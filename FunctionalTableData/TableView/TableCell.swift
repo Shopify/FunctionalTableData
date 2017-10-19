@@ -44,9 +44,9 @@ public class TableHeaderFooter<ViewType: UIView, Layout: TableItemLayout>: UITab
 		view.layoutMargins = .zero
 		contentView.addSubviewsForAutolayout(view)
 		
-		contentView.addSubviewsForAutolayout(topSeparator, bottomSeparator)
-		topSeparator.constrainToTopOfView(contentView)
-		bottomSeparator.constrainToBottomOfView(contentView)
+		addSubviewsForAutolayout(topSeparator, bottomSeparator)
+		topSeparator.constrainToTopOfView(self)
+		bottomSeparator.constrainToBottomOfView(self)
 		
 		Layout.layoutView(view, inContentView: contentView)
 	}
