@@ -146,11 +146,6 @@ public class FunctionalCollectionData: NSObject {
 		return nil
 	}
 	
-	@available(*, deprecated, message: "The `reloadList` argument is no longer available.")
-	public func renderAndDiff(_ newSections: [TableSection], keyPath: KeyPath? = nil, reloadList: Bool, animated: Bool = true, completion: (() -> Void)? = nil) {
-		renderAndDiff(newSections, keyPath: keyPath, animated: animated, completion: completion)
-	}
-	
 	/// Populates the collection with the specified sections, and asynchronously updates the collection view to reflect the cells and sections that have changed.
 	///
 	/// - Parameters:
