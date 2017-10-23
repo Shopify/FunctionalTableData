@@ -51,9 +51,14 @@ public struct CellStyle {
 			cell.backgroundView = backgroundView
 		}
 		
-		if let layoutMargins = layoutMargins {
-			cell.contentView.layoutMargins = layoutMargins
-		}
+        // SUPER HACK! On iOS 11, setting preserveSuperviewLayoutMargin to true changes the behavior
+        // of the layout margins, even when it was already true. Without this fix our layout margins
+        // were not being respected and our cells were shorter than on iOS 10
+        if cell.contentView.preservesSuperviewLayoutMargins {
+            cell.contentView.preservesSuperviewLayoutMargins = true
+        }
+        
+        cell.contentView.layoutMargins = layoutMargins ?? UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 		
 		cell.tintColor = tintColor
 		
@@ -88,9 +93,14 @@ public struct CellStyle {
 			cell.backgroundView = backgroundView
 		}
 		
-		if let layoutMargins = layoutMargins {
-			cell.contentView.layoutMargins = layoutMargins
-		}
+        // SUPER HACK! On iOS 11, setting preserveSuperviewLayoutMargin to true changes the behavior
+        // of the layout margins, even when it was already true. Without this fix our layout margins
+        // were not being respected and our cells were shorter than on iOS 10
+        if cell.contentView.preservesSuperviewLayoutMargins {
+            cell.contentView.preservesSuperviewLayoutMargins = true
+        }
+        
+        cell.contentView.layoutMargins = layoutMargins ?? UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 		
 		cell.tintColor = tintColor
 		
