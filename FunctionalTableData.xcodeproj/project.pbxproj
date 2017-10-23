@@ -46,6 +46,7 @@
 		4CA5579B1F44842000A11B5C /* CombinedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5579A1F44842000A11B5C /* CombinedCell.swift */; };
 		4CA5579D1F4484E400A11B5C /* AdvancedCellsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5579C1F4484E400A11B5C /* AdvancedCellsViewController.swift */; };
 		4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */; };
+		4CD535031F9E3A010041A3F9 /* CellStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,7 @@
 		4CCCE8451F8AA7CD00C73258 /* TableItemConfigType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemConfigType.swift; sourceTree = "<group>"; };
 		4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
 		4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemLayout.swift; sourceTree = "<group>"; };
+		4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellStyleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,10 +204,11 @@
 		4C7A27091F2FA0F800360E9B /* FunctionalTableDataTests */ = {
 			isa = PBXGroup;
 			children = (
+				4C7A270C1F2FA0F800360E9B /* Info.plist */,
+				4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */,
 				4C924F251F98E7A3005D2F02 /* FunctionalDataTests.swift */,
 				4CA356731F322D7F0081BE90 /* TableSectionChangeSetTests.swift */,
 				4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */,
-				4C7A270C1F2FA0F800360E9B /* Info.plist */,
 			);
 			path = FunctionalTableDataTests;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				4CA356761F322D7F0081BE90 /* TableSectionStyleTests.swift in Sources */,
 				4CA356751F322D7F0081BE90 /* TableSectionChangeSetTests.swift in Sources */,
 				4C924F261F98E7A3005D2F02 /* FunctionalDataTests.swift in Sources */,
+				4CD535031F9E3A010041A3F9 /* CellStyleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
