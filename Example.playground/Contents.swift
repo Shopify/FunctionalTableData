@@ -4,7 +4,7 @@ import FunctionalTableData
 
 class ExampleViewController: UITableViewController {
 	private let functionalData = FunctionalTableData()
-	private var items: [CellConfigType] = [] {
+	private var items: [String] = [] {
 		didSet {
 			render()
 		}
@@ -19,17 +19,19 @@ class ExampleViewController: UITableViewController {
 	}
 	
 	@objc private func didSelectAdd() {
-		let item = LabelCell(
-			key: "id-\(items.count)",
-			state: LabelState(text: NSDate().description),
-			cellUpdater: LabelState.updateView)
-		
-		items.append(item)
+		items.append(NSDate().description)
 	}
 	
 	private func render() {
+		let rows: [CellConfigType] = items.enumerated().map { index, item in
+			return LabelCell(
+				key: "id-\(index)",
+				state: LabelState(text: item),
+				cellUpdater: LabelState.updateView)
+		}
+		
 		functionalData.renderAndDiff([
-			TableSection(key: "section", rows: items)
+			TableSection(key: "section", rows: rows)
 		])
 	}
 }
