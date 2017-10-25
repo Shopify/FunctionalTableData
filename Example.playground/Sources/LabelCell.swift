@@ -3,7 +3,7 @@ import FunctionalTableData
 
 public typealias LabelCell = HostCell<UILabel, LabelState, LayoutMarginsTableItemLayout>
 
-/// A very simple state for a `UILabel` allowing a quick configuration of it's text, font, and color values.
+/// A very simple state for a `UILabel` allowing a quick configuration of its text, font, and color values.
 public struct LabelState: Equatable {
 	public let text: String
 	public let font: UIFont
@@ -19,7 +19,7 @@ public struct LabelState: Equatable {
 	///
 	/// - Parameters:
 	///   - view: `UIView` that responds to this state.
-	///   - state: data to update the view with. If `nil` the view is getting reused by another cell.
+	///   - state: data to update the view with. If `nil` the view is being reused by the tableview.
 	public static func updateView(_ view: UILabel, state: LabelState?) {
 		guard let state = state else {
 			view.text = nil
