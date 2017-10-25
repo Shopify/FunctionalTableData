@@ -47,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C30E4071FA029FE00337415 /* Example.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Example.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FunctionalTableData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7A26FF1F2FA0F800360E9B /* FunctionalTableData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FunctionalTableData.h; sourceTree = "<group>"; };
 		4C7A27001F2FA0F800360E9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		4C7A26F21F2FA0F800360E9B = {
 			isa = PBXGroup;
 			children = (
+				4C30E4071FA029FE00337415 /* Example.playground */,
 				4C7A26FE1F2FA0F800360E9B /* FunctionalTableData */,
 				4C7A27091F2FA0F800360E9B /* FunctionalTableDataTests */,
 				4C7A26FD1F2FA0F800360E9B /* Products */,
