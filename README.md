@@ -8,7 +8,7 @@ Instead of trying to build many different UITableViewCells and implement a UITab
 ----------|---------------------
 💯 | Functional approach for maintaining table state
 👷‍ | Reusable views and states
-✅ | Snapshot and Unit tests
+✅ | Unit tests
 🔀 | Automatic diff in your states
 ❤️ | Used across Shopify's iOS apps
 🙅 | No more IndexPath bookkeeping
@@ -38,7 +38,7 @@ github "Shopify/FunctionalTableData"
 
 ## Getting started
 To use the Functional Table Data (FTD) two things are required, one instance of UITableView, and an instance of the FTD itself. Once both are available, typically in a view controller's `viewDidLoad`, they are connected together using
-`functionalTableData.tableView = myTableViewInstance`. After this, every time we want to display/update the data we simply call `functionalTableData.renderAndDiff(sections)`.
+`functionalTableData.tableView = yourTableViewInstance`. After this, every time we want to display/update the data we simply call `functionalTableData.renderAndDiff(sections)`.
 
 ## Usage
 
@@ -77,7 +77,7 @@ functionalTableData.renderAndDiff([section])
 
 <img src="/Images/Example1.png" />
 
-Check out the [example project](/Examples/) for more examples.
+Check out the [example playground](/Example.playground) for a fully interactive example.
 
 ### Building new Cells
 Knowing that a cell consists of a view and state let's start with a simple example, a cell that displays a label. By specifying the generic requirements of `HostCell`, the simplest possible example is one that takes an `UILabel` as its view, a `String` as its state and `LayoutMarginsTableItemLayout` as the layout (See `TableItemLayout` for more info).
