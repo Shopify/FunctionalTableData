@@ -35,9 +35,8 @@ public class FunctionalCollectionData: NSObject {
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	fileprivate var sections: [TableSection] = []
+	private var sections: [TableSection] = []
 	private static let reloadEntireTableThreshold = 20
-	fileprivate var heightAtIndexKeyPath: [String : CGFloat] = [:]
 	
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
@@ -132,7 +131,7 @@ public class FunctionalCollectionData: NSObject {
 	/// - Returns: The key representation of the supplied `IndexPath`.
 	public func keyPathForIndexPath(indexPath: IndexPath) -> KeyPath {
 		let section = sections[indexPath.section]
-		let row = section.rows[indexPath.row]
+		let row = section.rows[indexPath.item]
 		return KeyPath(sectionKey: section.key, rowKey: row.key)
 	}
 	
@@ -197,7 +196,7 @@ public class FunctionalCollectionData: NSObject {
 		DispatchQueue.main.sync {
 			visibleIndexPaths = collectionView.indexPathsForVisibleItems.filter {
 				let section = oldSections[$0.section]
-				return $0.row < section.rows.count
+				return $0.item < section.rows.count
 			}
 		}
 		
@@ -295,7 +294,7 @@ public class FunctionalCollectionData: NSObject {
 					update.cellConfig.update(cell: cell, in: collectionView)
 					
 					let section = sections[update.index.section]
-					let style = section.mergedStyle(for: update.index.row)
+					let style = section.mergedStyle(for: update.index.item)
 					style?.configure(cell: cell, in: collectionView)
 				}
 			}
@@ -328,7 +327,7 @@ public class FunctionalCollectionData: NSObject {
 	///   - triggerDelegate: `true` to trigger the `collection:didSelectItemAt:` delegate from `UICollectionView` or `false` to skip it. Skipping it is the default `UICollectionView` behavior.
 	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UICollectionViewScrollPosition = .bottom, triggerDelegate: Bool = false) {
 		guard let aCollectionView = collectionView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
-
+		
 		aCollectionView.selectItem(at: indexPath, animated: animated, scrollPosition: scrollPosition)
 		if triggerDelegate {
 			collectionView(aCollectionView, didSelectItemAt: indexPath)
@@ -337,7 +336,7 @@ public class FunctionalCollectionData: NSObject {
 	
 	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
 		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
-			return IndexPath(row: rowIndex, section: sectionIndex)
+			return IndexPath(item: rowIndex, section: sectionIndex)
 		}
 		
 		return nil
@@ -418,10 +417,9 @@ extension FunctionalCollectionData: UICollectionViewDataSource {
 	}
 }
 
-extension FunctionalCollectionData: UICollectionViewDelegate {		
+extension FunctionalCollectionData: UICollectionViewDelegate {
 	public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.selectionAction != nil
+		return sections[indexPath]?.actions.selectionAction != nil
 	}
 	
 	public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -439,10 +437,6 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 	public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		guard indexPath.section < sections.count else { return }
 		
-		if let indexKeyPath = sections[indexPath.section].sectionKeyPathForRow(indexPath.item) {
-			heightAtIndexKeyPath[indexKeyPath] = cell.bounds.height
-		}
-		
 		if let cellConfig = sections[indexPath] {
 			cellConfig.actions.visibilityAction?(cell, true)
 			return
@@ -457,13 +451,11 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 	}
 	
 	public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.canPerformAction != nil
+		return sections[indexPath]?.actions.canPerformAction != nil
 	}
 	
 	public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.canPerformAction?(action) ?? false
+		return sections[indexPath]?.actions.canPerformAction?(action) ?? false
 	}
 	
 	public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
@@ -480,6 +472,9 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 	
 	// MARK: - UIScrollViewDelegate
 	
+	/// This is an undocumented optional `UIScrollViewDelegate` method that is not exposed by the public protocol
+	/// but will still get called on delegates that implement it. Because it is not publicly exposed,
+	/// the Swift 4 compiler will not automatically annotate it as @objc, requiring this manual annotation.
 	@objc public func scrollViewDidChangeContentSize(_ scrollView: UIScrollView) {
 		scrollViewDidChangeContentSize?(scrollView)
 	}
@@ -504,4 +499,3 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 		scrollViewDidEndScrollingAnimation?(scrollView)
 	}
 }
-
