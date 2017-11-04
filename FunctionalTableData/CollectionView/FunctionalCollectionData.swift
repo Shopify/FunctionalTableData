@@ -17,7 +17,7 @@ public class FunctionalCollectionData: NSObject {
 	///
 	/// Think of it as a readable implementation of `IndexPath`, that can be used to locate a given cell
 	/// or `TableSection` in the data set.
-	public struct KeyPath {
+	public struct KeyPath: Equatable {
 		/// Unique identifier for a section.
 		public let sectionKey: String
 		/// Unique identifier for an item inside a section.
@@ -26,6 +26,10 @@ public class FunctionalCollectionData: NSObject {
 		public init(sectionKey: String, rowKey: String) {
 			self.sectionKey = sectionKey
 			self.rowKey = rowKey
+		}
+		
+		public static func ==(lhs: KeyPath, rhs: KeyPath) -> Bool {
+			return lhs.sectionKey == rhs.sectionKey && lhs.rowKey == rhs.rowKey
 		}
 	}
 	
@@ -214,14 +218,12 @@ public class FunctionalCollectionData: NSObject {
 			strongSelf.renderAndDiffQueue.isSuspended = true
 			collectionView.registerCellsForSections(localSections)
 			if oldSections.isEmpty || changes.count > FunctionalCollectionData.reloadEntireTableThreshold || collectionView.isDecelerating || !animated {
+				
 				strongSelf.sections = localSections
-				CATransaction.begin()
-				CATransaction.setCompletionBlock {
-					strongSelf.finishRenderAndDiff(keyPath: keyPath)
-					completion?()
-				}
+				
 				collectionView.reloadData()
-				CATransaction.commit()
+				strongSelf.finishRenderAndDiff(keyPath: keyPath)
+				completion?()
 			} else {
 				if strongSelf.unitTesting {
 					strongSelf.applyTableChanges(changes, localSections: localSections, completion: {
@@ -418,6 +420,11 @@ extension FunctionalCollectionData: UICollectionViewDataSource {
 }
 
 extension FunctionalCollectionData: UICollectionViewDelegate {
+	public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+		guard let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems else { return true }
+		return indexPathsForSelectedItems.contains(indexPath) == false
+	}
+	
 	public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
 		return sections[indexPath]?.actions.selectionAction != nil
 	}
@@ -499,3 +506,4 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 		scrollViewDidEndScrollingAnimation?(scrollView)
 	}
 }
+
