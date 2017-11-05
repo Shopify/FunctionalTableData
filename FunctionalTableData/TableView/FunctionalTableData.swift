@@ -37,7 +37,7 @@ public class FunctionalTableData: NSObject {
 	///
 	/// Think of it as a readable implementation of `IndexPath`, that can be used to locate a given cell
 	/// or `TableSection` in the data set.
-	public struct KeyPath {
+	public struct KeyPath: Equatable {
 		/// Unique identifier for a section.
 		public let sectionKey: String
 		/// Unique identifier for an item inside a section.
@@ -46,6 +46,10 @@ public class FunctionalTableData: NSObject {
 		public init(sectionKey: String, rowKey: String) {
 			self.sectionKey = sectionKey
 			self.rowKey = rowKey
+		}
+		
+		public static func ==(lhs: KeyPath, rhs: KeyPath) -> Bool {
+			return lhs.sectionKey == rhs.sectionKey && lhs.rowKey == rhs.rowKey
 		}
 	}
 

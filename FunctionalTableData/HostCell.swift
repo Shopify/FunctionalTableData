@@ -89,9 +89,6 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 		guard let cell = cell as? CollectionCell<View, Layout> else { return }
 		
 		cellUpdater(cell.view, state)
-		UIView.performWithoutAnimation {
-			cell.layoutIfNeeded()
-		}
 	}
 	
 	public func isEqual(_ other: CellConfigType) -> Bool {
