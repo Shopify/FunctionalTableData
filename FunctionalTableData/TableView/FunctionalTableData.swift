@@ -37,7 +37,7 @@ public class FunctionalTableData: NSObject {
 	///
 	/// Think of it as a readable implementation of `IndexPath`, that can be used to locate a given cell
 	/// or `TableSection` in the data set.
-	public struct KeyPath: Equatable {
+	public struct KeyPath {
 		/// Unique identifier for a section.
 		public let sectionKey: String
 		/// Unique identifier for an item inside a section.
@@ -47,10 +47,6 @@ public class FunctionalTableData: NSObject {
 			self.sectionKey = sectionKey
 			self.rowKey = rowKey
 		}
-		
-		public static func ==(lhs: KeyPath, rhs: KeyPath) -> Bool {
-			return lhs.sectionKey == rhs.sectionKey && lhs.rowKey == rhs.rowKey
-		}
 	}
 
 	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?) {
@@ -59,9 +55,9 @@ public class FunctionalTableData: NSObject {
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	fileprivate var sections: [TableSection] = []
+	private var sections: [TableSection] = []
 	private static let reloadEntireTableThreshold = 20
-	fileprivate var heightAtIndexKeyPath: [String : CGFloat] = [:]
+	private var heightAtIndexKeyPath: [String: CGFloat] = [:]
 	
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
@@ -429,6 +425,13 @@ public class FunctionalTableData: NSObject {
 	internal func calculateTableChanges(oldSections: [TableSection], newSections: [TableSection], visibleIndexPaths: [IndexPath]) -> TableSectionChangeSet {
 		return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths)
 	}
+	
+	public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		guard let indexPath = tableView?.indexPathForRow(at: location), let cell = tableView?.cellForRow(at: indexPath) else { return nil }
+		guard let cellConfig = self[indexPath],
+			let viewController = cellConfig.actions.previewingViewControllerAction?(cell, cell.convert(location, from: tableView), previewingContext) else { return nil }
+		return viewController
+	}
 }
 
 extension UITableView {
@@ -652,6 +655,9 @@ extension FunctionalTableData: UITableViewDelegate {
 	
 	// MARK: - UIScrollViewDelegate
 	
+	/// This is an undocumented optional `UIScrollViewDelegate` method that is not exposed by the public protocol
+	/// but will still get called on delegates that implement it. Because it is not publicly exposed,
+	/// the Swift 4 compiler will not automatically annotate it as @objc, requiring this manual annotation.
 	@objc public func scrollViewDidChangeContentSize(_ scrollView: UIScrollView) {
 		scrollViewDidChangeContentSize?(scrollView)
 	}

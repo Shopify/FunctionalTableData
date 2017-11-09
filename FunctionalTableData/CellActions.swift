@@ -19,7 +19,11 @@ public struct CellActions {
 	public typealias SelectionAction = (_ sender: UIView) -> SelectionState
 	public typealias CanPerformAction = (_ selector: Selector) -> Bool
 	public typealias VisibilityAction = (_ cell: UIView, _ visible: Bool) -> Void
-	public typealias PreviewingViewControllerAction = () -> UIViewController?
+	/// Closure type that is executed when the user 3D-touches on a cell
+	/// - parameter cell: the cell in which the 3D-touch occured
+	/// - parameter point: The point where the 3D-touch occured, translated to the coordinate space of the cell
+	/// - parameter context: The instance of `UIViewControllerPreviewing` that is participating in the 3D-touch
+	public typealias PreviewingViewControllerAction = (_ cell: UIView, _ point: CGPoint, _ context: UIViewControllerPreviewing) -> UIViewController?
 	
 	/// The action to perform when the cell is selected
 	public let selectionAction: SelectionAction?
@@ -46,5 +50,18 @@ public struct CellActions {
 		self.canBeMoved = canBeMoved
 		self.visibilityAction = visibilityAction
 		self.previewingViewControllerAction = previewingViewControllerAction
+	}
+	
+	public init(selectionAction: SelectionAction? = nil,
+				rowActions: [UITableViewRowAction]? = nil,
+				canPerformAction: CanPerformAction? = nil,
+				canBeMoved: Bool = false,
+				visibilityAction: VisibilityAction? = nil,
+				previewingViewControllerAction: @escaping () -> UIViewController?) {
+		let wrappedPreviewingViewControllerAction: PreviewingViewControllerAction = { (cell, _, previewingContext) in
+			previewingContext.sourceRect = previewingContext.sourceView.convert(cell.bounds, from: cell)
+			return previewingViewControllerAction()
+		}
+		self.init(selectionAction: selectionAction, rowActions: rowActions, canPerformAction: canPerformAction, canBeMoved: canBeMoved, visibilityAction: visibilityAction, previewingViewControllerAction: wrappedPreviewingViewControllerAction)
 	}
 }
