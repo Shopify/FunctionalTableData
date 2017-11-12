@@ -11,6 +11,9 @@ import UIKit
 /// Defines the view, state and layout information of a row item inside a TableSection.
 /// It relies on you to build UIView subclasses and use those instead of implementing UITableViewCell or UICollectionViewCell subclasses. This has the side effect of building better more reusable view components. This greatly simplifies composition by combining several host-cells into more complex layouts. It also makes equality simpler and more "Swifty" by requiring that anything provided as State only requires that the State object conform to the Equatable protocol. The View portion of the generic only requires it to be a UIView subclass.
 public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, State: Equatable, Layout: TableItemLayout {
+	public typealias TableViewCellType = TableCell<View, Layout>
+	public typealias CollectionViewCellType = CollectionCell<View, Layout>
+	
 	public let key: String
 	public var style: CellStyle?
 	public let actions: CellActions
@@ -74,7 +77,7 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 	// MARK: - CellConfigType
 	
 	public func update(cell: UITableViewCell, in tableView: UITableView) {
-		guard let cell = cell as? TableCell<View, Layout> else { return }
+		guard let cell = cell as? TableViewCellType else { return }
 		
 		cellUpdater(cell.view, state)
 		// Only layout cells that aren't in the reuse pool
@@ -86,8 +89,7 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 	}
 	
 	public func update(cell: UICollectionViewCell, in collectionView: UICollectionView) {
-		guard let cell = cell as? CollectionCell<View, Layout> else { return }
-		
+		guard let cell = cell as? CollectionViewCellType else { return }
 		cellUpdater(cell.view, state)
 	}
 	
