@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 import FunctionalTableData
 
 public typealias LabelCell = HostCell<UILabel, LabelState, LayoutMarginsTableItemLayout>
