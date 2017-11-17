@@ -1,8 +1,9 @@
 <img src="/Images/Banner.png" />
 
-Functional Table Data takes a complete, idempotent description of your table state, compares it with the previous render call to compute which cells have changed, and updates the UITableView. Table state is declared in an idempotent and functional manner, simplifying state management of complex UI.
+Functional Table Data implements a functional renderer for UITableView.  You pass it a complete description of your table state, and Functional Table Data compares it with the previous render call to insert, update, and remove the sections and cells that have changed.  This massively simplifies state management of complex UI.
 
-Instead of trying to build many different UITableViewCells and implement a UITableView(DataSource|Delegate) for each view that then needs to understand all possible state transformations. Provide a system that lets you express this as a series of states describing the cells themselves.
+No longer do you have to manually track the number of sections, cells, and indices of your UI.  Build one method that generates your table state structure from your data.  The provided `HostCell` generic makes it easy to add FunctionalTableData support to `UITableViewCell`s.
+
 
 |         | Noteworthy features       |
 ----------|---------------------
@@ -41,6 +42,8 @@ To use the Functional Table Data (FTD) two things are required, one instance of 
 `functionalTableData.tableView = yourTableViewInstance`. After this, every time we want to display/update the data we simply call `functionalTableData.renderAndDiff(sections)`.
 
 ## Usage
+
+Check out the [example playground](/Example.playground) for a fully interactive example.
 
 Any time you want to update the data currently being displayed you generate the new state and pass it off to your instance of the Functional Table Data. The FTD is then responsible for computing the differences between the previous state and the next state and updating itself as necessary.
 
