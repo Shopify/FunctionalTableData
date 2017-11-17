@@ -19,15 +19,6 @@ Instead of trying to build many different UITableViewCells and implement a UITab
 
 Simply drag and drop the `FunctionalTableData/FunctionalTableData` folder into your Xcode project.
 
-### CocoaPods
-
-Add the following to your `Podfile`:
-
-```ruby
-use_frameworks!
-pod "FunctionalTableData"
-```
-
 ### Carthage
 
 Add the following to your `Cartfile`:
