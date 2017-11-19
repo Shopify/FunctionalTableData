@@ -1,0 +1,6 @@
+language: swift
+xcode_project: FunctionalTableData.xcodeproj
+xcode_schema: FunctionalTableDataTests
+
+env:
+  - PLATFORM=iOS NAME='iPhone SE'
