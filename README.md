@@ -49,7 +49,8 @@ let section = TableSection(key: "header-unique-key", rows: [])
 Each section contains a series of rows where each row value must conform to the `CellConfigType` protocol.
 
 ```swift
-/// The simplest possible version of a cell that displays a label. Useful to get started, but in most cases a more robust state should be used allowing more customization.
+/// The simplest possible version of a cell that displays a label.
+/// Useful to get started, but in most cases a more robust state should be used allowing more customization.
 typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
 
 let cells: [CellConfigType] = [
