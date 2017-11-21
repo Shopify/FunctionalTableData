@@ -1,5 +1,7 @@
 <img src="/Images/Banner.png" />
 
+[![Build Status](https://travis-ci.org/Shopify/FunctionalTableData.svg)](https://travis-ci.org/Shopify/FunctionalTableData)
+
 Functional Table Data implements a functional renderer for UITableView. You pass it a complete description of your table state, and Functional Table Data compares it with the previous render call to insert, update, and remove the sections and cells that have changed. This massively simplifies state management of complex UI.
 
 No longer do you have to manually track the number of sections, cells, and indices of your UI. Build one method that generates your table state structure from your data. The provided `HostCell` generic makes it easy to add FunctionalTableData support to `UITableViewCell`s.
