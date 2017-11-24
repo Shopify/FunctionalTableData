@@ -30,6 +30,14 @@ Add the following to your `Cartfile`:
 github "Shopify/FunctionalTableData"
 ```
 
+### CocoaPods
+
+Add the following to your `Podfile`:
+
+``` ruby
+pod "FunctionalTableData"
+```
+
 ## Getting started
 To use the Functional Table Data (FTD) two things are required, one instance of UITableView, and an instance of the FTD itself. Once both are available, typically in a view controller's `viewDidLoad`, they are connected together using
 `functionalTableData.tableView = yourTableViewInstance`. After this, every time we want to display/update the data we simply call `functionalTableData.renderAndDiff(sections)`.
