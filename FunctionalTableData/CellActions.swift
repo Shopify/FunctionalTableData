@@ -16,6 +16,8 @@ public struct CellActions {
 		case deselected
 	}
 	
+	public typealias CanSelectCallback = (Bool) -> Void
+	public typealias CanSelectAction = (_ canSelect: @escaping CanSelectCallback) -> Void
 	public typealias SelectionAction = (_ sender: UIView) -> SelectionState
 	public typealias CanPerformAction = (_ selector: Selector) -> Bool
 	public typealias VisibilityAction = (_ cell: UIView, _ visible: Bool) -> Void
@@ -25,6 +27,9 @@ public struct CellActions {
 	/// - parameter context: The instance of `UIViewControllerPreviewing` that is participating in the 3D-touch
 	public typealias PreviewingViewControllerAction = (_ cell: UIView, _ point: CGPoint, _ context: UIViewControllerPreviewing) -> UIViewController?
 	
+	/// The action to perform when the cell will be selected.
+	/// - Important: When the `canSelectAction` is called, it is passed a `CanSelectCallback` closure. It is the responsibility of the action to eventually call the passed in closure providing either a `true` or `false` value to it. This passed in value determines if the selection will be performed or not.
+	public let canSelectAction: CanSelectAction?
 	/// The action to perform when the cell is selected
 	public let selectionAction: SelectionAction?
 	/// All the available row actions this cell can perform. See [UITableViewRowAction](https://developer.apple.com/documentation/uikit/uitableviewrowaction) for more info.
@@ -38,12 +43,14 @@ public struct CellActions {
 	/// The action to perform when the cell is 3D touched by the user.
 	public let previewingViewControllerAction: PreviewingViewControllerAction?
 	
-	public init(selectionAction: SelectionAction? = nil,
-	            rowActions: [UITableViewRowAction]? = nil,
-	            canPerformAction: CanPerformAction? = nil,
-	            canBeMoved: Bool = false,
-	            visibilityAction: VisibilityAction? = nil,
-	            previewingViewControllerAction: PreviewingViewControllerAction? = nil) {
+	public init(canSelectAction: CanSelectAction? = nil,
+				selectionAction: SelectionAction? = nil,
+				rowActions: [UITableViewRowAction]? = nil,
+				canPerformAction: CanPerformAction? = nil,
+				canBeMoved: Bool = false,
+				visibilityAction: VisibilityAction? = nil,
+				previewingViewControllerAction: PreviewingViewControllerAction? = nil) {
+		self.canSelectAction = canSelectAction
 		self.selectionAction = selectionAction
 		self.rowActions = rowActions
 		self.canPerformAction = canPerformAction
@@ -52,7 +59,8 @@ public struct CellActions {
 		self.previewingViewControllerAction = previewingViewControllerAction
 	}
 	
-	public init(selectionAction: SelectionAction? = nil,
+	public init(canSelectAction: CanSelectAction? = nil,
+				selectionAction: SelectionAction? = nil,
 				rowActions: [UITableViewRowAction]? = nil,
 				canPerformAction: CanPerformAction? = nil,
 				canBeMoved: Bool = false,

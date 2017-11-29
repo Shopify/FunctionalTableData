@@ -62,9 +62,6 @@ public class FunctionalTableData: NSObject {
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
 	
-	/// Index path for the previously selected row.
-	public var indexPathForPreviouslySelectedRow: IndexPath?
-	
 	/// Enclosing `UITableView` that presents all the `TableSection` data.
 	///
 	/// `FunctionalTableData` will take care of setting its own `UITableViewDelegate` and
@@ -230,20 +227,37 @@ public class FunctionalTableData: NSObject {
 				return
 			}
 			
-			if Set(newSections.map { $0.key }).count != newSections.count {
-				let sectionKeys = newSections.map { $0.key }.joined(separator: ", ")
-				let reason = "\(strongSelf.name) : Duplicate Table Section keys"
-				let userInfo: [String: Any] = ["Duplicates": sectionKeys]
-				NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
-			}
-			
-			for section in newSections {
-				if Set(section.map { $0.key }).count != section.rows.count {
-					let rowKeys = section.rows.map { $0.key }.joined(separator: ", ")
-					let reason = "\(strongSelf.name) : Section.Row keys must all be unique"
-					let userInfo: [String: Any] = ["Section": section.key, "Duplicates": rowKeys]
+			func validateKeyUniqueness() {
+				let sectionKeys = newSections.map { $0.key }
+				if Set(sectionKeys).count != newSections.count {
+					let reason = "\(strongSelf.name) : Duplicate Table Section keys"
+					let userInfo: [String: Any] = ["Duplicates": sectionKeys]
 					NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
 				}
+				
+				for section in newSections {
+					let rowKeys = section.rows.map { $0.key }
+					if Set(rowKeys).count != section.rows.count {
+						let reason = "\(strongSelf.name) : Section.Row keys must all be unique"
+						let userInfo: [String: Any] = ["Section": section.key, "Duplicates": rowKeys]
+						NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
+					}
+				}
+			}
+			
+			if strongSelf.unitTesting {
+				validateKeyUniqueness()
+			} else {
+				NSException.catchAndRethrow({
+					validateKeyUniqueness()
+				}, failure: {
+					if $0.name == NSExceptionName.internalInconsistencyException {
+						guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
+						let changes = TableSectionChangeSet()
+						let exception = Exception(name: $0.name.rawValue, newSections: [], oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: strongSelf.tableView?.frame ?? .zero, reason: $0.reason)
+						exceptionHandler.handle(exception: exception)
+					}
+				})
 			}
 			
 			strongSelf.doRenderAndDiff(newSections, keyPath: keyPath, animated: animated, animations: animations, completion: completion)
@@ -564,9 +578,40 @@ extension FunctionalTableData: UITableViewDelegate {
 			return nil
 		}
 		
-		indexPathForPreviouslySelectedRow = tableView.indexPathForSelectedRow		
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.selectionAction != nil ? indexPath : nil
+		guard let cellConfig = sections[indexPath], let selectionAction = cellConfig.actions.selectionAction else {
+			return nil
+		}
+		
+		let currentSelection = tableView.indexPathForSelectedRow
+		
+		if let canSelectAction = cellConfig.actions.canSelectAction, let selectedCell = tableView.cellForRow(at: indexPath) {
+			let canSelectResult: (Bool) -> Void = { selected in
+				if #available(iOSApplicationExtension 10.0, *) {
+					dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+				}
+				if selected {
+					selectedCell.setHighlighted(false, animated: false)
+					tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+					if selectionAction(selectedCell) == .deselected {
+						tableView.deselectRow(at: indexPath, animated: false)
+					}
+					
+					if let currentSelection = currentSelection {
+						tableView.cellForRow(at: currentSelection)?.setHighlighted(false, animated: false)
+						tableView.deselectRow(at: currentSelection, animated: false)
+					}
+				} else {
+					selectedCell.setHighlighted(false, animated: true)
+				}
+			}
+			DispatchQueue.main.async {
+				selectedCell.setHighlighted(true, animated: false)
+				canSelectAction(canSelectResult)
+			}
+			return nil
+		} else {
+			return indexPath
+		}
 	}
 	
 	public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
