@@ -214,11 +214,28 @@ public class FunctionalTableData: NSObject {
 	///
 	/// - Parameters:
 	///   - newSections: An array of TableSection instances to populate the table with. These will replace the previous sections and update any cells that have changed between the old and new sections.
-	///   - keyPath: A key path identifying which cell to scroll into view after the render occurs.
+	///   - keyPath: The key path identifying which cell to scroll into view after the render occurs.
 	///   - animated: `true` to animate the changes to the table cells, or `false` if the `UITableView` should be updated with no animation.
 	///   - animations: Type of animation to perform. See `FunctionalTableData.TableAnimations` for more info.
 	///   - completion: Callback that will be called on the main thread once the `UITableView` has finished updating and animating any changes.
-	public func renderAndDiff(_ newSections: [TableSection], keyPath: KeyPath? = nil, animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
+	@available(*, deprecated, message: "Call `scroll(to:animated:scrollPosition:)` in the completion handler instead.")
+	public func renderAndDiff(_ newSections: [TableSection], keyPath: KeyPath?, animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
+		renderAndDiff(newSections, animated: animated, animations: animations) { [weak self] in
+			if let strongSelf = self, let keyPath = keyPath {
+				strongSelf.scroll(to: keyPath)
+			}
+			completion?()
+		}
+	}
+		
+	/// Populates the table with the specified sections, and asynchronously updates the table view to reflect the cells and sections that have changed.
+	///
+	/// - Parameters:
+	///   - newSections: An array of TableSection instances to populate the table with. These will replace the previous sections and update any cells that have changed between the old and new sections.
+	///   - animated: `true` to animate the changes to the table cells, or `false` if the `UITableView` should be updated with no animation.
+	///   - animations: Type of animation to perform. See `FunctionalTableData.TableAnimations` for more info.
+	///   - completion: Callback that will be called on the main thread once the `UITableView` has finished updating and animating any changes.
+	public func renderAndDiff(_ newSections: [TableSection], animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
 		let blockOperation = BlockOperation { [weak self] in
 			guard let strongSelf = self else {
 				if let completion = completion {
@@ -260,12 +277,12 @@ public class FunctionalTableData: NSObject {
 				})
 			}
 			
-			strongSelf.doRenderAndDiff(newSections, keyPath: keyPath, animated: animated, animations: animations, completion: completion)
+			strongSelf.doRenderAndDiff(newSections, animated: animated, animations: animations, completion: completion)
 		}
 		renderAndDiffQueue.addOperation(blockOperation)
 	}
 	
-	private func doRenderAndDiff(_ newSections: [TableSection], keyPath: KeyPath? = nil, animated: Bool = true, animations: TableAnimations, completion: (() -> Void)? = nil) {
+	private func doRenderAndDiff(_ newSections: [TableSection], animated: Bool, animations: TableAnimations, completion: (() -> Void)?) {
 		guard let tableView = tableView else {
 			if let completion = completion {
 				DispatchQueue.main.async(execute: completion)
@@ -300,7 +317,7 @@ public class FunctionalTableData: NSObject {
 				strongSelf.sections = localSections
 				CATransaction.begin()
 				CATransaction.setCompletionBlock {
-					strongSelf.finishRenderAndDiff(keyPath: keyPath)
+					strongSelf.finishRenderAndDiff()
 					completion?()
 				}
 				tableView.reloadData()
@@ -308,13 +325,13 @@ public class FunctionalTableData: NSObject {
 			} else {
 				if strongSelf.unitTesting {
 					strongSelf.applyTableChanges(changes, localSections: localSections, animations: animations, completion: {
-						strongSelf.finishRenderAndDiff(keyPath: keyPath)
+						strongSelf.finishRenderAndDiff()
 						completion?()
 					})
 				} else {
 					NSException.catchAndRethrow({
 						strongSelf.applyTableChanges(changes, localSections: localSections, animations: animations, completion: {
-							strongSelf.finishRenderAndDiff(keyPath: keyPath)
+							strongSelf.finishRenderAndDiff()
 							completion?()
 						})
 					}, failure: { exception in
@@ -403,12 +420,7 @@ public class FunctionalTableData: NSObject {
 		CATransaction.commit()
 	}
 
-	private func finishRenderAndDiff(keyPath: KeyPath? = nil ) {
-		guard let tableView = tableView else { return }
-		if let keyPath = keyPath, let indexPath = indexPathFromKeyPath(keyPath) {
-			tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-		}
-		
+	private func finishRenderAndDiff() {
 		renderAndDiffQueue.isSuspended = false
 	}
 	
@@ -418,14 +430,25 @@ public class FunctionalTableData: NSObject {
 	///   - keyPath: A key path identifying a row in the table view.
 	///   - animated: `true` if you want to animate the selection, and `false` if the change should be immediate.
 	///   - triggerDelegate: `true` to trigger the `tableView:didSelectRowAt:` delegate from `UITableView` or `false` to skip it. Skipping it is the default `UITableView` behavior.
-	public func select(keyPath: KeyPath, animated: Bool = true, triggerDelegate: Bool = false) {
+	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableViewScrollPosition = .none, triggerDelegate: Bool = false) {
 		guard let aTableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		if tableView(aTableView, willSelectRowAt: indexPath) != nil {
-			aTableView.selectRow(at: indexPath, animated: animated, scrollPosition: .none)
+			aTableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
 			if triggerDelegate {
 				tableView(aTableView, didSelectRowAt: indexPath)
 			}
 		}
+	}
+	
+	/// Scrolls to the item at the specified key path.
+	///
+	/// - Parameters:
+	///   - keyPath: A key path identifying a row in the table view.
+	///   - animated: `true` to animate to the new scroll position, or `false` to scroll immediately.
+	///   - scrollPosition: Specifies where the item specified by `keyPath` should be positioned once scrolling finishes.
+	public func scroll(to keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableViewScrollPosition = .bottom) {
+		guard let aTableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
+		aTableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
 	}
 	
 	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
