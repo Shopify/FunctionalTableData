@@ -138,6 +138,7 @@ extension CellStyle: Equatable {
 		equality = equality && lhs.backgroundView == rhs.backgroundView
 		equality = equality && lhs.tintColor == rhs.tintColor
 		equality = equality && lhs.layoutMargins == rhs.layoutMargins
+		equality = equality && lhs.cornerRadius == rhs.cornerRadius
 		return equality
 	}
 }
