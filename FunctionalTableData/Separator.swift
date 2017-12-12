@@ -64,7 +64,7 @@ public class Separator: UIView {
 		applyHorizontalConstraints(view)
 	}
 
-	fileprivate func applyHorizontalConstraints(_ view: UIView) {
+	private func applyHorizontalConstraints(_ view: UIView) {
 		trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 		switch style {
 		case .full, .moreInset:
@@ -76,18 +76,24 @@ public class Separator: UIView {
 }
 
 public extension UIView {
-	public func applyTopSeparator(_ style: Separator.Style) {
+	public func applyTopSeparator(_ style: Separator.Style, color: UIColor? = nil) {
 		removeSeparator(Separator.Tag.top)
 		let separator = Separator(style: style)
 		separator.tag = Separator.Tag.top.rawValue
+		if let color = color {
+			separator.backgroundColor = color
+		}
 		addSubviewsForAutolayout(separator)
 		separator.constrainToTopOfView(self)
 	}
 	
-	public func applyBottomSeparator(_ style: Separator.Style) {
+	public func applyBottomSeparator(_ style: Separator.Style, color: UIColor? = nil) {
 		removeSeparator(Separator.Tag.bottom)
 		let separator = Separator(style: style)
 		separator.tag = Separator.Tag.bottom.rawValue
+		if let color = color {
+			separator.backgroundColor = color
+		}
 		addSubviewsForAutolayout(separator)
 		separator.constrainToBottomOfView(self)
 	}

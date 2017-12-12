@@ -28,6 +28,33 @@ public class TableCell<ViewType: UIView, Layout: TableItemLayout>: UITableViewCe
 		prepare?(view)
 		prepare = nil
 	}
+	
+	public override func accessibilityElementCount() -> Int {
+		let originalCount = super.accessibilityElementCount()
+		
+		// Instances of a UITableViewCell subclass that don't contain any accessible views will still report
+		// that they contain a single empty static text element that has no label, value or accessibility content.
+		// This element does nothing and isn't read out - but it still acts as an accessible element and clutters up
+		// VoiceOver navigation. The code below is a workaround to suppress these bogus accessibility placeholders.
+		
+		// (Instances of *UITableViewCell itself* do not exhibit this behaviour: they report no elements in this situation.
+		// The mere act of subclassing UITableViewCell is enough to change the behaviour. Thanks UIKit.)
+		if let element = super.accessibilityElement(at: 0) as? UIAccessibilityElement, originalCount == 1 && element.isEmpty {
+			return 0
+		} else {
+			return originalCount
+		}
+	}
+}
+
+private extension UIAccessibilityElement {
+	var isEmpty: Bool {
+		return
+			accessibilityTraits == UIAccessibilityTraitStaticText &&
+				(accessibilityLabel == nil || accessibilityLabel!.isEmpty) &&
+				(accessibilityValue == nil || accessibilityValue!.isEmpty) &&
+				(accessibilityHint == nil || accessibilityHint!.isEmpty)
+	}
 }
 
 public class TableHeaderFooter<ViewType: UIView, Layout: TableItemLayout>: UITableViewHeaderFooterView {
