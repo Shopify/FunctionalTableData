@@ -43,7 +43,7 @@ public struct TableSectionChangeSet {
 	let new: [TableSection]
 	let visibleIndexPaths: [IndexPath]
 
-	var isEmpty: Bool {
+	public var isEmpty: Bool {
 		return deletedSections.isEmpty
 			&& insertedSections.isEmpty
 			&& reloadedSections.isEmpty
@@ -55,7 +55,7 @@ public struct TableSectionChangeSet {
 			&& updates.isEmpty
 	}
 
-	var count: Int {
+	public var count: Int {
 		var total = deletedSections.count
 		total += insertedSections.count
 		total += reloadedSections.count
