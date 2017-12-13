@@ -608,7 +608,7 @@ extension FunctionalTableData: UITableViewDelegate {
 		
 		if let canSelectAction = cellConfig.actions.canSelectAction, let selectedCell = tableView.cellForRow(at: indexPath) {
 			let canSelectResult: (Bool) -> Void = { selected in
-				if #available(iOSApplicationExtension 10.0, *) {
+				if #available(iOS 10.0, *) {
 					dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
 				}
 				if selected {
