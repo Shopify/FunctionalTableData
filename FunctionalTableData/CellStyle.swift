@@ -63,7 +63,7 @@ public struct CellStyle {
 		
 		cell.tintColor = tintColor
 		
-		if #available(iOS 11.0, *) {
+		if #available(iOSApplicationExtension 11.0, *) {
 			cell.insetsLayoutMarginsFromSafeArea = false
 			cell.contentView.insetsLayoutMarginsFromSafeArea = false
 		}
