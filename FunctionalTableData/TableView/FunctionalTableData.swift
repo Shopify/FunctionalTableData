@@ -271,7 +271,7 @@ public class FunctionalTableData: NSObject {
 					if $0.name == NSExceptionName.internalInconsistencyException {
 						guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
 						let changes = TableSectionChangeSet()
-						let exception = Exception(name: $0.name.rawValue, newSections: [], oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: strongSelf.tableView?.frame ?? .zero, reason: $0.reason)
+						let exception = Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: strongSelf.tableView?.frame ?? .zero, reason: $0.reason)
 						exceptionHandler.handle(exception: exception)
 					}
 				})
@@ -292,9 +292,8 @@ public class FunctionalTableData: NSObject {
 		
 		let oldSections = sections
 		
-		var visibleIndexPaths: [IndexPath] = []
-		DispatchQueue.main.sync {
-			visibleIndexPaths = tableView.indexPathsForVisibleRows?.filter {
+		let visibleIndexPaths = DispatchQueue.main.sync {
+			tableView.indexPathsForVisibleRows?.filter {
 				let section = oldSections[$0.section]
 				return $0.row < section.rows.count
 				} ?? []

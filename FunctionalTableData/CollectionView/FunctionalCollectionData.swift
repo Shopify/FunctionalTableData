@@ -181,20 +181,37 @@ public class FunctionalCollectionData: NSObject {
 				return
 			}
 			
-			if Set(newSections.map { $0.key }).count != newSections.count {
-				let sectionKeys = newSections.map { $0.key }.joined(separator: ", ")
-				let reason = "\(strongSelf.name) : Duplicate Table Section keys"
-				let userInfo: [String: Any] = ["Duplicates": sectionKeys]
-				NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
-			}
-			
-			for section in newSections {
-				if Set(section.map { $0.key }).count != section.rows.count {
-					let rowKeys = section.rows.map { $0.key }.joined(separator: ", ")
-					let reason = "\(strongSelf.name) : Section.Row keys must all be unique"
-					let userInfo: [String: Any] = ["Section": section.key, "Duplicates": rowKeys]
+			func validateKeyUniqueness() {
+				let sectionKeys = newSections.map { $0.key }
+				if Set(sectionKeys).count != newSections.count {
+					let reason = "\(strongSelf.name) : Duplicate Section keys"
+					let userInfo: [String: Any] = ["Duplicates": sectionKeys]
 					NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
 				}
+				
+				for section in newSections {
+					let rowKeys = section.rows.map { $0.key }
+					if Set(rowKeys).count != section.rows.count {
+						let reason = "\(strongSelf.name) : Section.Row keys must all be unique"
+						let userInfo: [String: Any] = ["Section": section.key, "Duplicates": rowKeys]
+						NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
+					}
+				}
+			}
+			
+			if strongSelf.unitTesting {
+				validateKeyUniqueness()
+			} else {
+				NSException.catchAndRethrow({
+					validateKeyUniqueness()
+				}, failure: {
+					if $0.name == NSExceptionName.internalInconsistencyException {
+						guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
+						let changes = TableSectionChangeSet()
+						let exception = FunctionalTableData.Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: strongSelf.collectionView?.frame ?? .zero, reason: $0.reason)
+						exceptionHandler.handle(exception: exception)
+					}
+				})
 			}
 			
 			strongSelf.doRenderAndDiff(newSections, animated: animated, completion: completion)
@@ -212,9 +229,8 @@ public class FunctionalCollectionData: NSObject {
 		
 		let oldSections = sections
 		
-		var visibleIndexPaths: [IndexPath] = []
-		DispatchQueue.main.sync {
-			visibleIndexPaths = collectionView.indexPathsForVisibleItems.filter {
+		let visibleIndexPaths = DispatchQueue.main.sync {
+			collectionView.indexPathsForVisibleItems.filter {
 				let section = oldSections[$0.section]
 				return $0.item < section.rows.count
 			}
@@ -310,6 +326,10 @@ public class FunctionalCollectionData: NSObject {
 			for update in changes.updates {
 				if let cell = collectionView.cellForItem(at: update.index) {
 					update.cellConfig.update(cell: cell, in: collectionView)
+					
+					let section = sections[update.index.section]
+					let style = section.mergedStyle(for: update.index.item)
+					style?.configure(cell: cell, in: collectionView)
 				}
 			}
 		}
@@ -524,4 +544,3 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 		scrollViewDidEndScrollingAnimation?(scrollView)
 	}
 }
-

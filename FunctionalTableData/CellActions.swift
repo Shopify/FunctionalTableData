@@ -70,6 +70,6 @@ public struct CellActions {
 			previewingContext.sourceRect = previewingContext.sourceView.convert(cell.bounds, from: cell)
 			return previewingViewControllerAction()
 		}
-		self.init(selectionAction: selectionAction, rowActions: rowActions, canPerformAction: canPerformAction, canBeMoved: canBeMoved, visibilityAction: visibilityAction, previewingViewControllerAction: wrappedPreviewingViewControllerAction)
+		self.init(canSelectAction: canSelectAction, selectionAction: selectionAction, rowActions: rowActions, canPerformAction: canPerformAction, canBeMoved: canBeMoved, visibilityAction: visibilityAction, previewingViewControllerAction: wrappedPreviewingViewControllerAction)
 	}
 }
