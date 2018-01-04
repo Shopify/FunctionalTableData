@@ -450,6 +450,16 @@ public class FunctionalTableData: NSObject {
 		aTableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
 	}
 	
+	/// - Parameter point: The point in the collection view’s bounds that you want to test.
+	/// - Returns: the keypath of the item at the specified point, or `nil` if no item was found at that point.
+	public func keyPath(at point: CGPoint) -> KeyPath? {
+		guard let indexPath = tableView?.indexPathForRow(at: point) else {
+			return nil
+		}
+		
+		return keyPathForIndexPath(indexPath: indexPath)
+	}
+	
 	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
 		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
 			return IndexPath(row: rowIndex, section: sectionIndex)
