@@ -62,10 +62,14 @@ public class FunctionalCollectionData: NSObject {
 	
 	public var scrollViewDidScroll: ((_ scrollView: UIScrollView) -> Void)?
 	public var scrollViewWillBeginDragging: ((_ scrollView: UIScrollView) -> Void)?
+	public var scrollViewWillEndDragging: ((_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>) -> Void)?
 	public var scrollViewDidEndDragging: ((_ scrollView: UIScrollView, _ decelerate: Bool) -> Void)?
+	public var scrollViewWillBeginDecelerating: ((_ scrollView: UIScrollView) -> Void)?
 	public var scrollViewDidEndDecelerating: ((_ scrollView: UIScrollView) -> Void)?
 	public var scrollViewDidChangeContentSize: ((_ scrollView: UIScrollView) -> Void)?
 	public var scrollViewDidEndScrollingAnimation: ((_ scrollView: UIScrollView) -> Void)?
+	public var scrollViewShouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)?
+	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)?
 	
 	private let unitTesting: Bool
 	
@@ -532,8 +536,16 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 		scrollViewWillBeginDragging?(scrollView)
 	}
 	
+	public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+		scrollViewWillEndDragging?(scrollView, velocity, targetContentOffset)
+	}
+	
 	public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		scrollViewDidEndDragging?(scrollView, decelerate)
+	}
+	
+	public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+		scrollViewWillBeginDecelerating?(scrollView)
 	}
 	
 	public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -542,5 +554,13 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 	
 	public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
 		scrollViewDidEndScrollingAnimation?(scrollView)
+	}
+	
+	public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+		return scrollViewShouldScrollToTop?(scrollView) ?? true
+	}
+	
+	public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+		scrollViewDidScrollToTop?(scrollView)
 	}
 }
