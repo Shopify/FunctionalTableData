@@ -283,6 +283,10 @@ public class FunctionalTableData: NSObject {
 			
 			strongSelf.doRenderAndDiff(newSections, animated: animated, animations: animations, completion: completion)
 		}
+		renderAndDiffQueue.operations.forEach { (operation) in
+			guard operation.isExecuting == false else { return }
+			operation.cancel()
+		}
 		renderAndDiffQueue.addOperation(blockOperation)
 	}
 	
