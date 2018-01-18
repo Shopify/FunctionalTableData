@@ -283,6 +283,8 @@ public class FunctionalTableData: NSObject {
 			
 			strongSelf.doRenderAndDiff(newSections, animated: animated, animations: animations, completion: completion)
 		}
+		//cancel waiting operations since only the last state needs to be rendered
+		renderAndDiffQueue.operations.lazy.filter { !$0.isExecuting }.forEach { $0.cancel() }
 		renderAndDiffQueue.addOperation(blockOperation)
 	}
 	
