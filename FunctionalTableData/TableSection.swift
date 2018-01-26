@@ -6,7 +6,7 @@
 //  Copyright © 2016 Shopify. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// A type with the information about a section.
 ///
