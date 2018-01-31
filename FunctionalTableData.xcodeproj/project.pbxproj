@@ -70,7 +70,6 @@
 
 /* Begin PBXFileReference section */
 		17E18B3E201BE69C005E462E /* FunctionalTableData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FunctionalTableData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		17E18B3F201BE69C005E462E /* FunctionalTableData copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FunctionalTableData copy-Info.plist"; path = "/Users/iamkevb/github/shopify/FunctionalTableData/FunctionalTableData copy-Info.plist"; sourceTree = "<absolute>"; };
 		4C30E4071FA029FE00337415 /* Example.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Example.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FunctionalTableData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7A26FF1F2FA0F800360E9B /* FunctionalTableData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FunctionalTableData.h; sourceTree = "<group>"; };
@@ -137,7 +136,6 @@
 				4C7A26FE1F2FA0F800360E9B /* FunctionalTableData */,
 				4C7A27091F2FA0F800360E9B /* FunctionalTableDataTests */,
 				4C7A26FD1F2FA0F800360E9B /* Products */,
-				17E18B3F201BE69C005E462E /* FunctionalTableData copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -460,7 +458,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "FunctionalTableData copy-Info.plist";
+				INFOPLIST_FILE = FunctionalTableData/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
@@ -484,7 +482,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "FunctionalTableData copy-Info.plist";
+				INFOPLIST_FILE = FunctionalTableData/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
