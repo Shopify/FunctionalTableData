@@ -18,7 +18,7 @@ FOUNDATION_EXPORT const unsigned char FunctionalTableDataVersionString[];
 NS_ASSUME_NONNULL_BEGIN
 
 __attribute__((visibility("hidden")))
-static inline void catchAndRethrowException(__attribute__((noescape)) void (^ __nonnull inBlock)(), __attribute__((noescape)) void (^ __nonnull rethrow)(NSException *)) {
+static inline void catchAndRethrowException(__attribute__((noescape)) void (^ __nonnull inBlock)(void), __attribute__((noescape)) void (^ __nonnull rethrow)(NSException *)) {
 	@try {
 		inBlock();
 	} @catch (NSException *exception) {
