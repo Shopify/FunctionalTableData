@@ -137,19 +137,6 @@ public class FunctionalTableData: NSObject {
 		tableView?.delegate = nil
 	}
 	
-	func updateRow(keyPath: KeyPath, newRow: CellConfigType, completionAction: (() -> Void)? = nil) {
-		guard let tableView = tableView else { return }
-		if let indexPath = indexPathFromKeyPath(keyPath), let cell = tableView.cellForRow(at: indexPath) {
-			newRow.update(cell: cell, in: tableView)
-		}
-		
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
-			sections[sectionIndex].rows[rowIndex] = newRow
-		}
-		
-		completionAction?()
-	}
-	
 	/// Returns the cell identified by a key path.
 	///
 	/// - Parameter keyPath: A key path identifying the cell to look up.

@@ -90,19 +90,6 @@ public class FunctionalCollectionData: NSObject {
 		collectionView?.delegate = nil
 	}
 	
-	func updateRow(keyPath: KeyPath, newRow: CellConfigType, completionAction: (() -> Void)? = nil) {
-		guard let collectionView = collectionView else { return }
-		if let indexPath = indexPathFromKeyPath(keyPath), let cell = collectionView.cellForItem(at: indexPath) {
-			newRow.update(cell: cell, in: collectionView)
-		}
-		
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
-			sections[sectionIndex].rows[rowIndex] = newRow
-		}
-		
-		completionAction?()
-	}
-	
 	/// Returns the cell identified by a key path.
 	///
 	/// - Parameter keyPath: A key path identifying the cell to look up.
