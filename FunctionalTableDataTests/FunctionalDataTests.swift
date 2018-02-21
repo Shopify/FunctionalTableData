@@ -10,55 +10,6 @@ import XCTest
 @testable import FunctionalTableData
 
 class FunctionalDataTests: XCTestCase {
-	func testUpdateRow() {
-		let tableData = FunctionalTableData()
-		let tableView = UITableView()
-		
-		tableData.tableView = tableView
-		
-		let expectation1 = expectation(description: "render and diff happens")
-		let cellConfigC1 = TestCaseCell(key: "color1", state: TestCaseState(data: "red"), cellUpdater: TestCaseState.updateView)
-		let cellConfigC2 = TestCaseCell(key: "color2", state: TestCaseState(data: "green"), cellUpdater: TestCaseState.updateView)
-		let sectionC1 = TableSection(key: "colors Section", rows: [cellConfigC1, cellConfigC2])
-		
-		let cellConfigS1 = TestCaseCell(key: "size1", state: TestCaseState(data: "medium"), cellUpdater: TestCaseState.updateView)
-		let cellConfigS2 = TestCaseCell(key: "size2", state: TestCaseState(data: "large"), cellUpdater: TestCaseState.updateView)
-		let sectionS1 = TableSection(key: "sizes Section", rows: [cellConfigS1, cellConfigS2])
-		
-		let expectation2 = expectation(description: "size1 Update")
-		let cellConfigS1B = TestCaseCell(key: "size1", state: TestCaseState(data: "small"), cellUpdater: TestCaseState.updateView)
-		
-		let updateKeyPath = FunctionalTableData.KeyPath(sectionKey: "sizes Section", rowKey: "size1")
-		
-		tableData.renderAndDiff([sectionC1, sectionS1], animated: false) { [weak tableData] in
-			expectation1.fulfill()
-			if let tableData = tableData, let tableView = tableData.tableView {
-				XCTAssertEqual(tableView.numberOfSections, 2)
-				XCTAssertEqual(tableView.numberOfRows(inSection: 0), 2)
-				XCTAssertEqual(tableView.numberOfRows(inSection: 1), 2)
-				
-				if let row = tableData.rowForKeyPath(updateKeyPath) {
-					XCTAssertTrue(row.isEqual(cellConfigS1))
-				}
-				
-				tableData.updateRow(keyPath: updateKeyPath, newRow: cellConfigS1B) { [weak tableData] in
-					expectation2.fulfill()
-					if let tableData = tableData, let tableView = tableData.tableView {
-						XCTAssertEqual(tableView.numberOfSections, 2)
-						XCTAssertEqual(tableView.numberOfRows(inSection: 0), 2)
-						XCTAssertEqual(tableView.numberOfRows(inSection: 1), 2)
-						
-						if let row = tableData.rowForKeyPath(updateKeyPath) {
-							XCTAssertTrue(row.isEqual(cellConfigS1B))
-						}
-					}
-				}
-			}
-		}
-		
-		waitForExpectations(timeout: 1, handler: nil)
-	}
-	
 	func testKeyPathFromRowKey() {
 		let tableData = FunctionalTableData()
 		let tableView = UITableView()
