@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17E18B22201BE69C005E462E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A278A1F2FB89400360E9B /* UIView+Extensions.swift */; };
+		17E18B23201BE69C005E462E /* TableItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */; };
+		17E18B24201BE69C005E462E /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8441F8AA7CD00C73258 /* TableCell.swift */; };
+		17E18B25201BE69C005E462E /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27741F2FB55D00360E9B /* Reusable.swift */; };
+		17E18B26201BE69C005E462E /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */; };
+		17E18B27201BE69C005E462E /* CellActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A276F1F2FB55D00360E9B /* CellActions.swift */; };
+		17E18B28201BE69C005E462E /* FunctionalCollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8411F8AA7B200C73258 /* FunctionalCollectionData.swift */; };
+		17E18B29201BE69C005E462E /* TableSectionHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A277A1F2FB55D00360E9B /* TableSectionHeaderFooter.swift */; };
+		17E18B2A201BE69C005E462E /* CellConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27701F2FB55D00360E9B /* CellConfigType.swift */; };
+		17E18B2B201BE69C005E462E /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27751F2FB55D00360E9B /* Separator.swift */; };
+		17E18B2C201BE69C005E462E /* ObjCExceptionRethrower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */; };
+		17E18B2D201BE69C005E462E /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27881F2FB69C00360E9B /* UIView+AutoLayout.swift */; };
+		17E18B2E201BE69C005E462E /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8401F8AA7B200C73258 /* UICollectionView+Reusable.swift */; };
+		17E18B2F201BE69C005E462E /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE83F1F8AA7B200C73258 /* CollectionCell.swift */; };
+		17E18B30201BE69C005E462E /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27781F2FB55D00360E9B /* TableSection.swift */; };
+		17E18B31201BE69C005E462E /* FunctionalTableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27711F2FB55D00360E9B /* FunctionalTableData.swift */; };
+		17E18B32201BE69C005E462E /* HostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27721F2FB55D00360E9B /* HostCell.swift */; };
+		17E18B33201BE69C005E462E /* TableItemConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8451F8AA7CD00C73258 /* TableItemConfigType.swift */; };
+		17E18B34201BE69C005E462E /* TableSectionChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27791F2FB55D00360E9B /* TableSectionChangeSet.swift */; };
+		17E18B35201BE69C005E462E /* CollectionItemConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8421F8AA7B200C73258 /* CollectionItemConfigType.swift */; };
+		17E18B36201BE69C005E462E /* CellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A27761F2FB55D00360E9B /* CellStyle.swift */; };
+		17E18B39201BE69C005E462E /* FunctionalTableData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A26FF1F2FA0F800360E9B /* FunctionalTableData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C63250B1F8AA89B00B2B74B /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8441F8AA7CD00C73258 /* TableCell.swift */; };
 		4C63250C1F8AA89D00B2B74B /* TableItemConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8451F8AA7CD00C73258 /* TableItemConfigType.swift */; };
 		4C63250D1F8AA8A000B2B74B /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */; };
@@ -47,6 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		17E18B3E201BE69C005E462E /* FunctionalTableData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FunctionalTableData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C30E4071FA029FE00337415 /* Example.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Example.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FunctionalTableData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7A26FF1F2FA0F800360E9B /* FunctionalTableData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FunctionalTableData.h; sourceTree = "<group>"; };
@@ -81,6 +104,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		17E18B37201BE69C005E462E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4C7A26F81F2FA0F800360E9B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -114,6 +144,7 @@
 			children = (
 				4C7A26FC1F2FA0F800360E9B /* FunctionalTableData.framework */,
 				4C7A27051F2FA0F800360E9B /* FunctionalTableDataTests.xctest */,
+				17E18B3E201BE69C005E462E /* FunctionalTableData.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -195,6 +226,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		17E18B38201BE69C005E462E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17E18B39201BE69C005E462E /* FunctionalTableData.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4C7A26F91F2FA0F800360E9B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -206,6 +245,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		17E18B20201BE69C005E462E /* FunctionalTableDataStatic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17E18B3B201BE69C005E462E /* Build configuration list for PBXNativeTarget "FunctionalTableDataStatic" */;
+			buildPhases = (
+				17E18B21201BE69C005E462E /* Sources */,
+				17E18B37201BE69C005E462E /* Frameworks */,
+				17E18B38201BE69C005E462E /* Headers */,
+				17E18B3A201BE69C005E462E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FunctionalTableDataStatic;
+			productName = FunctionalTableData;
+			productReference = 17E18B3E201BE69C005E462E /* FunctionalTableData.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		4C7A26FB1F2FA0F800360E9B /* FunctionalTableData */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C7A27101F2FA0F800360E9B /* Build configuration list for PBXNativeTarget "FunctionalTableData" */;
@@ -252,9 +309,12 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = Shopify;
 				TargetAttributes = {
+					17E18B20201BE69C005E462E = {
+						LastSwiftMigration = 0920;
+					};
 					4C7A26FB1F2FA0F800360E9B = {
 						CreatedOnToolsVersion = 8.3.3;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					4C7A27041F2FA0F800360E9B = {
@@ -279,11 +339,19 @@
 			targets = (
 				4C7A26FB1F2FA0F800360E9B /* FunctionalTableData */,
 				4C7A27041F2FA0F800360E9B /* FunctionalTableDataTests */,
+				17E18B20201BE69C005E462E /* FunctionalTableDataStatic */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		17E18B3A201BE69C005E462E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4C7A26FA1F2FA0F800360E9B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -301,6 +369,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		17E18B21201BE69C005E462E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17E18B22201BE69C005E462E /* UIView+Extensions.swift in Sources */,
+				17E18B23201BE69C005E462E /* TableItemLayout.swift in Sources */,
+				17E18B24201BE69C005E462E /* TableCell.swift in Sources */,
+				17E18B25201BE69C005E462E /* Reusable.swift in Sources */,
+				17E18B26201BE69C005E462E /* UITableView+Reusable.swift in Sources */,
+				17E18B27201BE69C005E462E /* CellActions.swift in Sources */,
+				17E18B28201BE69C005E462E /* FunctionalCollectionData.swift in Sources */,
+				17E18B29201BE69C005E462E /* TableSectionHeaderFooter.swift in Sources */,
+				17E18B2A201BE69C005E462E /* CellConfigType.swift in Sources */,
+				17E18B2B201BE69C005E462E /* Separator.swift in Sources */,
+				17E18B2C201BE69C005E462E /* ObjCExceptionRethrower.swift in Sources */,
+				17E18B2D201BE69C005E462E /* UIView+AutoLayout.swift in Sources */,
+				17E18B2E201BE69C005E462E /* UICollectionView+Reusable.swift in Sources */,
+				17E18B2F201BE69C005E462E /* CollectionCell.swift in Sources */,
+				17E18B30201BE69C005E462E /* TableSection.swift in Sources */,
+				17E18B31201BE69C005E462E /* FunctionalTableData.swift in Sources */,
+				17E18B32201BE69C005E462E /* HostCell.swift in Sources */,
+				17E18B33201BE69C005E462E /* TableItemConfigType.swift in Sources */,
+				17E18B34201BE69C005E462E /* TableSectionChangeSet.swift in Sources */,
+				17E18B35201BE69C005E462E /* CollectionItemConfigType.swift in Sources */,
+				17E18B36201BE69C005E462E /* CellStyle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4C7A26F71F2FA0F800360E9B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -351,6 +447,53 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		17E18B3C201BE69C005E462E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = FunctionalTableData/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.FunctionalTableData;
+				PRODUCT_MODULE_NAME = FunctionalTableData;
+				PRODUCT_NAME = FunctionalTableData;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		17E18B3D201BE69C005E462E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = FunctionalTableData/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.FunctionalTableData;
+				PRODUCT_MODULE_NAME = FunctionalTableData;
+				PRODUCT_NAME = FunctionalTableData;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		4C7A270E1F2FA0F800360E9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -536,6 +679,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		17E18B3B201BE69C005E462E /* Build configuration list for PBXNativeTarget "FunctionalTableDataStatic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17E18B3C201BE69C005E462E /* Debug */,
+				17E18B3D201BE69C005E462E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4C7A26F61F2FA0F800360E9B /* Build configuration list for PBXProject "FunctionalTableData" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
