@@ -70,6 +70,8 @@ public class FunctionalCollectionData: NSObject {
 	public var scrollViewDidEndScrollingAnimation: ((_ scrollView: UIScrollView) -> Void)?
 	public var scrollViewShouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)?
 	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)?
+	public var supplementaryElementReuseIdentifier: ((_ collectionView: UICollectionView, _ kind: String, _ indexPath: IndexPath) -> String)?
+	public var prepareViewForSupplementaryElement: ((_ collectionView: UICollectionView, _ view: UICollectionReusableView, _ kind: String, _ indexPath: IndexPath) -> Void)?
 	
 	private let unitTesting: Bool
 	
@@ -455,6 +457,19 @@ extension FunctionalCollectionData: UICollectionViewDataSource {
 		sections[destinationIndexPath.section].rows.insert(cell, at: destinationIndexPath.item)
 		
 		sections[sourceIndexPath.section].didMoveRow?(sourceIndexPath.item, destinationIndexPath.item)
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		// We expose this delegate method by requiring a method to get the reuseIdentifier, and then using that reuseIdentifier to
+		// dequeue a UICollectionReusableView, which can then have its appropriate attributes applied.
+		// This approach is required because `UICollectionViewDataSource` requires that this always return a valid view, and
+		// suggests skipping applying attributes to the view when a supplementary view is not wanted.
+		//
+		// The owner of the collectionView is still responsible for registering the supplementary element with `UICollectionView.register(_:forSupplementaryViewOfKind:withReuseIdentifier:)`
+		let reuseIdentifier = supplementaryElementReuseIdentifier?(collectionView, kind, indexPath) ?? ""
+		let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath)
+		prepareViewForSupplementaryElement?(collectionView, view, kind, indexPath)
+		return view
 	}
 }
 
