@@ -392,7 +392,7 @@ public class FunctionalCollectionData: NSObject {
 		guard let cellConfig = self[indexPath],
 			let viewController = cellConfig.actions.previewingViewControllerAction?(cell, cell.convert(location, from: collectionView), previewingContext) else { return nil }
 		return viewController
-    }
+	}
 }
 
 extension UICollectionView {
