@@ -1,8 +1,15 @@
+//
+//  SecondViewController.swift
+//  FunctionalTableDataDemo
+//
+//  Created by Kevin Barnes on 2018-04-20.
+//  Copyright © 2018 Shopify. All rights reserved.
+//
+
 import UIKit
-import PlaygroundSupport
 import FunctionalTableData
 
-class ExampleViewController: UICollectionViewController {
+class CollectionExampleController: UICollectionViewController {
 	private let functionalData = FunctionalCollectionData()
 	private var items: [String] = [] {
 		didSet {
@@ -15,7 +22,7 @@ class ExampleViewController: UICollectionViewController {
 		
 		collectionView?.backgroundColor = .white
 		functionalData.collectionView = collectionView
-		title = "Example"
+		title = "Collection View"
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didSelectAdd))
 	}
 	
@@ -37,12 +44,3 @@ class ExampleViewController: UICollectionViewController {
 			])
 	}
 }
-
-// Create a layout, this is the key part when dealing with UICollectionView.
-let layout = UICollectionViewFlowLayout()
-layout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
-
-// Present the view controller in the Live View window
-let liveController = UINavigationController(rootViewController: ExampleViewController(collectionViewLayout: layout))
-liveController.preferredContentSize = CGSize(width: 320, height: 420)
-PlaygroundPage.current.liveView = liveController
