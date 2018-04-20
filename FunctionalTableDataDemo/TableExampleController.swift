@@ -1,8 +1,16 @@
+//
+//  FirstViewController.swift
+//  FunctionalTableDataDemo
+//
+//  Created by Kevin Barnes on 2018-04-20.
+//  Copyright © 2018 Shopify. All rights reserved.
+//
+
 import UIKit
-import PlaygroundSupport
 import FunctionalTableData
 
-class ExampleViewController: UITableViewController {
+class TableExampleController: UITableViewController {
+
 	private let functionalData = FunctionalTableData()
 	private var items: [String] = [] {
 		didSet {
@@ -14,7 +22,7 @@ class ExampleViewController: UITableViewController {
 		super.viewDidLoad()
 		
 		functionalData.tableView = tableView
-		title = "Example"
+		title = "Table View"
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didSelectAdd))
 	}
 	
@@ -32,11 +40,8 @@ class ExampleViewController: UITableViewController {
 		
 		functionalData.renderAndDiff([
 			TableSection(key: "section", rows: rows)
-		])
+			])
 	}
+
 }
 
-// Present the view controller in the Live View window
-let liveController = UINavigationController(rootViewController: ExampleViewController())
-liveController.preferredContentSize = CGSize(width: 320, height: 420)
-PlaygroundPage.current.liveView = liveController

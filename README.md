@@ -36,7 +36,7 @@ To use the Functional Table Data (FTD) two things are required, one instance of 
 
 ## Usage
 
-Check out the [example playground](/Example.playground) for a fully interactive example.
+Check out the [demo app](/FunctionalTableDataDemo) for a fully interactive example.
 
 Any time you want to update the data currently being displayed you generate the new state and pass it off to your instance of the Functional Table Data. The FTD is then responsible for computing the differences between the previous state and the next state and updating itself as necessary.
 
@@ -74,7 +74,7 @@ functionalTableData.renderAndDiff([section])
 
 <img src="/Images/Example1.png" />
 
-Check out the [example playground](/Example.playground) for a fully interactive example.
+Check out the [demo app](/FunctionalTableDataDemo) for a fully interactive example.
 
 ### Building new Cells
 Knowing that a cell consists of a view and state let's start with a simple example, a cell that displays a label. By specifying the generic requirements of `HostCell`, the simplest possible example is one that takes an `UILabel` as its view, a `String` as its state and `LayoutMarginsTableItemLayout` as the layout (See `TableItemLayout` for more info).
