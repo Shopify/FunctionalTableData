@@ -22,10 +22,10 @@ class StyleTests: XCTestCase {
 	}
 	
 	override func tearDown() {
-		super.tearDown()
 		cell = nil
 		table = nil
 		style = nil
+		super.tearDown()
 	}
 	
 	func testBottomSeparator() {
@@ -107,7 +107,14 @@ class StyleTests: XCTestCase {
 		style.configure(cell: cell, in: table)
 		XCTAssertEqual(cell.accessoryType, .none)
 	}
-	
+
+	func testAccessoryView() {
+		let accessoryView = UIView()
+		style.accessoryView = accessoryView
+		style.configure(cell: cell, in: table)
+		XCTAssertEqual(cell.accessoryView, accessoryView)
+	}
+
 	func testSelectionColor() {
 		style.selectionColor = .red
 		style.configure(cell: cell, in: table)

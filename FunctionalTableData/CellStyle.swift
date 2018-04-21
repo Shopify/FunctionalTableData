@@ -16,6 +16,7 @@ public struct CellStyle {
 	public var separatorColor: UIColor?
 	public var highlight: Bool?
 	public var accessoryType: UITableViewCellAccessoryType = .none
+	public var accessoryView: UIView?
 	public var selectionColor: UIColor? = CellStyle.selectionColor
 	public var backgroundColor: UIColor?
 	public var backgroundView: UIView?
@@ -28,6 +29,7 @@ public struct CellStyle {
 	            separatorColor: UIColor? = nil,
 	            highlight: Bool? = nil,
 	            accessoryType: UITableViewCellAccessoryType = .none,
+	            accessoryView: UIView? = nil,
 	            selectionColor: UIColor? = CellStyle.selectionColor,
 	            backgroundColor: UIColor? = nil,
 	            backgroundView: UIView? = nil,
@@ -39,6 +41,7 @@ public struct CellStyle {
 		self.separatorColor = separatorColor
 		self.highlight = highlight
 		self.accessoryType = accessoryType
+		self.accessoryView = accessoryView
 		self.selectionColor = selectionColor
 		self.backgroundColor = backgroundColor
 		self.backgroundView = backgroundView
@@ -123,6 +126,7 @@ public struct CellStyle {
 		}
 		
 		cell.accessoryType = accessoryType
+		cell.accessoryView = accessoryView
 	}
 }
 
