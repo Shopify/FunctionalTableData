@@ -1,6 +1,8 @@
 language: swift
 xcode_project: FunctionalTableData.xcodeproj
 xcode_schema: FunctionalTableDataTests
+notifications:
+  disabled: true
 
 env:
   - PLATFORM=iOS NAME='iPhone SE'
