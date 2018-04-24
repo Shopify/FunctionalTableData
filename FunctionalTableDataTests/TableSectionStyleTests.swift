@@ -57,7 +57,7 @@ class TableSectionStyleTests: XCTestCase {
 		let style = SectionStyle(separators: .default)
 		let section = TableSection(key: "section", rows: rows, style: style)
 		
-		let styles = (0..<3).flatMap { section.mergedStyle(for: $0) }
+		let styles = (0..<3).compactMap { section.mergedStyle(for: $0) }
 		XCTAssertEqual(styles.count, rows.count)
 		XCTAssertEqual(styles[0], CellStyle(topSeparator: .full, bottomSeparator: .inset))
 		XCTAssertEqual(styles[1], CellStyle(bottomSeparator: .inset))
