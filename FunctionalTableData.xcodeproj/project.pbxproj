@@ -497,7 +497,6 @@
 				DEVELOPMENT_TEAM = UD42KN75C7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = FunctionalTableDataDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jadedpixel.FunctionalTableDataDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -519,7 +518,6 @@
 				DEVELOPMENT_TEAM = UD42KN75C7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = FunctionalTableDataDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jadedpixel.FunctionalTableDataDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
