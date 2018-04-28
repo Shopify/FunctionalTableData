@@ -22,6 +22,7 @@ class CollectionExampleController: UICollectionViewController {
 		
 		collectionView?.backgroundColor = .white
 		functionalData.collectionView = collectionView
+		collectionView?.allowsMultipleSelection = false
 		title = "Collection View"
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didSelectAdd))
 	}
@@ -35,6 +36,14 @@ class CollectionExampleController: UICollectionViewController {
 			return LabelCell(
 				key: "id-\(index)",
 				style: CellStyle(backgroundColor: .lightGray),
+				actions: CellActions(
+					canSelectAction: { callback in
+						callback(true)
+				},
+					selectionAction: { (view, selected) -> CellActions.SelectionState in
+						print("\(item) is \(selected ? "Selected" : "Deselected")")
+						return selected ? .selected : .deselected
+				}),
 				state: LabelState(text: item),
 				cellUpdater: LabelState.updateView)
 		}
