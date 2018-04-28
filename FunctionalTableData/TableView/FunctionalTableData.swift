@@ -617,9 +617,9 @@ extension FunctionalTableData: UITableViewDelegate {
 				if selected {
 					selectedCell.setHighlighted(false, animated: false)
 					
-					if selectionAction(selectedCell, true) == .selected {
+					if selectionAction(selectedCell) == .selected {
 						tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-					} else if selectionAction(selectedCell, false) == .deselected {
+					} else {
 						tableView.deselectRow(at: indexPath, animated: false)
 					}
 
@@ -645,7 +645,7 @@ extension FunctionalTableData: UITableViewDelegate {
 		guard let cell = tableView.cellForRow(at: indexPath) else { return }
 		let cellConfig = sections[indexPath]
 
-		let selectionState = cellConfig?.actions.selectionAction?(cell, true) ?? .deselected
+		let selectionState = cellConfig?.actions.selectionAction?(cell) ?? .deselected
 		if selectionState == .deselected {
 			DispatchQueue.main.async {
 				tableView.deselectRow(at: indexPath, animated: true)
@@ -657,7 +657,7 @@ extension FunctionalTableData: UITableViewDelegate {
 		guard let cell = tableView.cellForRow(at: indexPath) else { return }
 		let cellConfig = sections[indexPath]
 
-		let selectionState = cellConfig?.actions.selectionAction?(cell, false) ?? .deselected
+		let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
 		if selectionState == .selected {
 			DispatchQueue.main.async {
 				tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)

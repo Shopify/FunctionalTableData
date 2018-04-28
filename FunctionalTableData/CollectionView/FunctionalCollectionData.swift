@@ -479,7 +479,7 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 		guard let cell = collectionView.cellForItem(at: indexPath) else { return }
 		let cellConfig = sections[indexPath]
 		
-		let selectionState = cellConfig?.actions.selectionAction?(cell, true) ?? .deselected
+		let selectionState = cellConfig?.actions.selectionAction?(cell) ?? .deselected
 		if selectionState == .deselected {
 			DispatchQueue.main.async {
 				collectionView.deselectItem(at: indexPath, animated: true)
@@ -491,7 +491,7 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 		guard let cell = collectionView.cellForItem(at: indexPath) else { return }
 		let cellConfig = sections[indexPath]
 		
-		let selectionState = cellConfig?.actions.selectionAction?(cell, false) ?? .deselected
+		let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
 		if selectionState == .selected {
 			DispatchQueue.main.async {
 				collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
