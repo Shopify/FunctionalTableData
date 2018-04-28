@@ -18,7 +18,7 @@ public struct CellActions {
 	
 	public typealias CanSelectCallback = (Bool) -> Void
 	public typealias CanSelectAction = (_ canSelect: @escaping CanSelectCallback) -> Void
-	public typealias SelectionAction = (_ sender: UIView) -> SelectionState
+	public typealias SelectionAction = (_ sender: UIView, _ isSelecting: Bool) -> SelectionState
 	public typealias CanPerformAction = (_ selector: Selector) -> Bool
 	public typealias VisibilityAction = (_ cell: UIView, _ visible: Bool) -> Void
 	/// Closure type that is executed when the user 3D-touches on a cell
