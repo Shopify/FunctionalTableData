@@ -22,6 +22,7 @@ class TableExampleController: UITableViewController {
 		super.viewDidLoad()
 		
 		functionalData.tableView = tableView
+		tableView.allowsMultipleSelection = false
 		title = "Table View"
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didSelectAdd))
 	}
@@ -34,6 +35,14 @@ class TableExampleController: UITableViewController {
 		let rows: [CellConfigType] = items.enumerated().map { index, item in
 			return LabelCell(
 				key: "id-\(index)",
+				actions: CellActions(
+					canSelectAction: { callback in
+						callback(true)
+				},
+					selectionAction: { (view, selected) -> CellActions.SelectionState in
+						print("\(item) is \(selected ? "Selected" : "Deselected")")
+						return selected ? .selected : .deselected
+				}),
 				state: LabelState(text: item),
 				cellUpdater: LabelState.updateView)
 		}
