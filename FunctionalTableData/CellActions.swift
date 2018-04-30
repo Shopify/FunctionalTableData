@@ -19,6 +19,7 @@ public struct CellActions {
 	public typealias CanSelectCallback = (Bool) -> Void
 	public typealias CanSelectAction = (_ canSelect: @escaping CanSelectCallback) -> Void
 	public typealias SelectionAction = (_ sender: UIView) -> SelectionState
+	public typealias DeselectionAction = (_ sender: UIView) -> SelectionState
 	public typealias CanPerformAction = (_ selector: Selector) -> Bool
 	public typealias VisibilityAction = (_ cell: UIView, _ visible: Bool) -> Void
 	/// Closure type that is executed when the user 3D-touches on a cell
@@ -32,6 +33,8 @@ public struct CellActions {
 	public let canSelectAction: CanSelectAction?
 	/// The action to perform when the cell is selected
 	public let selectionAction: SelectionAction?
+	/// The action to perform when the cell is deselected
+	public let deselectionAction: SelectionAction?
 	/// All the available row actions this cell can perform. See [UITableViewRowAction](https://developer.apple.com/documentation/uikit/uitableviewrowaction) for more info.
 	public let rowActions: [UITableViewRowAction]?
 	/// Indicates if the cell can perform a given action.
@@ -45,6 +48,7 @@ public struct CellActions {
 	
 	public init(canSelectAction: CanSelectAction? = nil,
 				selectionAction: SelectionAction? = nil,
+				deselectionAction: DeselectionAction? = nil,
 				rowActions: [UITableViewRowAction]? = nil,
 				canPerformAction: CanPerformAction? = nil,
 				canBeMoved: Bool = false,
@@ -52,6 +56,7 @@ public struct CellActions {
 				previewingViewControllerAction: PreviewingViewControllerAction? = nil) {
 		self.canSelectAction = canSelectAction
 		self.selectionAction = selectionAction
+		self.deselectionAction = deselectionAction
 		self.rowActions = rowActions
 		self.canPerformAction = canPerformAction
 		self.canBeMoved = canBeMoved
@@ -61,6 +66,7 @@ public struct CellActions {
 	
 	public init(canSelectAction: CanSelectAction? = nil,
 				selectionAction: SelectionAction? = nil,
+				deselectionAction: DeselectionAction? = nil,
 				rowActions: [UITableViewRowAction]? = nil,
 				canPerformAction: CanPerformAction? = nil,
 				canBeMoved: Bool = false,
@@ -70,6 +76,6 @@ public struct CellActions {
 			previewingContext.sourceRect = previewingContext.sourceView.convert(cell.bounds, from: cell)
 			return previewingViewControllerAction()
 		}
-		self.init(canSelectAction: canSelectAction, selectionAction: selectionAction, rowActions: rowActions, canPerformAction: canPerformAction, canBeMoved: canBeMoved, visibilityAction: visibilityAction, previewingViewControllerAction: wrappedPreviewingViewControllerAction)
+		self.init(canSelectAction: canSelectAction, selectionAction: selectionAction, deselectionAction: deselectionAction, rowActions: rowActions, canPerformAction: canPerformAction, canBeMoved: canBeMoved, visibilityAction: visibilityAction, previewingViewControllerAction: wrappedPreviewingViewControllerAction)
 	}
 }

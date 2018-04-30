@@ -34,6 +34,15 @@ class TableExampleController: UITableViewController {
 		let rows: [CellConfigType] = items.enumerated().map { index, item in
 			return LabelCell(
 				key: "id-\(index)",
+				actions: CellActions(
+					selectionAction: { (view) -> CellActions.SelectionState in
+						print("\(item) is being selected")
+						return .selected
+				},
+					deselectionAction: { (view) -> CellActions.SelectionState in
+						print("\(item) is being deselected")
+						return .deselected
+				}),
 				state: LabelState(text: item),
 				cellUpdater: LabelState.updateView)
 		}

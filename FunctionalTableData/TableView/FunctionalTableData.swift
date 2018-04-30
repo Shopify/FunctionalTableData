@@ -218,7 +218,7 @@ public class FunctionalTableData: NSObject {
 			completion?()
 		}
 	}
-		
+
 	/// Populates the table with the specified sections, and asynchronously updates the table view to reflect the cells and sections that have changed.
 	///
 	/// - Parameters:
@@ -616,12 +616,14 @@ extension FunctionalTableData: UITableViewDelegate {
 				}
 				if selected {
 					selectedCell.setHighlighted(false, animated: false)
-					tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-					if selectionAction(selectedCell) == .deselected {
+					
+					if selectionAction(selectedCell) == .selected {
+						tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+					} else {
 						tableView.deselectRow(at: indexPath, animated: false)
 					}
-					
-					if let currentSelection = currentSelection {
+
+					if !tableView.allowsMultipleSelection, let currentSelection = currentSelection {
 						tableView.cellForRow(at: currentSelection)?.setHighlighted(false, animated: false)
 						tableView.deselectRow(at: currentSelection, animated: false)
 					}
@@ -647,6 +649,18 @@ extension FunctionalTableData: UITableViewDelegate {
 		if selectionState == .deselected {
 			DispatchQueue.main.async {
 				tableView.deselectRow(at: indexPath, animated: true)
+			}
+		}
+	}
+
+	public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+		guard let cell = tableView.cellForRow(at: indexPath) else { return }
+		let cellConfig = sections[indexPath]
+
+		let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
+		if selectionState == .selected {
+			DispatchQueue.main.async {
+				tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
 			}
 		}
 	}

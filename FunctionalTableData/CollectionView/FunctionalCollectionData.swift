@@ -467,10 +467,10 @@ extension FunctionalCollectionData: UICollectionViewDataSource {
 
 extension FunctionalCollectionData: UICollectionViewDelegate {
 	public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-		guard let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems else { return true }
+		guard let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems, !collectionView.allowsMultipleSelection else { return true }
 		return indexPathsForSelectedItems.contains(indexPath) == false
 	}
-	
+
 	public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
 		return sections[indexPath]?.actions.selectionAction != nil
 	}
@@ -483,6 +483,18 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 		if selectionState == .deselected {
 			DispatchQueue.main.async {
 				collectionView.deselectItem(at: indexPath, animated: true)
+			}
+		}
+	}
+
+	public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+		guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+		let cellConfig = sections[indexPath]
+		
+		let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
+		if selectionState == .selected {
+			DispatchQueue.main.async {
+				collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
 			}
 		}
 	}

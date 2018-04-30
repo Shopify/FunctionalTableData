@@ -35,6 +35,15 @@ class CollectionExampleController: UICollectionViewController {
 			return LabelCell(
 				key: "id-\(index)",
 				style: CellStyle(backgroundColor: .lightGray),
+				actions: CellActions(
+					selectionAction: { (view) -> CellActions.SelectionState in
+						print("\(item) is being selected")
+						return .selected
+				},
+					deselectionAction: { (view) -> CellActions.SelectionState in
+						print("\(item) is being deselected")
+						return .deselected
+				}),
 				state: LabelState(text: item),
 				cellUpdater: LabelState.updateView)
 		}
