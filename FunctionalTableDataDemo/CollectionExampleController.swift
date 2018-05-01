@@ -36,12 +36,12 @@ class CollectionExampleController: UICollectionViewController {
 				key: "id-\(index)",
 				style: CellStyle(backgroundColor: .lightGray),
 				actions: CellActions(
-					selectionAction: { (view) -> CellActions.SelectionState in
-						print("\(item) is being selected")
+					selectionAction: { _ in
+						print("\(item) selected")
 						return .selected
 				},
-					deselectionAction: { (view) -> CellActions.SelectionState in
-						print("\(item) is being deselected")
+					deselectionAction: { _ in
+						print("\(item) deselected")
 						return .deselected
 				}),
 				state: LabelState(text: item),
@@ -50,6 +50,6 @@ class CollectionExampleController: UICollectionViewController {
 		
 		functionalData.renderAndDiff([
 			TableSection(key: "section", rows: rows)
-			])
+        ])
 	}
 }

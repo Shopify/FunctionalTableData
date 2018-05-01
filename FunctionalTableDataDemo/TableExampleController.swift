@@ -10,7 +10,6 @@ import UIKit
 import FunctionalTableData
 
 class TableExampleController: UITableViewController {
-
 	private let functionalData = FunctionalTableData()
 	private var items: [String] = [] {
 		didSet {
@@ -35,12 +34,12 @@ class TableExampleController: UITableViewController {
 			return LabelCell(
 				key: "id-\(index)",
 				actions: CellActions(
-					selectionAction: { (view) -> CellActions.SelectionState in
-						print("\(item) is being selected")
+					selectionAction: { _ in
+						print("\(item) selected")
 						return .selected
 				},
-					deselectionAction: { (view) -> CellActions.SelectionState in
-						print("\(item) is being deselected")
+					deselectionAction: { _ in
+						print("\(item) deselected")
 						return .deselected
 				}),
 				state: LabelState(text: item),
@@ -49,8 +48,7 @@ class TableExampleController: UITableViewController {
 		
 		functionalData.renderAndDiff([
 			TableSection(key: "section", rows: rows)
-			])
+        ])
 	}
-
 }
 
