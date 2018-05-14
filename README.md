@@ -1,11 +1,10 @@
-<img src="/Images/Banner.png" />
+<img src="https://github.com/Shopify/FunctionalTableData/raw/master/Images/Banner.png" />
 
 [![Build Status](https://travis-ci.org/Shopify/FunctionalTableData.svg)](https://travis-ci.org/Shopify/FunctionalTableData)
 
 Functional Table Data implements a functional renderer for UITableView. You pass it a complete description of your table state, and Functional Table Data compares it with the previous render call to insert, update, and remove the sections and cells that have changed. This massively simplifies state management of complex UI.
 
 No longer do you have to manually track the number of sections, cells, and indices of your UI. Build one method that generates your table state structure from your data. The provided `HostCell` generic makes it easy to add FunctionalTableData support to `UITableViewCell`s.
-
 
 |         | Noteworthy features       |
 ----------|---------------------
@@ -36,7 +35,7 @@ To use the Functional Table Data (FTD) two things are required, one instance of 
 
 ## Usage
 
-Check out the [demo app](/FunctionalTableDataDemo) for a fully interactive example.
+Check out the [demo app](https://github.com/Shopify/FunctionalTableData/blob/master/FunctionalTableDataDemo) for a fully interactive example.
 
 Any time you want to update the data currently being displayed you generate the new state and pass it off to your instance of the Functional Table Data. The FTD is then responsible for computing the differences between the previous state and the next state and updating itself as necessary.
 
@@ -72,9 +71,9 @@ After assigning the variable `rows` to our previously created `section`, all tha
 functionalTableData.renderAndDiff([section])
 ```
 
-<img src="/Images/Example1.png" />
+<img src="https://github.com/Shopify/FunctionalTableData/raw/master/Images/Example1.png" />
 
-Check out the [demo app](/FunctionalTableDataDemo) for a fully interactive example.
+Check out the [demo app](https://github.com/Shopify/FunctionalTableData/blob/master/FunctionalTableDataDemo) for a fully interactive example.
 
 ### Building new Cells
 Knowing that a cell consists of a view and state let's start with a simple example, a cell that displays a label. By specifying the generic requirements of `HostCell`, the simplest possible example is one that takes an `UILabel` as its view, a `String` as its state and `LayoutMarginsTableItemLayout` as the layout (See `TableItemLayout` for more info).

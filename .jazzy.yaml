@@ -1,4 +1,4 @@
-# Ordered by output of `jazzy --help config`
-
+github_url: https://github.com/shopify/FunctionalTableData
+github_file_prefix: https://github.com/shopify/FunctionalTableData/tree/master
 skip_undocumented: true
 hide_documentation_coverage: true
