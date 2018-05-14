@@ -122,4 +122,4 @@ LabelCell(key: "company", state: LabelState(text: "Shopify",
 At the end of the day `HostCell` is just one of the possible implementations of `CellConfigType`, that's the underlying power of this framework.
 
 ## License
-Functional Table Data is under the [MIT License](/LICENSE.txt)
+Functional Table Data is under the [MIT License](https://github.com/Shopify/FunctionalTableData/blob/master/LICENSE.txt)
