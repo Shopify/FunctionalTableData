@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>HostCell Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/HostCell" class="dashAnchor"></a>
+    <a title="HostCell Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (27% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        HostCell Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CollectionCell.html">CollectionCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalCollectionData.html">FunctionalCollectionData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalCollectionData/KeyPath.html">– KeyPath</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalTableData.html">FunctionalTableData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalTableData/Exception.html">– Exception</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalTableData/KeyPath.html">– KeyPath</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalTableData/TableAnimations.html">– TableAnimations</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Separator.html">Separator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Separator/Style.html">– Style</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Separator/Tag.html">– Tag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TableCell.html">TableCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TableHeaderFooter.html">TableHeaderFooter</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/EdgeLayout.html">EdgeLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EdgeLayout/Horizontal.html">– Horizontal</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EdgeLayout/Vertical.html">– Vertical</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MarginsLayout.html">MarginsLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MarginsLayout/Horizontal.html">– Horizontal</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MarginsLayout/Vertical.html">– Vertical</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSException.html">NSException</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UICollectionView.html">UICollectionView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UITableView.html">UITableView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIView.html">UIView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/CellConfigType.html">CellConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/CollectionItemConfigType.html">CollectionItemConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FunctionalTableDataExceptionHandler.html">FunctionalTableDataExceptionHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Reusable.html">Reusable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableHeaderFooterConfigType.html">TableHeaderFooterConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableHeaderFooterStateType.html">TableHeaderFooterStateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableItemConfigType.html">TableItemConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableItemLayout.html">TableItemLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableSectionType.html">TableSectionType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/CellActions.html">CellActions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CellActions/SelectionState.html">– SelectionState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CellStyle.html">CellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CombinedLayout.html">CombinedLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ExplicitLayoutMarginsTableItemLayout.html">ExplicitLayoutMarginsTableItemLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HostCell.html">HostCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SectionStyle.html">SectionStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SectionStyle/Separators.html">– Separators</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TableSection.html">TableSection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TableSectionChangeSet.html">TableSectionChangeSet</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TableSectionHeaderFooter.html">TableSectionHeaderFooter</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:19FunctionalTableData09EdgeBasedB10ItemLayouta">EdgeBasedTableItemLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:19FunctionalTableData013LayoutMarginsb4ItemD0a">LayoutMarginsTableItemLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:19FunctionalTableData0B16HeaderConfigTypea">TableHeaderConfigType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>HostCell</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">HostCell</span><span class="o">&lt;</span><span class="kt">View</span><span class="p">,</span> <span class="kt">State</span><span class="p">,</span> <span class="kt">Layout</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/CellConfigType.html">CellConfigType</a></span> <span class="k">where</span> <span class="kt">View</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt">State</span> <span class="p">:</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">Layout</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/TableItemLayout.html">TableItemLayout</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>Defines the view, state and layout information of a row item inside a TableSection.
+It relies on you to build UIView subclasses and use those instead of implementing UITableViewCell or UICollectionViewCell subclasses. This has the side effect of building better more reusable view components. This greatly simplifies composition by combining several host-cells into more complex layouts. It also makes equality simpler and more <q>Swifty</q> by requiring that anything provided as State only requires that the State object conform to the Equatable protocol. The View portion of the generic only requires it to be a UIView subclass.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV0b4ViewE4Typea"></a>
+                    <a name="//apple_ref/swift/Alias/TableViewCellType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV0b4ViewE4Typea">TableViewCellType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">TableViewCellType</span> <span class="o">=</span> <span class="kt"><a href="../Classes/TableCell.html">TableCell</a></span><span class="o">&lt;</span><span class="kt">View</span><span class="p">,</span> <span class="kt">Layout</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV014CollectionViewE4Typea"></a>
+                    <a name="//apple_ref/swift/Alias/CollectionViewCellType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV014CollectionViewE4Typea">CollectionViewCellType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">CollectionViewCellType</span> <span class="o">=</span> <span class="kt"><a href="../Classes/CollectionCell.html">CollectionCell</a></span><span class="o">&lt;</span><span class="kt">View</span><span class="p">,</span> <span class="kt">Layout</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData14CellConfigTypeP3keySSvp"></a>
+                    <a name="//apple_ref/swift/Property/key" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData14CellConfigTypeP3keySSvp">key</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData14CellConfigTypeP5styleAA0D5StyleVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/style" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData14CellConfigTypeP5styleAA0D5StyleVSgvp">style</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Structs/CellStyle.html">CellStyle</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData14CellConfigTypeP7actionsAA0D7ActionsVvp"></a>
+                    <a name="//apple_ref/swift/Property/actions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData14CellConfigTypeP7actionsAA0D7ActionsVvp">actions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">actions</span><span class="p">:</span> <span class="kt"><a href="../Structs/CellActions.html">CellActions</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV5stateq_vp"></a>
+                    <a name="//apple_ref/swift/Property/state" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV5stateq_vp">state</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Contains the state information of a cell.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">State</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV11cellUpdateryx_q_Sgtcvp"></a>
+                    <a name="//apple_ref/swift/Property/cellUpdater" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV11cellUpdateryx_q_Sgtcvp">cellUpdater</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A function that updates a cell&rsquo;s view to match the current state. It receives two values, the view instance and an optional state instance. The purpose of this function is to update the view to reflect that of the given state. The reason that the state is optional is because cells may move into the reuse queue. When this happens they no longer have a state and the updater function is called giving the opportunity to reset the view to its default value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">cellUpdater</span><span class="p">:</span> <span class="p">(</span><span class="n">_</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="n">_</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">State</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellVACyxq_q0_GSS3key_AA0E5StyleVSg5styleAA0E7ActionsV7actionsq_5stateyx_q_Sgtc11cellUpdatertcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(key:style:actions:state:cellUpdater:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellVACyxq_q0_GSS3key_AA0E5StyleVSg5styleAA0E7ActionsV7actionsq_5stateyx_q_Sgtc11cellUpdatertcfc">init(key:style:actions:state:cellUpdater:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Structs/CellStyle.html">CellStyle</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">actions</span><span class="p">:</span> <span class="kt"><a href="../Structs/CellActions.html">CellActions</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/CellActions.html">CellActions</a></span><span class="p">(),</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">State</span><span class="p">,</span> <span class="nv">cellUpdater</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="n">_</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">State</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/TableItemConfigType"></a>
+                <a name="//apple_ref/swift/Section/TableItemConfigType" class="dashAnchor"></a>
+                <a href="#/TableItemConfigType">
+                  <h3 class="section-name">TableItemConfigType</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV8registerySo11UITableViewC4with_tF"></a>
+                    <a name="//apple_ref/swift/Method/register(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV8registerySo11UITableViewC4with_tF">register(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers the instance of this HostCell for use in creating new table cells.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">register</span><span class="p">(</span><span class="n">with</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tableView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the <code>UITableView</code> to register the cell with.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV8registerySo16UICollectionViewC4with_tF"></a>
+                    <a name="//apple_ref/swift/Method/register(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV8registerySo16UICollectionViewC4with_tF">register(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers the instance of this HostCell for use in creating new table cells.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">register</span><span class="p">(</span><span class="n">with</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>collectionView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the <code>UICollectionView</code> to register the cell with.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV07dequeueE0So011UITableViewE0CSo0gH0C4from_10Foundation9IndexPathV2attF"></a>
+                    <a name="//apple_ref/swift/Method/dequeueCell(from:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV07dequeueE0So011UITableViewE0CSo0gH0C4from_10Foundation9IndexPathV2attF">dequeueCell(from:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a reusable <code>UITableView</code> cell object for the specified reuse identifier and adds it to the table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">dequeueCell</span><span class="p">(</span><span class="n">from</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UITableViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tableView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the <code>UITableView</code> holding the cells.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index path specifying the location of the cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A UITableViewCell object that exists in the reusable-cell queue.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV07dequeueE0So016UICollectionViewE0CSo0gH0C4from_10Foundation9IndexPathV2attF"></a>
+                    <a name="//apple_ref/swift/Method/dequeueCell(from:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV07dequeueE0So016UICollectionViewE0CSo0gH0C4from_10Foundation9IndexPathV2attF">dequeueCell(from:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a reusable <code>UICollectionView</code> cell object for the specified reuse identifier and adds it to the collection.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">dequeueCell</span><span class="p">(</span><span class="n">from</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span> <span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>collectionView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the <code>UICollectionView</code> holding the cells.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index path specifying the location of the cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A UICollectionViewCell object that exists in the reusable-cell queue.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/CellConfigType"></a>
+                <a name="//apple_ref/swift/Section/CellConfigType" class="dashAnchor"></a>
+                <a href="#/CellConfigType">
+                  <h3 class="section-name">CellConfigType</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData14CellConfigTypeP6updateySo011UITableViewD0C4cell_So0hI0C2intF"></a>
+                    <a name="//apple_ref/swift/Method/update(cell:in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData14CellConfigTypeP6updateySo011UITableViewD0C4cell_So0hI0C2intF">update(cell:in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="nv">cell</span><span class="p">:</span> <span class="kt">UITableViewCell</span><span class="p">,</span> <span class="k">in</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData14CellConfigTypeP6updateySo016UICollectionViewD0C4cell_So0hI0C2intF"></a>
+                    <a name="//apple_ref/swift/Method/update(cell:in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData14CellConfigTypeP6updateySo016UICollectionViewD0C4cell_So0hI0C2intF">update(cell:in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="nv">cell</span><span class="p">:</span> <span class="kt">UICollectionViewCell</span><span class="p">,</span> <span class="k">in</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData14CellConfigTypeP7isEqualSbAaB_pF"></a>
+                    <a name="//apple_ref/swift/Method/isEqual(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData14CellConfigTypeP7isEqualSbAaB_pF">isEqual(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isEqual</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt"><a href="../Protocols/CellConfigType.html">CellConfigType</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV9debugInfos10DictionaryVySSypGyF"></a>
+                    <a name="//apple_ref/swift/Method/debugInfo()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV9debugInfos10DictionaryVySSypGyF">debugInfo()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">debugInfo</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellVACyxq_q0_Gqd__3key_AA0E5StyleVSg5styleAA0E7ActionsV7actionsq_5stateyx_q_Sgtc11cellUpdatertcs16RawRepresentableRd__SS0N5ValueRtd__lufc"></a>
+                    <a name="//apple_ref/swift/Method/init(key:style:actions:state:cellUpdater:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellVACyxq_q0_Gqd__3key_AA0E5StyleVSg5styleAA0E7ActionsV7actionsq_5stateyx_q_Sgtc11cellUpdatertcs16RawRepresentableRd__SS0N5ValueRtd__lufc">init(key:style:actions:state:cellUpdater:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">RawRepresentable</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Structs/CellStyle.html">CellStyle</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">actions</span><span class="p">:</span> <span class="kt"><a href="../Structs/CellActions.html">CellActions</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/CellActions.html">CellActions</a></span><span class="p">(),</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">State</span><span class="p">,</span> <span class="nv">cellUpdater</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="n">_</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">State</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">where</span> <span class="kt">T</span><span class="o">.</span><span class="kt">RawValue</span> <span class="o">==</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
