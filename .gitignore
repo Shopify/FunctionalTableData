@@ -27,3 +27,5 @@ profile
 */fastlane/*.coverage.txt
 FunctionalTableData/build/*
 .dev
+
+docs/docs/undocumented.json

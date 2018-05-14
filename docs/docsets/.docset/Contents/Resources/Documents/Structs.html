@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Structures  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/Structures" class="dashAnchor"></a>
+    <a title="Structures  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html"> Docs</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Structures  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/UICollectionView.html">UICollectionView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UITableView.html">UITableView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/CellConfigType.html">CellConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/FunctionalTableDataExceptionHandler.html">FunctionalTableDataExceptionHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Reusable.html">Reusable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/TableSectionType.html">TableSectionType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/CellActions.html">CellActions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/HostCell.html">HostCell</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Structures</h1>
+            <p>The following structures are available globally.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData11CellActionsV"></a>
+                    <a name="//apple_ref/swift/Struct/CellActions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData11CellActionsV">CellActions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The actions property exposed on the CellConfigType represents possible events that will be executed based on the users interaction with that particular cell. Of note are the <code>selectionAction</code> and <code>previewingViewControllerAction</code>. The <code>selectionAction</code> is executed when the user taps on that particular cell. The main use case for this is present a new detail view controller or a modal (but is not constrained to these actions, these are just the common use cases). The <code>previewingViewControllerAction</code> is responsible for returning an instance of a UIViewController that will be shown when a user 3D-touches on a cell.</p>
+
+                        <a href="Structs/CellActions.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CellActions</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData8HostCellV"></a>
+                    <a name="//apple_ref/swift/Struct/HostCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData8HostCellV">HostCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Defines the view, state and layout information of a row item inside a TableSection.
+It relies on you to build UIView subclasses and use those instead of implementing UITableViewCell or UICollectionViewCell subclasses. This has the side effect of building better more reusable view components. This greatly simplifies composition by combining several host-cells into more complex layouts. It also makes equality simpler and more <q>Swifty</q> by requiring that anything provided as State only requires that the State object conform to the Equatable protocol. The View portion of the generic only requires it to be a UIView subclass.</p>
+
+                        <a href="Structs/HostCell.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">HostCell</span><span class="o">&lt;</span><span class="kt">View</span><span class="p">,</span> <span class="kt">State</span><span class="p">,</span> <span class="kt">Layout</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="Protocols/CellConfigType.html">CellConfigType</a></span> <span class="k">where</span> <span class="kt">View</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt">State</span> <span class="p">:</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">Layout</span> <span class="p">:</span> <span class="kt">TableItemLayout</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

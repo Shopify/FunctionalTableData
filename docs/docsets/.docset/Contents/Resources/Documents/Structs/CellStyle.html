@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CellStyle Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/CellStyle" class="dashAnchor"></a>
+    <a title="CellStyle Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (27% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        CellStyle Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CollectionCell.html">CollectionCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalCollectionData.html">FunctionalCollectionData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalCollectionData/KeyPath.html">– KeyPath</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalTableData.html">FunctionalTableData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalTableData/Exception.html">– Exception</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalTableData/KeyPath.html">– KeyPath</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FunctionalTableData/TableAnimations.html">– TableAnimations</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Separator.html">Separator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Separator/Style.html">– Style</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Separator/Tag.html">– Tag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TableCell.html">TableCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TableHeaderFooter.html">TableHeaderFooter</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/EdgeLayout.html">EdgeLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EdgeLayout/Horizontal.html">– Horizontal</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EdgeLayout/Vertical.html">– Vertical</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MarginsLayout.html">MarginsLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MarginsLayout/Horizontal.html">– Horizontal</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MarginsLayout/Vertical.html">– Vertical</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSException.html">NSException</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UICollectionView.html">UICollectionView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UITableView.html">UITableView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIView.html">UIView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/CellConfigType.html">CellConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/CollectionItemConfigType.html">CollectionItemConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FunctionalTableDataExceptionHandler.html">FunctionalTableDataExceptionHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Reusable.html">Reusable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableHeaderFooterConfigType.html">TableHeaderFooterConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableHeaderFooterStateType.html">TableHeaderFooterStateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableItemConfigType.html">TableItemConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableItemLayout.html">TableItemLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TableSectionType.html">TableSectionType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/CellActions.html">CellActions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CellActions/SelectionState.html">– SelectionState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CellStyle.html">CellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CombinedLayout.html">CombinedLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ExplicitLayoutMarginsTableItemLayout.html">ExplicitLayoutMarginsTableItemLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HostCell.html">HostCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SectionStyle.html">SectionStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SectionStyle/Separators.html">– Separators</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TableSection.html">TableSection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TableSectionChangeSet.html">TableSectionChangeSet</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TableSectionHeaderFooter.html">TableSectionHeaderFooter</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:19FunctionalTableData09EdgeBasedB10ItemLayouta">EdgeBasedTableItemLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:19FunctionalTableData013LayoutMarginsb4ItemD0a">LayoutMarginsTableItemLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:19FunctionalTableData0B16HeaderConfigTypea">TableHeaderConfigType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>CellStyle</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CellStyle</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV14selectionColorSo7UIColorCSgvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/selectionColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV14selectionColorSo7UIColorCSgvpZ">selectionColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">selectionColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV15bottomSeparatorAA0G0C0E0OSgvp"></a>
+                    <a name="//apple_ref/swift/Property/bottomSeparator" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV15bottomSeparatorAA0G0C0E0OSgvp">bottomSeparator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">bottomSeparator</span><span class="p">:</span> <span class="kt"><a href="../Classes/Separator.html">Separator</a></span><span class="o">.</span><span class="kt">Style</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV12topSeparatorAA0G0C0E0OSgvp"></a>
+                    <a name="//apple_ref/swift/Property/topSeparator" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV12topSeparatorAA0G0C0E0OSgvp">topSeparator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">topSeparator</span><span class="p">:</span> <span class="kt"><a href="../Classes/Separator.html">Separator</a></span><span class="o">.</span><span class="kt">Style</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV14separatorColorSo7UIColorCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/separatorColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV14separatorColorSo7UIColorCSgvp">separatorColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">separatorColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV9highlightSbSgvp"></a>
+                    <a name="//apple_ref/swift/Property/highlight" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV9highlightSbSgvp">highlight</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">highlight</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV13accessoryTypeSC011UITableViewd9AccessoryG0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/accessoryType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV13accessoryTypeSC011UITableViewd9AccessoryG0Ovp">accessoryType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">accessoryType</span><span class="p">:</span> <span class="kt">UITableViewCellAccessoryType</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV14selectionColorSo7UIColorCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/selectionColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV14selectionColorSo7UIColorCSgvp">selectionColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">selectionColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV15backgroundColorSo7UIColorCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/backgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV15backgroundColorSo7UIColorCSgvp">backgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">backgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV14backgroundViewSo6UIViewCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/backgroundView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV14backgroundViewSo6UIViewCSgvp">backgroundView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">backgroundView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV9tintColorSo7UIColorCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/tintColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV9tintColorSo7UIColorCSgvp">tintColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">tintColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV13layoutMarginsSC12UIEdgeInsetsVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/layoutMargins" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV13layoutMarginsSC12UIEdgeInsetsVSgvp">layoutMargins</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">layoutMargins</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleV12cornerRadius12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/cornerRadius" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleV12cornerRadius12CoreGraphics7CGFloatVvp">cornerRadius</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">cornerRadius</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19FunctionalTableData9CellStyleVAcA9SeparatorC0E0OSg03topF0_AH06bottomF0So7UIColorCSg14separatorColorSbSg9highlightSC011UITableViewD13AccessoryTypeO09accessoryP0AM09selectionK0AM010backgroundK0So6UIViewCSg0sN0AM04tintK0SC12UIEdgeInsetsVSg13layoutMargins12CoreGraphics7CGFloatV12cornerRadiustcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(topSeparator:bottomSeparator:separatorColor:highlight:accessoryType:selectionColor:backgroundColor:backgroundView:tintColor:layoutMargins:cornerRadius:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19FunctionalTableData9CellStyleVAcA9SeparatorC0E0OSg03topF0_AH06bottomF0So7UIColorCSg14separatorColorSbSg9highlightSC011UITableViewD13AccessoryTypeO09accessoryP0AM09selectionK0AM010backgroundK0So6UIViewCSg0sN0AM04tintK0SC12UIEdgeInsetsVSg13layoutMargins12CoreGraphics7CGFloatV12cornerRadiustcfc">init(topSeparator:bottomSeparator:separatorColor:highlight:accessoryType:selectionColor:backgroundColor:backgroundView:tintColor:layoutMargins:cornerRadius:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">topSeparator</span><span class="p">:</span> <span class="kt"><a href="../Classes/Separator.html">Separator</a></span><span class="o">.</span><span class="kt">Style</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">bottomSeparator</span><span class="p">:</span> <span class="kt"><a href="../Classes/Separator.html">Separator</a></span><span class="o">.</span><span class="kt">Style</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">separatorColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">highlight</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">accessoryType</span><span class="p">:</span> <span class="kt">UITableViewCellAccessoryType</span> <span class="o">=</span> <span class="o">.</span><span class="k">none</span><span class="p">,</span>
+            <span class="nv">selectionColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span> <span class="o">=</span> <span class="kt">CellStyle</span><span class="o">.</span><span class="n"><a href="../Structs/CellStyle.html#/s:19FunctionalTableData9CellStyleV14selectionColorSo7UIColorCSgvpZ">selectionColor</a></span><span class="p">,</span>
+            <span class="nv">backgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">backgroundView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">tintColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">layoutMargins</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">cornerRadius</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">CellStyle</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">CellStyle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

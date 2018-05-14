@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html"> Docs</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+          Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/UICollectionView.html">UICollectionView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UITableView.html">UITableView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/CellConfigType.html">CellConfigType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/FunctionalTableDataExceptionHandler.html">FunctionalTableDataExceptionHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Reusable.html">Reusable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/TableSectionType.html">TableSectionType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/CellActions.html">CellActions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/HostCell.html">HostCell</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <p><img src="/Images/Banner.png" /></p>
+
+<p><a href="https://travis-ci.org/Shopify/FunctionalTableData"><img src="https://travis-ci.org/Shopify/FunctionalTableData.svg" alt="Build Status"></a></p>
+
+<p>Functional Table Data implements a functional renderer for UITableView. You pass it a complete description of your table state, and Functional Table Data compares it with the previous render call to insert, update, and remove the sections and cells that have changed. This massively simplifies state management of complex UI.</p>
+
+<p>No longer do you have to manually track the number of sections, cells, and indices of your UI. Build one method that generates your table state structure from your data. The provided <code><a href="Structs/HostCell.html">HostCell</a></code> generic makes it easy to add FunctionalTableData support to <code>UITableViewCell</code>s.</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th>Noteworthy features</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>💯</td>
+<td>Functional approach for maintaining table state</td>
+</tr>
+<tr>
+<td>👷‍</td>
+<td>Reusable views and states</td>
+</tr>
+<tr>
+<td>✅</td>
+<td>Unit tests</td>
+</tr>
+<tr>
+<td>🔀</td>
+<td>Automatic diff in your states</td>
+</tr>
+<tr>
+<td>❤️</td>
+<td>Used across Shopify&rsquo;s iOS apps</td>
+</tr>
+<tr>
+<td>🙅</td>
+<td>No more IndexPath bookkeeping</td>
+</tr>
+</tbody></table>
+<h2 id='installation' class='heading'>Installation</h2>
+<h3 id='manual' class='heading'>Manual</h3>
+
+<p>Simply drag and drop the <code>FunctionalTableData/FunctionalTableData</code> folder into your Xcode project.</p>
+<h3 id='carthage' class='heading'>Carthage</h3>
+
+<p>Add the following to your <code>Cartfile</code>:</p>
+<pre class="highlight ruby"><code><span class="n">github</span> <span class="s2">"Shopify/FunctionalTableData"</span>
+</code></pre>
+<h2 id='getting-started' class='heading'>Getting started</h2>
+
+<p>To use the Functional Table Data (FTD) two things are required, one instance of UITableView, and an instance of the FTD itself. Once both are available, typically in a view controller&rsquo;s <code>viewDidLoad</code>, they are connected together using
+<code>functionalTableData.tableView = yourTableViewInstance</code>. After this, every time we want to display/update the data we simply call <code>functionalTableData.renderAndDiff(sections)</code>.</p>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>Check out the <a href="/FunctionalTableDataDemo">demo app</a> for a fully interactive example.</p>
+
+<p>Any time you want to update the data currently being displayed you generate the new state and pass it off to your instance of the Functional Table Data. The FTD is then responsible for computing the differences between the previous state and the next state and updating itself as necessary.</p>
+
+<p>The <code>FunctionalTableData</code> holds onto an array of sections where each section has a key. This key must be unique across all sections but should be deterministic so that its possible to adjust the rows contained within that section without replacing the entire section itself.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">section</span> <span class="o">=</span> <span class="kt">TableSection</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"header-unique-key"</span><span class="p">,</span> <span class="nv">rows</span><span class="p">:</span> <span class="p">[])</span>
+</code></pre>
+
+<p>Each section contains a series of rows where each row value must conform to the <code><a href="Protocols/CellConfigType.html">CellConfigType</a></code> protocol.</p>
+<pre class="highlight swift"><code><span class="c1">/// The simplest possible version of a cell that displays a label.</span>
+<span class="c1">/// Useful to get started, but in most cases a more robust state should be used allowing more customization.</span>
+<span class="kd">typealias</span> <span class="kt">LabelCell</span> <span class="o">=</span> <span class="kt">HostCell</span><span class="o">&lt;</span><span class="kt">UILabel</span><span class="p">,</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">LayoutMarginsTableItemLayout</span><span class="o">&gt;</span>
+
+<span class="k">let</span> <span class="nv">cells</span><span class="p">:</span> <span class="p">[</span><span class="kt">CellConfigType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">LabelCell</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"company"</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="s">"Shopify"</span><span class="p">)</span> <span class="p">{</span> <span class="n">view</span><span class="p">,</span> <span class="n">state</span> <span class="k">in</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="p">},</span>
+    <span class="kt">LabelCell</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"location"</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="s">"🇨🇦"</span><span class="p">)</span> <span class="p">{</span> <span class="n">view</span><span class="p">,</span> <span class="n">state</span> <span class="k">in</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+
+<p>The rows themselves also have a key which must be unique inside of that section. This key is used to determine when new rows are added to a section, if any were removed, or if any moved to a different location.
+Additionally, each <code>CellConfig</code> type implements an isEqual function to determine if two of them represent the same data being displayed. This allows for a single cell to perform a state change operation, that is, a toggle changing from its <code>off</code> to <code>on</code> state, a text value changing, etc.</p>
+
+<p>After assigning the variable <code>rows</code> to our previously created <code>section</code>, all that is needed to display the data in the table view is this method.</p>
+<pre class="highlight swift"><code><span class="n">functionalTableData</span><span class="o">.</span><span class="nf">renderAndDiff</span><span class="p">([</span><span class="n">section</span><span class="p">])</span>
+</code></pre>
+
+<p><img src="/Images/Example1.png" /></p>
+
+<p>Check out the <a href="/FunctionalTableDataDemo">demo app</a> for a fully interactive example.</p>
+<h3 id='building-new-cells' class='heading'>Building new Cells</h3>
+
+<p>Knowing that a cell consists of a view and state let&rsquo;s start with a simple example, a cell that displays a label. By specifying the generic requirements of <code><a href="Structs/HostCell.html">HostCell</a></code>, the simplest possible example is one that takes an <code>UILabel</code> as its view, a <code>String</code> as its state and <code>LayoutMarginsTableItemLayout</code> as the layout (See <code>TableItemLayout</code> for more info).</p>
+<pre class="highlight swift"><code><span class="kd">typealias</span> <span class="kt">LabelCell</span> <span class="o">=</span> <span class="kt">HostCell</span><span class="o">&lt;</span><span class="kt">UILabel</span><span class="p">,</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">LayoutMarginsTableItemLayout</span><span class="o">&gt;</span>
+
+<span class="c1">// Usage</span>
+<span class="kt">LabelCell</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"company"</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="s">"Shopify"</span><span class="p">)</span> <span class="p">{</span> <span class="n">view</span><span class="p">,</span> <span class="n">state</span> <span class="k">in</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">state</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Although, the previous code is very useful to get started, in most cases a more robust state should be used allowing more customization. A better example would be something like this</p>
+<pre class="highlight swift"><code><span class="kd">typealias</span> <span class="kt">LabelCell</span> <span class="o">=</span> <span class="kt">HostCell</span><span class="o">&lt;</span><span class="kt">UILabel</span><span class="p">,</span> <span class="kt">LabelState</span><span class="p">,</span> <span class="kt">LayoutMarginsTableItemLayout</span><span class="o">&gt;</span>
+
+<span class="kd">struct</span> <span class="kt">LabelState</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">alignment</span><span class="p">:</span> <span class="kt">NSTextAlignment</span>
+    <span class="k">let</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">UIColor</span>
+
+    <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">LabelState</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">LabelState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">lhs</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="n">text</span> <span class="o">&amp;&amp;</span> <span class="n">lhs</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="n">alignment</span> <span class="o">&amp;&amp;</span> <span class="n">lhs</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="n">color</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage</span>
+<span class="kt">LabelCell</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"company"</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">LabelState</span><span class="p">(</span><span class="nv">text</span><span class="p">:</span> <span class="s">"Shopify"</span><span class="p">,</span>
+                                            <span class="nv">alignment</span><span class="p">:</span> <span class="o">.</span><span class="n">center</span><span class="p">,</span>
+                                            <span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">green</span><span class="p">))</span> <span class="p">{</span> <span class="n">view</span><span class="p">,</span> <span class="n">state</span> <span class="k">in</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">state</span> <span class="o">=</span> <span class="n">state</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// If the state is `nil`, prepare this view to be reused</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">""</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">textAlignment</span> <span class="o">=</span> <span class="o">.</span><span class="n">natural</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">textColor</span> <span class="o">=</span> <span class="o">.</span><span class="n">black</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">text</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">textAlignment</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">alignment</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">textColor</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">color</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>At the end of the day <code><a href="Structs/HostCell.html">HostCell</a></code> is just one of the possible implementations of <code><a href="Protocols/CellConfigType.html">CellConfigType</a></code>, that&rsquo;s the underlying power of this framework.</p>
+<h2 id='license' class='heading'>License</h2>
+
+<p>Functional Table Data is under the <a href="/LICENSE.txt">MIT License</a></p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

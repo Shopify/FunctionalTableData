@@ -1,0 +1,4 @@
+# Ordered by output of `jazzy --help config`
+
+skip_undocumented: true
+hide_documentation_coverage: true
