@@ -1,0 +1,418 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
+      "line": 14,
+      "symbol": "CellActions.SelectionState",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
+      "line": 19,
+      "symbol": "CellActions.CanSelectCallback",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
+      "line": 20,
+      "symbol": "CellActions.CanSelectAction",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
+      "line": 21,
+      "symbol": "CellActions.SelectionAction",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
+      "line": 22,
+      "symbol": "CellActions.DeselectionAction",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
+      "line": 23,
+      "symbol": "CellActions.CanPerformAction",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
+      "line": 24,
+      "symbol": "CellActions.VisibilityAction",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
+      "line": 49,
+      "symbol": "CellActions.init(canSelectAction:selectionAction:deselectionAction:rowActions:canPerformAction:canBeMoved:visibilityAction:previewingViewControllerAction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
+      "line": 67,
+      "symbol": "CellActions.init(canSelectAction:selectionAction:deselectionAction:rowActions:canPerformAction:canBeMoved:visibilityAction:previewingViewControllerAction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellConfigType.swift",
+      "line": 47,
+      "symbol": "CellConfigType.debugInfo()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellStyle.swift",
+      "line": null,
+      "symbol": "CellStyle",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellStyle.swift",
+      "line": 12,
+      "symbol": "CellStyle",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/CollectionCell.swift",
+      "line": 11,
+      "symbol": "CollectionCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/CollectionItemConfigType.swift",
+      "line": null,
+      "symbol": "CollectionItemConfigType",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/CollectionItemConfigType.swift",
+      "line": 11,
+      "symbol": "CollectionItemConfigType",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
+      "line": null,
+      "symbol": "FunctionalCollectionData",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
+      "line": null,
+      "symbol": "FunctionalCollectionData",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
+      "line": 12,
+      "symbol": "FunctionalCollectionData",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/UICollectionView+Reusable.swift",
+      "line": 12,
+      "symbol": "UICollectionView.registerReusableCell(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/UICollectionView+Reusable.swift",
+      "line": 16,
+      "symbol": "UICollectionView.dequeueReusableCell(_:indexPath:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/HostCell.swift",
+      "line": 14,
+      "symbol": "HostCell.TableViewCellType",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/HostCell.swift",
+      "line": 15,
+      "symbol": "HostCell.CollectionViewCellType",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/HostCell.swift",
+      "line": 25,
+      "symbol": "HostCell.init(key:style:actions:state:cellUpdater:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/HostCell.swift",
+      "line": 103,
+      "symbol": "HostCell.debugInfo()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/HostCell.swift",
+      "line": 110,
+      "symbol": "HostCell.init(key:style:actions:state:cellUpdater:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/ObjCExceptionRethrower.swift",
+      "line": 12,
+      "symbol": "NSException.catchAndRethrow(_:failure:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/Separator.swift",
+      "line": 11,
+      "symbol": "Separator",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/Separator.swift",
+      "line": 79,
+      "symbol": "UIView.applyTopSeparator(_:color:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/Separator.swift",
+      "line": 90,
+      "symbol": "UIView.applyBottomSeparator(_:color:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/Separator.swift",
+      "line": 101,
+      "symbol": "UIView.removeSeparator(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableItemLayout.swift",
+      "line": 11,
+      "symbol": "TableItemLayout",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableItemLayout.swift",
+      "line": 17,
+      "symbol": "EdgeBasedTableItemLayout",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableItemLayout.swift",
+      "line": 18,
+      "symbol": "LayoutMarginsTableItemLayout",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableItemLayout.swift",
+      "line": 20,
+      "symbol": "ExplicitLayoutMarginsTableItemLayout",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableItemLayout.swift",
+      "line": 27,
+      "symbol": "EdgeLayout",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableItemLayout.swift",
+      "line": 39,
+      "symbol": "MarginsLayout",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableItemLayout.swift",
+      "line": 52,
+      "symbol": "CombinedLayout",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSection.swift",
+      "line": null,
+      "symbol": "TableSection",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSection.swift",
+      "line": null,
+      "symbol": "TableSection",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSection.swift",
+      "line": 26,
+      "symbol": "TableSectionType.rowCount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSection.swift",
+      "line": 28,
+      "symbol": "TableSectionType.subscript(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.subscript",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSection.swift",
+      "line": 31,
+      "symbol": "TableSection",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSection.swift",
+      "line": 120,
+      "symbol": "SectionStyle",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSectionChangeSet.swift",
+      "line": 22,
+      "symbol": "TableSectionChangeSet",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSectionHeaderFooter.swift",
+      "line": 14,
+      "symbol": "TableHeaderConfigType",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSectionHeaderFooter.swift",
+      "line": 16,
+      "symbol": "TableHeaderFooterConfigType",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSectionHeaderFooter.swift",
+      "line": 21,
+      "symbol": "TableHeaderFooterStateType",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableSectionHeaderFooter.swift",
+      "line": 28,
+      "symbol": "TableSectionHeaderFooter",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
+      "line": null,
+      "symbol": "FunctionalTableData",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
+      "line": null,
+      "symbol": "FunctionalTableData",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
+      "line": 21,
+      "symbol": "FunctionalTableData",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/TableCell.swift",
+      "line": 11,
+      "symbol": "TableCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/TableCell.swift",
+      "line": 60,
+      "symbol": "TableHeaderFooter",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/TableItemConfigType.swift",
+      "line": null,
+      "symbol": "TableItemConfigType",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/TableItemConfigType.swift",
+      "line": 11,
+      "symbol": "TableItemConfigType",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/UITableView+Reusable.swift",
+      "line": 14,
+      "symbol": "UITableView.registerReusableHeaderFooterView(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/UITableView+Reusable.swift",
+      "line": 18,
+      "symbol": "UITableView.dequeueReusableHeaderFooterView(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/UITableView+Reusable.swift",
+      "line": 27,
+      "symbol": "UITableView.registerReusableCell(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/UITableView+Reusable.swift",
+      "line": 31,
+      "symbol": "UITableView.dequeueReusableCell(_:indexPath:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/raulriera/Downloads/Shopify/FunctionalTableData"
+}
