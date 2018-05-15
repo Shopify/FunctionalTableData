@@ -9,41 +9,43 @@
 import Foundation
 import UIKit
 
-/// The actions property exposed on the CellConfigType represents possible events that will be executed based on the users interaction with that particular cell. Of note are the `selectionAction` and `previewingViewControllerAction`. The `selectionAction` is executed when the user taps on that particular cell. The main use case for this is present a new detail view controller or a modal (but is not constrained to these actions, these are just the common use cases). The `previewingViewControllerAction` is responsible for returning an instance of a UIViewController that will be shown when a user 3D-touches on a cell.
+/// Defines the presentation information of an item inside a `TableSection`.
+///
+/// Some properties are only supported by `UITableView`.
 public struct CellStyle {
 	public static var selectionColor: UIColor? = nil // TODO: make this not a static like this
-    /// The style to apply to the bottom separator in the cell.
-    ///
-    /// Supported by UITableView only.
+	/// The style to apply to the bottom separator in the cell.
+	///
+	/// Supported by `UITableView` only.
 	public var bottomSeparator: Separator.Style?
-    /// The style to apply to the top separator in the cell.
-    ///
-    /// Supported by UITableView only.
+	/// The style to apply to the top separator in the cell.
+	///
+	/// Supported by `UITableView` only.
 	public var topSeparator: Separator.Style?
-    /// The color of separator rows in the cell.
-    ///
-    /// Supported by UITableView only.
+	/// The color of separator lines in the cell.
+	///
+	/// Supported by `UITableView` only.
 	public var separatorColor: UIColor?
-    /// Whether the cell is highlighted or not.
-    ///
-    /// Supported by UITableView only.
+	/// Whether the cell is highlighted or not.
+	///
+	/// Supported by `UITableView` only.
 	public var highlight: Bool?
-    /// The type of standard accessory control used by a cell.
-    /// You use these constants when setting the value of the [accessoryType](apple-reference-documentation://hspQPOCGHb) property.
-    ///
-    /// Supported by UITableView only.
+	/// The type of standard accessory control used by a cell.
+	/// You use these constants when setting the value of the [accessoryType](apple-reference-documentation://hspQPOCGHb) property.
+	///
+	/// Supported by `UITableView` only.
 	public var accessoryType: UITableViewCellAccessoryType = .none
-    /// The view's selection color.
+	/// The view's selection color.
 	public var selectionColor: UIColor? = CellStyle.selectionColor
-    /// The view's background color.
+	/// The view's background color.
 	public var backgroundColor: UIColor?
-    /// The view that is displayed behind the cell’s other content.
+	/// The view that is displayed behind the cell’s other content.
 	public var backgroundView: UIView?
-    /// The tint color to apply to the cell.
+	/// The tint color to apply to the cell.
 	public var tintColor: UIColor?
-    /// The default spacing to use when laying out content in the view.
+	/// The default spacing to use when laying out content in the view.
 	public var layoutMargins: UIEdgeInsets?
-    /// The radius to use when drawing rounded corners for the layer’s background.
+	/// The radius to use when drawing rounded corners in the view.
 	public var cornerRadius: CGFloat
 	
 	public init(topSeparator: Separator.Style? = nil,
