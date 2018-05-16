@@ -8,9 +8,7 @@
 
 import Foundation
 
-/// A type with the information about a section.
-///
-/// `FunctionalTableData` deals in arrays of `TableSection` instances. Each section, at a minimum, has a string value unique within the table itself, and an array of `CellConfigType` instances that represent the rows of the section. Additionally there may be a header and footer for the section.
+/// A type that provides the information about a section.
 public protocol TableSectionType {
 	/// Unique identifier for the section.
 	var key: String { get }
@@ -28,6 +26,9 @@ public protocol TableSectionType {
 	subscript(index: Int) -> CellConfigType { get }
 }
 
+/// Defines the style, and state information of a section.
+///
+/// `FunctionalTableData` deals in arrays of `TableSection` instances. Each section, at a minimum, has a string value unique within the table itself, and an array of `CellConfigType` instances that represent the rows of the section. Additionally there may be a header and footer for the section.
 public struct TableSection: Sequence, TableSectionType {
 	public let key: String
 	public var header: TableHeaderFooterConfigType? = nil
