@@ -11,6 +11,7 @@ import UIKit
 
 /// The actions property exposed on the CellConfigType represents possible events that will be executed based on the users interaction with that particular cell. Of note are the `selectionAction` and `previewingViewControllerAction`. The `selectionAction` is executed when the user taps on that particular cell. The main use case for this is present a new detail view controller or a modal (but is not constrained to these actions, these are just the common use cases). The `previewingViewControllerAction` is responsible for returning an instance of a UIViewController that will be shown when a user 3D-touches on a cell.
 public struct CellActions {
+	/// The possible states a cell can be when a selection action is performed on it.
 	public enum SelectionState {
 		case selected
 		case deselected
