@@ -2,70 +2,63 @@
   "warnings": [
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 16,
-      "symbol": "CellActions.SelectionState.selected",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "line": 14,
+      "symbol": "CellActions.SelectionState",
+      "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 17,
-      "symbol": "CellActions.SelectionState.deselected",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 20,
+      "line": 19,
       "symbol": "CellActions.CanSelectCallback",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 21,
+      "line": 20,
       "symbol": "CellActions.CanSelectAction",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 22,
+      "line": 21,
       "symbol": "CellActions.SelectionAction",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 23,
+      "line": 22,
       "symbol": "CellActions.DeselectionAction",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 24,
+      "line": 23,
       "symbol": "CellActions.CanPerformAction",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 25,
+      "line": 24,
       "symbol": "CellActions.VisibilityAction",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 50,
+      "line": 49,
       "symbol": "CellActions.init(canSelectAction:selectionAction:deselectionAction:rowActions:canPerformAction:canBeMoved:visibilityAction:previewingViewControllerAction:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellActions.swift",
-      "line": 68,
+      "line": 67,
       "symbol": "CellActions.init(canSelectAction:selectionAction:deselectionAction:rowActions:canPerformAction:canBeMoved:visibilityAction:previewingViewControllerAction:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -79,16 +72,16 @@
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellStyle.swift",
-      "line": 16,
-      "symbol": "CellStyle.selectionColor",
-      "symbol_kind": "source.lang.swift.decl.var.static",
+      "line": null,
+      "symbol": "CellStyle",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CellStyle.swift",
-      "line": 51,
-      "symbol": "CellStyle.init(topSeparator:bottomSeparator:separatorColor:highlight:accessoryType:selectionColor:backgroundColor:backgroundView:tintColor:layoutMargins:cornerRadius:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "line": 12,
+      "symbol": "CellStyle",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
