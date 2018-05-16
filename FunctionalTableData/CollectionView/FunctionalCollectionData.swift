@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+/// A renderer for `UICollectionView`.
+///
+/// By providing a complete description of your table state using an array of `TableSection`. `FunctionalCollectionData` compares it with the previous render call to insert, update, and remove everything that have changed. This massively simplifies state management of complex UI.
 public class FunctionalCollectionData: NSObject {
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
