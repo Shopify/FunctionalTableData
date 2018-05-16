@@ -28,6 +28,29 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/FunctionalCollectionData.html">FunctionalCollectionData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FunctionalCollectionData/KeyPath.html">– KeyPath</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FunctionalTableData.html">FunctionalTableData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FunctionalTableData.html#/s:19FunctionalTableDataAAC9ExceptionV">– Exception</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FunctionalTableData/KeyPath.html">– KeyPath</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FunctionalTableData.html#/s:19FunctionalTableDataAAC0B10AnimationsV">– TableAnimations</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -69,6 +92,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/HostCell.html">HostCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/TableSection.html">TableSection</a>
               </li>
             </ul>
           </li>
@@ -136,7 +162,7 @@
 
 <p>Any time you want to update the data currently being displayed you generate the new state and pass it off to your instance of the Functional Table Data. The FTD is then responsible for computing the differences between the previous state and the next state and updating itself as necessary.</p>
 
-<p>The <code>FunctionalTableData</code> holds onto an array of sections where each section has a key. This key must be unique across all sections but should be deterministic so that its possible to adjust the rows contained within that section without replacing the entire section itself.</p>
+<p>The <code><a href="Classes/FunctionalTableData.html">FunctionalTableData</a></code> holds onto an array of sections where each section has a key. This key must be unique across all sections but should be deterministic so that its possible to adjust the rows contained within that section without replacing the entire section itself.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">section</span> <span class="o">=</span> <span class="kt">TableSection</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"header-unique-key"</span><span class="p">,</span> <span class="nv">rows</span><span class="p">:</span> <span class="p">[])</span>
 </code></pre>
 
