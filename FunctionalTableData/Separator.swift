@@ -8,10 +8,20 @@
 
 import UIKit
 
+/// A view used to include separator lines between table cells.
+///
+/// Use the static `inset` property to globably change the default inset for all table cells. The default background color of a separator is `UIColor.clear`, use [UIAppearance](https://developer.apple.com/documentation/uikit/uiappearance) to modify its value.
+///
+/// Supported by `UITableView` only.
 public class Separator: UIView {
+	/// Specifies the default inset of cell separators.
 	public static var inset: CGFloat = 0.0
+	/// Specifies the default thickness of cell separators.
 	private let thickness: CGFloat = 1.0 / UIScreen.main.scale
 	
+	/// The style for table cells used as separators.
+	///
+	/// The options are `full`, `inset`, and `moreInset`
 	public enum Style {
 		case full
 		case inset
@@ -29,8 +39,9 @@ public class Separator: UIView {
 		}
 	}
 	
+	/// The identifier that can be used to locate a given separator view.
 	public enum Tag: Int {
-		// numbers are random so subview tags dont conflict
+		// numbers are random so subview tags don't conflict
 		case top = 2318
 		case bottom = 9773
 		
@@ -76,6 +87,11 @@ public class Separator: UIView {
 }
 
 public extension UIView {
+	/// Applies an instance of a `Separator` view to the top of the current view.
+	///
+	/// - Parameters:
+	///   - style: the separator inset style.
+	///   - color: the separator color.
 	public func applyTopSeparator(_ style: Separator.Style, color: UIColor? = nil) {
 		removeSeparator(Separator.Tag.top)
 		let separator = Separator(style: style)
@@ -87,6 +103,11 @@ public extension UIView {
 		separator.constrainToTopOfView(self)
 	}
 	
+	/// Applies an instance of a `Separator` view to the bottom of the current view.
+	///
+	/// - Parameters:
+	///   - style: the separator inset style.
+	///   - color: the separator color.
 	public func applyBottomSeparator(_ style: Separator.Style, color: UIColor? = nil) {
 		removeSeparator(Separator.Tag.bottom)
 		let separator = Separator(style: style)
@@ -98,6 +119,9 @@ public extension UIView {
 		separator.constrainToBottomOfView(self)
 	}
 	
+	/// Removes any instance of a `Separator` view from the current view.
+	///
+	/// - Parameter withTag: the separator to remove.
 	public func removeSeparator(_ withTag: Separator.Tag) {
 		guard let separator = viewWithTag(withTag.rawValue) as? Separator else { return }
 		separator.removeFromSuperview()

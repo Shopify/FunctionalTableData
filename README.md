@@ -33,6 +33,8 @@ github "Shopify/FunctionalTableData"
 To use the Functional Table Data (FTD) two things are required, one instance of UITableView, and an instance of the FTD itself. Once both are available, typically in a view controller's `viewDidLoad`, they are connected together using
 `functionalTableData.tableView = yourTableViewInstance`. After this, every time we want to display/update the data we simply call `functionalTableData.renderAndDiff(sections)`.
 
+For more information, read our [documentation](https://shopify.github.io/FunctionalTableData/).
+
 ## Usage
 
 Check out the [demo app](https://github.com/Shopify/FunctionalTableData/blob/master/FunctionalTableDataDemo) for a fully interactive example.
