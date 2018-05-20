@@ -48,9 +48,10 @@ public class FunctionalCollectionData: NSObject {
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
 	
-	/// Index path for the previously selected row.
-	public var indexPathForPreviouslySelectedRow: IndexPath?
-	
+	/// Enclosing `UICollectionView` that presents all the `TableSection` data.
+	///
+	/// `FunctionalCollectionData` will take care of setting its own `UICollectionViewDelegate` and
+	/// `UICollectionViewDataSource` and manage all the internals of the `UICollectionView` on its own.
 	public var collectionView: UICollectionView? {
 		didSet {
 			guard let collectionView = collectionView else { return }
@@ -81,9 +82,17 @@ public class FunctionalCollectionData: NSObject {
 		return renderAndDiffQueue.isSuspended
 	}
 	
-	public init(name: String? = nil, fileName: String = #file, lineNumber: Int = #line) {
-		self.unitTesting = NSClassFromString("XCTestCase") != nil
-		self.name = name ?? "FunctionalCollectionDataRenderAndDiff-\((fileName as NSString).lastPathComponent):\(lineNumber)"
+	/// Initializes a FunctionalCollectionData. To configure its view, provide a UICollectionView after initialization.
+	///
+	/// - Parameter name: String identifying this instance of FunctionalCollectionData, useful when several instances are displayed on the same screen
+	public init(name: String? = nil) {
+		if let name = name {
+			self.name = name
+		} else {
+			self.name = "FunctionalCollectionDataRenderAndDiff-\((#file as NSString).lastPathComponent):\(#line)"
+		}
+
+		unitTesting = NSClassFromString("XCTestCase") != nil
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name
 		renderAndDiffQueue.maxConcurrentOperationCount = 1

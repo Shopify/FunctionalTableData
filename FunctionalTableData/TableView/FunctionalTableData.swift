@@ -128,9 +128,17 @@ public class FunctionalTableData: NSObject {
 		return renderAndDiffQueue.isSuspended
 	}
 	
-	public init(name: String? = nil, fileName: String = #file, lineNumber: Int = #line) {
-		self.unitTesting = NSClassFromString("XCTestCase") != nil
-		self.name = name ?? "FunctionalTableDataRenderAndDiff-\((fileName as NSString).lastPathComponent):\(lineNumber)"
+	/// Initializes a FunctionalTableData. To configure its view, provide a UITableView after initialization.
+	///
+	/// - Parameter name: String identifying this instance of FunctionalTableData, useful when several instances are displayed on the same screen
+	public init(name: String? = nil) {
+		if let name = name {
+			self.name = name
+		} else {
+			self.name = "FunctionalTableDataRenderAndDiff-\((#file as NSString).lastPathComponent):\(#line)"
+		}
+		
+		unitTesting = NSClassFromString("XCTestCase") != nil
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name
 		renderAndDiffQueue.maxConcurrentOperationCount = 1
