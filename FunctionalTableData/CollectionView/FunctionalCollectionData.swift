@@ -94,9 +94,9 @@ public class FunctionalCollectionData: NSObject {
 	
 	/// Initializes a FunctionalCollectionData. To configure its view, provide a UICollectionView after initialization.
 	///
-	/// - Parameter name: String identifying this instance of FunctionalCollectionData, useful when several instances are displayed on the same screen
+	/// - Parameter name: String identifying this instance of FunctionalCollectionData, useful when several instances are displayed on the same screen. This also value names the queue doing all the rendering work, useful for debugging.
 	public init(name: String? = nil) {
-		self.name = name ?? "FunctionalCollectionDataRenderAndDiff-\(UUID().uuidString)"
+		self.name = name ?? "FunctionalCollectionDataRenderAndDiff"
 		unitTesting = NSClassFromString("XCTestCase") != nil
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name

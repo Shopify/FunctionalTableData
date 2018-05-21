@@ -140,9 +140,9 @@ public class FunctionalTableData: NSObject {
 	
 	/// Initializes a FunctionalTableData. To configure its view, provide a UITableView after initialization.
 	///
-	/// - Parameter name: String identifying this instance of FunctionalTableData, useful when several instances are displayed on the same screen
+	/// - Parameter name: String identifying this instance of FunctionalTableData, useful when several instances are displayed on the same screen. This value also names the queue doing all the rendering work, useful for debugging.
 	public init(name: String? = nil) {
-		self.name = name ?? "FunctionalTableDataRenderAndDiff-\(UUID().uuidString)"		
+		self.name = name ?? "FunctionalTableDataRenderAndDiff"
 		unitTesting = NSClassFromString("XCTestCase") != nil
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name
