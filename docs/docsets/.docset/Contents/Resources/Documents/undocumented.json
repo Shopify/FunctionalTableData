@@ -121,273 +121,259 @@
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 54,
-      "symbol": "FunctionalCollectionData.collectionView",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 62,
+      "line": 63,
       "symbol": "FunctionalCollectionData.subscript(_:)",
       "symbol_kind": "source.lang.swift.decl.function.subscript",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 66,
+      "line": 67,
       "symbol": "FunctionalCollectionData.scrollViewDidScroll",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 67,
+      "line": 68,
       "symbol": "FunctionalCollectionData.scrollViewWillBeginDragging",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 68,
+      "line": 69,
       "symbol": "FunctionalCollectionData.scrollViewWillEndDragging",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 69,
+      "line": 70,
       "symbol": "FunctionalCollectionData.scrollViewDidEndDragging",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 70,
+      "line": 71,
       "symbol": "FunctionalCollectionData.scrollViewWillBeginDecelerating",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 71,
+      "line": 72,
       "symbol": "FunctionalCollectionData.scrollViewDidEndDecelerating",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 72,
+      "line": 73,
       "symbol": "FunctionalCollectionData.scrollViewDidChangeContentSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 73,
+      "line": 74,
       "symbol": "FunctionalCollectionData.scrollViewDidEndScrollingAnimation",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 74,
+      "line": 75,
       "symbol": "FunctionalCollectionData.scrollViewShouldScrollToTop",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 75,
+      "line": 76,
       "symbol": "FunctionalCollectionData.scrollViewDidScrollToTop",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 84,
-      "symbol": "FunctionalCollectionData.init(name:fileName:lineNumber:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 381,
+      "line": 390,
       "symbol": "FunctionalCollectionData.indexPathFromKeyPath(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 393,
+      "line": 402,
       "symbol": "FunctionalCollectionData.previewingContext(_:viewControllerForLocation:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 439,
+      "line": 448,
       "symbol": "FunctionalCollectionData.numberOfSections(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 443,
+      "line": 452,
       "symbol": "FunctionalCollectionData.collectionView(_:numberOfItemsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 447,
+      "line": 456,
       "symbol": "FunctionalCollectionData.collectionView(_:cellForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 459,
+      "line": 468,
       "symbol": "FunctionalCollectionData.collectionView(_:moveItemAt:to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 472,
+      "line": 481,
       "symbol": "FunctionalCollectionData.collectionView(_:shouldSelectItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 477,
+      "line": 486,
       "symbol": "FunctionalCollectionData.collectionView(_:shouldHighlightItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 481,
+      "line": 490,
       "symbol": "FunctionalCollectionData.collectionView(_:didSelectItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 493,
+      "line": 502,
       "symbol": "FunctionalCollectionData.collectionView(_:didDeselectItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 505,
+      "line": 514,
       "symbol": "FunctionalCollectionData.collectionView(_:willDisplay:forItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 514,
+      "line": 523,
       "symbol": "FunctionalCollectionData.collectionView(_:didEndDisplaying:forItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 521,
+      "line": 530,
       "symbol": "FunctionalCollectionData.collectionView(_:shouldShowMenuForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 525,
+      "line": 534,
       "symbol": "FunctionalCollectionData.collectionView(_:canPerformAction:forItemAt:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 529,
+      "line": 538,
       "symbol": "FunctionalCollectionData.collectionView(_:performAction:forItemAt:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 533,
+      "line": 542,
       "symbol": "FunctionalCollectionData.collectionView(_:canMoveItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 537,
+      "line": 546,
       "symbol": "FunctionalCollectionData.collectionView(_:targetIndexPathForMoveFromItemAt:toProposedIndexPath:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 550,
+      "line": 559,
       "symbol": "FunctionalCollectionData.scrollViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 554,
+      "line": 563,
       "symbol": "FunctionalCollectionData.scrollViewWillBeginDragging(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 558,
+      "line": 567,
       "symbol": "FunctionalCollectionData.scrollViewWillEndDragging(_:withVelocity:targetContentOffset:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 562,
+      "line": 571,
       "symbol": "FunctionalCollectionData.scrollViewDidEndDragging(_:willDecelerate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 566,
+      "line": 575,
       "symbol": "FunctionalCollectionData.scrollViewWillBeginDecelerating(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 570,
+      "line": 579,
       "symbol": "FunctionalCollectionData.scrollViewDidEndDecelerating(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 574,
+      "line": 583,
       "symbol": "FunctionalCollectionData.scrollViewDidEndScrollingAnimation(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 578,
+      "line": 587,
       "symbol": "FunctionalCollectionData.scrollViewShouldScrollToTop(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/CollectionView/FunctionalCollectionData.swift",
-      "line": 582,
+      "line": 591,
       "symbol": "FunctionalCollectionData.scrollViewDidScrollToTop(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -814,273 +800,266 @@
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 131,
-      "symbol": "FunctionalTableData.init(name:fileName:lineNumber:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 203,
+      "line": 211,
       "symbol": "FunctionalTableData.renderAndDiff(_:keyPath:reloadList:animated:animations:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 459,
+      "line": 467,
       "symbol": "FunctionalTableData.indexPathFromKeyPath(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 471,
+      "line": 479,
       "symbol": "FunctionalTableData.previewingContext(_:viewControllerForLocation:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 531,
+      "line": 539,
       "symbol": "FunctionalTableData.numberOfSections(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 535,
+      "line": 543,
       "symbol": "FunctionalTableData.tableView(_:numberOfRowsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 539,
+      "line": 547,
       "symbol": "FunctionalTableData.tableView(_:cellForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 551,
+      "line": 559,
       "symbol": "FunctionalTableData.tableView(_:moveRowAt:to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 564,
+      "line": 572,
       "symbol": "FunctionalTableData.tableView(_:heightForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 572,
+      "line": 580,
       "symbol": "FunctionalTableData.tableView(_:heightForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 580,
+      "line": 588,
       "symbol": "FunctionalTableData.tableView(_:estimatedHeightForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 589,
+      "line": 597,
       "symbol": "FunctionalTableData.tableView(_:viewForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 594,
+      "line": 602,
       "symbol": "FunctionalTableData.tableView(_:viewForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 599,
+      "line": 607,
       "symbol": "FunctionalTableData.tableView(_:shouldHighlightRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 604,
+      "line": 612,
       "symbol": "FunctionalTableData.tableView(_:willSelectRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 647,
+      "line": 655,
       "symbol": "FunctionalTableData.tableView(_:didSelectRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 659,
+      "line": 667,
       "symbol": "FunctionalTableData.tableView(_:didDeselectRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 671,
+      "line": 679,
       "symbol": "FunctionalTableData.tableView(_:willDisplay:forRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 684,
+      "line": 692,
       "symbol": "FunctionalTableData.tableView(_:didEndDisplaying:forRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 691,
+      "line": 699,
       "symbol": "FunctionalTableData.tableView(_:willDisplayHeaderView:forSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 696,
+      "line": 704,
       "symbol": "FunctionalTableData.tableView(_:didEndDisplayingHeaderView:forSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 702,
+      "line": 710,
       "symbol": "FunctionalTableData.tableView(_:shouldShowMenuForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 707,
+      "line": 715,
       "symbol": "FunctionalTableData.tableView(_:canPerformAction:forRowAt:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 712,
+      "line": 720,
       "symbol": "FunctionalTableData.tableView(_:performAction:forRowAt:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 716,
+      "line": 724,
       "symbol": "FunctionalTableData.tableView(_:editingStyleForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 721,
+      "line": 729,
       "symbol": "FunctionalTableData.tableView(_:shouldIndentWhileEditingRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 725,
+      "line": 733,
       "symbol": "FunctionalTableData.tableView(_:canMoveRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 729,
+      "line": 737,
       "symbol": "FunctionalTableData.tableView(_:targetIndexPathForMoveFromRowAt:toProposedIndexPath:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 733,
+      "line": 741,
       "symbol": "FunctionalTableData.tableView(_:canEditRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 738,
+      "line": 746,
       "symbol": "FunctionalTableData.tableView(_:editActionsForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 752,
+      "line": 760,
       "symbol": "FunctionalTableData.scrollViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 756,
+      "line": 764,
       "symbol": "FunctionalTableData.scrollViewWillBeginDragging(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 760,
+      "line": 768,
       "symbol": "FunctionalTableData.scrollViewWillEndDragging(_:withVelocity:targetContentOffset:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 764,
+      "line": 772,
       "symbol": "FunctionalTableData.scrollViewDidEndDragging(_:willDecelerate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 768,
+      "line": 776,
       "symbol": "FunctionalTableData.scrollViewWillBeginDecelerating(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 772,
+      "line": 780,
       "symbol": "FunctionalTableData.scrollViewDidEndDecelerating(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 776,
+      "line": 784,
       "symbol": "FunctionalTableData.scrollViewDidEndScrollingAnimation(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 780,
+      "line": 788,
       "symbol": "FunctionalTableData.scrollViewShouldScrollToTop(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/TableView/FunctionalTableData.swift",
-      "line": 784,
+      "line": 792,
       "symbol": "FunctionalTableData.scrollViewDidScrollToTop(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
