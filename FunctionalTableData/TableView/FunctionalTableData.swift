@@ -84,17 +84,27 @@ public class FunctionalTableData: NSObject {
 		return sections[indexPath]
 	}
 
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619392-scrollviewdidscroll) for more information.
 	public var scrollViewDidScroll: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619394-scrollviewwillbegindragging) for more information.
 	public var scrollViewWillBeginDragging: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619385-scrollviewwillenddragging) for more information.
 	public var scrollViewWillEndDragging: ((_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619436-scrollviewdidenddragging) for more information.
 	public var scrollViewDidEndDragging: ((_ scrollView: UIScrollView, _ decelerate: Bool) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619386-scrollviewwillbegindecelerating) for more information.
 	public var scrollViewWillBeginDecelerating: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619417-scrollviewdidenddecelerating) for more information.
 	public var scrollViewDidEndDecelerating: ((_ scrollView: UIScrollView) -> Void)?
+	/// Tells the delegate that the scroll view has changed its content size.
 	public var scrollViewDidChangeContentSize: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619379-scrollviewdidendscrollinganimati) for more information.
 	public var scrollViewDidEndScrollingAnimation: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619378-scrollviewshouldscrolltotop) for more information.
 	public var scrollViewShouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619382-scrollviewdidscrolltotop) for more information.
 	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)?
-	
+
 	/// The type of animation when rows and sections are inserted or deleted.
 	public struct TableAnimations {
 		public struct Actions {

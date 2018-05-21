@@ -64,15 +64,25 @@ public class FunctionalCollectionData: NSObject {
 		return sections[indexPath]
 	}
 	
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619392-scrollviewdidscroll) for more information.
 	public var scrollViewDidScroll: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619394-scrollviewwillbegindragging) for more information.
 	public var scrollViewWillBeginDragging: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619385-scrollviewwillenddragging) for more information.
 	public var scrollViewWillEndDragging: ((_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619436-scrollviewdidenddragging) for more information.
 	public var scrollViewDidEndDragging: ((_ scrollView: UIScrollView, _ decelerate: Bool) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619386-scrollviewwillbegindecelerating) for more information.
 	public var scrollViewWillBeginDecelerating: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619417-scrollviewdidenddecelerating) for more information.
 	public var scrollViewDidEndDecelerating: ((_ scrollView: UIScrollView) -> Void)?
+	/// Tells the delegate that the scroll view has changed its content size.
 	public var scrollViewDidChangeContentSize: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619379-scrollviewdidendscrollinganimati) for more information.
 	public var scrollViewDidEndScrollingAnimation: ((_ scrollView: UIScrollView) -> Void)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619378-scrollviewshouldscrolltotop) for more information.
 	public var scrollViewShouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)?
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619382-scrollviewdidscrolltotop) for more information.
 	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)?
 	
 	private let unitTesting: Bool
@@ -373,7 +383,7 @@ public class FunctionalCollectionData: NSObject {
 	}
 	
 	/// - Parameter point: The point in the collection view’s bounds that you want to test.
-	/// - Returns: the keypath of the item at the specified point, or `nil` if no item was found at that point.
+	/// - Returns: The keypath of the item at the specified point, or `nil` if no item was found at that point.
 	public func keyPath(at point: CGPoint) -> KeyPath? {
 		guard let indexPath = collectionView?.indexPathForItem(at: point) else {
 			return nil
@@ -382,6 +392,10 @@ public class FunctionalCollectionData: NSObject {
 		return keyPathForIndexPath(indexPath: indexPath)
 	}
 	
+	/// Returns the IndexPath corresponding to the provided KeyPath.
+	///
+	/// - Parameter keyPath: The path representing the desired indexPath.
+	/// - Returns: The IndexPath of the item at the provided keyPath.
 	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
 		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
 			return IndexPath(item: rowIndex, section: sectionIndex)
