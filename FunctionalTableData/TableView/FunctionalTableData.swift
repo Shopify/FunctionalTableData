@@ -132,12 +132,7 @@ public class FunctionalTableData: NSObject {
 	///
 	/// - Parameter name: String identifying this instance of FunctionalTableData, useful when several instances are displayed on the same screen
 	public init(name: String? = nil) {
-		if let name = name {
-			self.name = name
-		} else {
-			self.name = "FunctionalTableDataRenderAndDiff-\((#file as NSString).lastPathComponent):\(#line)"
-		}
-		
+		self.name = name ?? "FunctionalTableDataRenderAndDiff-\(UUID().uuidString)"		
 		unitTesting = NSClassFromString("XCTestCase") != nil
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name

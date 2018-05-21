@@ -86,12 +86,7 @@ public class FunctionalCollectionData: NSObject {
 	///
 	/// - Parameter name: String identifying this instance of FunctionalCollectionData, useful when several instances are displayed on the same screen
 	public init(name: String? = nil) {
-		if let name = name {
-			self.name = name
-		} else {
-			self.name = "FunctionalCollectionDataRenderAndDiff-\((#file as NSString).lastPathComponent):\(#line)"
-		}
-
+		self.name = name ?? "FunctionalCollectionDataRenderAndDiff-\(UUID().uuidString)"
 		unitTesting = NSClassFromString("XCTestCase") != nil
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name
