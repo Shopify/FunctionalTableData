@@ -1,8 +1,8 @@
 language: swift
+osx_image: xcode9.3
 xcode_project: FunctionalTableData.xcodeproj
 xcode_schema: FunctionalTableDataTests
 notifications:
   disabled: true
-
-env:
-  - PLATFORM=iOS NAME='iPhone SE'
+script:
+  - xcodebuild test -scheme FunctionalTableData -destination "OS=11.3,name=iPhone SE" -sdk iphonesimulator11.3 | xcpretty -c
