@@ -148,14 +148,11 @@
 		17E57FE7208A404700BFCC3D /* FunctionalTableDataDemo */ = {
 			isa = PBXGroup;
 			children = (
-				17E57FFF208A425F00BFCC3D /* LabelCell.swift */,
 				17E57FE8208A404700BFCC3D /* AppDelegate.swift */,
-				17E57FEA208A404700BFCC3D /* TableExampleController.swift */,
-				17E57FEC208A404700BFCC3D /* CollectionExampleController.swift */,
-				17E57FEE208A404700BFCC3D /* Main.storyboard */,
-				17E57FF1208A404800BFCC3D /* Assets.xcassets */,
-				17E57FF3208A404800BFCC3D /* LaunchScreen.storyboard */,
 				17E57FF6208A404800BFCC3D /* Info.plist */,
+				4CCFDFF520B2230E00584343 /* Cells */,
+				4CCFDFF620B2231500584343 /* View Controllers */,
+				4CCFDFF420B2230200584343 /* Resources */,
 			);
 			path = FunctionalTableDataDemo;
 			sourceTree = "<group>";
@@ -252,6 +249,33 @@
 				4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */,
 			);
 			path = TableView;
+			sourceTree = "<group>";
+		};
+		4CCFDFF420B2230200584343 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				17E57FF1208A404800BFCC3D /* Assets.xcassets */,
+				17E57FF3208A404800BFCC3D /* LaunchScreen.storyboard */,
+				17E57FEE208A404700BFCC3D /* Main.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4CCFDFF520B2230E00584343 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				17E57FFF208A425F00BFCC3D /* LabelCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4CCFDFF620B2231500584343 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				17E57FEC208A404700BFCC3D /* CollectionExampleController.swift */,
+				17E57FEA208A404700BFCC3D /* TableExampleController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

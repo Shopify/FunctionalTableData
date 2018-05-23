@@ -44,10 +44,6 @@ public class Separator: UIView {
 		// numbers are random so subview tags don't conflict
 		case top = 2318
 		case bottom = 9773
-		
-		var intValue: Int {
-			return self.rawValue
-		}
 	}
 
 	let style: Style
