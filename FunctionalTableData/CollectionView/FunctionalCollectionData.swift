@@ -322,8 +322,8 @@ public class FunctionalCollectionData: NSObject {
 					update.cellConfig.update(cell: cell, in: collectionView)
 					
 					let section = sections[update.index.section]
-					let style = section.mergedStyle(for: update.index.item)
-					style?.configure(cell: cell, in: collectionView)
+					let style = section.mergedStyle(for: update.index.item) ?? CellStyle()
+					style.configure(cell: cell, in: collectionView)
 				}
 			}
 		}
@@ -455,7 +455,8 @@ extension FunctionalCollectionData: UICollectionViewDataSource {
 		let cell = cellConfig.dequeueCell(from: collectionView, at: indexPath)
 		
 		cellConfig.update(cell: cell, in: collectionView)
-		cellConfig.style?.configure(cell: cell, in: collectionView)
+		let style = cellConfig.style ?? CellStyle()
+		style.configure(cell: cell, in: collectionView)
 		
 		return cell
 	}
