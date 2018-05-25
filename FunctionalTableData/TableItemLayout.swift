@@ -29,7 +29,7 @@ public struct ExplicitLayoutMarginsTableItemLayout: TableItemLayout {
 }
 
 public enum EdgeLayout {
-	@available(*, deprecated, message: "Use `Leading` and `EdgeLayout.Trailing` instead.")
+	@available(*, deprecated, message: "Use `EdgeLayout.Leading` and `EdgeLayout.Trailing` instead.")
 	public struct Horizontal: TableItemLayout {
 		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
 			Leading.layoutView(view, inContentView: contentView)
@@ -112,7 +112,7 @@ public enum MarginsLayout {
 	}
 }
 
-@available(*, deprecated, message: "Use `Layout(Top:Leading:Bottom:Trailing)` instead.")
+@available(*, deprecated, message: "Use `Layout<Top:Leading:Bottom:Trailing>` instead.")
 public struct CombinedLayout<Horizontal: TableItemLayout, Vertical: TableItemLayout>: TableItemLayout {
 	public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
 		Horizontal.layoutView(view, inContentView: contentView)
