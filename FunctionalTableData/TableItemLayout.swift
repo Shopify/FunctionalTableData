@@ -14,44 +14,117 @@ public protocol TableItemLayout {
 
 // TableItemLayout
 
-public typealias EdgeBasedTableItemLayout = CombinedLayout<EdgeLayout.Horizontal, EdgeLayout.Vertical>
-public typealias LayoutMarginsTableItemLayout = CombinedLayout<MarginsLayout.Horizontal, MarginsLayout.Vertical>
+public typealias EdgeBasedTableItemLayout = Layout<EdgeLayout.Top, EdgeLayout.Leading, EdgeLayout.Bottom, EdgeLayout.Trailing>
+public typealias LayoutMarginsTableItemLayout = Layout<MarginsLayout.Top, MarginsLayout.Leading, MarginsLayout.Bottom, MarginsLayout.Trailing>
 
 public struct ExplicitLayoutMarginsTableItemLayout: TableItemLayout {
 	public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
 		contentView.preservesSuperviewLayoutMargins = false
-		view.constrainToFillView(contentView, respectingLayoutMargins: true)
+		
+		MarginsLayout.Top.layoutView(view, inContentView: contentView)
+		MarginsLayout.Leading.layoutView(view, inContentView: contentView)
+		MarginsLayout.Bottom.layoutView(view, inContentView: contentView)
+		MarginsLayout.Trailing.layoutView(view, inContentView: contentView)
 	}
 }
 
 public enum EdgeLayout {
+	@available(*, deprecated, message: "Use `EdgeLayout.Leading` and `EdgeLayout.Trailing` instead.")
 	public struct Horizontal: TableItemLayout {
 		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
-			view.constrainToFillViewHorizontally(contentView)
+			Leading.layoutView(view, inContentView: contentView)
+			Trailing.layoutView(view, inContentView: contentView)
 		}
 	}
+	
+	@available(*, deprecated, message: "Use `EdgeLayout.Top` and `EdgeLayout.Bottom` instead.")
 	public struct Vertical: TableItemLayout {
 		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
-			view.constrainToFillViewVertically(contentView)
+			Top.layoutView(view, inContentView: contentView)
+			Bottom.layoutView(view, inContentView: contentView)
 		}
 	}
-}
-public enum MarginsLayout {
-	public struct Horizontal: TableItemLayout {
+	
+	public struct Top: TableItemLayout {
 		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
-			view.constrainToFillViewHorizontally(contentView, respectingLayoutMargins: true)
+			view.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
 		}
 	}
-	public struct Vertical: TableItemLayout {
+	
+	public struct Leading: TableItemLayout {
 		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
-			view.constrainToFillViewVertically(contentView, respectingLayoutMargins: true)
+			view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+		}
+	}
+	
+	public struct Bottom: TableItemLayout {
+		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
+			contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+		}
+	}
+	
+	public struct Trailing: TableItemLayout {
+		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
+			contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 		}
 	}
 }
 
+public enum MarginsLayout {
+	@available(*, deprecated, message: "Use `MarginsLayout.Leading` and `MarginsLayout.Trailing` instead.")
+	public struct Horizontal: TableItemLayout {
+		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
+			Leading.layoutView(view, inContentView: contentView)
+			Trailing.layoutView(view, inContentView: contentView)
+		}
+	}
+	
+	@available(*, deprecated, message: "Use `MarginsLayout.Top` and `MarginsLayout.Bottom` instead.")
+	public struct Vertical: TableItemLayout {
+		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
+			Top.layoutView(view, inContentView: contentView)
+			Bottom.layoutView(view, inContentView: contentView)
+		}
+	}
+	
+	public struct Top: TableItemLayout {
+		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
+			view.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
+		}
+	}
+	
+	public struct Leading: TableItemLayout {
+		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
+			view.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor).isActive = true
+		}
+	}
+	
+	public struct Bottom: TableItemLayout {
+		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
+			contentView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+		}
+	}
+	
+	public struct Trailing: TableItemLayout {
+		public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
+			contentView.layoutMarginsGuide.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+		}
+	}
+}
+
+@available(*, deprecated, message: "Use `Layout<Top:Leading:Bottom:Trailing>` instead.")
 public struct CombinedLayout<Horizontal: TableItemLayout, Vertical: TableItemLayout>: TableItemLayout {
 	public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
 		Horizontal.layoutView(view, inContentView: contentView)
 		Vertical.layoutView(view, inContentView: contentView)
+	}
+}
+
+public struct Layout<Top: TableItemLayout, Leading: TableItemLayout, Bottom: TableItemLayout, Trailing: TableItemLayout>: TableItemLayout {
+	public static func layoutView(_ view: UIView, inContentView contentView: UIView) {
+		Top.layoutView(view, inContentView: contentView)
+		Leading.layoutView(view, inContentView: contentView)
+		Bottom.layoutView(view, inContentView: contentView)
+		Trailing.layoutView(view, inContentView: contentView)
 	}
 }
