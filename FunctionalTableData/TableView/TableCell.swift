@@ -11,7 +11,7 @@ import UIKit
 public class TableCell<ViewType: UIView, Layout: TableItemLayout>: UITableViewCell {
 	public let view: ViewType
 	public var prepare: ((_ view: ViewType) -> Void)?
-	public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		view = ViewType()
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -50,7 +50,7 @@ public class TableCell<ViewType: UIView, Layout: TableItemLayout>: UITableViewCe
 private extension UIAccessibilityElement {
 	var isEmpty: Bool {
 		return
-			accessibilityTraits == UIAccessibilityTraitStaticText &&
+			accessibilityTraits == UIAccessibilityTraits.staticText &&
 				(accessibilityLabel == nil || accessibilityLabel!.isEmpty) &&
 				(accessibilityValue == nil || accessibilityValue!.isEmpty) &&
 				(accessibilityHint == nil || accessibilityHint!.isEmpty)
@@ -68,7 +68,7 @@ public class TableHeaderFooter<ViewType: UIView, Layout: TableItemLayout>: UITab
 		
 		contentView.backgroundColor = UIColor.white
 		contentView.layoutMargins = view.layoutMargins
-		view.layoutMargins = .zero
+		view.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 		contentView.addSubviewsForAutolayout(view)
 		
 		addSubviewsForAutolayout(topSeparator, bottomSeparator)

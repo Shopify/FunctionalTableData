@@ -74,7 +74,7 @@ public class FunctionalTableData: NSObject {
 			guard let tableView = tableView else { return }
 			tableView.dataSource = self
 			tableView.delegate = self
-			tableView.rowHeight = UITableViewAutomaticDimension
+			tableView.rowHeight = UITableView.automaticDimension
 			tableView.tableFooterView = UIView(frame: .zero)
 			tableView.separatorStyle = .none
 		}
@@ -108,13 +108,13 @@ public class FunctionalTableData: NSObject {
 	/// The type of animation when rows and sections are inserted or deleted.
 	public struct TableAnimations {
 		public struct Actions {
-			let insert: UITableViewRowAnimation
-			let delete: UITableViewRowAnimation
-			let reload: UITableViewRowAnimation
+			let insert: UITableView.RowAnimation
+			let delete: UITableView.RowAnimation
+			let reload: UITableView.RowAnimation
 			public static let `default` = Actions(insert: .fade, delete: .fade, reload: .automatic)
 			public static let legacy = Actions(insert: .top, delete: .top, reload: .automatic)
 
-			public init(insert: UITableViewRowAnimation, delete: UITableViewRowAnimation, reload: UITableViewRowAnimation) {
+			public init(insert: UITableView.RowAnimation, delete: UITableView.RowAnimation, reload: UITableView.RowAnimation) {
 				self.insert = insert
 				self.delete = delete
 				self.reload = reload
@@ -438,7 +438,7 @@ public class FunctionalTableData: NSObject {
 	///   - keyPath: A key path identifying a row in the table view.
 	///   - animated: `true` if you want to animate the selection, and `false` if the change should be immediate.
 	///   - triggerDelegate: `true` to trigger the `tableView:didSelectRowAt:` delegate from `UITableView` or `false` to skip it. Skipping it is the default `UITableView` behavior.
-	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableViewScrollPosition = .none, triggerDelegate: Bool = false) {
+	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .none, triggerDelegate: Bool = false) {
 		guard let aTableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		if tableView(aTableView, willSelectRowAt: indexPath) != nil {
 			aTableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
@@ -454,7 +454,7 @@ public class FunctionalTableData: NSObject {
 	///   - keyPath: A key path identifying a row in the table view.
 	///   - animated: `true` to animate to the new scroll position, or `false` to scroll immediately.
 	///   - scrollPosition: Specifies where the item specified by `keyPath` should be positioned once scrolling finishes.
-	public func scroll(to keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableViewScrollPosition = .bottom) {
+	public func scroll(to keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .bottom) {
 		guard let aTableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		aTableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
 	}
@@ -591,11 +591,11 @@ extension FunctionalTableData: UITableViewDelegate {
 	}
 	
 	public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-		guard indexPath.section < sections.count else { return UITableViewAutomaticDimension }
+		guard indexPath.section < sections.count else { return UITableView.automaticDimension }
 		if let indexKeyPath = sections[indexPath.section].sectionKeyPathForRow(indexPath.row), let height = heightAtIndexKeyPath[indexKeyPath] {
 			return height
 		} else {
-			return UITableViewAutomaticDimension
+			return UITableView.automaticDimension
 		}
 	}
 	
@@ -726,7 +726,7 @@ extension FunctionalTableData: UITableViewDelegate {
 		// required
 	}
 
-	public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+	public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
 		let cellConfig = sections[indexPath]
 		return cellConfig?.actions.rowActions != nil ? .delete : .none
 	}

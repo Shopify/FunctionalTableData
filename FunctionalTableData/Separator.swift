@@ -58,7 +58,7 @@ public class Separator: UIView {
 	}
 	
 	public override var intrinsicContentSize: CGSize {
-		return CGSize(width: UIViewNoIntrinsicMetric, height: thickness)
+		return CGSize(width: UIView.noIntrinsicMetric, height: thickness)
 	}
 
 	public func constrainToTopOfView(_ view: UIView, constant: CGFloat = 0) {
