@@ -105,6 +105,10 @@ public class FunctionalTableData: NSObject {
 	public var scrollViewShouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)?
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619382-scrollviewdidscrolltotop) for more information.
 	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)?
+
+	/// An optional callback that describes the current scroll position of the table as an accessibility aid.
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewaccessibilitydelegate/1621055-accessibilityscrollstatus) for more information.
+	public var scrollViewAccessibilityScrollStatus: ((_ scrollView: UIScrollView) -> String?)?
 	
 	/// The type of animation when rows and sections are inserted or deleted.
 	public struct TableAnimations {
@@ -779,5 +783,11 @@ extension FunctionalTableData: UITableViewDelegate {
 	
 	public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
 		scrollViewDidScrollToTop?(scrollView)
+	}
+	
+	// MARK: - UIScrollViewAccessibilityDelegate
+	
+	public func accessibilityScrollStatus(for scrollView: UIScrollView) -> String? {
+		return scrollViewAccessibilityScrollStatus?(scrollView)
 	}
 }
