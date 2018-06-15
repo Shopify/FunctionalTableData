@@ -27,4 +27,13 @@ static inline void catchAndRethrowException(__attribute__((noescape)) void (^ __
 	}
 }
 
+__attribute__((visibility("hidden")))
+static inline void catchException(__attribute__((noescape)) void (^ __nonnull inBlock)(void), __attribute__((noescape)) void (^ __nonnull exceptionHandler)(NSException *)) {
+	@try {
+		inBlock();
+	} @catch (NSException *exception) {
+		exceptionHandler(exception);
+	}
+}
+
 NS_ASSUME_NONNULL_END
