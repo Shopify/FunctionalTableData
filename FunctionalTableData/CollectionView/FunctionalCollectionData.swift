@@ -36,9 +36,9 @@ public class FunctionalCollectionData: NSObject {
 		}
 	}
 	
-	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?) {
+	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
 		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
-		let exception = FunctionalTableData.Exception(name: name, newSections: sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: collectionView?.frame ?? .zero, reason: exceptionReason)
+		let exception = FunctionalTableData.Exception(name: name, newSections: sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: collectionView?.frame ?? .zero, reason: exceptionReason, userInfo: exceptionUserInfo)
 		exceptionHandler.handle(exception: exception)
 	}
 	
@@ -189,34 +189,16 @@ public class FunctionalCollectionData: NSObject {
 				return
 			}
 			
-			func validateKeyUniqueness() {
-				let sectionKeys = newSections.map { $0.key }
-				if Set(sectionKeys).count != newSections.count {
-					let reason = "\(strongSelf.name) : Duplicate Section keys"
-					let userInfo: [String: Any] = ["Duplicates": sectionKeys]
-					NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
-				}
-				
-				for section in newSections {
-					let rowKeys = section.rows.map { $0.key }
-					if Set(rowKeys).count != section.rows.count {
-						let reason = "\(strongSelf.name) : Section.Row keys must all be unique"
-						let userInfo: [String: Any] = ["Section": section.key, "Duplicates": rowKeys]
-						NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
-					}
-				}
-			}
-			
 			if strongSelf.unitTesting {
-				validateKeyUniqueness()
+				newSections.validateKeyUniqueness(senderName: strongSelf.name)
 			} else {
 				NSException.catchAndRethrow({
-					validateKeyUniqueness()
+					newSections.validateKeyUniqueness(senderName: strongSelf.name)
 				}, failure: {
 					if $0.name == NSExceptionName.internalInconsistencyException {
 						guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
 						let changes = TableSectionChangeSet()
-						let exception = FunctionalTableData.Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: strongSelf.collectionView?.frame ?? .zero, reason: $0.reason)
+						let exception = FunctionalTableData.Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: strongSelf.collectionView?.frame ?? .zero, reason: $0.reason, userInfo: $0.userInfo)
 						exceptionHandler.handle(exception: exception)
 					}
 				})
@@ -278,7 +260,7 @@ public class FunctionalCollectionData: NSObject {
 						})
 					}, failure: { exception in
 						if exception.name == NSExceptionName.internalInconsistencyException {
-							strongSelf.dumpDebugInfoForChanges(changes, previousSections: oldSections, visibleIndexPaths: visibleIndexPaths, exceptionReason: exception.reason)
+							strongSelf.dumpDebugInfoForChanges(changes, previousSections: oldSections, visibleIndexPaths: visibleIndexPaths, exceptionReason: exception.reason, exceptionUserInfo: exception.userInfo)
 						}
 					})
 				}
@@ -364,7 +346,7 @@ public class FunctionalCollectionData: NSObject {
 	///   - triggerDelegate: `true` to trigger the `collection:didSelectItemAt:` delegate from `UICollectionView` or `false` to skip it. Skipping it is the default `UICollectionView` behavior.
 	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UICollectionViewScrollPosition = [], triggerDelegate: Bool = false) {
 		guard let aCollectionView = collectionView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
-
+		
 		aCollectionView.selectItem(at: indexPath, animated: animated, scrollPosition: scrollPosition)
 		if triggerDelegate {
 			collectionView(aCollectionView, didSelectItemAt: indexPath)
@@ -407,7 +389,7 @@ public class FunctionalCollectionData: NSObject {
 	internal func calculateTableChanges(oldSections: [TableSection], newSections: [TableSection], visibleIndexPaths: [IndexPath]) -> TableSectionChangeSet {
 		return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths)
 	}
-
+	
 	public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		guard let indexPath = collectionView?.indexPathForItem(at: location), let cell = collectionView?.cellForItem(at: indexPath) else { return nil }
 		guard let cellConfig = self[indexPath],
@@ -491,7 +473,7 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 		guard let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems, !collectionView.allowsMultipleSelection else { return true }
 		return indexPathsForSelectedItems.contains(indexPath) == false
 	}
-
+	
 	public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
 		return sections[indexPath]?.actions.selectionAction != nil
 	}
@@ -507,7 +489,7 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 			}
 		}
 	}
-
+	
 	public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 		guard let cell = collectionView.cellForItem(at: indexPath) else { return }
 		let cellConfig = sections[indexPath]

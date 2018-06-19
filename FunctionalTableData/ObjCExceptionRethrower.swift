@@ -12,4 +12,8 @@ extension NSException {
 	public static func catchAndRethrow(_ block: () -> Void, failure: (_ exception: NSException) -> Void) {
 		catchAndRethrowException(block, failure)
 	}
+	
+	public static func catchAndHandle(_ block: () -> Void, failure: (_ exception: NSException) -> Void) {
+		catchException(block, failure)
+	}
 }

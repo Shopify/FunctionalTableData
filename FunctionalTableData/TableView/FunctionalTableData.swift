@@ -31,6 +31,7 @@ public class FunctionalTableData: NSObject {
 		public let visible: [IndexPath]
 		public let viewFrame: CGRect
 		public let reason: String?
+		public let userInfo: [AnyHashable: Any]?
 	}
 	
 	/// Specifies the desired exception handling behaviour.
@@ -51,10 +52,10 @@ public class FunctionalTableData: NSObject {
 			self.rowKey = rowKey
 		}
 	}
-
-	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?) {
+	
+	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
 		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
-		let exception = Exception(name: name, newSections: sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: tableView?.frame ?? .zero, reason: exceptionReason)
+		let exception = Exception(name: name, newSections: sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: tableView?.frame ?? .zero, reason: exceptionReason, userInfo: exceptionUserInfo)
 		exceptionHandler.handle(exception: exception)
 	}
 	
@@ -83,7 +84,7 @@ public class FunctionalTableData: NSObject {
 	public subscript(indexPath: IndexPath) -> CellConfigType? {
 		return sections[indexPath]
 	}
-
+	
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619392-scrollviewdidscroll) for more information.
 	public var scrollViewDidScroll: ((_ scrollView: UIScrollView) -> Void)?
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619394-scrollviewwillbegindragging) for more information.
@@ -104,7 +105,7 @@ public class FunctionalTableData: NSObject {
 	public var scrollViewShouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)?
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619382-scrollviewdidscrolltotop) for more information.
 	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)?
-
+	
 	/// The type of animation when rows and sections are inserted or deleted.
 	public struct TableAnimations {
 		public struct Actions {
@@ -113,7 +114,7 @@ public class FunctionalTableData: NSObject {
 			let reload: UITableViewRowAnimation
 			public static let `default` = Actions(insert: .fade, delete: .fade, reload: .automatic)
 			public static let legacy = Actions(insert: .top, delete: .top, reload: .automatic)
-
+			
 			public init(insert: UITableViewRowAnimation, delete: UITableViewRowAnimation, reload: UITableViewRowAnimation) {
 				self.insert = insert
 				self.delete = delete
@@ -234,7 +235,7 @@ public class FunctionalTableData: NSObject {
 			completion?()
 		}
 	}
-
+	
 	/// Populates the table with the specified sections, and asynchronously updates the table view to reflect the cells and sections that have changed.
 	///
 	/// - Parameters:
@@ -251,34 +252,16 @@ public class FunctionalTableData: NSObject {
 				return
 			}
 			
-			func validateKeyUniqueness() {
-				let sectionKeys = newSections.map { $0.key }
-				if Set(sectionKeys).count != newSections.count {
-					let reason = "\(strongSelf.name) : Duplicate Table Section keys"
-					let userInfo: [String: Any] = ["Duplicates": sectionKeys]
-					NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
-				}
-				
-				for section in newSections {
-					let rowKeys = section.rows.map { $0.key }
-					if Set(rowKeys).count != section.rows.count {
-						let reason = "\(strongSelf.name) : Section.Row keys must all be unique"
-						let userInfo: [String: Any] = ["Section": section.key, "Duplicates": rowKeys]
-						NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
-					}
-				}
-			}
-			
 			if strongSelf.unitTesting {
-				validateKeyUniqueness()
+				newSections.validateKeyUniqueness(senderName: strongSelf.name)
 			} else {
 				NSException.catchAndRethrow({
-					validateKeyUniqueness()
+					newSections.validateKeyUniqueness(senderName: strongSelf.name)
 				}, failure: {
 					if $0.name == NSExceptionName.internalInconsistencyException {
 						guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
 						let changes = TableSectionChangeSet()
-						let exception = Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: strongSelf.tableView?.frame ?? .zero, reason: $0.reason)
+						let exception = Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: strongSelf.tableView?.frame ?? .zero, reason: $0.reason, userInfo: $0.userInfo)
 						exceptionHandler.handle(exception: exception)
 					}
 				})
@@ -307,10 +290,10 @@ public class FunctionalTableData: NSObject {
 				return $0.row < section.rows.count
 				} ?? []
 		}
-
+		
 		let localSections = newSections.filter { $0.rows.count > 0 }
 		let changes = calculateTableChanges(oldSections: oldSections, newSections: localSections, visibleIndexPaths: visibleIndexPaths)
-
+		
 		// Use dispatch_sync because the table updates have to be processed before this function returns
 		// or another queued renderAndDiff could get the incorrect state to diff against.
 		DispatchQueue.main.sync { [weak self] in
@@ -344,7 +327,7 @@ public class FunctionalTableData: NSObject {
 						})
 					}, failure: { exception in
 						if exception.name == NSExceptionName.internalInconsistencyException {
-							strongSelf.dumpDebugInfoForChanges(changes, previousSections: oldSections, visibleIndexPaths: visibleIndexPaths, exceptionReason: exception.reason)
+							strongSelf.dumpDebugInfoForChanges(changes, previousSections: oldSections, visibleIndexPaths: visibleIndexPaths, exceptionReason: exception.reason, exceptionUserInfo: exception.userInfo)
 						}
 					})
 				}
@@ -381,7 +364,7 @@ public class FunctionalTableData: NSObject {
 			if !changes.reloadedSections.isEmpty {
 				tableView.reloadSections(changes.reloadedSections, with: animations.sections.reload)
 			}
-
+			
 			if !changes.insertedRows.isEmpty {
 				tableView.insertRows(at: changes.insertedRows, with: animations.rows.insert)
 			}
@@ -427,7 +410,7 @@ public class FunctionalTableData: NSObject {
 		
 		CATransaction.commit()
 	}
-
+	
 	private func finishRenderAndDiff() {
 		renderAndDiffQueue.isSuspended = false
 	}
@@ -560,15 +543,15 @@ extension FunctionalTableData: UITableViewDataSource {
 		
 		return cell
 	}
-
+	
 	public func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 		// Should only ever be moving within section
 		assert(sourceIndexPath.section == destinationIndexPath.section)
-
+		
 		// Update internal state to match move
 		let cell = sections[sourceIndexPath.section].rows.remove(at: sourceIndexPath.row)
 		sections[destinationIndexPath.section].rows.insert(cell, at: destinationIndexPath.row)
-
+		
 		sections[sourceIndexPath.section].didMoveRow?(sourceIndexPath.row, destinationIndexPath.row)
 	}
 }
@@ -638,7 +621,7 @@ extension FunctionalTableData: UITableViewDelegate {
 					} else {
 						tableView.deselectRow(at: indexPath, animated: false)
 					}
-
+					
 					if !tableView.allowsMultipleSelection, let currentSelection = currentSelection {
 						tableView.cellForRow(at: currentSelection)?.setHighlighted(false, animated: false)
 						tableView.deselectRow(at: currentSelection, animated: false)
@@ -660,7 +643,7 @@ extension FunctionalTableData: UITableViewDelegate {
 	public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let cell = tableView.cellForRow(at: indexPath) else { return }
 		let cellConfig = sections[indexPath]
-
+		
 		let selectionState = cellConfig?.actions.selectionAction?(cell) ?? .deselected
 		if selectionState == .deselected {
 			DispatchQueue.main.async {
@@ -668,11 +651,11 @@ extension FunctionalTableData: UITableViewDelegate {
 			}
 		}
 	}
-
+	
 	public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
 		guard let cell = tableView.cellForRow(at: indexPath) else { return }
 		let cellConfig = sections[indexPath]
-
+		
 		let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
 		if selectionState == .selected {
 			DispatchQueue.main.async {
@@ -725,20 +708,20 @@ extension FunctionalTableData: UITableViewDelegate {
 	public func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
 		// required
 	}
-
+	
 	public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
 		let cellConfig = sections[indexPath]
 		return cellConfig?.actions.rowActions != nil ? .delete : .none
 	}
-
+	
 	public func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
 		return false
 	}
-
+	
 	public func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
 		return sections[indexPath]?.actions.canBeMoved ?? false
 	}
-
+	
 	public func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
 		return sourceIndexPath.section == proposedDestinationIndexPath.section ? proposedDestinationIndexPath : sourceIndexPath
 	}
@@ -747,7 +730,7 @@ extension FunctionalTableData: UITableViewDelegate {
 		let cellConfig = sections[indexPath]
 		return cellConfig?.actions.rowActions != nil || self.tableView(tableView, canMoveRowAt: indexPath)
 	}
-
+	
 	public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let cellConfig = sections[indexPath]
 		return cellConfig?.actions.rowActions
@@ -769,7 +752,7 @@ extension FunctionalTableData: UITableViewDelegate {
 	public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
 		scrollViewWillBeginDragging?(scrollView)
 	}
-
+	
 	public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 		scrollViewWillEndDragging?(scrollView, velocity, targetContentOffset)
 	}
@@ -777,7 +760,7 @@ extension FunctionalTableData: UITableViewDelegate {
 	public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		scrollViewDidEndDragging?(scrollView, decelerate)
 	}
-
+	
 	public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
 		scrollViewWillBeginDecelerating?(scrollView)
 	}
