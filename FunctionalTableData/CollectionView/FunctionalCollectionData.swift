@@ -85,6 +85,10 @@ public class FunctionalCollectionData: NSObject {
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619382-scrollviewdidscrolltotop) for more information.
 	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)?
 	
+	/// An optional callback that describes the current scroll position of the collection view as an accessibility aid.
+	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewaccessibilitydelegate/1621055-accessibilityscrollstatus) for more information.
+	public var scrollViewAccessibilityScrollStatus: ((_ scrollView: UIScrollView) -> String?)?
+	
 	private let unitTesting: Bool
 	
 	/// A Boolean value that returns `true` when a `renderAndDiff` pass is currently running.
@@ -581,5 +585,11 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 	
 	public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
 		scrollViewDidScrollToTop?(scrollView)
+	}
+	
+	// MARK: - UIScrollViewAccessibilityDelegate
+	
+	public func accessibilityScrollStatus(for scrollView: UIScrollView) -> String? {
+		return scrollViewAccessibilityScrollStatus?(scrollView)
 	}
 }
