@@ -784,9 +784,11 @@ extension FunctionalTableData: UITableViewDelegate {
 	public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
 		scrollViewDidScrollToTop?(scrollView)
 	}
-	
-	// MARK: - UIScrollViewAccessibilityDelegate
-	
+}
+
+// MARK: - UIScrollViewAccessibilityDelegate
+
+extension FunctionalTableData: UIScrollViewAccessibilityDelegate {
 	public func accessibilityScrollStatus(for scrollView: UIScrollView) -> String? {
 		return scrollViewAccessibilityScrollStatus?(scrollView)
 	}
