@@ -586,9 +586,11 @@ extension FunctionalCollectionData: UICollectionViewDelegate {
 	public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
 		scrollViewDidScrollToTop?(scrollView)
 	}
-	
-	// MARK: - UIScrollViewAccessibilityDelegate
-	
+}
+
+// MARK: - UIScrollViewAccessibilityDelegate
+
+extension FunctionalCollectionData: UIScrollViewAccessibilityDelegate {
 	public func accessibilityScrollStatus(for scrollView: UIScrollView) -> String? {
 		return scrollViewAccessibilityScrollStatus?(scrollView)
 	}
