@@ -29,7 +29,7 @@ extension Array where Element: TableSectionType {
 }
 
 private extension Array where Element: Hashable {
-	func duplicates() -> Set<Element> {
+	func duplicates() -> [Element] {
 		var dups: Set<Element> = []
 		var uniques: Set<Element> = []
 		forEach {
@@ -39,18 +39,18 @@ private extension Array where Element: Hashable {
 				uniques.insert($0)
 			}
 		}
-		return dups
+		return Array(dups)
 	}
 }
 
 private extension Array where Element: TableSectionType {
-	func duplicateKeys() -> Set<String> {
+	func duplicateKeys() -> [String] {
 		return map { $0.key }.duplicates()
 	}
 }
 
 private extension Array where Element == CellConfigType {
-	func duplicateKeys() -> Set<String> {
+	func duplicateKeys() -> [String] {
 		return map { $0.key }.duplicates()
 	}
 }
