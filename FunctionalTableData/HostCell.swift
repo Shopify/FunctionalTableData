@@ -93,7 +93,6 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 		cellUpdater(cell.view, state)
 	}
 	
-	@inline(never)
 	public func isEqual(_ other: CellConfigType) -> Bool {
 		if let other = other as? HostCell<View, State, Layout> {
 			return state == other.state
