@@ -19,7 +19,7 @@ struct Moved<T: Equatable>: Equatable {
 
 // Compares two arrays of TableSections and produces the operations
 // required to go from one to the other
-public class TableSectionChangeSet {
+public final class TableSectionChangeSet {
 	typealias MovedSection = Moved<Int>
 	typealias MovedRow = Moved<IndexPath>
 
