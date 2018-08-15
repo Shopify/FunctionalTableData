@@ -19,7 +19,7 @@ struct Moved<T: Equatable>: Equatable {
 
 // Compares two arrays of TableSections and produces the operations
 // required to go from one to the other
-public struct TableSectionChangeSet {
+public final class TableSectionChangeSet {
 	typealias MovedSection = Moved<Int>
 	typealias MovedRow = Moved<IndexPath>
 
@@ -102,7 +102,7 @@ public struct TableSectionChangeSet {
 	*
 	* Whenever a section was also in the previous list, we compare the sections and perform the exact same algorithm on the individual rows.
 	*/
-	private mutating func calculateChanges() {
+	private func calculateChanges() {
 		let newSections = Set(new.map { $0.key })
 		var oldSections: [String: Int] = Dictionary(minimumCapacity: old.count)
 		for (oldSectionIndex, oldSection) in old.enumerated() {
@@ -167,7 +167,7 @@ public struct TableSectionChangeSet {
 		return new.section.mergedStyle(for: new.row) == old.section.mergedStyle(for: old.row)
 	}
 
-	private mutating func compareRows(newRows: inout Set<String>, oldRows: inout [String: Int], oldSectionIndex: Int, newSectionIndex: Int) {
+	private func compareRows(newRows: inout Set<String>, oldRows: inout [String: Int], oldSectionIndex: Int, newSectionIndex: Int) {
 		// Clear the set and dictionary, ensuring we keep the capacity to reduce allocations
 		newRows.removeAll(keepingCapacity: true)
 		oldRows.removeAll(keepingCapacity: true)
