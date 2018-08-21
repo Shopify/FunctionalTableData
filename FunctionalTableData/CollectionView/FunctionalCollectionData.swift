@@ -322,7 +322,7 @@ public class FunctionalCollectionData: NSObject {
 					update.cellConfig.update(cell: cell, in: collectionView)
 					
 					let section = sections[update.index.section]
-					let style = section.mergedStyle(for: update.index.item) ?? CellStyle()
+					let style = section.mergedStyle(for: update.index.item)
 					style.configure(cell: cell, in: collectionView)
 				}
 			}
