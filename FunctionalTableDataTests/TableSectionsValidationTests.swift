@@ -37,7 +37,12 @@ class TableSectionsValidationTests: XCTestCase {
 		}, failure: {
 			XCTAssertEqual($0.name, NSExceptionName.internalInconsistencyException)
 			XCTAssertNotNil($0.userInfo as? [String: Any])
-			XCTAssertEqual($0.userInfo!["Duplicates"] as? Set<String>, Set(arrayLiteral: "section1"))
+			
+			if let duplicates = $0.userInfo?["Duplicates"] as? [String] {
+				XCTAssertEqual(Set(duplicates), Set(["section1"]))
+			} else {
+				XCTFail("Missing or malformed user info value for Duplicates")
+			}
 		})
 	}
 	
@@ -53,8 +58,18 @@ class TableSectionsValidationTests: XCTestCase {
 		}, failure: {
 			XCTAssertEqual($0.name, NSExceptionName.internalInconsistencyException)
 			XCTAssertNotNil($0.userInfo as? [String: Any])
-			XCTAssertEqual($0.userInfo!["Section"] as? String, "section2")
-			XCTAssertEqual($0.userInfo!["Duplicates"] as? Set<String>, Set(arrayLiteral: "row1", "row4"))
+			
+			if let section = $0.userInfo?["Section"] as? String {
+				XCTAssertEqual(section, "section2")
+			} else {
+				XCTFail("Missing or malformed user info value for Section")
+			}
+			
+			if let duplicates = $0.userInfo?["Duplicates"] as? [String] {
+				XCTAssertEqual(Set(duplicates), Set(["row1", "row4"]))
+			} else {
+				XCTFail("Missing or malformed user info value for Duplicates")
+			}
 		})
 	}
 	
