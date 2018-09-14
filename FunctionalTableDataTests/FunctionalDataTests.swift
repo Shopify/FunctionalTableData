@@ -73,6 +73,25 @@ class FunctionalDataTests: XCTestCase {
 		XCTAssertNotNil(indexPath)
 	}
 	
+	func testCellAccessibilityIdentifiers() {
+		let tableData = FunctionalTableData()
+		let tableView = UITableView()
+		
+		tableData.tableView = tableView
+		let expectation1 = expectation(description: "rendered")
+		let cellConfig = TestCaseCell(key: "cellKey", state: TestCaseState(data: "red"), cellUpdater: TestCaseState.updateView)
+		let section = TableSection(key: "sectionKey", rows: [cellConfig])
+		
+		tableData.renderAndDiff([section]) {
+			expectation1.fulfill()
+		}
+		waitForExpectations(timeout: 1, handler: nil)
+		
+		let cell = tableData.tableView?.visibleCells.first
+		XCTAssertNotNil(cell)
+		XCTAssertEqual(cell!.accessibilityIdentifier, section.sectionKeyPathForRow(0))
+	}
+	
 	func testPerformance() {
 		let functionalData = FunctionalTableData()
 		
