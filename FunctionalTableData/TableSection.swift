@@ -90,28 +90,24 @@ public struct TableSection: Sequence, TableSectionType {
 	///
 	/// - Parameter row: Integer identifying the position of the row in the section.
 	/// - Returns: The `CellStyle` of the cell merged with the style of the section.
-	public func mergedStyle(for row: Int) -> CellStyle? {
-		var rowStyle = rows[row].style
+	public func mergedStyle(for row: Int) -> CellStyle {
+		var rowStyle = rows[row].style ?? CellStyle()
 
-		if rowStyle == nil && style != nil {
-			rowStyle = CellStyle()
-		}
-
-		let top = rowStyle?.topSeparator ?? style?.separators.top
-		let bottom = rowStyle?.bottomSeparator ?? style?.separators.bottom
-		let interitem = rowStyle?.bottomSeparator ?? style?.separators.interitem
+		let top = rowStyle.topSeparator ?? style?.separators.top
+		let bottom = rowStyle.bottomSeparator ?? style?.separators.bottom
+		let interitem = rowStyle.bottomSeparator ?? style?.separators.interitem
 		
 		switch (row, rows.index(after: row)) {
 		case (rows.startIndex, rows.endIndex):
-			rowStyle?.topSeparator = top
-			rowStyle?.bottomSeparator = bottom
+			rowStyle.topSeparator = top
+			rowStyle.bottomSeparator = bottom
 		case (rows.startIndex, _):
-			rowStyle?.topSeparator = top
-			rowStyle?.bottomSeparator = interitem
+			rowStyle.topSeparator = top
+			rowStyle.bottomSeparator = interitem
 		case (_, rows.endIndex):
-			rowStyle?.bottomSeparator = bottom
+			rowStyle.bottomSeparator = bottom
 		case (_, _):
-			rowStyle?.bottomSeparator = interitem
+			rowStyle.bottomSeparator = interitem
 		}
 
 		return rowStyle

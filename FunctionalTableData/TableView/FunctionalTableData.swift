@@ -390,7 +390,7 @@ public class FunctionalTableData: NSObject {
 					
 					let section = sections[update.index.section]
 					let style = section.mergedStyle(for: update.index.row)
-					style?.configure(cell: cell, in: tableView)
+					style.configure(cell: cell, in: tableView)
 				}
 			}
 		}
@@ -543,7 +543,8 @@ extension FunctionalTableData: UITableViewDataSource {
 		let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
 		
 		cellConfig.update(cell: cell, in: tableView)
-		sectionData.mergedStyle(for: row)?.configure(cell: cell, in: tableView)
+		let style = sectionData.mergedStyle(for: row)
+		style.configure(cell: cell, in: tableView)
 		
 		return cell
 	}
