@@ -541,6 +541,7 @@ extension FunctionalTableData: UITableViewDataSource {
 		let row = indexPath.row
 		let cellConfig = sectionData[row]
 		let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
+		cell.accessibilityIdentifier = sectionData.sectionKeyPathForRow(row)
 		
 		cellConfig.update(cell: cell, in: tableView)
 		let style = sectionData.mergedStyle(for: row)
