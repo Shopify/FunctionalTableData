@@ -34,7 +34,7 @@ public struct CellStyle {
 	/// You use these constants when setting the value of the [accessoryType](apple-reference-documentation://hspQPOCGHb) property.
 	///
 	/// Supported by `UITableView` only.
-	public var accessoryType: UITableViewCellAccessoryType = .none
+	public var accessoryType: UITableViewCell.AccessoryType = .none
 	/// The view's selection color.
 	public var selectionColor: UIColor? = CellStyle.selectionColor
 	/// The view's background color.
@@ -52,7 +52,7 @@ public struct CellStyle {
 	            bottomSeparator: Separator.Style? = nil,
 	            separatorColor: UIColor? = nil,
 	            highlight: Bool? = nil,
-	            accessoryType: UITableViewCellAccessoryType = .none,
+	            accessoryType: UITableViewCell.AccessoryType = .none,
 	            selectionColor: UIColor? = CellStyle.selectionColor,
 	            backgroundColor: UIColor? = nil,
 	            backgroundView: UIView? = nil,
