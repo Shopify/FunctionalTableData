@@ -348,7 +348,7 @@ public class FunctionalCollectionData: NSObject {
 	///   - animated: `true` if you want to animate the selection, and `false` if the change should be immediate.
 	///   - scrollPosition: An option that specifies where the item should be positioned when scrolling finishes.
 	///   - triggerDelegate: `true` to trigger the `collection:didSelectItemAt:` delegate from `UICollectionView` or `false` to skip it. Skipping it is the default `UICollectionView` behavior.
-	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UICollectionViewScrollPosition = [], triggerDelegate: Bool = false) {
+	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UICollectionView.ScrollPosition = [], triggerDelegate: Bool = false) {
 		guard let aCollectionView = collectionView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		
 		aCollectionView.selectItem(at: indexPath, animated: animated, scrollPosition: scrollPosition)
@@ -363,7 +363,7 @@ public class FunctionalCollectionData: NSObject {
 	///   - keyPath: A key path identifying a row in the collection view.
 	///   - animated: `true` to animate to the new scroll position, or `false` to scroll immediately.
 	///   - scrollPosition: Specifies where the item specified by `keyPath` should be positioned once scrolling finishes.
-	public func scroll(to keyPath: KeyPath, animated: Bool = true, scrollPosition: UICollectionViewScrollPosition = [.bottom, .right]) {
+	public func scroll(to keyPath: KeyPath, animated: Bool = true, scrollPosition: UICollectionView.ScrollPosition = [.bottom, .right]) {
 		guard let aCollectionView = collectionView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		aCollectionView.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
 	}
