@@ -13,7 +13,22 @@ import UIKit
 ///
 /// Some properties are only supported by `UITableView`.
 public struct CellStyle {
-	public static var selectionColor: UIColor? = nil // TODO: make this not a static like this
+	/// The default selection color to use for styles that don't specify their own.
+	public static var defaultSelectionColor: UIColor? = nil
+	
+	/// The default background color to use for styles that don't specify their own.
+	public static var defaultBackgroundColor: UIColor? = .white
+	
+	@available(*, deprecated, message: "Renamed to defaultSelectionColor.")
+	public static var selectionColor: UIColor? {
+		get {
+			return defaultSelectionColor
+		}
+		set {
+			defaultSelectionColor = newValue
+		}
+	}
+	
 	/// The style to apply to the bottom separator in the cell.
 	///
 	/// Supported by `UITableView` only.
@@ -34,9 +49,9 @@ public struct CellStyle {
 	/// You use these constants when setting the value of the [accessoryType](apple-reference-documentation://hspQPOCGHb) property.
 	///
 	/// Supported by `UITableView` only.
-	public var accessoryType: UITableViewCell.AccessoryType = .none
+	public var accessoryType: UITableViewCell.AccessoryType
 	/// The view's selection color.
-	public var selectionColor: UIColor? = CellStyle.selectionColor
+	public var selectionColor: UIColor?
 	/// The view's background color.
 	public var backgroundColor: UIColor?
 	/// The view that is displayed behind the cell’s other content.
@@ -53,8 +68,8 @@ public struct CellStyle {
 	            separatorColor: UIColor? = nil,
 	            highlight: Bool? = nil,
 	            accessoryType: UITableViewCell.AccessoryType = .none,
-	            selectionColor: UIColor? = CellStyle.selectionColor,
-	            backgroundColor: UIColor? = nil,
+	            selectionColor: UIColor? = CellStyle.defaultSelectionColor,
+	            backgroundColor: UIColor? = CellStyle.defaultBackgroundColor,
 	            backgroundView: UIView? = nil,
 	            tintColor: UIColor? = nil,
 	            layoutMargins: UIEdgeInsets? = nil,
@@ -73,14 +88,8 @@ public struct CellStyle {
 	}
 	
 	func configure(cell: UICollectionViewCell, in collectionView: UICollectionView) {
-		if let backgroundView = backgroundView {
-			cell.backgroundView = backgroundView
-		} else {
-			cell.backgroundColor = backgroundColor ?? UIColor.white
-			let backgroundView = UIView()
-			backgroundView.backgroundColor = cell.backgroundColor
-			cell.backgroundView = backgroundView
-		}
+		cell.backgroundColor = backgroundColor
+		cell.backgroundView = backgroundView
 		
 		if let layoutMargins = layoutMargins {
 			cell.contentView.layoutMargins = layoutMargins
@@ -118,14 +127,8 @@ public struct CellStyle {
 			cell.removeSeparator(Separator.Tag.top)
 		}
 		
-		if let backgroundView = backgroundView {
-			cell.backgroundView = backgroundView
-		} else {
-			cell.backgroundColor = backgroundColor ?? UIColor.white
-			let backgroundView = UIView()
-			backgroundView.backgroundColor = cell.backgroundColor
-			cell.backgroundView = backgroundView
-		}
+		cell.backgroundColor = backgroundColor
+		cell.backgroundView = backgroundView
 		
 		// SUPER HACK! On iOS 11, setting preserveSuperviewLayoutMargin to true changes the behavior
 		// of the layout margins, even when it was already true. Without this fix our layout margins
