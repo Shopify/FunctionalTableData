@@ -118,20 +118,32 @@ class StyleTests: XCTestCase {
 	}
 	
 	func testBackground() {
+		style.configure(cell: cell, in: table)
+		XCTAssertNil(cell.backgroundView)
+		XCTAssertEqual(cell.backgroundColor, CellStyle.defaultBackgroundColor)
+		
 		style.backgroundColor = .red
 		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.backgroundView?.backgroundColor, .red)
+		XCTAssertNil(cell.backgroundView)
+		XCTAssertEqual(cell.backgroundColor, .red)
+		
 		let bgView = UIView()
 		bgView.backgroundColor = .yellow
 		style.backgroundView = bgView
 		style.configure(cell: cell, in: table)
+		XCTAssertEqual(cell.backgroundView, bgView)
 		XCTAssertEqual(cell.backgroundView?.backgroundColor, .yellow)
+		XCTAssertEqual(cell.backgroundColor, .red)
+		
 		style.backgroundView = nil
 		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.backgroundView?.backgroundColor, .red)
+		XCTAssertNil(cell.backgroundView)
+		XCTAssertEqual(cell.backgroundColor, .red)
+		
 		style.backgroundColor = nil
 		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.backgroundView?.backgroundColor, .white)
+		XCTAssertNil(cell.backgroundView)
+		XCTAssertNil(cell.backgroundColor)
 	}
 	
 	func testTintColor() {
