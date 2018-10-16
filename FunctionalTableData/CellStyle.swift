@@ -54,8 +54,11 @@ public struct CellStyle {
 	public var selectionColor: UIColor?
 	/// The view's background color.
 	public var backgroundColor: UIColor?
-	/// The view that is displayed behind the cell’s other content.
+	/// The view that is displayed behind the cell's other content.
+	@available(*, deprecated, message: "Replaced with backgroundViewProvider.")
 	public var backgroundView: UIView?
+	/// Provides the view that is displayed behind the cell's other content.
+	public var backgroundViewProvider: BackgroundViewProvider
 	/// The tint color to apply to the cell.
 	public var tintColor: UIColor?
 	/// The default spacing to use when laying out content in the view.
@@ -63,6 +66,7 @@ public struct CellStyle {
 	/// The radius to use when drawing rounded corners in the view.
 	public var cornerRadius: CGFloat
 	
+	@available(*, deprecated, message: "The `backgroundView` argument is no longer available. Use backgroundViewProvider instead.")
 	public init(topSeparator: Separator.Style? = nil,
 	            bottomSeparator: Separator.Style? = nil,
 	            separatorColor: UIColor? = nil,
@@ -70,7 +74,7 @@ public struct CellStyle {
 	            accessoryType: UITableViewCell.AccessoryType = .none,
 	            selectionColor: UIColor? = CellStyle.defaultSelectionColor,
 	            backgroundColor: UIColor? = CellStyle.defaultBackgroundColor,
-	            backgroundView: UIView? = nil,
+	            backgroundView: UIView?,
 	            tintColor: UIColor? = nil,
 	            layoutMargins: UIEdgeInsets? = nil,
 	            cornerRadius: CGFloat = 0) {
@@ -81,7 +85,44 @@ public struct CellStyle {
 		self.accessoryType = accessoryType
 		self.selectionColor = selectionColor
 		self.backgroundColor = backgroundColor
-		self.backgroundView = backgroundView
+		self.tintColor = tintColor
+		self.layoutMargins = layoutMargins
+		self.cornerRadius = cornerRadius
+
+		struct DefaultBackgroundProvider: BackgroundViewProvider {
+			let view: UIView?
+
+			func backgroundView() -> UIView? {
+				return view
+			}
+
+			func isEqualTo(_ other: BackgroundViewProvider) -> Bool {
+				return backgroundView() == other.backgroundView()
+			}
+		}
+
+		self.backgroundViewProvider = DefaultBackgroundProvider(view: backgroundView)
+	}
+
+	public init(topSeparator: Separator.Style? = nil,
+				bottomSeparator: Separator.Style? = nil,
+				separatorColor: UIColor? = nil,
+				highlight: Bool? = nil,
+				accessoryType: UITableViewCell.AccessoryType = .none,
+				selectionColor: UIColor? = CellStyle.defaultSelectionColor,
+				backgroundColor: UIColor? = CellStyle.defaultBackgroundColor,
+				backgroundViewProvider: BackgroundViewProvider = EmptyBackgroundProvider(),
+				tintColor: UIColor? = nil,
+				layoutMargins: UIEdgeInsets? = nil,
+				cornerRadius: CGFloat = 0) {
+		self.bottomSeparator = bottomSeparator
+		self.topSeparator = topSeparator
+		self.separatorColor = separatorColor
+		self.highlight = highlight
+		self.accessoryType = accessoryType
+		self.selectionColor = selectionColor
+		self.backgroundColor = backgroundColor
+		self.backgroundViewProvider = backgroundViewProvider
 		self.tintColor = tintColor
 		self.layoutMargins = layoutMargins
 		self.cornerRadius = cornerRadius
@@ -89,8 +130,14 @@ public struct CellStyle {
 	
 	func configure(cell: UICollectionViewCell, in collectionView: UICollectionView) {
 		cell.backgroundColor = backgroundColor
-		cell.backgroundView = backgroundView
-		
+		if let backgroundView = backgroundViewProvider.backgroundView() {
+			cell.backgroundView = backgroundView
+		} else {
+			let backgroundView = UIView()
+			backgroundView.backgroundColor = cell.backgroundColor
+			cell.backgroundView = backgroundView
+		}
+
 		if let layoutMargins = layoutMargins {
 			cell.contentView.layoutMargins = layoutMargins
 		}
@@ -126,9 +173,16 @@ public struct CellStyle {
 		} else {
 			cell.removeSeparator(Separator.Tag.top)
 		}
-		
+
 		cell.backgroundColor = backgroundColor
-		cell.backgroundView = backgroundView
+
+		if let backgroundView = backgroundViewProvider.backgroundView() {
+			cell.backgroundView = backgroundView
+		} else {
+			let backgroundView = UIView()
+			backgroundView.backgroundColor = cell.backgroundColor
+			cell.backgroundView = backgroundView
+		}
 		
 		// SUPER HACK! On iOS 11, setting preserveSuperviewLayoutMargin to true changes the behavior
 		// of the layout margins, even when it was already true. Without this fix our layout margins
@@ -163,10 +217,10 @@ extension CellStyle: Equatable {
 		equality = equality && lhs.accessoryType == rhs.accessoryType
 		equality = equality && lhs.selectionColor == rhs.selectionColor
 		equality = equality && lhs.backgroundColor == rhs.backgroundColor
-		equality = equality && lhs.backgroundView == rhs.backgroundView
 		equality = equality && lhs.tintColor == rhs.tintColor
 		equality = equality && lhs.layoutMargins == rhs.layoutMargins
 		equality = equality && lhs.cornerRadius == rhs.cornerRadius
+		equality = equality && lhs.backgroundViewProvider.isEqualTo(rhs.backgroundViewProvider)
 		return equality
 	}
 }

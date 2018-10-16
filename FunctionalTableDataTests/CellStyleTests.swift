@@ -13,6 +13,21 @@ class StyleTests: XCTestCase {
 	var cell: UITableViewCell!
 	var table: UITableView!
 	var style: CellStyle!
+
+	struct ColoredBackgroundProvider: BackgroundViewProvider {
+		let color: UIColor
+
+		public func backgroundView() -> UIView? {
+			let bgView = UIView()
+			bgView.backgroundColor = color
+			return bgView
+		}
+
+		public func isEqualTo(_ other: BackgroundViewProvider) -> Bool {
+			guard let other = other as? ColoredBackgroundProvider else { return false }
+			return color == other.color
+		}
+	}
 	
 	override func setUp() {
 		super.setUp()
@@ -119,30 +134,17 @@ class StyleTests: XCTestCase {
 	
 	func testBackground() {
 		style.configure(cell: cell, in: table)
-		XCTAssertNil(cell.backgroundView)
 		XCTAssertEqual(cell.backgroundColor, CellStyle.defaultBackgroundColor)
-		
 		style.backgroundColor = .red
 		style.configure(cell: cell, in: table)
-		XCTAssertNil(cell.backgroundView)
 		XCTAssertEqual(cell.backgroundColor, .red)
-		
-		let bgView = UIView()
-		bgView.backgroundColor = .yellow
-		style.backgroundView = bgView
+		let backgroundViewProvider = ColoredBackgroundProvider(color: .yellow)
+		style.backgroundViewProvider = backgroundViewProvider
 		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.backgroundView, bgView)
 		XCTAssertEqual(cell.backgroundView?.backgroundColor, .yellow)
-		XCTAssertEqual(cell.backgroundColor, .red)
-		
-		style.backgroundView = nil
-		style.configure(cell: cell, in: table)
-		XCTAssertNil(cell.backgroundView)
-		XCTAssertEqual(cell.backgroundColor, .red)
-		
+		style.backgroundViewProvider = EmptyBackgroundProvider()
 		style.backgroundColor = nil
 		style.configure(cell: cell, in: table)
-		XCTAssertNil(cell.backgroundView)
 		XCTAssertNil(cell.backgroundColor)
 	}
 	
