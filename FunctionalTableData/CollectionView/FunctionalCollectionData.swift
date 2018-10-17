@@ -202,7 +202,8 @@ public class FunctionalCollectionData: NSObject {
 					if $0.name == NSExceptionName.internalInconsistencyException {
 						guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
 						let changes = TableSectionChangeSet()
-						let exception = FunctionalTableData.Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: strongSelf.collectionView?.frame ?? .zero, reason: $0.reason, userInfo: $0.userInfo)
+						let viewFrame = DispatchQueue.main.sync { strongSelf.collectionView?.frame ?? .zero }
+						let exception = FunctionalTableData.Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: viewFrame, reason: $0.reason, userInfo: $0.userInfo)
 						exceptionHandler.handle(exception: exception)
 					}
 				})
