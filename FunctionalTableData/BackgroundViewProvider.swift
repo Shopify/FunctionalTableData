@@ -19,16 +19,14 @@ public protocol BackgroundViewProvider {
 	func isEqualTo(_ other: BackgroundViewProvider) -> Bool
 }
 
-public extension BackgroundViewProvider {
-	public func isEqualTo(_ other: BackgroundViewProvider) -> Bool {
-		return type(of: self) == type(of: other)
-	}
-}
-
 public struct EmptyBackgroundProvider: BackgroundViewProvider {
 	public init() {}
 
 	public func backgroundView() -> UIView? {
 		return nil
+	}
+
+	public func isEqualTo(_ other: BackgroundViewProvider) -> Bool {
+		return type(of: self) == type(of: other)
 	}
 }
