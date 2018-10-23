@@ -400,18 +400,31 @@ public class FunctionalTableData: NSObject {
 		CATransaction.setCompletionBlock {
 			completion?()
 		}
-		
-		tableView.beginUpdates()
+
 		// #4629 - There is an issue where on some occasions calling beginUpdates() will cause a heightForRowAtIndexPath() call to be made. If the sections have been changed already we may no longer find the cells
 		// in the model causing a crash. To prevent this from happening, only load the new model AFTER beginUpdates() has run
-		sections = localSections
-		applyTableSectionChanges(changes)
-		tableView.endUpdates()
+		if #available(iOS 11.0, *) {
+			tableView.performBatchUpdates({
+				sections = localSections
+				applyTableSectionChanges(changes)
+			}, completion: nil)
+		} else {
+			tableView.beginUpdates()
+			sections = localSections
+			applyTableSectionChanges(changes)
+			tableView.endUpdates()
+		}
 		
 		// Apply transitions after we have commited section/row changes since transition indexPaths are in post-commit space
-		tableView.beginUpdates()
-		applyTransitionChanges(changes)
-		tableView.endUpdates()
+		if #available(iOS 11.0, *) {
+			tableView.performBatchUpdates({
+				applyTransitionChanges(changes)
+			}, completion: nil)
+		} else {
+			tableView.beginUpdates()
+			applyTransitionChanges(changes)
+			tableView.endUpdates()
+		}
 		
 		CATransaction.commit()
 	}
