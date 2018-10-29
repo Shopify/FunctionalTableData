@@ -16,26 +16,6 @@ public class FunctionalCollectionData: NSObject {
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
 	
-	/// Represents the unique path to a given item in the `FunctionalCollectionData`.
-	///
-	/// Think of it as a readable implementation of `IndexPath`, that can be used to locate a given cell
-	/// or `TableSection` in the data set.
-	public struct KeyPath: Equatable {
-		/// Unique identifier for a section.
-		public let sectionKey: String
-		/// Unique identifier for an item inside a section.
-		public let rowKey: String
-		
-		public init(sectionKey: String, rowKey: String) {
-			self.sectionKey = sectionKey
-			self.rowKey = rowKey
-		}
-		
-		public static func ==(lhs: KeyPath, rhs: KeyPath) -> Bool {
-			return lhs.sectionKey == rhs.sectionKey && lhs.rowKey == rhs.rowKey
-		}
-	}
-	
 	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
 		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
 		let exception = FunctionalTableData.Exception(name: name, newSections: sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: collectionView?.frame ?? .zero, reason: exceptionReason, userInfo: exceptionUserInfo)
@@ -116,7 +96,7 @@ public class FunctionalCollectionData: NSObject {
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
 	public func rowForKeyPath(_ keyPath: KeyPath) -> CellConfigType? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
+		if let sectionIndex = sections.index(where: { $0.key.hashValue == keyPath.sectionKey.hashValue }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key.hashValue == keyPath.rowKey.hashValue }) {
 			return sections[sectionIndex].rows[rowIndex]
 		}
 		
@@ -130,7 +110,7 @@ public class FunctionalCollectionData: NSObject {
 	public func keyPathForRowKey(_ key: String) -> KeyPath? {
 		for section in sections {
 			for row in section {
-				if row.key == key {
+				if row.key.hashValue == key.hashValue {
 					return KeyPath(sectionKey: section.key, rowKey: row.key)
 				}
 			}
@@ -153,7 +133,7 @@ public class FunctionalCollectionData: NSObject {
 	
 	private func sectionForKey(key: String) -> TableSection? {
 		for section in sections {
-			if section.key == key {
+			if section.key.hashValue == key.hashValue {
 				return section
 			}
 		}
@@ -384,7 +364,7 @@ public class FunctionalCollectionData: NSObject {
 	/// - Parameter keyPath: The path representing the desired indexPath.
 	/// - Returns: The IndexPath of the item at the provided keyPath.
 	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
+		if let sectionIndex = sections.index(where: { $0.key.hashValue == keyPath.sectionKey.hashValue }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
 			return IndexPath(item: rowIndex, section: sectionIndex)
 		}
 		

@@ -14,7 +14,7 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 	public typealias TableViewCellType = TableCell<View, Layout>
 	public typealias CollectionViewCellType = CollectionCell<View, Layout>
 	
-	public let key: String
+	public let key: AnyHashable
 	public var style: CellStyle?
 	public let actions: CellActions
 	/// Contains the state information of a cell.

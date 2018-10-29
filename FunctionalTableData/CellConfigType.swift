@@ -17,7 +17,7 @@ import UIKit
 /// When two items have matching `key` values but the `isEqual` call between old and new returns false the `update` function is called. It is the responsibility of this function to update the cell, and any subviews of the cell, to reflect the state.
 public protocol CellConfigType: TableItemConfigType, CollectionItemConfigType {
 	/// Unique identifier for the cell.
-	var key: String { get }
+	var key: AnyHashable { get }
 	/// Indicates a cell style. See `CellStyle` for more information.
 	var style: CellStyle? { get set }
 	/// Indicates all the possible actions a cell can perform. See `CellActions` for more information.

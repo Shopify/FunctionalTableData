@@ -37,22 +37,6 @@ public class FunctionalTableData: NSObject {
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
 	
-	/// Represents the unique path to a given item in the `FunctionalTableData`.
-	///
-	/// Think of it as a readable implementation of `IndexPath`, that can be used to locate a given cell
-	/// or `TableSection` in the data set.
-	public struct KeyPath {
-		/// Unique identifier for a section.
-		public let sectionKey: String
-		/// Unique identifier for an item inside a section.
-		public let rowKey: String
-		
-		public init(sectionKey: String, rowKey: String) {
-			self.sectionKey = sectionKey
-			self.rowKey = rowKey
-		}
-	}
-	
 	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
 		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
 		let exception = Exception(name: name, newSections: sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: tableView?.frame ?? .zero, reason: exceptionReason, userInfo: exceptionUserInfo)
@@ -61,7 +45,7 @@ public class FunctionalTableData: NSObject {
 	
 	private var sections: [TableSection] = []
 	private static let reloadEntireTableThreshold = 20
-	private var heightAtIndexKeyPath: [String: CGFloat] = [:]
+	private var heightAtIndexKeyPath: [KeyPath: CGFloat] = [:]
 	
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
@@ -163,7 +147,7 @@ public class FunctionalTableData: NSObject {
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
 	public func rowForKeyPath(_ keyPath: KeyPath) -> CellConfigType? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
+		if let sectionIndex = sections.index(where: { $0.key.hashValue == keyPath.sectionKey.hashValue }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key.hashValue == keyPath.rowKey.hashValue }) {
 			return sections[sectionIndex].rows[rowIndex]
 		}
 		
@@ -177,7 +161,7 @@ public class FunctionalTableData: NSObject {
 	public func keyPathForRowKey(_ key: String) -> KeyPath? {
 		for section in sections {
 			for row in section {
-				if row.key == key {
+				if row.key.hashValue == key.hashValue {
 					return KeyPath(sectionKey: section.key, rowKey: row.key)
 				}
 			}
@@ -207,7 +191,7 @@ public class FunctionalTableData: NSObject {
 		return tableView?.rectForRow(at: indexPath)
 	}
 	
-	private func sectionForKey(key: String) -> TableSection? {
+	private func sectionForKey(key: AnyHashable) -> TableSection? {
 		for section in sections {
 			if section.key == key {
 				return section
@@ -458,7 +442,7 @@ public class FunctionalTableData: NSObject {
 	}
 	
 	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
+		if let sectionIndex = sections.index(where: { $0.key.hashValue == keyPath.sectionKey.hashValue }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
 			return IndexPath(row: rowIndex, section: sectionIndex)
 		}
 		
@@ -542,7 +526,8 @@ extension FunctionalTableData: UITableViewDataSource {
 		let row = indexPath.row
 		let cellConfig = sectionData[row]
 		let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
-		cell.accessibilityIdentifier = sectionData.sectionKeyPathForRow(row)
+		
+		cell.accessibilityIdentifier = sectionData.accessibilityIdentifierForRow(row, inSection: indexPath.section)
 		
 		cellConfig.update(cell: cell, in: tableView)
 		let style = sectionData.mergedStyle(for: row)

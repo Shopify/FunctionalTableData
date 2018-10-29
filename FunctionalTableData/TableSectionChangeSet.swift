@@ -104,7 +104,7 @@ public final class TableSectionChangeSet {
 	*/
 	private func calculateChanges() {
 		let newSections = Set(new.map { $0.key })
-		var oldSections: [String: Int] = Dictionary(minimumCapacity: old.count)
+		var oldSections: [AnyHashable: Int] = Dictionary(minimumCapacity: old.count)
 		for (oldSectionIndex, oldSection) in old.enumerated() {
 			oldSections[oldSection.key] = oldSectionIndex
 		}
@@ -114,8 +114,8 @@ public final class TableSectionChangeSet {
 		var newSectionIndex = 0
 
 		// Shared between iterations to reduce allocations
-		var newRows: Set<String> = Set()
-		var oldRows: [String: Int] = [:]
+		var newRows: Set<AnyHashable> = Set()
+		var oldRows: [AnyHashable: Int] = [:]
 		while oldSectionIndex < old.count || newSectionIndex < new.count {
 			// Skip over all the deleted or moved sections
 			while oldSectionIndex < old.count {
@@ -167,7 +167,7 @@ public final class TableSectionChangeSet {
 		return new.section.mergedStyle(for: new.row) == old.section.mergedStyle(for: old.row)
 	}
 
-	private func compareRows(newRows: inout Set<String>, oldRows: inout [String: Int], oldSectionIndex: Int, newSectionIndex: Int) {
+	private func compareRows(newRows: inout Set<AnyHashable>, oldRows: inout [AnyHashable: Int], oldSectionIndex: Int, newSectionIndex: Int) {
 		// Clear the set and dictionary, ensuring we keep the capacity to reduce allocations
 		newRows.removeAll(keepingCapacity: true)
 		oldRows.removeAll(keepingCapacity: true)

@@ -44,13 +44,13 @@ private extension Array where Element: Hashable {
 }
 
 private extension Array where Element: TableSectionType {
-	func duplicateKeys() -> [String] {
+	func duplicateKeys() -> [AnyHashable] {
 		return map { $0.key }.duplicates()
 	}
 }
 
 private extension Array where Element == CellConfigType {
-	func duplicateKeys() -> [String] {
+	func duplicateKeys() -> [AnyHashable] {
 		return map { $0.key }.duplicates()
 	}
 }

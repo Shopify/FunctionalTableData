@@ -29,7 +29,7 @@ class FunctionalDataTests: XCTestCase {
 			expectation1.fulfill()
 			
 			if let tableData = tableData, let keyPath = tableData.keyPathForRowKey("size1") {
-				XCTAssertTrue(keyPath.sectionKey == "sizes Section" && keyPath.rowKey == "size1")
+				XCTAssertTrue(keyPath.sectionKey == AnyHashable("sizes Section") && keyPath.rowKey == AnyHashable("size1"))
 			} else {
 				XCTFail()
 			}

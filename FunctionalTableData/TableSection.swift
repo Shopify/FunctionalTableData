@@ -11,7 +11,7 @@ import Foundation
 /// A type that provides the information about a section.
 public protocol TableSectionType {
 	/// Unique identifier for the section.
-	var key: String { get }
+	var key: AnyHashable { get }
 	/// View object to display in the header of this section.
 	var header: TableHeaderFooterConfigType? { get }
 	/// View object to display in the footer of this section.
@@ -30,7 +30,7 @@ public protocol TableSectionType {
 ///
 /// `FunctionalTableData` deals in arrays of `TableSection` instances. Each section, at a minimum, has a string value unique within the table itself, and an array of `CellConfigType` instances that represent the rows of the section. Additionally there may be a header and footer for the section.
 public struct TableSection: Sequence, TableSectionType {
-	public let key: String
+	public let key: AnyHashable
 	public var header: TableHeaderFooterConfigType? = nil
 	public var footer: TableHeaderFooterConfigType? = nil
 	public var rows: [CellConfigType]
@@ -40,7 +40,7 @@ public struct TableSection: Sequence, TableSectionType {
 	/// Callback executed when a row is manually moved by the user. It specifies the before and after index position.
 	public var didMoveRow: ((_ from: Int, _ to: Int) -> Void)?
 
-	public init(key: String, rows: [CellConfigType] = [], header: TableHeaderFooterConfigType? = nil, footer: TableHeaderFooterConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) {
+	public init(key: AnyHashable, rows: [CellConfigType] = [], header: TableHeaderFooterConfigType? = nil, footer: TableHeaderFooterConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) {
 		self.key = key
 		self.rows = rows
 		self.header = header
@@ -81,9 +81,18 @@ public struct TableSection: Sequence, TableSectionType {
 	///
 	/// - Parameter index: Integer identifying the position of the row in the section.
 	/// - Returns: The String identifier of the section enclosing the row.
-	func sectionKeyPathForRow(_ index: Int) -> String? {
+	func sectionKeyPathForRow(_ index: Int) -> KeyPath? {
 		guard index < rows.count else { return nil }
-		return key + rows[index].key
+		return KeyPath(sectionKey: key, rowKey: rows[index].key)
+	}
+	
+	func accessibilityIdentifierForRow(_ index: Int, inSection sectionIndex: Int) -> String? {
+		guard index < rows.count else { return nil }
+		if let sectionKey = key as? String, let rowKey = rows[index].key as? String {
+			return sectionKey+rowKey
+		} else {
+			return "section\(sectionIndex)-row\(index)"
+		}
 	}
 
 	/// Attempts to merge the separator's style provided by a `TableSection` with the separator's style provided by an instance of `CellConfigType`.
