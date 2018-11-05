@@ -417,6 +417,7 @@ public class FunctionalTableData: NSObject {
 	}
 	
 	private func finishRenderAndDiff() {
+        tableView.layoutIfNeeded()
 		renderAndDiffQueue.isSuspended = false
 	}
 	
