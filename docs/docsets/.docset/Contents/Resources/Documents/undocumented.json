@@ -401,35 +401,35 @@
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/Separator.swift",
-      "line": 55,
+      "line": 51,
       "symbol": "Separator.init(style:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/Separator.swift",
-      "line": 60,
+      "line": 56,
       "symbol": "Separator.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/Separator.swift",
-      "line": 64,
+      "line": 60,
       "symbol": "Separator.intrinsicContentSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/Separator.swift",
-      "line": 68,
+      "line": 64,
       "symbol": "Separator.constrainToTopOfView(_:constant:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/raulriera/Downloads/Shopify/FunctionalTableData/FunctionalTableData/Separator.swift",
-      "line": 73,
+      "line": 69,
       "symbol": "Separator.constrainToBottomOfView(_:constant:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
