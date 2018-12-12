@@ -28,4 +28,4 @@ profile
 FunctionalTableData/build/*
 .dev
 
-docs/docs/undocumented.json
+**/undocumented.json
