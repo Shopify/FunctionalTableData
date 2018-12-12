@@ -46,6 +46,7 @@
 		4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */; };
 		4CD535031F9E3A010041A3F9 /* CellStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */; };
 		9FF97DB3212CA23B006FA047 /* TableCellReuseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF97DB2212CA23B006FA047 /* TableCellReuseTests.swift */; };
+		BC8C5D4121763B7B00443E28 /* BackgroundViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C5D4021763B7B00443E28 /* BackgroundViewProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,7 @@
 		4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemLayout.swift; sourceTree = "<group>"; };
 		4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellStyleTests.swift; sourceTree = "<group>"; };
 		9FF97DB2212CA23B006FA047 /* TableCellReuseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellReuseTests.swift; sourceTree = "<group>"; };
+		BC8C5D4021763B7B00443E28 /* BackgroundViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 				4C7A27871F2FB68400360E9B /* Extensions */,
 				4CCCE83E1F8AA7B200C73258 /* CollectionView */,
 				4CCCE8431F8AA7CD00C73258 /* TableView */,
+				BC8C5D4021763B7B00443E28 /* BackgroundViewProvider.swift */,
 				4C7A276F1F2FB55D00360E9B /* CellActions.swift */,
 				4C7A27701F2FB55D00360E9B /* CellConfigType.swift */,
 				4C7A27761F2FB55D00360E9B /* CellStyle.swift */,
@@ -456,6 +459,7 @@
 				3624340420D2F40100A75787 /* Array+TableSection.swift in Sources */,
 				4C7A27861F2FB55D00360E9B /* TableSectionHeaderFooter.swift in Sources */,
 				4C7A277C1F2FB55D00360E9B /* CellConfigType.swift in Sources */,
+				BC8C5D4121763B7B00443E28 /* BackgroundViewProvider.swift in Sources */,
 				4C7A27811F2FB55D00360E9B /* Separator.swift in Sources */,
 				4C7A277F1F2FB55D00360E9B /* ObjCExceptionRethrower.swift in Sources */,
 				4C7A27891F2FB69C00360E9B /* UIView+AutoLayout.swift in Sources */,
