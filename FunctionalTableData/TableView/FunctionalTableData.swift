@@ -65,6 +65,8 @@ public class FunctionalTableData: NSObject {
 	
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
+
+	fileprivate var contentOffsetBeforeUpdates: CGPoint?
 	
 	/// Enclosing `UITableView` that presents all the `TableSection` data.
 	///
@@ -401,6 +403,9 @@ public class FunctionalTableData: NSObject {
 			completion?()
 		}
 		
+		// Save the contentOffset of the tableView before we begin updates.
+		contentOffsetBeforeUpdates = tableView.contentOffset
+
 		tableView.beginUpdates()
 		// #4629 - There is an issue where on some occasions calling beginUpdates() will cause a heightForRowAtIndexPath() call to be made. If the sections have been changed already we may no longer find the cells
 		// in the model causing a crash. To prevent this from happening, only load the new model AFTER beginUpdates() has run
@@ -412,6 +417,9 @@ public class FunctionalTableData: NSObject {
 		tableView.beginUpdates()
 		applyTransitionChanges(changes)
 		tableView.endUpdates()
+
+		// Reset the contentOffset after we finish updating the tableView.
+		contentOffsetBeforeUpdates = nil
 		
 		CATransaction.commit()
 	}
@@ -753,6 +761,12 @@ extension FunctionalTableData: UITableViewDelegate {
 	}
 	
 	public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		// #127 - There is an issue with the tableView jumping to an incorrect contentOffset when pulling to refresh on iOS 12.1
+		// To avoid this, we need to save the contentOffset of the tableView before any table updates are applied and prevent
+		// the tableView from scrolling to a new contentOffset until those updates have completed.
+		if let contentOffsetBeforeUpdates = contentOffsetBeforeUpdates {
+			scrollView.setContentOffset(contentOffsetBeforeUpdates, animated: false)
+		}
 		scrollViewDidScroll?(scrollView)
 	}
 	
