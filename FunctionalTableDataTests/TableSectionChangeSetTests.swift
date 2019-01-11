@@ -63,6 +63,90 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertEqual(changes.deletedSections, IndexSet())
 	}
 
+	func testSectionNotReloadedWithEqualHeaders() {
+		let oldItems: [TableSection] = [TableSection(key: "section1", header: TestHeaderFooter(state: TestHeaderFooterState(data: "green")))]
+		let newItems: [TableSection] = [TableSection(key: "section1", header: TestHeaderFooter(state: TestHeaderFooterState(data: "green")))]
+		let changes = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [])
+
+		XCTAssertTrue(changes.isEmpty)
+		XCTAssertEqual(changes.movedSections, [])
+		XCTAssertEqual(changes.insertedSections, IndexSet())
+		XCTAssertEqual(changes.reloadedSections, IndexSet())
+		XCTAssertEqual(changes.deletedSections, IndexSet())
+	}
+
+	func testSectionNotReloadedWithEqualFooters() {
+		let oldItems: [TableSection] = [TableSection(key: "section1", footer: TestHeaderFooter(state: TestHeaderFooterState(data: "blue")))]
+		let newItems: [TableSection] = [TableSection(key: "section1", footer: TestHeaderFooter(state: TestHeaderFooterState(data: "blue")))]
+		let changes = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [])
+
+		XCTAssertTrue(changes.isEmpty)
+		XCTAssertEqual(changes.movedSections, [])
+		XCTAssertEqual(changes.insertedSections, IndexSet())
+		XCTAssertEqual(changes.reloadedSections, IndexSet())
+		XCTAssertEqual(changes.deletedSections, IndexSet())
+	}
+
+	func testRowsComparedIfHeadersEqual() {
+		let oldItems: [TableSection] = [TableSection(key: "section1", header: TestHeaderFooter(state: TestHeaderFooterState(data: "blue")))]
+		let newItems: [TableSection] = [TableSection(key: "section1", rows: [
+			TestCaseCell(key: "row1", state: TestCaseState(data: "red"), cellUpdater: TestCaseState.updateView)
+			], header: TestHeaderFooter(state: TestHeaderFooterState(data: "blue"))
+		)]
+		let changes = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [])
+
+		XCTAssertFalse(changes.isEmpty)
+		XCTAssertEqual(changes.count, 1)
+		XCTAssertEqual(changes.reloadedSections, IndexSet())
+		XCTAssertEqual(changes.insertedRows, [IndexPath(item: 0, section: 0)])
+	}
+
+	func testSectionReloadedWithInequalHeaders() {
+		let oldItems: [TableSection] = [TableSection(key: "section1", rows: [
+			TestCaseCell(key: "row1", state: TestCaseState(data: "red"), cellUpdater: TestCaseState.updateView)
+			], header: TestHeaderFooter(state: TestHeaderFooterState(data: "green"))
+		)]
+		let newItems: [TableSection] = [TableSection(key: "section1", rows: [
+			TestCaseCell(key: "row1", state: TestCaseState(data: "red"), cellUpdater: TestCaseState.updateView),
+			TestCaseCell(key: "row2", state: TestCaseState(data: "blue"), cellUpdater: TestCaseState.updateView)
+			], header: TestHeaderFooter(state: TestHeaderFooterState(data: "purple"))
+		)]
+		let changes = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [])
+
+		XCTAssertFalse(changes.isEmpty)
+		XCTAssertEqual(changes.count, 1)
+		XCTAssertEqual(changes.movedSections, [])
+		XCTAssertEqual(changes.insertedSections, IndexSet())
+		XCTAssertEqual(changes.reloadedSections, IndexSet([0]))
+		XCTAssertEqual(changes.deletedSections, IndexSet())
+		XCTAssertEqual(changes.insertedRows, [])
+		XCTAssertEqual(changes.deletedRows, [])
+		XCTAssertEqual(changes.reloadedRows, [])
+	}
+
+	func testSectionReloadedWithInequalFooters() {
+		let oldItems: [TableSection] = [TableSection(key: "section1", rows: [
+			TestCaseCell(key: "row1", state: TestCaseState(data: "red"), cellUpdater: TestCaseState.updateView),
+			TestCaseCell(key: "row2", state: TestCaseState(data: "blue"), cellUpdater: TestCaseState.updateView)
+			], footer: TestHeaderFooter(state: TestHeaderFooterState(data: "green"))
+		)]
+		let newItems: [TableSection] = [TableSection(key: "section1", rows: [
+			TestCaseCell(key: "row3", state: TestCaseState(data: "pink"), cellUpdater: TestCaseState.updateView)
+			], footer: TestHeaderFooter(state: TestHeaderFooterState(data: "purple"))
+		)]
+		let changes = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [])
+
+		XCTAssertFalse(changes.isEmpty)
+		XCTAssertEqual(changes.count, 1)
+		XCTAssertEqual(changes.movedSections, [])
+		XCTAssertEqual(changes.insertedSections, IndexSet())
+		XCTAssertEqual(changes.reloadedSections, IndexSet([0]))
+		XCTAssertEqual(changes.deletedSections, IndexSet())
+		XCTAssertEqual(changes.insertedRows, [])
+		XCTAssertEqual(changes.deletedRows, [])
+		XCTAssertEqual(changes.reloadedRows, [])
+	}
+
 	// Shows the algorithm is greedy
 	func testMoveDown() {
 		let oldItems: [TableSection] = [
@@ -456,3 +540,33 @@ class TableSectionChangeSetTests: XCTestCase {
 }
 
 fileprivate typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
+
+fileprivate struct TestHeaderFooterState: TableHeaderFooterStateType, Equatable {
+	let insets: UIEdgeInsets = .zero
+	let height: CGFloat = 0
+	let topSeparatorHidden: Bool = true
+	let bottomSeparatorHidden: Bool = true
+	var data: String
+}
+
+fileprivate struct TestHeaderFooter: TableHeaderFooterConfigType {
+	typealias HeaderFooter = TableHeaderFooter<UIView, LayoutMarginsTableItemLayout>
+	let state: TestHeaderFooterState?
+
+	func register(with tableView: UITableView) {
+		tableView.registerReusableHeaderFooterView(HeaderFooter.self)
+	}
+
+	func dequeueHeaderFooter(from tableView: UITableView) -> UITableViewHeaderFooterView? {
+		return tableView.dequeueReusableHeaderFooterView(HeaderFooter.self)
+	}
+
+	func isEqual(_ other: TableHeaderFooterConfigType?) -> Bool {
+		guard let other = other as? TestHeaderFooter else { return false }
+		return state == other.state
+	}
+
+	var height: CGFloat {
+		return state?.height ?? 0
+	}
+}

@@ -15,7 +15,14 @@ public typealias TableHeaderConfigType = TableHeaderFooterConfigType
 
 public protocol TableHeaderFooterConfigType: TableItemConfigType {
 	func dequeueHeaderFooter(from tableView: UITableView) -> UITableViewHeaderFooterView?
+	func isEqual(_ other: TableHeaderFooterConfigType?) -> Bool
 	var height: CGFloat { get }
+}
+
+public extension TableHeaderFooterConfigType {
+	func isEqual(_ other: TableHeaderFooterConfigType?) -> Bool {
+		return (other as? Self) != nil
+	}
 }
 
 public protocol TableHeaderFooterStateType {
