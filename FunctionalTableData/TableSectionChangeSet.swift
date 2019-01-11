@@ -134,7 +134,11 @@ public final class TableSectionChangeSet {
 				if oldSectionIndex < old.count && new[newSectionIndex].key == old[oldSectionIndex].key {
 					// Skip over equal sections
 					repeat {
-						compareRows(newRows: &newRows, oldRows: &oldRows, oldSectionIndex: oldSectionIndex, newSectionIndex: newSectionIndex)
+						if headerOrFooterChanged(oldSectionIndex: oldSectionIndex, newSectionIndex: newSectionIndex) {
+							reloadedSections.insert(newSectionIndex)
+						} else {
+							compareRows(newRows: &newRows, oldRows: &oldRows, oldSectionIndex: oldSectionIndex, newSectionIndex: newSectionIndex)
+						}
 						oldSectionIndex += 1
 						newSectionIndex += 1
 					} while oldSectionIndex < old.count &&
@@ -165,6 +169,22 @@ public final class TableSectionChangeSet {
 			return false
 		}
 		return new.section.mergedStyle(for: new.row) == old.section.mergedStyle(for: old.row)
+	}
+
+	private func headerOrFooterChanged(oldSectionIndex: Int, newSectionIndex: Int) -> Bool {
+		let oldHeader = old[oldSectionIndex].header
+		let newHeader = new[newSectionIndex].header
+		guard oldHeader?.isEqual(newHeader) ?? (newHeader == nil) else {
+			return true
+		}
+
+		let oldFooter = old[oldSectionIndex].footer
+		let newFooter = new[newSectionIndex].footer
+		guard oldFooter?.isEqual(newFooter) ?? (newFooter == nil) else {
+			return true
+		}
+
+		return false
 	}
 
 	private func compareRows(newRows: inout Set<String>, oldRows: inout [String: Int], oldSectionIndex: Int, newSectionIndex: Int) {
