@@ -135,7 +135,7 @@ public final class TableSectionChangeSet {
 					// Skip over equal sections
 					repeat {
 						if headerOrFooterChanged(oldSectionIndex: oldSectionIndex, newSectionIndex: newSectionIndex) {
-							reloadedSections.insert(newSectionIndex)
+							reloadedSections.insert(oldSectionIndex)
 						} else {
 							compareRows(newRows: &newRows, oldRows: &oldRows, oldSectionIndex: oldSectionIndex, newSectionIndex: newSectionIndex)
 						}

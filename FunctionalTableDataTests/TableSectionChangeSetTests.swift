@@ -147,6 +147,42 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertEqual(changes.reloadedRows, [])
 	}
 
+	func testCorrectSectionReloadedWithDelete() {
+		let oldItems: [TableSection] = [
+			TableSection(key: "section1"),
+			TableSection(key: "section2", footer: TestHeaderFooter(state: TestHeaderFooterState(data: "green")))
+		]
+		let newItems: [TableSection] = [TableSection(key: "section2", footer: TestHeaderFooter(state: TestHeaderFooterState(data: "purple")))]
+		let changes = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [])
+
+		XCTAssertFalse(changes.isEmpty)
+		XCTAssertEqual(changes.count, 2)
+		XCTAssertEqual(changes.movedSections, [])
+		XCTAssertEqual(changes.insertedSections, IndexSet())
+		XCTAssertEqual(changes.reloadedSections, IndexSet([1]))
+		XCTAssertEqual(changes.deletedSections, IndexSet([0]))
+	}
+
+	func testCorrectSectionReloadedWithInsert() {
+		let oldItems: [TableSection] = [
+			TableSection(key: "section1", footer: TestHeaderFooter(state: TestHeaderFooterState(data: "green"))),
+			TableSection(key: "section2")
+		]
+		let newItems: [TableSection] = [
+			TableSection(key: "section3"),
+			TableSection(key: "section1", footer: TestHeaderFooter(state: TestHeaderFooterState(data: "purple"))),
+			TableSection(key: "section2")
+		]
+		let changes = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [])
+
+		XCTAssertFalse(changes.isEmpty)
+		XCTAssertEqual(changes.count, 2)
+		XCTAssertEqual(changes.movedSections, [])
+		XCTAssertEqual(changes.insertedSections, IndexSet([0]))
+		XCTAssertEqual(changes.reloadedSections, IndexSet([0]))
+		XCTAssertEqual(changes.deletedSections, IndexSet())
+	}
+
 	// Shows the algorithm is greedy
 	func testMoveDown() {
 		let oldItems: [TableSection] = [
