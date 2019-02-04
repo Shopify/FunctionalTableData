@@ -576,33 +576,12 @@ class TableSectionChangeSetTests: XCTestCase {
 }
 
 fileprivate typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
+fileprivate typealias TestHeaderFooter = TableSectionHeaderFooter<UIView, LayoutMarginsTableItemLayout, TestHeaderFooterState>
 
-fileprivate struct TestHeaderFooterState: TableHeaderFooterStateType, Equatable {
+fileprivate struct TestHeaderFooterState: TableHeaderFooterStateType {
 	let insets: UIEdgeInsets = .zero
 	let height: CGFloat = 0
 	let topSeparatorHidden: Bool = true
 	let bottomSeparatorHidden: Bool = true
 	var data: String
-}
-
-fileprivate struct TestHeaderFooter: TableHeaderFooterConfigType {
-	typealias HeaderFooter = TableHeaderFooter<UIView, LayoutMarginsTableItemLayout>
-	let state: TestHeaderFooterState?
-
-	func register(with tableView: UITableView) {
-		tableView.registerReusableHeaderFooterView(HeaderFooter.self)
-	}
-
-	func dequeueHeaderFooter(from tableView: UITableView) -> UITableViewHeaderFooterView? {
-		return tableView.dequeueReusableHeaderFooterView(HeaderFooter.self)
-	}
-
-	func isEqual(_ other: TableHeaderFooterConfigType?) -> Bool {
-		guard let other = other as? TestHeaderFooter else { return false }
-		return state == other.state
-	}
-
-	var height: CGFloat {
-		return state?.height ?? 0
-	}
 }

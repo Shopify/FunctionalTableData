@@ -19,39 +19,40 @@ public protocol TableHeaderFooterConfigType: TableItemConfigType {
 	var height: CGFloat { get }
 }
 
-public extension TableHeaderFooterConfigType {
-	func isEqual(_ other: TableHeaderFooterConfigType?) -> Bool {
-		return (other as? Self) != nil
-	}
-}
-
-public protocol TableHeaderFooterStateType {
+public protocol TableHeaderFooterStateType: Equatable {
 	var insets: UIEdgeInsets { get }
 	var height: CGFloat { get }
 	var topSeparatorHidden: Bool { get }
 	var bottomSeparatorHidden: Bool { get }
 }
 
-public struct TableSectionHeaderFooter<ViewType: UIView, Layout: TableItemLayout, S: TableHeaderFooterStateType>: TableHeaderFooterConfigType {
-	public typealias ViewUpdater = (_ header: TableHeaderFooter<ViewType, Layout>, _ state: S) -> Void
-	public let state: S?
-	let updateView: ViewUpdater?
+public struct TableSectionHeaderFooter<View: UIView, Layout: TableItemLayout, State: TableHeaderFooterStateType>: TableHeaderFooterConfigType {
+	public typealias ViewUpdater = (_ header: TableHeaderFooter<View, Layout>, _ state: State) -> Void
+	public let state: State?
+	let viewUpdater: ViewUpdater?
 	
-	public init(state: S? = nil, updater: ViewUpdater? = nil) {
+	public init(state: State? = nil, viewUpdater: ViewUpdater? = nil) {
 		self.state = state
-		self.updateView = updater
+		self.viewUpdater = viewUpdater
 	}
 	
 	public func register(with tableView: UITableView) {
-		tableView.registerReusableHeaderFooterView(TableHeaderFooter<ViewType, Layout>.self)
+		tableView.registerReusableHeaderFooterView(TableHeaderFooter<View, Layout>.self)
 	}
 	
 	public func dequeueHeaderFooter(from tableView: UITableView) -> UITableViewHeaderFooterView? {
-		let header = tableView.dequeueReusableHeaderFooterView(TableHeaderFooter<ViewType, Layout>.self)
-		if let updater = updateView, let state = state {
-			updater(header, state)
+		let header = tableView.dequeueReusableHeaderFooterView(TableHeaderFooter<View, Layout>.self)
+		if let viewUpdater = viewUpdater, let state = state {
+			viewUpdater(header, state)
 		}
 		return header
+	}
+
+	public func isEqual(_ other: TableHeaderFooterConfigType?) -> Bool {
+		if let other = other as? TableSectionHeaderFooter<View, Layout, State> {
+			return state == other.state
+		}
+		return false
 	}
 	
 	public var height: CGFloat {
