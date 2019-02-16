@@ -19,7 +19,7 @@ No longer do you have to manually track the number of sections, cells, and indic
 
 ### Manual
 
-Simply drag and drop the `FunctionalTableData/FunctionalTableData` folder into your Xcode project.
+Simply drag and drop `FunctionalTableData/FunctionalTableData.xcodeproj` into your Xcode project.
 
 ### Carthage
 
