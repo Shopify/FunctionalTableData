@@ -37,29 +37,13 @@ public class FunctionalTableData: NSObject {
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
 	
-	/// Represents the unique path to a given item in the `FunctionalTableData`.
-	///
-	/// Think of it as a readable implementation of `IndexPath`, that can be used to locate a given cell
-	/// or `TableSection` in the data set.
-	public struct KeyPath {
-		/// Unique identifier for a section.
-		public let sectionKey: String
-		/// Unique identifier for an item inside a section.
-		public let rowKey: String
-		
-		public init(sectionKey: String, rowKey: String) {
-			self.sectionKey = sectionKey
-			self.rowKey = rowKey
-		}
-	}
-	
 	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
 		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
 		let exception = Exception(name: name, newSections: sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: tableView?.frame ?? .zero, reason: exceptionReason, userInfo: exceptionUserInfo)
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	private var sections: [TableSection] = []
+	fileprivate var sections: [TableSection] = []
 	private static let reloadEntireTableThreshold = 20
 	private var heightAtIndexKeyPath: [String: CGFloat] = [:]
 	
@@ -158,46 +142,6 @@ public class FunctionalTableData: NSObject {
 		tableView?.delegate = nil
 	}
 	
-	/// Returns the cell identified by a key path.
-	///
-	/// - Parameter keyPath: A key path identifying the cell to look up.
-	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
-	public func rowForKeyPath(_ keyPath: KeyPath) -> CellConfigType? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
-			return sections[sectionIndex].rows[rowIndex]
-		}
-		
-		return nil
-	}
-	
-	/// Returns the key path specified by its string presentation.
-	///
-	/// - Parameter key: String identifier to lookup.
-	/// - Returns: A `KeyPath` that matches the key or `nil` if there is no match.
-	public func keyPathForRowKey(_ key: String) -> KeyPath? {
-		for section in sections {
-			for row in section {
-				if row.key == key {
-					return KeyPath(sectionKey: section.key, rowKey: row.key)
-				}
-			}
-		}
-		
-		return nil
-	}
-	
-	/// Returns the key path of the cell in a given `IndexPath` location.
-	///
-	/// __Note:__ This method performs an unsafe lookup, make sure that the `IndexPath` exists
-	/// before trying to transform it into a `KeyPath`.
-	/// - Parameter indexPath: A key path identifying where the key path is located.
-	/// - Returns: The key representation of the supplied `IndexPath`.
-	public func keyPathForIndexPath(indexPath: IndexPath) -> KeyPath {
-		let section = sections[indexPath.section]
-		let row = section.rows[indexPath.row]
-		return KeyPath(sectionKey: section.key, rowKey: row.key)
-	}
-	
 	/// Returns the drawing area for a row identified by key path.
 	///
 	/// - Parameter keyPath: A key path identifying the cell to look up.
@@ -205,16 +149,6 @@ public class FunctionalTableData: NSObject {
 	public func rectForKeyPath(_ keyPath: KeyPath) -> CGRect? {
 		guard let indexPath = indexPathFromKeyPath(keyPath) else { return nil }
 		return tableView?.rectForRow(at: indexPath)
-	}
-	
-	private func sectionForKey(key: String) -> TableSection? {
-		for section in sections {
-			if section.key == key {
-				return section
-			}
-		}
-		
-		return nil
 	}
 	
 	@available(*, deprecated, message: "The `reloadList` argument is no longer available.")
@@ -445,24 +379,6 @@ public class FunctionalTableData: NSObject {
 	public func scroll(to keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .bottom) {
 		guard let aTableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		aTableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
-	}
-	
-	/// - Parameter point: The point in the collection view’s bounds that you want to test.
-	/// - Returns: the keypath of the item at the specified point, or `nil` if no item was found at that point.
-	public func keyPath(at point: CGPoint) -> KeyPath? {
-		guard let indexPath = tableView?.indexPathForRow(at: point) else {
-			return nil
-		}
-		
-		return keyPathForIndexPath(indexPath: indexPath)
-	}
-	
-	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
-			return IndexPath(row: rowIndex, section: sectionIndex)
-		}
-		
-		return nil
 	}
 	
 	internal func calculateTableChanges(oldSections: [TableSection], newSections: [TableSection], visibleIndexPaths: [IndexPath]) -> TableSectionChangeSet {
@@ -795,4 +711,24 @@ extension FunctionalTableData: UIScrollViewAccessibilityDelegate {
 	public func accessibilityScrollStatus(for scrollView: UIScrollView) -> String? {
 		return scrollViewAccessibilityScrollStatus?(scrollView)
 	}
+}
+
+// MARK: - KeyPathType protocol
+
+extension FunctionalTableData: KeyPathType {
+    public var tableSections: [TableSection] {
+        return sections
+    }
+    
+    public func indexPathForRow(at point: CGPoint) -> IndexPath? {
+        return tableView?.indexPathForRow(at: point)
+    }
+    
+    public func keyRowForIndexPath(at indexPath: IndexPath, in section: TableSection) -> CellConfigType {
+        return section.rows[indexPath.row]
+    }
+    
+    public func keyIndexPath(at row: Int, in section: Int) -> IndexPath {
+        return IndexPath(row: row, section: section)
+    }
 }
