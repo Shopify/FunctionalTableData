@@ -205,14 +205,6 @@ public class FunctionalTableData: NSObject {
 		return tableView?.rectForRow(at: indexPath)
 	}
 	
-	private func sectionForKey(key: String) -> TableSection? {
-		for section in sections where section.key == key {
-			return section
-		}
-		
-		return nil
-	}
-	
 	@available(*, deprecated, message: "The `reloadList` argument is no longer available.")
 	public func renderAndDiff(_ newSections: [TableSection], keyPath: KeyPath? = nil, reloadList: Bool, animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
 		renderAndDiff(newSections, keyPath: keyPath, animated: animated, animations: animations, completion: completion)

@@ -149,14 +149,6 @@ public class FunctionalCollectionData: NSObject {
 		return KeyPath(sectionKey: section.key, rowKey: row.key)
 	}
 	
-	private func sectionForKey(key: String) -> TableSection? {
-		for section in sections where section.key == key {
-			return section
-		}
-		
-		return nil
-	}
-	
 	/// Populates the collection with the specified sections, and asynchronously updates the collection view to reflect the cells and sections that have changed.
 	///
 	/// - Parameters:
