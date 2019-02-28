@@ -59,8 +59,6 @@ public protocol KeyPathType {
     /// - Returns: The key representation of the supplied `IndexPath`.
     func keyPathForIndexPath(indexPath: IndexPath) -> KeyPath
     
-    func sectionForKey(key: String) -> TableSection?
-    
     /// - Parameter point: The point in the collection/table view’s bounds that you want to test.
     /// - Returns: The keypath of the item at the specified point, or `nil` if no item was found at that point.
     func keyPath(at point: CGPoint) -> KeyPath?
@@ -112,16 +110,6 @@ extension KeyPathType
         let section = tableSections[indexPath.section]
         let row = keyRowForIndexPath(at: indexPath, in: section)
         return KeyPath(sectionKey: section.key, rowKey: row.key)
-    }
-    
-    public func sectionForKey(key: String) -> TableSection? {
-        for section in tableSections {
-            if section.key == key {
-                return section
-            }
-        }
-        
-        return nil
     }
     
     /// - Parameter point: The point in the collection/table view’s bounds that you want to test.
