@@ -29,10 +29,10 @@ extension Array where Element: TableSectionType {
 }
 
 private extension Array where Element: Hashable {
-    func duplicates() -> [Element] {
-        let groups = Dictionary(grouping: self, by: { $0 }).filter{ $1.count > 1 }
-        return Array(groups.keys)
-    }
+        func duplicates() -> [Element] {
+        	let groups = Dictionary(grouping: self, by: { $0 }).filter{ $1.count > 1 }
+        	return Array(groups.keys)
+    	}
 }
 
 private extension Array where Element: TableSectionType {
