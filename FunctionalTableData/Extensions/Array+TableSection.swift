@@ -30,16 +30,8 @@ extension Array where Element: TableSectionType {
 
 private extension Array where Element: Hashable {
 	func duplicates() -> [Element] {
-		var dups: Set<Element> = []
-		var uniques: Set<Element> = []
-		forEach {
-			if uniques.contains($0) {
-				dups.insert($0)
-			} else {
-				uniques.insert($0)
-			}
-		}
-		return Array(dups)
+		let groups = Dictionary(grouping: self, by: { $0 }).filter{ $1.count > 1 }
+		return Array(groups.keys)
 	}
 }
 

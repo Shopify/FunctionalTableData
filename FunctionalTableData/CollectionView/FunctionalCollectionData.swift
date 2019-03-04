@@ -129,10 +129,8 @@ public class FunctionalCollectionData: NSObject {
 	/// - Returns: A `KeyPath` that matches the key or `nil` if there is no match.
 	public func keyPathForRowKey(_ key: String) -> KeyPath? {
 		for section in sections {
-			for row in section {
-				if row.key == key {
-					return KeyPath(sectionKey: section.key, rowKey: row.key)
-				}
+			for row in section where row.key == key {
+				return KeyPath(sectionKey: section.key, rowKey: row.key)
 			}
 		}
 		
@@ -149,16 +147,6 @@ public class FunctionalCollectionData: NSObject {
 		let section = sections[indexPath.section]
 		let row = section.rows[indexPath.item]
 		return KeyPath(sectionKey: section.key, rowKey: row.key)
-	}
-	
-	private func sectionForKey(key: String) -> TableSection? {
-		for section in sections {
-			if section.key == key {
-				return section
-			}
-		}
-		
-		return nil
 	}
 	
 	/// Populates the collection with the specified sections, and asynchronously updates the collection view to reflect the cells and sections that have changed.

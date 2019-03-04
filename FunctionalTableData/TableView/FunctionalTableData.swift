@@ -176,10 +176,8 @@ public class FunctionalTableData: NSObject {
 	/// - Returns: A `KeyPath` that matches the key or `nil` if there is no match.
 	public func keyPathForRowKey(_ key: String) -> KeyPath? {
 		for section in sections {
-			for row in section {
-				if row.key == key {
-					return KeyPath(sectionKey: section.key, rowKey: row.key)
-				}
+			for row in section where row.key == key {
+				return KeyPath(sectionKey: section.key, rowKey: row.key)
 			}
 		}
 		
@@ -205,16 +203,6 @@ public class FunctionalTableData: NSObject {
 	public func rectForKeyPath(_ keyPath: KeyPath) -> CGRect? {
 		guard let indexPath = indexPathFromKeyPath(keyPath) else { return nil }
 		return tableView?.rectForRow(at: indexPath)
-	}
-	
-	private func sectionForKey(key: String) -> TableSection? {
-		for section in sections {
-			if section.key == key {
-				return section
-			}
-		}
-		
-		return nil
 	}
 	
 	@available(*, deprecated, message: "The `reloadList` argument is no longer available.")
