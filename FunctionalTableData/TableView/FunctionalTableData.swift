@@ -66,6 +66,18 @@ public class FunctionalTableData: NSObject {
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
 	
+	/// Inverts the `UITableView` vertically, which is great for messaging app UIs.
+	///
+	/// `FunctionalTableData` will take care of flipping any cells so the UI appears
+	/// as normal, but you're required to manage data and insets accordingly where used,
+	/// and keep in mind that `scrollIndicatorInsets` need to be adjusted by you as well.
+	public var isInverted: Bool = false {
+		didSet {
+			guard let tableView = tableView else { return }
+			tableView.transform = isInverted ? CGAffineTransform(rotationAngle: -.pi) : .identity
+		}
+	}
+	
 	/// Enclosing `UITableView` that presents all the `TableSection` data.
 	///
 	/// `FunctionalTableData` will take care of setting its own `UITableViewDelegate` and
@@ -530,6 +542,11 @@ extension FunctionalTableData: UITableViewDataSource {
 		let row = indexPath.row
 		let cellConfig = sectionData[row]
 		let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
+		
+		if isInverted {
+			cell.transform = CGAffineTransform(rotationAngle: -.pi)
+		}
+		
 		cell.accessibilityIdentifier = sectionData.sectionKeyPathForRow(row)
 		
 		cellConfig.update(cell: cell, in: tableView)
@@ -553,7 +570,7 @@ extension FunctionalTableData: UITableViewDataSource {
 
 extension FunctionalTableData: UITableViewDelegate {
 	public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard let header = sections[section].header else {
+		guard let header = isInverted ? sections[section].footer : sections[section].header else {
 			// When given a height of zero grouped style UITableView's use their default value instead of zero. By returning CGFloat.min we get around this behavior and force UITableView to end up using a height of zero after all.
 			return tableView.style == .grouped ? CGFloat.leastNormalMagnitude : 0
 		}
@@ -561,7 +578,7 @@ extension FunctionalTableData: UITableViewDelegate {
 	}
 	
 	public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		guard let footer = sections[section].footer else {
+		guard let footer = isInverted ? sections[section].header : sections[section].footer else {
 			// When given a height of zero grouped style UITableView's use their default value instead of zero. By returning CGFloat.min we get around this behavior and force UITableView to end up using a height of zero after all.
 			return tableView.style == .grouped ? CGFloat.leastNormalMagnitude : 0
 		}
@@ -578,13 +595,21 @@ extension FunctionalTableData: UITableViewDelegate {
 	}
 	
 	public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		guard let header = sections[section].header else { return nil }
-		return header.dequeueHeaderFooter(from: tableView)
+		guard let header = isInverted ? sections[section].footer : sections[section].header else { return nil }
+		let headerView = header.dequeueHeaderFooter(from: tableView)
+		if isInverted {
+			headerView?.transform = CGAffineTransform(rotationAngle: -.pi)
+		}
+		return headerView
 	}
 	
 	public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-		guard let footer = sections[section].footer else { return nil }
-		return footer.dequeueHeaderFooter(from: tableView)
+		guard let footer = isInverted ? sections[section].header : sections[section].footer else { return nil }
+		let footerView = footer.dequeueHeaderFooter(from: tableView)
+		if isInverted {
+			footerView?.transform = CGAffineTransform(rotationAngle: -.pi)
+		}
+		return footerView
 	}
 	
 	public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
