@@ -45,6 +45,7 @@
 		4CA356761F322D7F0081BE90 /* TableSectionStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */; };
 		4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */; };
 		4CD535031F9E3A010041A3F9 /* CellStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */; };
+		90186EEC2230449B00EAB42E /* InvertedTableExampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90186EEB2230449B00EAB42E /* InvertedTableExampleController.swift */; };
 		9FF97DB3212CA23B006FA047 /* TableCellReuseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF97DB2212CA23B006FA047 /* TableCellReuseTests.swift */; };
 		BC8C5D4121763B7B00443E28 /* BackgroundViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C5D4021763B7B00443E28 /* BackgroundViewProvider.swift */; };
 /* End PBXBuildFile section */
@@ -122,6 +123,7 @@
 		4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
 		4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemLayout.swift; sourceTree = "<group>"; };
 		4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellStyleTests.swift; sourceTree = "<group>"; };
+		90186EEB2230449B00EAB42E /* InvertedTableExampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvertedTableExampleController.swift; sourceTree = "<group>"; };
 		9FF97DB2212CA23B006FA047 /* TableCellReuseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellReuseTests.swift; sourceTree = "<group>"; };
 		BC8C5D4021763B7B00443E28 /* BackgroundViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -286,6 +288,7 @@
 			children = (
 				17E57FEC208A404700BFCC3D /* CollectionExampleController.swift */,
 				17E57FEA208A404700BFCC3D /* TableExampleController.swift */,
+				90186EEB2230449B00EAB42E /* InvertedTableExampleController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17E57FED208A404700BFCC3D /* CollectionExampleController.swift in Sources */,
+				90186EEC2230449B00EAB42E /* InvertedTableExampleController.swift in Sources */,
 				17E57FE9208A404700BFCC3D /* AppDelegate.swift in Sources */,
 				17E58000208A425F00BFCC3D /* LabelCell.swift in Sources */,
 				17E57FEB208A404700BFCC3D /* TableExampleController.swift in Sources */,
