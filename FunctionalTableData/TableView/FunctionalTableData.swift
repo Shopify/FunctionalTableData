@@ -21,7 +21,7 @@ public protocol FunctionalTableDataExceptionHandler {
 /// A renderer for `UITableView`.
 ///
 /// By providing a complete description of your view state using an array of `TableSection`. `FunctionalTableData` compares it with the previous render call to insert, update, and remove everything that have changed. This massively simplifies state management of complex UI.
-public class FunctionalTableData: NSObject {
+public class FunctionalTableData {
 	/// A type that provides the information about an exception.
 	public struct Exception {
 		public let name: String
@@ -59,12 +59,19 @@ public class FunctionalTableData: NSObject {
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	private var sections: [TableSection] = []
+	private var sections: [TableSection] = [] {
+		didSet {
+			dataSource.sections = sections
+			delegate.sections = sections
+		}
+	}
 	private static let reloadEntireTableThreshold = 20
-	private var heightAtIndexKeyPath: [String: CGFloat] = [:]
 	
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
+	
+	let dataSource = DataSource()
+	let delegate = Delegate()
 	
 	/// Enclosing `UITableView` that presents all the `TableSection` data.
 	///
@@ -73,8 +80,8 @@ public class FunctionalTableData: NSObject {
 	public var tableView: UITableView? {
 		didSet {
 			guard let tableView = tableView else { return }
-			tableView.dataSource = self
-			tableView.delegate = self
+			tableView.dataSource = dataSource
+			tableView.delegate = delegate
 			tableView.rowHeight = UITableView.automaticDimension
 			tableView.tableFooterView = UIView(frame: .zero)
 			tableView.separatorStyle = .none
@@ -87,36 +94,16 @@ public class FunctionalTableData: NSObject {
 	
 	/// An object to receive various [UIScrollViewDelegate](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate) related events
 	public weak var scrollViewDelegate: UIScrollViewDelegate? {
-		didSet {
+		get {
+			return delegate.scrollViewDelegate
+		}
+		set {
+			delegate.scrollViewDelegate = newValue
+			
 			// Reset the delegate, this triggers UITableView and UIScrollView to re-cache their available delegate methods
-			let delegate = tableView?.delegate
 			tableView?.delegate = nil
 			tableView?.delegate = delegate
 		}
-	}
-	
-	internal var backwardsCompatScrollViewDelegate = ScrollViewDelegate()
-
-	public override func responds(to aSelector: Selector!) -> Bool {
-		if class_respondsToSelector(type(of: self), aSelector) {
-			return true
-		} else if let scrollViewDelegate = scrollViewDelegate, scrollViewDelegate.responds(to: aSelector) {
-			return true
-		} else if backwardsCompatScrollViewDelegate.responds(to: aSelector) {
-			return true
-		}
-		return super.responds(to: aSelector)
-	}
-
-	public override func forwardingTarget(for aSelector: Selector!) -> Any? {
-		if class_respondsToSelector(type(of: self), aSelector) {
-			return self
-		} else if let scrollViewDelegate = scrollViewDelegate, scrollViewDelegate.responds(to: aSelector) {
-			return scrollViewDelegate
-		} else if backwardsCompatScrollViewDelegate.responds(to: aSelector) {
-			return backwardsCompatScrollViewDelegate
-		}
-		return super.forwardingTarget(for: aSelector)
 	}
 	
 	/// The type of animation when rows and sections are inserted or deleted.
@@ -161,7 +148,6 @@ public class FunctionalTableData: NSObject {
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name
 		renderAndDiffQueue.maxConcurrentOperationCount = 1
-		super.init()
 	}
 	
 	deinit {
@@ -425,11 +411,11 @@ public class FunctionalTableData: NSObject {
 	///   - animated: `true` if you want to animate the selection, and `false` if the change should be immediate.
 	///   - triggerDelegate: `true` to trigger the `tableView:didSelectRowAt:` delegate from `UITableView` or `false` to skip it. Skipping it is the default `UITableView` behavior.
 	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .none, triggerDelegate: Bool = false) {
-		guard let aTableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
-		if tableView(aTableView, willSelectRowAt: indexPath) != nil {
-			aTableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
+		guard let tableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
+		if delegate.tableView(tableView, willSelectRowAt: indexPath) != nil {
+			tableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
 			if triggerDelegate {
-				tableView(aTableView, didSelectRowAt: indexPath)
+				delegate.tableView(tableView, didSelectRowAt: indexPath)
 			}
 		}
 	}
@@ -441,8 +427,8 @@ public class FunctionalTableData: NSObject {
 	///   - animated: `true` to animate to the new scroll position, or `false` to scroll immediately.
 	///   - scrollPosition: Specifies where the item specified by `keyPath` should be positioned once scrolling finishes.
 	public func scroll(to keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .bottom) {
-		guard let aTableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
-		aTableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
+		guard let tableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
+		tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
 	}
 	
 	/// - Parameter point: The point in the collection view’s bounds that you want to test.
@@ -523,221 +509,5 @@ extension UITableView {
 	public func indexPath(for view: UIView) -> IndexPath? {
 		guard let cell: UITableViewCell = view.typedSuperview() else { return nil }
 		return self.indexPath(for: cell)
-	}
-}
-
-extension FunctionalTableData: UITableViewDataSource {
-	public func numberOfSections(in tableView: UITableView) -> Int {
-		return sections.count
-	}
-	
-	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return sections[section].rows.count
-	}
-	
-	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let sectionData = sections[indexPath.section]
-		let row = indexPath.row
-		let cellConfig = sectionData[row]
-		let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
-		cell.accessibilityIdentifier = sectionData.sectionKeyPathForRow(row)
-		
-		cellConfig.update(cell: cell, in: tableView)
-		let style = sectionData.mergedStyle(for: row)
-		style.configure(cell: cell, in: tableView)
-		
-		return cell
-	}
-	
-	public func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		// Should only ever be moving within section
-		assert(sourceIndexPath.section == destinationIndexPath.section)
-		
-		// Update internal state to match move
-		let cell = sections[sourceIndexPath.section].rows.remove(at: sourceIndexPath.row)
-		sections[destinationIndexPath.section].rows.insert(cell, at: destinationIndexPath.row)
-		
-		sections[sourceIndexPath.section].didMoveRow?(sourceIndexPath.row, destinationIndexPath.row)
-	}
-}
-
-extension FunctionalTableData: UITableViewDelegate {
-	public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard let header = sections[section].header else {
-			// When given a height of zero grouped style UITableView's use their default value instead of zero. By returning CGFloat.min we get around this behavior and force UITableView to end up using a height of zero after all.
-			return tableView.style == .grouped ? CGFloat.leastNormalMagnitude : 0
-		}
-		return header.height
-	}
-	
-	public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		guard let footer = sections[section].footer else {
-			// When given a height of zero grouped style UITableView's use their default value instead of zero. By returning CGFloat.min we get around this behavior and force UITableView to end up using a height of zero after all.
-			return tableView.style == .grouped ? CGFloat.leastNormalMagnitude : 0
-		}
-		return footer.height
-	}
-	
-	public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-		guard indexPath.section < sections.count else { return UITableView.automaticDimension }
-		if let indexKeyPath = sections[indexPath.section].sectionKeyPathForRow(indexPath.row), let height = heightAtIndexKeyPath[indexKeyPath] {
-			return height
-		} else {
-			return UITableView.automaticDimension
-		}
-	}
-	
-	public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		guard let header = sections[section].header else { return nil }
-		return header.dequeueHeaderFooter(from: tableView)
-	}
-	
-	public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-		guard let footer = sections[section].footer else { return nil }
-		return footer.dequeueHeaderFooter(from: tableView)
-	}
-	
-	public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.selectionAction != nil
-	}
-	
-	public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-		if tableView.indexPathForSelectedRow == indexPath {
-			return nil
-		}
-		
-		guard let cellConfig = sections[indexPath], let selectionAction = cellConfig.actions.selectionAction else {
-			return nil
-		}
-		
-		let currentSelection = tableView.indexPathForSelectedRow
-		
-		if let canSelectAction = cellConfig.actions.canSelectAction, let selectedCell = tableView.cellForRow(at: indexPath) {
-			let canSelectResult: (Bool) -> Void = { selected in
-				if #available(iOSApplicationExtension 10.0, *) {
-					dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
-				}
-				if selected {
-					selectedCell.setHighlighted(false, animated: false)
-					
-					if selectionAction(selectedCell) == .selected {
-						tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-					} else {
-						tableView.deselectRow(at: indexPath, animated: false)
-					}
-					
-					if !tableView.allowsMultipleSelection, let currentSelection = currentSelection {
-						tableView.cellForRow(at: currentSelection)?.setHighlighted(false, animated: false)
-						tableView.deselectRow(at: currentSelection, animated: false)
-					}
-				} else {
-					selectedCell.setHighlighted(false, animated: true)
-				}
-			}
-			DispatchQueue.main.async {
-				selectedCell.setHighlighted(true, animated: false)
-				canSelectAction(canSelectResult)
-			}
-			return nil
-		} else {
-			return indexPath
-		}
-	}
-	
-	public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let cell = tableView.cellForRow(at: indexPath) else { return }
-		let cellConfig = sections[indexPath]
-		
-		let selectionState = cellConfig?.actions.selectionAction?(cell) ?? .deselected
-		if selectionState == .deselected {
-			DispatchQueue.main.async {
-				tableView.deselectRow(at: indexPath, animated: true)
-			}
-		}
-	}
-	
-	public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-		guard let cell = tableView.cellForRow(at: indexPath) else { return }
-		let cellConfig = sections[indexPath]
-		
-		let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
-		if selectionState == .selected {
-			DispatchQueue.main.async {
-				tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-			}
-		}
-	}
-	
-	public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		guard indexPath.section < sections.count else { return }
-		
-		if let indexKeyPath = sections[indexPath.section].sectionKeyPathForRow(indexPath.row) {
-			heightAtIndexKeyPath[indexKeyPath] = cell.bounds.height
-		}
-		
-		if let cellConfig = sections[indexPath] {
-			cellConfig.actions.visibilityAction?(cell, true)
-			return
-		}
-	}
-	
-	public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if let cellConfig = sections[indexPath] {
-			cellConfig.actions.visibilityAction?(cell, false)
-			return
-		}
-	}
-	
-	public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-		let tableSection = sections[section]
-		tableSection.headerVisibilityAction?(view, true)
-	}
-	
-	public func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
-		guard section < sections.count else { return }
-		let tableSection = sections[section]
-		tableSection.headerVisibilityAction?(view, false)
-	}
-	
-	public func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.canPerformAction != nil
-	}
-	
-	public func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.canPerformAction?(action) ?? false
-	}
-	
-	public func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
-		// required
-	}
-	
-	public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.rowActions != nil ? .delete : .none
-	}
-	
-	public func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-		return false
-	}
-	
-	public func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-		return sections[indexPath]?.actions.canBeMoved ?? false
-	}
-	
-	public func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-		return sourceIndexPath.section == proposedDestinationIndexPath.section ? proposedDestinationIndexPath : sourceIndexPath
-	}
-	
-	public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.rowActions != nil || self.tableView(tableView, canMoveRowAt: indexPath)
-	}
-	
-	public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-		let cellConfig = sections[indexPath]
-		return cellConfig?.actions.rowActions
 	}
 }
