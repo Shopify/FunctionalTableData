@@ -85,30 +85,39 @@ public class FunctionalTableData: NSObject {
 		return sections[indexPath]
 	}
 	
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619392-scrollviewdidscroll) for more information.
-	public var scrollViewDidScroll: ((_ scrollView: UIScrollView) -> Void)?
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619394-scrollviewwillbegindragging) for more information.
-	public var scrollViewWillBeginDragging: ((_ scrollView: UIScrollView) -> Void)?
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619385-scrollviewwillenddragging) for more information.
-	public var scrollViewWillEndDragging: ((_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>) -> Void)?
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619436-scrollviewdidenddragging) for more information.
-	public var scrollViewDidEndDragging: ((_ scrollView: UIScrollView, _ decelerate: Bool) -> Void)?
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619386-scrollviewwillbegindecelerating) for more information.
-	public var scrollViewWillBeginDecelerating: ((_ scrollView: UIScrollView) -> Void)?
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619417-scrollviewdidenddecelerating) for more information.
-	public var scrollViewDidEndDecelerating: ((_ scrollView: UIScrollView) -> Void)?
-	/// Tells the delegate that the scroll view has changed its content size.
-	public var scrollViewDidChangeContentSize: ((_ scrollView: UIScrollView) -> Void)?
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619379-scrollviewdidendscrollinganimati) for more information.
-	public var scrollViewDidEndScrollingAnimation: ((_ scrollView: UIScrollView) -> Void)?
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619378-scrollviewshouldscrolltotop) for more information.
-	public var scrollViewShouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)?
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619382-scrollviewdidscrolltotop) for more information.
-	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)?
+	/// An object to receive various [UIScrollViewDelegate](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate) related events
+	public weak var scrollViewDelegate: UIScrollViewDelegate? {
+		didSet {
+			// Reset the delegate, this triggers UITableView and UIScrollView to re-cache their available delegate methods
+			let delegate = tableView?.delegate
+			tableView?.delegate = nil
+			tableView?.delegate = delegate
+		}
+	}
+	
+	internal var backwardsCompatScrollViewDelegate = ScrollViewDelegate()
 
-	/// An optional callback that describes the current scroll position of the table as an accessibility aid.
-	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewaccessibilitydelegate/1621055-accessibilityscrollstatus) for more information.
-	public var scrollViewAccessibilityScrollStatus: ((_ scrollView: UIScrollView) -> String?)?
+	public override func responds(to aSelector: Selector!) -> Bool {
+		if class_respondsToSelector(type(of: self), aSelector) {
+			return true
+		} else if let scrollViewDelegate = scrollViewDelegate, scrollViewDelegate.responds(to: aSelector) {
+			return true
+		} else if backwardsCompatScrollViewDelegate.responds(to: aSelector) {
+			return true
+		}
+		return super.responds(to: aSelector)
+	}
+
+	public override func forwardingTarget(for aSelector: Selector!) -> Any? {
+		if class_respondsToSelector(type(of: self), aSelector) {
+			return self
+		} else if let scrollViewDelegate = scrollViewDelegate, scrollViewDelegate.responds(to: aSelector) {
+			return scrollViewDelegate
+		} else if backwardsCompatScrollViewDelegate.responds(to: aSelector) {
+			return backwardsCompatScrollViewDelegate
+		}
+		return super.forwardingTarget(for: aSelector)
+	}
 	
 	/// The type of animation when rows and sections are inserted or deleted.
 	public struct TableAnimations {
@@ -152,6 +161,7 @@ public class FunctionalTableData: NSObject {
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name
 		renderAndDiffQueue.maxConcurrentOperationCount = 1
+		super.init()
 	}
 	
 	deinit {
@@ -729,58 +739,5 @@ extension FunctionalTableData: UITableViewDelegate {
 	public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let cellConfig = sections[indexPath]
 		return cellConfig?.actions.rowActions
-	}
-	
-	// MARK: - UIScrollViewDelegate
-	
-	/// This is an undocumented optional `UIScrollViewDelegate` method that is not exposed by the public protocol
-	/// but will still get called on delegates that implement it. Because it is not publicly exposed,
-	/// the Swift 4 compiler will not automatically annotate it as @objc, requiring this manual annotation.
-	@objc public func scrollViewDidChangeContentSize(_ scrollView: UIScrollView) {
-		scrollViewDidChangeContentSize?(scrollView)
-	}
-	
-	public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		scrollViewDidScroll?(scrollView)
-	}
-	
-	public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-		scrollViewWillBeginDragging?(scrollView)
-	}
-	
-	public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-		scrollViewWillEndDragging?(scrollView, velocity, targetContentOffset)
-	}
-	
-	public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-		scrollViewDidEndDragging?(scrollView, decelerate)
-	}
-	
-	public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-		scrollViewWillBeginDecelerating?(scrollView)
-	}
-	
-	public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		scrollViewDidEndDecelerating?(scrollView)
-	}
-	
-	public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-		scrollViewDidEndScrollingAnimation?(scrollView)
-	}
-	
-	public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-		return scrollViewShouldScrollToTop?(scrollView) ?? true
-	}
-	
-	public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-		scrollViewDidScrollToTop?(scrollView)
-	}
-}
-
-// MARK: - UIScrollViewAccessibilityDelegate
-
-extension FunctionalTableData: UIScrollViewAccessibilityDelegate {
-	public func accessibilityScrollStatus(for scrollView: UIScrollView) -> String? {
-		return scrollViewAccessibilityScrollStatus?(scrollView)
 	}
 }
