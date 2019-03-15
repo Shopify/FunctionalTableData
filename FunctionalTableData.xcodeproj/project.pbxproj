@@ -46,6 +46,10 @@
 		4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */; };
 		4CD535031F9E3A010041A3F9 /* CellStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */; };
 		6C5F34C12231B91C00D57BEA /* ScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C02231B91C00D57BEA /* ScrollViewDelegate.swift */; };
+		6C5F34C52232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */; };
+		6C5F34C72232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C62232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift */; };
+		6C5F34C92232E8D300D57BEA /* FunctionalCollectionData+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C82232E8D300D57BEA /* FunctionalCollectionData+UICollectionViewDelegate.swift */; };
+		6C5F34CB2232E99000D57BEA /* FunctionalCollectionData+UICollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34CA2232E99000D57BEA /* FunctionalCollectionData+UICollectionViewDataSource.swift */; };
 		9FF97DB3212CA23B006FA047 /* TableCellReuseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF97DB2212CA23B006FA047 /* TableCellReuseTests.swift */; };
 		BC8C5D4121763B7B00443E28 /* BackgroundViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C5D4021763B7B00443E28 /* BackgroundViewProvider.swift */; };
 /* End PBXBuildFile section */
@@ -124,6 +128,10 @@
 		4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemLayout.swift; sourceTree = "<group>"; };
 		4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellStyleTests.swift; sourceTree = "<group>"; };
 		6C5F34C02231B91C00D57BEA /* ScrollViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewDelegate.swift; sourceTree = "<group>"; };
+		6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UITableViewDelegate.swift"; sourceTree = "<group>"; };
+		6C5F34C62232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		6C5F34C82232E8D300D57BEA /* FunctionalCollectionData+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalCollectionData+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
+		6C5F34CA2232E99000D57BEA /* FunctionalCollectionData+UICollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalCollectionData+UICollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		9FF97DB2212CA23B006FA047 /* TableCellReuseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellReuseTests.swift; sourceTree = "<group>"; };
 		BC8C5D4021763B7B00443E28 /* BackgroundViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -250,7 +258,9 @@
 				4CCCE83F1F8AA7B200C73258 /* CollectionCell.swift */,
 				4CCCE8421F8AA7B200C73258 /* CollectionItemConfigType.swift */,
 				4CCCE8411F8AA7B200C73258 /* FunctionalCollectionData.swift */,
+				6C5F34C82232E8D300D57BEA /* FunctionalCollectionData+UICollectionViewDelegate.swift */,
 				4CCCE8401F8AA7B200C73258 /* UICollectionView+Reusable.swift */,
+				6C5F34CA2232E99000D57BEA /* FunctionalCollectionData+UICollectionViewDataSource.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -259,6 +269,8 @@
 			isa = PBXGroup;
 			children = (
 				4C7A27711F2FB55D00360E9B /* FunctionalTableData.swift */,
+				6C5F34C62232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift */,
+				6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */,
 				4CCCE8441F8AA7CD00C73258 /* TableCell.swift */,
 				4CCCE8451F8AA7CD00C73258 /* TableItemConfigType.swift */,
 				4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */,
@@ -456,6 +468,7 @@
 				4C7A278B1F2FB89400360E9B /* UIView+Extensions.swift in Sources */,
 				4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */,
 				4C63250B1F8AA89B00B2B74B /* TableCell.swift in Sources */,
+				6C5F34CB2232E99000D57BEA /* FunctionalCollectionData+UICollectionViewDataSource.swift in Sources */,
 				4C7A27801F2FB55D00360E9B /* Reusable.swift in Sources */,
 				4C63250D1F8AA8A000B2B74B /* UITableView+Reusable.swift in Sources */,
 				4C7A277B1F2FB55D00360E9B /* CellActions.swift in Sources */,
@@ -468,10 +481,13 @@
 				4C7A277F1F2FB55D00360E9B /* ObjCExceptionRethrower.swift in Sources */,
 				4C7A27891F2FB69C00360E9B /* UIView+AutoLayout.swift in Sources */,
 				4C6325121F8AA8A400B2B74B /* UICollectionView+Reusable.swift in Sources */,
+				6C5F34C92232E8D300D57BEA /* FunctionalCollectionData+UICollectionViewDelegate.swift in Sources */,
 				4C6325111F8AA8A400B2B74B /* CollectionCell.swift in Sources */,
 				4C7A27841F2FB55D00360E9B /* TableSection.swift in Sources */,
+				6C5F34C72232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift in Sources */,
 				4C7A277D1F2FB55D00360E9B /* FunctionalTableData.swift in Sources */,
 				4C7A277E1F2FB55D00360E9B /* HostCell.swift in Sources */,
+				6C5F34C52232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift in Sources */,
 				4C63250C1F8AA89D00B2B74B /* TableItemConfigType.swift in Sources */,
 				4C7A27851F2FB55D00360E9B /* TableSectionChangeSet.swift in Sources */,
 				4C6325141F8AA8A400B2B74B /* CollectionItemConfigType.swift in Sources */,

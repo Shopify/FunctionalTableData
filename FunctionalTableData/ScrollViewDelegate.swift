@@ -86,91 +86,91 @@ public extension FunctionalTableData {
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619392-scrollviewdidscroll) for more information.
 	public var scrollViewDidScroll: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidScroll
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidScroll
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidScroll = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidScroll = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619394-scrollviewwillbegindragging) for more information.
 	public var scrollViewWillBeginDragging: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewWillBeginDragging
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewWillBeginDragging
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewWillBeginDragging = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewWillBeginDragging = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619385-scrollviewwillenddragging) for more information.
 	public var scrollViewWillEndDragging: ((_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewWillEndDragging
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewWillEndDragging
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewWillEndDragging = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewWillEndDragging = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619436-scrollviewdidenddragging) for more information.
 	public var scrollViewDidEndDragging: ((_ scrollView: UIScrollView, _ decelerate: Bool) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidEndDragging
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndDragging
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidEndDragging = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndDragging = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619386-scrollviewwillbegindecelerating) for more information.
 	public var scrollViewWillBeginDecelerating: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewWillBeginDecelerating
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewWillBeginDecelerating
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewWillBeginDecelerating = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewWillBeginDecelerating = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619417-scrollviewdidenddecelerating) for more information.
 	public var scrollViewDidEndDecelerating: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidEndDecelerating
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndDecelerating
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidEndDecelerating = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndDecelerating = newValue
 		}
 	}
 	/// Tells the delegate that the scroll view has changed its content size.
 	public var scrollViewDidChangeContentSize: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidChangeContentSize
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidChangeContentSize
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidChangeContentSize = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidChangeContentSize = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619379-scrollviewdidendscrollinganimati) for more information.
 	public var scrollViewDidEndScrollingAnimation: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidEndScrollingAnimation
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndScrollingAnimation
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidEndScrollingAnimation = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndScrollingAnimation = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619378-scrollviewshouldscrolltotop) for more information.
 	public var scrollViewShouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewShouldScrollToTop
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewShouldScrollToTop
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewShouldScrollToTop = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewShouldScrollToTop = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619382-scrollviewdidscrolltotop) for more information.
 	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidScrollToTop
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidScrollToTop
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidScrollToTop = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidScrollToTop = newValue
 		}
 	}
 	
@@ -178,10 +178,10 @@ public extension FunctionalTableData {
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewaccessibilitydelegate/1621055-accessibilityscrollstatus) for more information.
 	public var scrollViewAccessibilityScrollStatus: ((_ scrollView: UIScrollView) -> String?)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewAccessibilityScrollStatus
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewAccessibilityScrollStatus
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewAccessibilityScrollStatus = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewAccessibilityScrollStatus = newValue
 		}
 	}
 }
@@ -190,91 +190,91 @@ public extension FunctionalCollectionData {
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619392-scrollviewdidscroll) for more information.
 	public var scrollViewDidScroll: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidScroll
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidScroll
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidScroll = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidScroll = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619394-scrollviewwillbegindragging) for more information.
 	public var scrollViewWillBeginDragging: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewWillBeginDragging
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewWillBeginDragging
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewWillBeginDragging = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewWillBeginDragging = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619385-scrollviewwillenddragging) for more information.
 	public var scrollViewWillEndDragging: ((_ scrollView: UIScrollView, _ velocity: CGPoint, _ targetContentOffset: UnsafeMutablePointer<CGPoint>) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewWillEndDragging
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewWillEndDragging
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewWillEndDragging = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewWillEndDragging = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619436-scrollviewdidenddragging) for more information.
 	public var scrollViewDidEndDragging: ((_ scrollView: UIScrollView, _ decelerate: Bool) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidEndDragging
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndDragging
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidEndDragging = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndDragging = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619386-scrollviewwillbegindecelerating) for more information.
 	public var scrollViewWillBeginDecelerating: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewWillBeginDecelerating
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewWillBeginDecelerating
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewWillBeginDecelerating = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewWillBeginDecelerating = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619417-scrollviewdidenddecelerating) for more information.
 	public var scrollViewDidEndDecelerating: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidEndDecelerating
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndDecelerating
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidEndDecelerating = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndDecelerating = newValue
 		}
 	}
 	/// Tells the delegate that the scroll view has changed its content size.
 	public var scrollViewDidChangeContentSize: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidChangeContentSize
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidChangeContentSize
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidChangeContentSize = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidChangeContentSize = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619379-scrollviewdidendscrollinganimati) for more information.
 	public var scrollViewDidEndScrollingAnimation: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidEndScrollingAnimation
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndScrollingAnimation
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidEndScrollingAnimation = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidEndScrollingAnimation = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619378-scrollviewshouldscrolltotop) for more information.
 	public var scrollViewShouldScrollToTop: ((_ scrollView: UIScrollView) -> Bool)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewShouldScrollToTop
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewShouldScrollToTop
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewShouldScrollToTop = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewShouldScrollToTop = newValue
 		}
 	}
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619382-scrollviewdidscrolltotop) for more information.
 	public var scrollViewDidScrollToTop: ((_ scrollView: UIScrollView) -> Void)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewDidScrollToTop
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewDidScrollToTop
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewDidScrollToTop = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewDidScrollToTop = newValue
 		}
 	}
 	
@@ -282,10 +282,10 @@ public extension FunctionalCollectionData {
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewaccessibilitydelegate/1621055-accessibilityscrollstatus) for more information.
 	public var scrollViewAccessibilityScrollStatus: ((_ scrollView: UIScrollView) -> String?)? {
 		get {
-			return backwardsCompatScrollViewDelegate.scrollViewAccessibilityScrollStatus
+			return delegate.backwardsCompatScrollViewDelegate.scrollViewAccessibilityScrollStatus
 		}
 		set {
-			backwardsCompatScrollViewDelegate.scrollViewAccessibilityScrollStatus = newValue
+			delegate.backwardsCompatScrollViewDelegate.scrollViewAccessibilityScrollStatus = newValue
 		}
 	}
 }

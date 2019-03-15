@@ -12,7 +12,7 @@ import UIKit
 /// A renderer for `UICollectionView`.
 ///
 /// By providing a complete description of your view state using an array of `TableSection`. `FunctionalCollectionData` compares it with the previous render call to insert, update, and remove everything that have changed. This massively simplifies state management of complex UI.
-public class FunctionalCollectionData: NSObject {
+public class FunctionalCollectionData {
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
 	
@@ -42,11 +42,19 @@ public class FunctionalCollectionData: NSObject {
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	private var sections: [TableSection] = []
+	private var sections: [TableSection] = [] {
+		didSet {
+			dataSource.sections = sections
+			delegate.sections = sections
+		}
+	}
 	private static let reloadEntireTableThreshold = 20
 	
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
+	
+	let dataSource = DataSource()
+	let delegate = Delegate()
 	
 	/// Enclosing `UICollectionView` that presents all the `TableSection` data.
 	///
@@ -55,8 +63,8 @@ public class FunctionalCollectionData: NSObject {
 	public var collectionView: UICollectionView? {
 		didSet {
 			guard let collectionView = collectionView else { return }
-			collectionView.dataSource = self
-			collectionView.delegate = self
+			collectionView.dataSource = dataSource
+			collectionView.delegate = delegate
 		}
 	}
 	
@@ -66,36 +74,16 @@ public class FunctionalCollectionData: NSObject {
 	
 	/// An object to receive various [UIScrollViewDelegate](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate) related events
 	public weak var scrollViewDelegate: UIScrollViewDelegate? {
-		didSet {
+		get {
+			return delegate.scrollViewDelegate
+		}
+		set {
+			delegate.scrollViewDelegate = newValue
+			
 			// Reset the delegate, this triggers UITableView and UIScrollView to re-cache their available delegate methods
-			let delegate = collectionView?.delegate
 			collectionView?.delegate = nil
 			collectionView?.delegate = delegate
 		}
-	}
-	
-	internal var backwardsCompatScrollViewDelegate = ScrollViewDelegate()
-	
-	public override func responds(to aSelector: Selector!) -> Bool {
-		if class_respondsToSelector(type(of: self), aSelector) {
-			return true
-		} else if let scrollViewDelegate = scrollViewDelegate, scrollViewDelegate.responds(to: aSelector) {
-			return true
-		} else if backwardsCompatScrollViewDelegate.responds(to: aSelector) {
-			return true
-		}
-		return super.responds(to: aSelector)
-	}
-	
-	public override func forwardingTarget(for aSelector: Selector!) -> Any? {
-		if class_respondsToSelector(type(of: self), aSelector) {
-			return self
-		} else if let scrollViewDelegate = scrollViewDelegate, scrollViewDelegate.responds(to: aSelector) {
-			return scrollViewDelegate
-		} else if backwardsCompatScrollViewDelegate.responds(to: aSelector) {
-			return backwardsCompatScrollViewDelegate
-		}
-		return super.forwardingTarget(for: aSelector)
 	}
 	
 	private let unitTesting: Bool
@@ -347,11 +335,11 @@ public class FunctionalCollectionData: NSObject {
 	///   - scrollPosition: An option that specifies where the item should be positioned when scrolling finishes.
 	///   - triggerDelegate: `true` to trigger the `collection:didSelectItemAt:` delegate from `UICollectionView` or `false` to skip it. Skipping it is the default `UICollectionView` behavior.
 	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UICollectionView.ScrollPosition = [], triggerDelegate: Bool = false) {
-		guard let aCollectionView = collectionView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
+		guard let collectionView = collectionView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		
-		aCollectionView.selectItem(at: indexPath, animated: animated, scrollPosition: scrollPosition)
+		collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: scrollPosition)
 		if triggerDelegate {
-			collectionView(aCollectionView, didSelectItemAt: indexPath)
+			delegate.collectionView(collectionView, didSelectItemAt: indexPath)
 		}
 	}
 	
@@ -434,110 +422,5 @@ extension UICollectionView {
 	public func indexPath(for view: UIView) -> IndexPath? {
 		guard let cell: UICollectionViewCell = view.typedSuperview() else { return nil }
 		return self.indexPath(for: cell)
-	}
-}
-
-extension FunctionalCollectionData: UICollectionViewDataSource {
-	public func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return sections.count
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return sections[section].rows.count
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let sectionData = sections[indexPath.section]
-		let row = indexPath.item
-		let cellConfig = sectionData[row]
-		let cell = cellConfig.dequeueCell(from: collectionView, at: indexPath)
-		
-		cellConfig.update(cell: cell, in: collectionView)
-		let style = cellConfig.style ?? CellStyle()
-		style.configure(cell: cell, in: collectionView)
-		
-		return cell
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		// Should only ever be moving within section
-		assert(sourceIndexPath.section == destinationIndexPath.section)
-		
-		// Update internal state to match move
-		let cell = sections[sourceIndexPath.section].rows.remove(at: sourceIndexPath.item)
-		sections[destinationIndexPath.section].rows.insert(cell, at: destinationIndexPath.item)
-		
-		sections[sourceIndexPath.section].didMoveRow?(sourceIndexPath.item, destinationIndexPath.item)
-	}
-}
-
-extension FunctionalCollectionData: UICollectionViewDelegate {
-	public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-		guard let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems, !collectionView.allowsMultipleSelection else { return true }
-		return indexPathsForSelectedItems.contains(indexPath) == false
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-		return sections[indexPath]?.actions.selectionAction != nil
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-		let cellConfig = sections[indexPath]
-		
-		let selectionState = cellConfig?.actions.selectionAction?(cell) ?? .deselected
-		if selectionState == .deselected {
-			DispatchQueue.main.async {
-				collectionView.deselectItem(at: indexPath, animated: true)
-			}
-		}
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-		guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-		let cellConfig = sections[indexPath]
-		
-		let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
-		if selectionState == .selected {
-			DispatchQueue.main.async {
-				collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-			}
-		}
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		guard indexPath.section < sections.count else { return }
-		
-		if let cellConfig = sections[indexPath] {
-			cellConfig.actions.visibilityAction?(cell, true)
-			return
-		}
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if let cellConfig = sections[indexPath] {
-			cellConfig.actions.visibilityAction?(cell, false)
-			return
-		}
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-		return sections[indexPath]?.actions.canPerformAction != nil
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-		return sections[indexPath]?.actions.canPerformAction?(action) ?? false
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-		// required
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-		return sections[indexPath]?.actions.canBeMoved ?? false
-	}
-	
-	public func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
-		return originalIndexPath.section == proposedIndexPath.section ? proposedIndexPath : originalIndexPath
 	}
 }
