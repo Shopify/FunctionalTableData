@@ -125,11 +125,10 @@ At the end of the day `HostCell` is just one of the possible implementations of 
 
 ### Building custom Cells
 
-In order to build custom cells we will need to have 3 parts:
+In order to build custom cells we will need:
 
 1. A custom view class
 2. An object to manage the view state
-3. And optionally, a list builder to build the table view sections
 
 Let's build a view replicating a new iMessage cell
 
@@ -168,6 +167,7 @@ struct Message {
     let image: UIImage
     let date: Date
     let text: String
+    let id: String
 }
 
 struct MessageViewState: Equatable {
@@ -193,27 +193,33 @@ struct MessageViewState: Equatable {
 }
 ```
 
-Finally, the `MessageListBuilder` will accept an array of `Messages` and return the appropriate `TableSection`. We will define a custom `HostCell` called `MessageCell` and pass in our custom `MessageView`, `MessageViewState` and layout
+Finally, we build the rows with our array of  `Message` and the table section using `renderAndDiff` 
 
 ```swift
-struct MessageListBuilder {
-    //custom HostCell
-    private typealias MessageCell = HostCell<MessageView, MessageViewState, LayoutMarginsTableItemLayout>
+private typealias MessageCell = HostCell<MessageView, MessageViewState, LayoutMarginsTableItemLayout>
 
-    static func sections(messages: [Message]) -> TableSection {
-        var rows = [CellConfigType]()
-        for message in messages {
-            // each cell should have a unique key
-            rows.append(MessageCell(key: "\(message)-\(UUID().uuidString)-cell", state: MessageViewState(message: message)) { (view, state) in
-
-            })
-        }
-        return TableSection(key: "entire-table", rows: rows)
+private func render() {
+    let rows: [CellConfigType] = messages.enumerated().map { index, message in
+        return MessageCell(
+            key: "message.id-\(index)",
+            actions: CellActions(
+                selectionAction: { _ in
+                    print("\(message) selected")
+                    return .selected
+            },
+                deselectionAction: { _ in
+                    print("\(message) deselected")
+                    return .deselected
+            }),
+            state: MessageViewState(message: message),
+            cellUpdater: MessageViewState.updateView)
     }
+
+    functionalData.renderAndDiff([TableSection(key: "section", rows: rows)])
 }
 ```
 
-The power of FunctionalTableData is made obvious when your table/collection view includes many different types of cells. Rather than have a massive `if-else` in `cellForRowAtIndexPath`, our list builder just creates the appropriate cells. Since all cells are implementations of `CellConfigType`, it makes it incredbly easy to manage many different types of views and states.
+The power of FunctionalTableData is made obvious when your table/collection view includes many different types of cells. Rather than have a massive `if-else` in `cellForRowAtIndexPath`. Since all cells are implementations of `CellConfigType`, it makes it incredbly easy to manage many different types of views and states.
 
 ## License
 Functional Table Data is under the [MIT License](https://github.com/Shopify/FunctionalTableData/blob/master/LICENSE.txt)
