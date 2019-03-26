@@ -123,5 +123,146 @@ LabelCell(key: "company", state: LabelState(text: "Shopify",
 
 At the end of the day `HostCell` is just one of the possible implementations of `CellConfigType`, that's the underlying power of this framework.
 
+### Building custom Cells
+
+In order to build custom cells we will need to have 3 parts:
+
+1. A custom view class
+2. An object to manage the view state
+3. And optionally, a list builder to builder the table view sections
+
+Let's build a view replicating a new iMessage cell
+
+<img src="https://user-images.githubusercontent.com/7354919/54960747-30073200-4f1b-11e9-86c2-bb4b4fc4c5c1.png" />
+
+The first step is to build the custom view:
+
+```swift
+
+class MessageView: UIView {
+
+    let profilePicture = UIImageView()
+    let nameLabel = UILabel()
+    let messageLabel = UILabel()
+    let timeStampLabel = UILabel()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .white
+        setupConstraints()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func setupConstraints() {
+        profilePicture.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(profilePicture)
+
+        addSubview(nameLabel)
+        addSubview(messageLabel)
+
+        timeStampLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(timeStampLabel)
+
+        let stackView = UIStackView(arrangedSubviews: [nameLabel, messageLabel])
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.spacing = 3
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stackView)
+
+        let constraints: [NSLayoutConstraint] = [
+        profilePicture.heightAnchor.constraint(equalToConstant: 60),
+        profilePicture.widthAnchor.constraint(equalToConstant: 60),
+        profilePicture.leadingAnchor.constraint(equalTo: leadingAnchor),
+        profilePicture.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+        profilePicture.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+        stackView.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor),
+        stackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor),
+        stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
+        stackView.leadingAnchor.constraint(equalTo: profilePicture.trailingAnchor, constant: 12),
+        stackView.trailingAnchor.constraint(lessThanOrEqualTo: timeStampLabel.leadingAnchor, constant: -12),
+        timeStampLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+        timeStampLabel.topAnchor.constraint(equalTo: topAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
+
+        profilePicture.layer.borderWidth = 1
+        profilePicture.layer.borderColor = UIColor.black.cgColor
+        profilePicture.layer.cornerRadius = 30
+        profilePicture.backgroundColor = UIColor.gray
+
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        messageLabel.font = UIFont.systemFont(ofSize: 15, weight: .light)
+
+        timeStampLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        timeStampLabel.setContentHuggingPriority(.required, for: .horizontal)
+    }
+}
+```
+
+Next, we'll build the `MessageViewState` struct that will take care of setting all the views properties:
+
+```swift
+
+struct Message {
+    let name: String
+    let image: UIImage
+    let date: Date
+    let text: String
+}
+
+struct MessageViewState: Equatable {
+
+    let date: Date
+    let name: String
+    let message: String
+    let image: UIImage
+
+    init(message: Message) {
+        self.date = message.date
+        self.name = message.name
+        self.message = message.text
+        self.image = message.image
+    }
+
+    static func updateView(_ view: MessageView, state: MessageViewState?) {
+        guard let state = state else { return }
+        view.timeStampLabel.text = "\(state.date)"
+        view.nameLabel.text = state.name
+        view.messageLabel.text = state.message
+        view.profilePicture.image = state.image
+    }
+
+}
+```
+
+Finally, the `MessageListBuilder` will accept an array of `Messages` and return the appropriate `TableSection`. We will define a custom `HostCell` called `MessageCell` and pass in our custom `MessageView`, `MessageViewState` and layout
+
+```swift
+
+struct MessageListBuilder {
+
+    //custom HostCell
+    private typealias MessageCell = HostCell<MessageView, MessageViewState, LayoutMarginsTableItemLayout>
+
+    static func sections(messages: [Message]) -> TableSection {
+        var rows = [CellConfigType]()
+        for message in messages {
+            // each cell should have a unique key
+            rows.append(MessageCell(key: "\(message)-\(UUID().uuidString)-cell", state: MessageViewState(message: message)) { (view, state) in
+
+            })
+        }
+        return TableSection(key: "entire-table", rows: rows)
+    }
+}
+```
+
+The power of FunctionalTableData is made obvious when your table/collection view includes many different types of cells. Rather than have a massive `if-else` in `cellForRowAtIndexPath`, our list builder just creates the appropriate cells. Since all cells are implementations of `CellConfigType`, it makes it incredbly easy to manage many different types of views and states.
+
 ## License
 Functional Table Data is under the [MIT License](https://github.com/Shopify/FunctionalTableData/blob/master/LICENSE.txt)
