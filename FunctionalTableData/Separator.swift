@@ -88,7 +88,7 @@ public extension UIView {
 	/// - Parameters:
 	///   - style: the separator inset style.
 	///   - color: the separator color.
-	public func applyTopSeparator(_ style: Separator.Style, color: UIColor? = nil) {
+	func applyTopSeparator(_ style: Separator.Style, color: UIColor? = nil) {
 		removeSeparator(Separator.Tag.top)
 		let separator = Separator(style: style)
 		separator.tag = Separator.Tag.top.rawValue
@@ -104,7 +104,7 @@ public extension UIView {
 	/// - Parameters:
 	///   - style: the separator inset style.
 	///   - color: the separator color.
-	public func applyBottomSeparator(_ style: Separator.Style, color: UIColor? = nil) {
+	func applyBottomSeparator(_ style: Separator.Style, color: UIColor? = nil) {
 		removeSeparator(Separator.Tag.bottom)
 		let separator = Separator(style: style)
 		separator.tag = Separator.Tag.bottom.rawValue
@@ -118,7 +118,7 @@ public extension UIView {
 	/// Removes any instance of a `Separator` view from the current view.
 	///
 	/// - Parameter withTag: the separator to remove.
-	public func removeSeparator(_ withTag: Separator.Tag) {
+	func removeSeparator(_ withTag: Separator.Tag) {
 		guard let separator = viewWithTag(withTag.rawValue) as? Separator else { return }
 		separator.removeFromSuperview()
 	}
