@@ -129,7 +129,7 @@ In order to build custom cells we will need to have 3 parts:
 
 1. A custom view class
 2. An object to manage the view state
-3. And optionally, a list builder to builder the table view sections
+3. And optionally, a list builder to build the table view sections
 
 Let's build a view replicating a new iMessage cell
 
