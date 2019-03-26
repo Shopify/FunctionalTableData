@@ -20,7 +20,7 @@ public protocol TableSectionType {
 	var rows: [CellConfigType] { get }
 	/// Action to perform when the header view comes in or out of view.
 	var headerVisibilityAction: ((_ view: UIView, _ visible: Bool) -> Void)? { get }
-	@available(iOS, deprecated: 1.0, message: "Use `rows.count` instead.")
+	@available(*, deprecated, message: "Use `rows.count` instead.")
 	var rowCount: Int { get }
 
 	subscript(index: Int) -> CellConfigType { get }

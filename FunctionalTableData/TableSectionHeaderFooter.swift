@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: Header specific item config
 
-@available(iOS, deprecated: 1.0, message: "Use `TableHeaderFooterConfigType` instead.")
+@available(*, deprecated, message: "Use `TableHeaderFooterConfigType` instead.")
 public typealias TableHeaderConfigType = TableHeaderFooterConfigType
 
 public protocol TableHeaderFooterConfigType: TableItemConfigType {
