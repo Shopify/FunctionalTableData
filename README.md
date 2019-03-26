@@ -138,9 +138,7 @@ Let's build a view replicating a new iMessage cell
 The first step is to build the custom view:
 
 ```swift
-
 class MessageView: UIView {
-
     let profilePicture = UIImageView()
     let nameLabel = UILabel()
     let messageLabel = UILabel()
@@ -157,49 +155,7 @@ class MessageView: UIView {
     }
 
     func setupConstraints() {
-        profilePicture.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(profilePicture)
-
-        addSubview(nameLabel)
-        addSubview(messageLabel)
-
-        timeStampLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(timeStampLabel)
-
-        let stackView = UIStackView(arrangedSubviews: [nameLabel, messageLabel])
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.spacing = 3
-        stackView.distribution = .fill
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stackView)
-
-        let constraints: [NSLayoutConstraint] = [
-        profilePicture.heightAnchor.constraint(equalToConstant: 60),
-        profilePicture.widthAnchor.constraint(equalToConstant: 60),
-        profilePicture.leadingAnchor.constraint(equalTo: leadingAnchor),
-        profilePicture.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-        profilePicture.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-        stackView.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor),
-        stackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor),
-        stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
-        stackView.leadingAnchor.constraint(equalTo: profilePicture.trailingAnchor, constant: 12),
-        stackView.trailingAnchor.constraint(lessThanOrEqualTo: timeStampLabel.leadingAnchor, constant: -12),
-        timeStampLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-        timeStampLabel.topAnchor.constraint(equalTo: topAnchor)
-        ]
-        NSLayoutConstraint.activate(constraints)
-
-        profilePicture.layer.borderWidth = 1
-        profilePicture.layer.borderColor = UIColor.black.cgColor
-        profilePicture.layer.cornerRadius = 30
-        profilePicture.backgroundColor = UIColor.gray
-
-        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        messageLabel.font = UIFont.systemFont(ofSize: 15, weight: .light)
-
-        timeStampLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        timeStampLabel.setContentHuggingPriority(.required, for: .horizontal)
+        // implement your auto layout code
     }
 }
 ```
@@ -207,7 +163,6 @@ class MessageView: UIView {
 Next, we'll build the `MessageViewState` struct that will take care of setting all the views properties:
 
 ```swift
-
 struct Message {
     let name: String
     let image: UIImage
@@ -216,7 +171,6 @@ struct Message {
 }
 
 struct MessageViewState: Equatable {
-
     let date: Date
     let name: String
     let message: String
@@ -236,16 +190,13 @@ struct MessageViewState: Equatable {
         view.messageLabel.text = state.message
         view.profilePicture.image = state.image
     }
-
 }
 ```
 
 Finally, the `MessageListBuilder` will accept an array of `Messages` and return the appropriate `TableSection`. We will define a custom `HostCell` called `MessageCell` and pass in our custom `MessageView`, `MessageViewState` and layout
 
 ```swift
-
 struct MessageListBuilder {
-
     //custom HostCell
     private typealias MessageCell = HostCell<MessageView, MessageViewState, LayoutMarginsTableItemLayout>
 
