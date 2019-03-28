@@ -16,25 +16,7 @@ public class FunctionalCollectionData {
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
 	
-	/// Represents the unique path to a given item in the `FunctionalCollectionData`.
-	///
-	/// Think of it as a readable implementation of `IndexPath`, that can be used to locate a given cell
-	/// or `TableSection` in the data set.
-	public struct KeyPath: Equatable {
-		/// Unique identifier for a section.
-		public let sectionKey: String
-		/// Unique identifier for an item inside a section.
-		public let rowKey: String
-		
-		public init(sectionKey: String, rowKey: String) {
-			self.sectionKey = sectionKey
-			self.rowKey = rowKey
-		}
-		
-		public static func ==(lhs: KeyPath, rhs: KeyPath) -> Bool {
-			return lhs.sectionKey == rhs.sectionKey && lhs.rowKey == rhs.rowKey
-		}
-	}
+	public typealias KeyPath = ItemPath
 	
 	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
 		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
@@ -113,7 +95,7 @@ public class FunctionalCollectionData {
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
 	public func rowForKeyPath(_ keyPath: KeyPath) -> CellConfigType? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
+		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.itemKey }) {
 			return sections[sectionIndex].rows[rowIndex]
 		}
 		
@@ -123,11 +105,11 @@ public class FunctionalCollectionData {
 	/// Returns the key path specified by its string presentation.
 	///
 	/// - Parameter key: String identifier to lookup.
-	/// - Returns: A `KeyPath` that matches the key or `nil` if there is no match.
-	public func keyPathForRowKey(_ key: String) -> KeyPath? {
+	/// - Returns: A `ItemPath` that matches the key or `nil` if there is no match.
+	public func keyPathForRowKey(_ key: String) -> ItemPath? {
 		for section in sections {
 			for row in section where row.key == key {
-				return KeyPath(sectionKey: section.key, rowKey: row.key)
+				return ItemPath(sectionKey: section.key, itemKey: row.key)
 			}
 		}
 		
@@ -137,13 +119,13 @@ public class FunctionalCollectionData {
 	/// Returns the key path of the cell in a given `IndexPath` location.
 	///
 	/// __Note:__ This method performs an unsafe lookup, make sure that the `IndexPath` exists
-	/// before trying to transform it into a `KeyPath`.
+	/// before trying to transform it into a `ItemPath`.
 	/// - Parameter indexPath: A key path identifying where the key path is located.
 	/// - Returns: The key representation of the supplied `IndexPath`.
-	public func keyPathForIndexPath(indexPath: IndexPath) -> KeyPath {
+	public func keyPathForIndexPath(indexPath: IndexPath) -> ItemPath {
 		let section = sections[indexPath.section]
 		let row = section.rows[indexPath.item]
-		return KeyPath(sectionKey: section.key, rowKey: row.key)
+		return ItemPath(sectionKey: section.key, itemKey: row.key)
 	}
 	
 	/// Populates the collection with the specified sections, and asynchronously updates the collection view to reflect the cells and sections that have changed.
@@ -154,7 +136,7 @@ public class FunctionalCollectionData {
 	///   - animated: `true` to animate the changes to the collection cells, or `false` if the `UICollectionView` should be updated with no animation.
 	///   - completion: Callback that will be called on the main thread once the `UICollectionView` has finished updating and animating any changes.
 	@available(*, deprecated, message: "Call `scroll(to:animated:scrollPosition:)` in the completion handler instead.")
-	public func renderAndDiff(_ newSections: [TableSection], keyPath: KeyPath?, animated: Bool = true, completion: (() -> Void)? = nil) {
+	public func renderAndDiff(_ newSections: [TableSection], keyPath: ItemPath?, animated: Bool = true, completion: (() -> Void)? = nil) {
 		renderAndDiff(newSections, animated: animated) { [weak self] in
 			if let strongSelf = self, let keyPath = keyPath {
 				strongSelf.scroll(to: keyPath)
@@ -334,7 +316,7 @@ public class FunctionalCollectionData {
 	///   - animated: `true` if you want to animate the selection, and `false` if the change should be immediate.
 	///   - scrollPosition: An option that specifies where the item should be positioned when scrolling finishes.
 	///   - triggerDelegate: `true` to trigger the `collection:didSelectItemAt:` delegate from `UICollectionView` or `false` to skip it. Skipping it is the default `UICollectionView` behavior.
-	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UICollectionView.ScrollPosition = [], triggerDelegate: Bool = false) {
+	public func select(keyPath: ItemPath, animated: Bool = true, scrollPosition: UICollectionView.ScrollPosition = [], triggerDelegate: Bool = false) {
 		guard let collectionView = collectionView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		
 		collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: scrollPosition)
@@ -349,14 +331,14 @@ public class FunctionalCollectionData {
 	///   - keyPath: A key path identifying a row in the collection view.
 	///   - animated: `true` to animate to the new scroll position, or `false` to scroll immediately.
 	///   - scrollPosition: Specifies where the item specified by `keyPath` should be positioned once scrolling finishes.
-	public func scroll(to keyPath: KeyPath, animated: Bool = true, scrollPosition: UICollectionView.ScrollPosition = [.bottom, .right]) {
+	public func scroll(to keyPath: ItemPath, animated: Bool = true, scrollPosition: UICollectionView.ScrollPosition = [.bottom, .right]) {
 		guard let aCollectionView = collectionView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		aCollectionView.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
 	}
 	
 	/// - Parameter point: The point in the collection view’s bounds that you want to test.
 	/// - Returns: The keypath of the item at the specified point, or `nil` if no item was found at that point.
-	public func keyPath(at point: CGPoint) -> KeyPath? {
+	public func keyPath(at point: CGPoint) -> ItemPath? {
 		guard let indexPath = collectionView?.indexPathForItem(at: point) else {
 			return nil
 		}
@@ -364,12 +346,12 @@ public class FunctionalCollectionData {
 		return keyPathForIndexPath(indexPath: indexPath)
 	}
 	
-	/// Returns the IndexPath corresponding to the provided KeyPath.
+	/// Returns the IndexPath corresponding to the provided ItemPath.
 	///
 	/// - Parameter keyPath: The path representing the desired indexPath.
 	/// - Returns: The IndexPath of the item at the provided keyPath.
-	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
+	public func indexPathFromKeyPath(_ keyPath: ItemPath) -> IndexPath? {
+		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.itemKey }) {
 			return IndexPath(item: rowIndex, section: sectionIndex)
 		}
 		
