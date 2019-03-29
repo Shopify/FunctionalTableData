@@ -50,6 +50,10 @@ public struct CellStyle {
 	///
 	/// Supported by `UITableView` only.
 	public var accessoryType: UITableViewCell.AccessoryType
+	/// The custom view to use for the accessory. If set the accessoryType is ignored.
+	///
+	/// Supported by `UITableView` only.
+	public var accessoryView: UIView?
 	/// The view's selection color.
 	public var selectionColor: UIColor?
 	/// The view's background color.
@@ -72,6 +76,7 @@ public struct CellStyle {
 	            separatorColor: UIColor? = nil,
 	            highlight: Bool? = nil,
 	            accessoryType: UITableViewCell.AccessoryType = .none,
+				accessoryView: UIView? = nil,
 	            selectionColor: UIColor? = CellStyle.defaultSelectionColor,
 	            backgroundColor: UIColor? = CellStyle.defaultBackgroundColor,
 	            backgroundView: UIView?,
@@ -83,6 +88,7 @@ public struct CellStyle {
 		self.separatorColor = separatorColor
 		self.highlight = highlight
 		self.accessoryType = accessoryType
+		self.accessoryView = accessoryView
 		self.selectionColor = selectionColor
 		self.backgroundColor = backgroundColor
 		self.tintColor = tintColor
@@ -109,6 +115,7 @@ public struct CellStyle {
 				separatorColor: UIColor? = nil,
 				highlight: Bool? = nil,
 				accessoryType: UITableViewCell.AccessoryType = .none,
+				accessoryView: UIView? = nil,
 				selectionColor: UIColor? = CellStyle.defaultSelectionColor,
 				backgroundColor: UIColor? = CellStyle.defaultBackgroundColor,
 				backgroundViewProvider: BackgroundViewProvider? = nil,
@@ -120,6 +127,7 @@ public struct CellStyle {
 		self.separatorColor = separatorColor
 		self.highlight = highlight
 		self.accessoryType = accessoryType
+		self.accessoryView = accessoryView
 		self.selectionColor = selectionColor
 		self.backgroundColor = backgroundColor
 		self.backgroundViewProvider = backgroundViewProvider
@@ -192,6 +200,7 @@ public struct CellStyle {
 		}
 		
 		cell.accessoryType = accessoryType
+		cell.accessoryView = accessoryView
 	}
 }
 
@@ -202,6 +211,7 @@ extension CellStyle: Equatable {
 		equality = equality && lhs.separatorColor == rhs.separatorColor
 		equality = equality && lhs.highlight == rhs.highlight
 		equality = equality && lhs.accessoryType == rhs.accessoryType
+		equality = equality && lhs.accessoryView == rhs.accessoryView
 		equality = equality && lhs.selectionColor == rhs.selectionColor
 		equality = equality && lhs.backgroundColor == rhs.backgroundColor
 		equality = equality && lhs.tintColor == rhs.tintColor

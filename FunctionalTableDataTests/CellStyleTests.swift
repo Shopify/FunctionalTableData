@@ -123,6 +123,13 @@ class StyleTests: XCTestCase {
 		XCTAssertEqual(cell.accessoryType, .none)
 	}
 	
+	func testAccessoryView() {
+		let view = UIView()
+		style.accessoryView = view
+		style.configure(cell: cell, in: table)
+		XCTAssertEqual(cell.accessoryView, view)
+	}
+	
 	func testSelectionColor() {
 		style.selectionColor = .red
 		style.configure(cell: cell, in: table)
