@@ -88,7 +88,7 @@ class FunctionalDataTests: XCTestCase {
 		waitForExpectations(timeout: 1, handler: nil)
 		
 		let cell = tableData.tableView?.visibleCells.first
-		XCTAssertEqual(cell?.accessibilityIdentifier, "sectionKeycellKey")
+		XCTAssertEqual(cell?.accessibilityIdentifier, "sectionKey.cellKey")
 	}
 	
 	func testPerformance() {
