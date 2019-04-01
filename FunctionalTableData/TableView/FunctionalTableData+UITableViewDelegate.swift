@@ -205,7 +205,19 @@ extension FunctionalTableData {
 		
 		public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 			let cellConfig = sections[indexPath]
-			return cellConfig?.actions.rowActions
+			return cellConfig?.actions.trailingActionConfiguration?.asRowActions(in: tableView) ?? cellConfig?.actions.rowActions
+		}
+		
+		@available(iOSApplicationExtension 11.0, *)
+		public func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+			let cellConfig = sections[indexPath]
+			return cellConfig?.actions.leadingActionConfiguration?.asSwipeActionsConfiguration()
+		}
+
+		@available(iOSApplicationExtension 11.0, *)
+		public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+			let cellConfig = sections[indexPath]
+			return cellConfig?.actions.trailingActionConfiguration?.asSwipeActionsConfiguration()
 		}
 	}
 }
