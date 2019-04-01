@@ -16,7 +16,7 @@ public protocol TableSectionType {
 	var header: TableHeaderFooterConfigType? { get }
 	/// View object to display in the footer of this section.
 	var footer: TableHeaderFooterConfigType? { get }
-	/// Instances of `CellConfigType` that represent the rows in the table view.
+	/// Instances of `CellConfigType` that represent the items in the table.
 	var rows: [CellConfigType] { get }
 	/// Action to perform when the header view comes in or out of view.
 	var headerVisibilityAction: ((_ view: UIView, _ visible: Bool) -> Void)? { get }
@@ -28,16 +28,16 @@ public protocol TableSectionType {
 
 /// Defines the style, and state information of a section.
 ///
-/// `FunctionalTableData` deals in arrays of `TableSection` instances. Each section, at a minimum, has a string value unique within the table itself, and an array of `CellConfigType` instances that represent the rows of the section. Additionally there may be a header and footer for the section.
+/// `FunctionalTableData` deals in arrays of `TableSection` instances. Each section, at a minimum, has a string value unique within the table itself, and an array of `CellConfigType` instances that represent the items of the section. Additionally there may be a header and footer for the section.
 public struct TableSection: Sequence, TableSectionType {
 	public let key: String
 	public var header: TableHeaderFooterConfigType? = nil
 	public var footer: TableHeaderFooterConfigType? = nil
 	public var rows: [CellConfigType]
-	/// Specifies visual attributes to be applied to the section. This includes row separators to use at the top, bottom, and between items of the section.
+	/// Specifies visual attributes to be applied to the section. This includes item separators to use at the top, bottom, and between items of the section.
 	public var style: SectionStyle?
 	public var headerVisibilityAction: ((_ view: UIView, _ visible: Bool) -> Void)? = nil
-	/// Callback executed when a row is manually moved by the user. It specifies the before and after index position.
+	/// Callback executed when a item is manually moved by the user. It specifies the before and after index position.
 	public var didMoveRow: ((_ from: Int, _ to: Int) -> Void)?
 
 	public init(key: String, rows: [CellConfigType] = [], header: TableHeaderFooterConfigType? = nil, footer: TableHeaderFooterConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) {
@@ -81,9 +81,9 @@ public struct TableSection: Sequence, TableSectionType {
 	///
 	/// - Parameter index: Integer identifying the position of the row in the section.
 	/// - Returns: The String identifier of the section enclosing the row.
-	func sectionKeyPathForRow(_ index: Int) -> String? {
+	func sectionKeyPathForRow(_ index: Int) -> ItemPath? {
 		guard index < rows.count else { return nil }
-		return key + rows[index].key
+		return ItemPath(sectionKey: key, itemKey: rows[index].key)
 	}
 
 	/// Attempts to merge the separator's style provided by a `TableSection` with the separator's style provided by an instance of `CellConfigType`.
@@ -155,9 +155,9 @@ extension TableSection {
 
 extension Array where Element: TableSectionType {
 	subscript(key: IndexPath) -> CellConfigType? {
-		guard (key as NSIndexPath).section < count else { return nil }
-		let row = (key as NSIndexPath).row
-		let section: TableSectionType = self[(key as NSIndexPath).section]
+		guard key.section < count else { return nil }
+		let row = key.row
+		let section: TableSectionType = self[key.section]
 		return (row < section.rows.count) ? section[row] : nil
 	}
 }

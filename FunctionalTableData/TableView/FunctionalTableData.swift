@@ -37,21 +37,7 @@ public class FunctionalTableData {
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
 	
-	/// Represents the unique path to a given item in the `FunctionalTableData`.
-	///
-	/// Think of it as a readable implementation of `IndexPath`, that can be used to locate a given cell
-	/// or `TableSection` in the data set.
-	public struct KeyPath {
-		/// Unique identifier for a section.
-		public let sectionKey: String
-		/// Unique identifier for an item inside a section.
-		public let rowKey: String
-		
-		public init(sectionKey: String, rowKey: String) {
-			self.sectionKey = sectionKey
-			self.rowKey = rowKey
-		}
-	}
+	public typealias KeyPath = ItemPath
 	
 	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
 		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
@@ -158,8 +144,8 @@ public class FunctionalTableData {
 	///
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
-	public func rowForKeyPath(_ keyPath: KeyPath) -> CellConfigType? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
+	public func rowForKeyPath(_ keyPath: ItemPath) -> CellConfigType? {
+		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.itemKey }) {
 			return sections[sectionIndex].rows[rowIndex]
 		}
 		
@@ -169,11 +155,11 @@ public class FunctionalTableData {
 	/// Returns the key path specified by its string presentation.
 	///
 	/// - Parameter key: String identifier to lookup.
-	/// - Returns: A `KeyPath` that matches the key or `nil` if there is no match.
-	public func keyPathForRowKey(_ key: String) -> KeyPath? {
+	/// - Returns: A `ItemPath` that matches the key or `nil` if there is no match.
+	public func keyPathForRowKey(_ key: String) -> ItemPath? {
 		for section in sections {
 			for row in section where row.key == key {
-				return KeyPath(sectionKey: section.key, rowKey: row.key)
+				return ItemPath(sectionKey: section.key, itemKey: row.key)
 			}
 		}
 		
@@ -183,26 +169,26 @@ public class FunctionalTableData {
 	/// Returns the key path of the cell in a given `IndexPath` location.
 	///
 	/// __Note:__ This method performs an unsafe lookup, make sure that the `IndexPath` exists
-	/// before trying to transform it into a `KeyPath`.
+	/// before trying to transform it into a `ItemPath`.
 	/// - Parameter indexPath: A key path identifying where the key path is located.
 	/// - Returns: The key representation of the supplied `IndexPath`.
-	public func keyPathForIndexPath(indexPath: IndexPath) -> KeyPath {
+	public func keyPathForIndexPath(indexPath: IndexPath) -> ItemPath {
 		let section = sections[indexPath.section]
 		let row = section.rows[indexPath.row]
-		return KeyPath(sectionKey: section.key, rowKey: row.key)
+		return ItemPath(sectionKey: section.key, itemKey: row.key)
 	}
 	
 	/// Returns the drawing area for a row identified by key path.
 	///
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A rectangle defining the area in which the table view draws the row or `nil` if the key path is invalid.
-	public func rectForKeyPath(_ keyPath: KeyPath) -> CGRect? {
+	public func rectForKeyPath(_ keyPath: ItemPath) -> CGRect? {
 		guard let indexPath = indexPathFromKeyPath(keyPath) else { return nil }
 		return tableView?.rectForRow(at: indexPath)
 	}
 	
 	@available(*, deprecated, message: "The `reloadList` argument is no longer available.")
-	public func renderAndDiff(_ newSections: [TableSection], keyPath: KeyPath? = nil, reloadList: Bool, animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
+	public func renderAndDiff(_ newSections: [TableSection], keyPath: ItemPath? = nil, reloadList: Bool, animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
 		renderAndDiff(newSections, keyPath: keyPath, animated: animated, animations: animations, completion: completion)
 	}
 	
@@ -215,7 +201,7 @@ public class FunctionalTableData {
 	///   - animations: Type of animation to perform. See `FunctionalTableData.TableAnimations` for more info.
 	///   - completion: Callback that will be called on the main thread once the `UITableView` has finished updating and animating any changes.
 	@available(*, deprecated, message: "Call `scroll(to:animated:scrollPosition:)` in the completion handler instead.")
-	public func renderAndDiff(_ newSections: [TableSection], keyPath: KeyPath?, animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
+	public func renderAndDiff(_ newSections: [TableSection], keyPath: ItemPath?, animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
 		renderAndDiff(newSections, animated: animated, animations: animations) { [weak self] in
 			if let strongSelf = self, let keyPath = keyPath {
 				strongSelf.scroll(to: keyPath)
@@ -410,7 +396,7 @@ public class FunctionalTableData {
 	///   - keyPath: A key path identifying a row in the table view.
 	///   - animated: `true` if you want to animate the selection, and `false` if the change should be immediate.
 	///   - triggerDelegate: `true` to trigger the `tableView:didSelectRowAt:` delegate from `UITableView` or `false` to skip it. Skipping it is the default `UITableView` behavior.
-	public func select(keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .none, triggerDelegate: Bool = false) {
+	public func select(keyPath: ItemPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .none, triggerDelegate: Bool = false) {
 		guard let tableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		if delegate.tableView(tableView, willSelectRowAt: indexPath) != nil {
 			tableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
@@ -426,14 +412,14 @@ public class FunctionalTableData {
 	///   - keyPath: A key path identifying a row in the table view.
 	///   - animated: `true` to animate to the new scroll position, or `false` to scroll immediately.
 	///   - scrollPosition: Specifies where the item specified by `keyPath` should be positioned once scrolling finishes.
-	public func scroll(to keyPath: KeyPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .bottom) {
+	public func scroll(to keyPath: ItemPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .bottom) {
 		guard let tableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
 		tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
 	}
 	
 	/// - Parameter point: The point in the collection view’s bounds that you want to test.
 	/// - Returns: the keypath of the item at the specified point, or `nil` if no item was found at that point.
-	public func keyPath(at point: CGPoint) -> KeyPath? {
+	public func keyPath(at point: CGPoint) -> ItemPath? {
 		guard let indexPath = tableView?.indexPathForRow(at: point) else {
 			return nil
 		}
@@ -441,8 +427,8 @@ public class FunctionalTableData {
 		return keyPathForIndexPath(indexPath: indexPath)
 	}
 	
-	public func indexPathFromKeyPath(_ keyPath: KeyPath) -> IndexPath? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.rowKey }) {
+	public func indexPathFromKeyPath(_ keyPath: ItemPath) -> IndexPath? {
+		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.itemKey }) {
 			return IndexPath(row: rowIndex, section: sectionIndex)
 		}
 		

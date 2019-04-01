@@ -11,7 +11,7 @@ import Foundation
 extension FunctionalTableData {
 	class Delegate: NSObject, UITableViewDelegate {
 		var sections: [TableSection] = []
-		private var heightAtIndexKeyPath: [String: CGFloat] = [:]
+		private var heightAtIndexKeyPath: [ItemPath: CGFloat] = [:]
 		
 		weak var scrollViewDelegate: UIScrollViewDelegate?
 		var backwardsCompatScrollViewDelegate = ScrollViewDelegate()

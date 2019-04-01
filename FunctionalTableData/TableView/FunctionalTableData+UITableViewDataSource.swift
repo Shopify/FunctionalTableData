@@ -25,7 +25,7 @@ extension FunctionalTableData {
 			let row = indexPath.row
 			let cellConfig = sectionData[row]
 			let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
-			cell.accessibilityIdentifier = sectionData.sectionKeyPathForRow(row)
+			cell.accessibilityIdentifier = ItemPath(sectionKey: sectionData.key, itemKey: cellConfig.key).description
 			
 			cellConfig.update(cell: cell, in: tableView)
 			let style = sectionData.mergedStyle(for: row)

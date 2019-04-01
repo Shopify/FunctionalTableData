@@ -45,6 +45,7 @@
 		4CA356761F322D7F0081BE90 /* TableSectionStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA356741F322D7F0081BE90 /* TableSectionStyleTests.swift */; };
 		4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */; };
 		4CD535031F9E3A010041A3F9 /* CellStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */; };
+		6C421788224D42C500D64AE2 /* ItemPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C421787224D42C500D64AE2 /* ItemPath.swift */; };
 		6C5F34C12231B91C00D57BEA /* ScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C02231B91C00D57BEA /* ScrollViewDelegate.swift */; };
 		6C5F34C52232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */; };
 		6C5F34C72232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C62232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift */; };
@@ -127,6 +128,7 @@
 		4CCCE8461F8AA7CD00C73258 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
 		4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemLayout.swift; sourceTree = "<group>"; };
 		4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellStyleTests.swift; sourceTree = "<group>"; };
+		6C421787224D42C500D64AE2 /* ItemPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPath.swift; sourceTree = "<group>"; };
 		6C5F34C02231B91C00D57BEA /* ScrollViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewDelegate.swift; sourceTree = "<group>"; };
 		6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		6C5F34C62232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UITableViewDataSource.swift"; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				4CCCE83E1F8AA7B200C73258 /* CollectionView */,
 				4C7A27871F2FB68400360E9B /* Extensions */,
 				4CCCE8431F8AA7CD00C73258 /* TableView */,
+				6C421787224D42C500D64AE2 /* ItemPath.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -484,6 +488,7 @@
 				6C5F34C92232E8D300D57BEA /* FunctionalCollectionData+UICollectionViewDelegate.swift in Sources */,
 				4C6325111F8AA8A400B2B74B /* CollectionCell.swift in Sources */,
 				4C7A27841F2FB55D00360E9B /* TableSection.swift in Sources */,
+				6C421788224D42C500D64AE2 /* ItemPath.swift in Sources */,
 				6C5F34C72232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift in Sources */,
 				4C7A277D1F2FB55D00360E9B /* FunctionalTableData.swift in Sources */,
 				4C7A277E1F2FB55D00360E9B /* HostCell.swift in Sources */,
