@@ -142,7 +142,6 @@ public struct CellActions {
 	public let deselectionAction: SelectionAction?
 	
 	/// All the available row actions this cell can perform. See [UITableViewRowAction](https://developer.apple.com/documentation/uikit/uitableviewrowaction) for more info.
-	//@available(*, deprecated, message: "Use `trailingActionConfiguration` instead.")
 	public let rowActions: [UITableViewRowAction]?
 	
 	/// The swipe actions to display on the leading edge of the row.
@@ -195,6 +194,7 @@ public struct CellActions {
 
 public extension CellActions {
 	/// Backwards compatible initializer that accepts `rowActions` instead of `leadingActionConfiguration` and `trailingActionConfiguration`
+	@available(*, deprecated, message: "Use init with `trailingActionConfiguration` instead.")
 	init(
 		canSelectAction: CanSelectAction? = nil,
 		selectionAction: SelectionAction? = nil,
@@ -217,6 +217,7 @@ public extension CellActions {
 	}
 	
 	/// Backwards compatible initializer that wraps the `previewingViewControllerAction` to the new form.
+	@available(*, deprecated, message: "Use init with previewingViewControllerAction of type `PreviewingViewControllerAction`")
 	init(
 		canSelectAction: CanSelectAction? = nil,
 		selectionAction: SelectionAction? = nil,
