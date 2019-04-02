@@ -47,6 +47,7 @@ public class FunctionalTableData {
 	
 	private var sections: [TableSection] = [] {
 		didSet {
+			cellStyler.sections = sections
 			dataSource.sections = sections
 			delegate.sections = sections
 		}
@@ -56,8 +57,9 @@ public class FunctionalTableData {
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
 	
-	let dataSource = DataSource()
-	let delegate = Delegate()
+	private let cellStyler: CellStyler
+	private let dataSource: DataSource
+	internal let delegate: Delegate
 	
 	/// Enclosing `UITableView` that presents all the `TableSection` data.
 	///
@@ -134,6 +136,11 @@ public class FunctionalTableData {
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name
 		renderAndDiffQueue.maxConcurrentOperationCount = 1
+		
+		let cellStyler = CellStyler()
+		self.cellStyler = cellStyler
+		self.dataSource = DataSource(cellStyler: cellStyler)
+		self.delegate = Delegate(cellStyler: cellStyler)
 	}
 	
 	deinit {
@@ -145,7 +152,7 @@ public class FunctionalTableData {
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
 	public func rowForKeyPath(_ keyPath: ItemPath) -> CellConfigType? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.itemKey }) {
+		if let sectionIndex = sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey }) {
 			return sections[sectionIndex].rows[rowIndex]
 		}
 		
@@ -356,13 +363,7 @@ public class FunctionalTableData {
 		
 		func applyTransitionChanges(_ changes: TableSectionChangeSet) {
 			for update in changes.updates {
-				if let cell = tableView.cellForRow(at: update.index) {
-					update.cellConfig.update(cell: cell, in: tableView)
-					
-					let section = sections[update.index.section]
-					let style = section.mergedStyle(for: update.index.row)
-					style.configure(cell: cell, in: tableView)
-				}
+				cellStyler.update(cellConfig: update.cellConfig, at: update.index, in: tableView)
 			}
 		}
 		
@@ -417,6 +418,21 @@ public class FunctionalTableData {
 		tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
 	}
 	
+	/// Returns the currently highlighted row
+	public var highlightedRow: ItemPath? {
+		return cellStyler.highlightedRow
+	}
+	
+	/// Highlights the row at the given ItemPath
+	///
+	/// - Parameters:
+	///   - itemPath: The `ItemPath` to highlight. Pass nil to unhighlight any previously highlighted row.
+	///   - animated: `true` to highlight/unhighlight with animations, `false` otherwise.
+	public func highlightRow(at itemPath: ItemPath?, animated: Bool) {
+		guard let tableView = tableView else { return }
+		cellStyler.highlightRow(at: itemPath, animated: animated, in: tableView)
+	}
+	
 	/// - Parameter point: The point in the collection view’s bounds that you want to test.
 	/// - Returns: the keypath of the item at the specified point, or `nil` if no item was found at that point.
 	public func keyPath(at point: CGPoint) -> ItemPath? {
@@ -428,11 +444,7 @@ public class FunctionalTableData {
 	}
 	
 	public func indexPathFromKeyPath(_ keyPath: ItemPath) -> IndexPath? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.itemKey }) {
-			return IndexPath(row: rowIndex, section: sectionIndex)
-		}
-		
-		return nil
+		return sections.indexPath(from: keyPath)
 	}
 	
 	internal func calculateTableChanges(oldSections: [TableSection], newSections: [TableSection], visibleIndexPaths: [IndexPath]) -> TableSectionChangeSet {

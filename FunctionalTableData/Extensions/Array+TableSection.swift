@@ -28,9 +28,24 @@ extension Array where Element: TableSectionType {
 	}
 }
 
+extension Array where Element: TableSectionType {
+	func indexPath(from keyPath: FunctionalTableData.KeyPath) -> IndexPath? {
+		if let sectionIndex = self.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = self[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.rowKey }) {
+			return IndexPath(row: rowIndex, section: sectionIndex)
+		}
+		return nil
+	}
+	
+	func keyPath(from indexPath: IndexPath) -> FunctionalTableData.KeyPath {
+		let section = self[indexPath.section]
+		let row = section.rows[indexPath.row]
+		return FunctionalTableData.KeyPath(sectionKey: section.key, rowKey: row.key)
+	}
+}
+
 private extension Array where Element: Hashable {
 	func duplicates() -> [Element] {
-		let groups = Dictionary(grouping: self, by: { $0 }).filter{ $1.count > 1 }
+		let groups = Dictionary(grouping: self, by: { $0 }).filter { $1.count > 1 }
 		return Array(groups.keys)
 	}
 }

@@ -11,6 +11,11 @@ import Foundation
 extension FunctionalTableData {
 	class DataSource: NSObject, UITableViewDataSource {
 		var sections: [TableSection] = []
+		private var cellStyler: CellStyler
+		
+		init(cellStyler: CellStyler) {
+			self.cellStyler = cellStyler
+		}
 		
 		public func numberOfSections(in tableView: UITableView) -> Int {
 			return sections.count
@@ -27,9 +32,7 @@ extension FunctionalTableData {
 			let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
 			cell.accessibilityIdentifier = ItemPath(sectionKey: sectionData.key, itemKey: cellConfig.key).description
 			
-			cellConfig.update(cell: cell, in: tableView)
-			let style = sectionData.mergedStyle(for: row)
-			style.configure(cell: cell, in: tableView)
+			cellStyler.update(cell: cell, cellConfig: cellConfig, at: indexPath, in: tableView)
 			
 			return cell
 		}
@@ -41,7 +44,6 @@ extension FunctionalTableData {
 			// Update internal state to match move
 			let cell = sections[sourceIndexPath.section].rows.remove(at: sourceIndexPath.row)
 			sections[destinationIndexPath.section].rows.insert(cell, at: destinationIndexPath.row)
-			
 			sections[sourceIndexPath.section].didMoveRow?(sourceIndexPath.row, destinationIndexPath.row)
 		}
 		
