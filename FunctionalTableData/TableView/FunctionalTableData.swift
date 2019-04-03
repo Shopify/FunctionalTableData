@@ -50,6 +50,7 @@ public class FunctionalTableData {
 			cellStyler.sections = sections
 			dataSource.sections = sections
 			delegate.sections = sections
+			prefetchingDataSource.sections = sections
 		}
 	}
 	private static let reloadEntireTableThreshold = 20
@@ -70,6 +71,9 @@ public class FunctionalTableData {
 			guard let tableView = tableView else { return }
 			tableView.dataSource = dataSource
 			tableView.delegate = delegate
+			if #available(iOSApplicationExtension 10.0, *) {
+				tableView.prefetchDataSource = prefetchingDataSource
+			}
 			tableView.rowHeight = UITableView.automaticDimension
 			tableView.tableFooterView = UIView(frame: .zero)
 			tableView.separatorStyle = .none
@@ -126,6 +130,8 @@ public class FunctionalTableData {
 	public var isRendering: Bool {
 		return renderAndDiffQueue.isSuspended
 	}
+	
+	let prefetchingDataSource = DataSourcePrefetching()
 	
 	/// Initializes a FunctionalTableData. To configure its view, provide a UITableView after initialization.
 	///

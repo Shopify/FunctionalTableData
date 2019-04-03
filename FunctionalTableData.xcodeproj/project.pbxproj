@@ -47,6 +47,7 @@
 		4CD535031F9E3A010041A3F9 /* CellStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */; };
 		6C421788224D42C500D64AE2 /* ItemPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C421787224D42C500D64AE2 /* ItemPath.swift */; };
 		6C507AF62249268900D04521 /* FunctionalTableData+Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C507AF52249268900D04521 /* FunctionalTableData+Cells.swift */; };
+		6C507AF82249635A00D04521 /* FunctionalTableData+UITableViewDataSourcePrefetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C507AF72249635A00D04521 /* FunctionalTableData+UITableViewDataSourcePrefetching.swift */; };
 		6C52B551223ADAE40034E700 /* FunctionalTableData+UIKeyCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C52B550223ADAE40034E700 /* FunctionalTableData+UIKeyCommand.swift */; };
 		6C5F34C12231B91C00D57BEA /* ScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C02231B91C00D57BEA /* ScrollViewDelegate.swift */; };
 		6C5F34C52232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */; };
@@ -134,6 +135,7 @@
 		4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellStyleTests.swift; sourceTree = "<group>"; };
 		6C421787224D42C500D64AE2 /* ItemPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPath.swift; sourceTree = "<group>"; };
 		6C507AF52249268900D04521 /* FunctionalTableData+Cells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+Cells.swift"; sourceTree = "<group>"; };
+		6C507AF72249635A00D04521 /* FunctionalTableData+UITableViewDataSourcePrefetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UITableViewDataSourcePrefetching.swift"; sourceTree = "<group>"; };
 		6C52B550223ADAE40034E700 /* FunctionalTableData+UIKeyCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UIKeyCommand.swift"; sourceTree = "<group>"; };
 		6C5F34C02231B91C00D57BEA /* ScrollViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewDelegate.swift; sourceTree = "<group>"; };
 		6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UITableViewDelegate.swift"; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 		6C5F34C82232E8D300D57BEA /* FunctionalCollectionData+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalCollectionData+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		6C5F34CA2232E99000D57BEA /* FunctionalCollectionData+UICollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalCollectionData+UICollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		6C910BA822529B390000D7E9 /* FunctionalTableDataDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalTableDataDelegateTests.swift; sourceTree = "<group>"; };
+		6C910BEE22554F810000D7E9 /* FunctionalTableDataPrefetchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalTableDataPrefetchTests.swift; sourceTree = "<group>"; };
 		9FF97DB2212CA23B006FA047 /* TableCellReuseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellReuseTests.swift; sourceTree = "<group>"; };
 		BC8C5D4021763B7B00443E28 /* BackgroundViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -225,6 +228,7 @@
 				36C9208C20D3EB7500DA4251 /* TableSectionsValidationTests.swift */,
 				9FF97DB2212CA23B006FA047 /* TableCellReuseTests.swift */,
 				6C910BA822529B390000D7E9 /* FunctionalTableDataDelegateTests.swift */,
+				6C910BEE22554F810000D7E9 /* FunctionalTableDataPrefetchTests.swift */,
 			);
 			path = FunctionalTableDataTests;
 			sourceTree = "<group>";
@@ -283,6 +287,7 @@
 				6C507AF52249268900D04521 /* FunctionalTableData+Cells.swift */,
 				6C52B550223ADAE40034E700 /* FunctionalTableData+UIKeyCommand.swift */,
 				6C5F34C62232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift */,
+				6C507AF72249635A00D04521 /* FunctionalTableData+UITableViewDataSourcePrefetching.swift */,
 				6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */,
 				4CCCE8441F8AA7CD00C73258 /* TableCell.swift */,
 				4CCCE8451F8AA7CD00C73258 /* TableItemConfigType.swift */,
@@ -478,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C507AF82249635A00D04521 /* FunctionalTableData+UITableViewDataSourcePrefetching.swift in Sources */,
 				6C5F34C12231B91C00D57BEA /* ScrollViewDelegate.swift in Sources */,
 				4C7A278B1F2FB89400360E9B /* UIView+Extensions.swift in Sources */,
 				4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */,
@@ -518,6 +524,7 @@
 			files = (
 				4CA356761F322D7F0081BE90 /* TableSectionStyleTests.swift in Sources */,
 				4CA356751F322D7F0081BE90 /* TableSectionChangeSetTests.swift in Sources */,
+				6C910BEF22554F810000D7E9 /* FunctionalTableDataPrefetchTests.swift in Sources */,
 				4C924F261F98E7A3005D2F02 /* FunctionalDataTests.swift in Sources */,
 				4CD535031F9E3A010041A3F9 /* CellStyleTests.swift in Sources */,
 				36C9208D20D3EB7500DA4251 /* TableSectionsValidationTests.swift in Sources */,

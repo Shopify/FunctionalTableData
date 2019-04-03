@@ -133,6 +133,8 @@ public struct CellActions {
 	/// - parameter context: The instance of `UIViewControllerPreviewing` that is participating in the 3D-touch
 	public typealias PreviewingViewControllerAction = (_ cell: UIView, _ point: CGPoint, _ context: UIViewControllerPreviewing) -> UIViewController?
 	
+	public typealias PrefetchAction = () -> Operation
+	
 	/// The action to perform when the cell will be selected.
 	/// - Important: When the `canSelectAction` is called, it is passed a `CanSelectCallback` closure. It is the responsibility of the action to eventually call the passed in closure providing either a `true` or `false` value to it. This passed in value determines if the selection will be performed or not.
 	public let canSelectAction: CanSelectAction?
@@ -162,6 +164,8 @@ public struct CellActions {
 	public let visibilityAction: VisibilityAction?
 	/// The action to perform when the cell is 3D touched by the user.
 	public let previewingViewControllerAction: PreviewingViewControllerAction?
+	/// <#Description#>
+	public var prefetchAction: PrefetchAction?
 	
 	public init(
 		canSelectAction: CanSelectAction? = nil,
@@ -172,7 +176,9 @@ public struct CellActions {
 		canPerformAction: CanPerformAction? = nil,
 		canBeMoved: Bool = false,
 		visibilityAction: VisibilityAction? = nil,
-		previewingViewControllerAction: PreviewingViewControllerAction? = nil) {
+		previewingViewControllerAction: PreviewingViewControllerAction? = nil,
+		prefetchAction: PrefetchAction? = nil
+		) {
 		self.canSelectAction = canSelectAction
 		self.selectionAction = selectionAction
 		self.deselectionAction = deselectionAction
@@ -183,6 +189,7 @@ public struct CellActions {
 		self.canBeMoved = canBeMoved
 		self.visibilityAction = visibilityAction
 		self.previewingViewControllerAction = previewingViewControllerAction
+		self.prefetchAction = prefetchAction
 	}
 	
 	internal var hasEditActions: Bool {
