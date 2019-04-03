@@ -92,7 +92,7 @@ extension FunctionalTableData {
 				return nil
 			}
 			
-			let keyPath = sections.keyPath(from: indexPath)
+			let itemPath = sections.itemPath(from: indexPath)
 			
 			if let canSelectAction = cellConfig.actions.canSelectAction {
 				let canSelectResult: (Bool) -> Void = { selected in
@@ -104,11 +104,11 @@ extension FunctionalTableData {
 						self.tableView(tableView, didSelectRowAt: indexPath)
 						NotificationCenter.default.post(name: UITableView.selectionDidChangeNotification, object: tableView)
 					} else {
-						self.cellStyler.highlightRow(at: keyPath, animated: false, in: tableView)
+						self.cellStyler.highlightRow(at: itemPath, animated: false, in: tableView)
 					}
 				}
 				DispatchQueue.main.async {
-					self.cellStyler.highlightRow(at: keyPath, animated: false, in: tableView)
+					self.cellStyler.highlightRow(at: itemPath, animated: false, in: tableView)
 					canSelectAction(canSelectResult)
 				}
 				return nil

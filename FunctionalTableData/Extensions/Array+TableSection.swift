@@ -29,17 +29,18 @@ extension Array where Element: TableSectionType {
 }
 
 extension Array where Element: TableSectionType {
-	func indexPath(from keyPath: FunctionalTableData.KeyPath) -> IndexPath? {
-		if let sectionIndex = self.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = self[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.rowKey }) {
+	func indexPath(from itemPath: ItemPath) -> IndexPath? {
+		if let sectionIndex = self.firstIndex(where: { $0.key == itemPath.sectionKey }), let rowIndex = self[sectionIndex].rows.firstIndex(where: { $0.key == itemPath.itemKey }) {
 			return IndexPath(row: rowIndex, section: sectionIndex)
 		}
 		return nil
 	}
 	
-	func keyPath(from indexPath: IndexPath) -> FunctionalTableData.KeyPath {
+	func itemPath(from indexPath: IndexPath) -> ItemPath {
 		let section = self[indexPath.section]
-		let row = section.rows[indexPath.row]
-		return FunctionalTableData.KeyPath(sectionKey: section.key, rowKey: row.key)
+		let item = section.rows[indexPath.row]
+		return ItemPath(sectionKey: section.key, itemKey: item.key)
+	}
 	
 	func itemPaths(from indexPaths: [IndexPath]) -> [ItemPath] {
 		return indexPaths.map { itemPath(from: $0) }
