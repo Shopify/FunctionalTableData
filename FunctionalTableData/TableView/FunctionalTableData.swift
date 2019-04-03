@@ -404,6 +404,7 @@ public class FunctionalTableData {
 			if triggerDelegate {
 				delegate.tableView(tableView, didSelectRowAt: indexPath)
 			}
+			NotificationCenter.default.post(name: UITableView.selectionDidChangeNotification, object: tableView)
 		}
 	}
 	
