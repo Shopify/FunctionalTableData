@@ -3,7 +3,7 @@
 //  Shopify
 //
 //  Created by Raul Riera on 2017-12-18.
-//  Copyright © 2017 Raul Riera. All rights reserved.
+//  Copyright © 2017 Shopify. All rights reserved.
 //
 
 import UIKit

@@ -22,7 +22,7 @@ public struct SwitchState: Equatable {
 		self.onValueChanged = onValueChanged
 	}
 	
-	public static func updateView(_ view: UISwitch, state: SwitchState?) {
+	public static func updateView(_ view: UISwitch, state: SwitchState?) {		
 		view.isOn = state?.isOn ?? false
 		view.isEnabled = state?.isEnabled ?? false
 		view.setAction(for: .valueChanged) { switchView in

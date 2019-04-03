@@ -10,7 +10,6 @@ import UIKit
 import FunctionalTableData
 
 public typealias ImageCell = HostCell<UIImageView, ImageState, LayoutMarginsTableItemLayout>
-public typealias ImageWithSubtitleCell = CombinedCell<UIImageView, ImageState, SubtitleView, SubtitleState, LayoutMarginsTableItemLayout>
 
 public protocol ImageLoadable {
 	func setImage(from: URL, placeholder: UIImage?)
@@ -75,4 +74,9 @@ public struct ImageState: Equatable {
 	public static func ==(lhs: ImageState, rhs: ImageState) -> Bool {
 		return lhs.url == rhs.url && lhs.width == rhs.width && lhs.height == rhs.height
 	}
+}
+
+extension UIImageView: ImageLoadable {
+	public func setImage(from: URL, placeholder: UIImage?) {}
+	public func cancelLoadingImage() {}
 }

@@ -41,7 +41,7 @@ public class SubtitleView: UIView {
 			stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
 		])
 		
-		titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+		titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
 		subtitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 	}
 }

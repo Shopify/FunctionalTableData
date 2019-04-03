@@ -28,10 +28,10 @@ public struct LabelState: Equatable {
 	
 	public static func updateView(_ view: UILabel, state: LabelState?) {
 		guard let state = state else {
-			// reset parts of state that need to be reset
 			view.setControlText(nil)
 			return
 		}
+		
 		view.font = state.font
 		view.textColor = state.textColor
 		view.apply(truncationStyle: state.truncationStyle)

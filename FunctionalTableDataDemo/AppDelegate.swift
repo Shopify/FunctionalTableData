@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FunctionalTableData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		
+		Separator.appearance().backgroundColor = UITableView().separatorColor
+		UIButton.appearance().setTitleColor(.blue, for: .normal)
+		UIButton.appearance().setTitleColor(UIColor.blue.withAlphaComponent(0.5), for: .highlighted)
+		
 		return true
 	}
 	
