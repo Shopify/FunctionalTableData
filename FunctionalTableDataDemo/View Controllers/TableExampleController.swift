@@ -16,6 +16,7 @@ class TableExampleController: UITableViewController {
 			render()
 		}
 	}
+	private lazy var keyboardNavigator = FunctionalTableData.KeyboardNavigator(functionalTableData: functionalData)
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -27,6 +28,23 @@ class TableExampleController: UITableViewController {
 	
 	@objc private func didSelectAdd() {
 		items.append(NSDate().description)
+	}
+	
+	override var canBecomeFirstResponder: Bool {
+		return true
+	}
+	
+	override var keyCommands: [UIKeyCommand]? {
+		return keyboardNavigator.keyCommands
+	}
+	
+	open override func target(forAction action: Selector, withSender sender: Any?) -> Any? {
+		//return target(forAction: action, withSender: sender, keyCommandProviders: keyCommandProviders)
+		if let keyCommand = sender as? UIKeyCommand, keyboardNavigator.keyCommands.contains(keyCommand) {
+			return keyboardNavigator
+		} else {
+			return super.target(forAction: action, withSender: sender)
+		}
 	}
 	
 	private func render() {
@@ -48,7 +66,7 @@ class TableExampleController: UITableViewController {
 		
 		functionalData.renderAndDiff([
 			TableSection(key: "section", rows: rows)
-        ])
+		])
 	}
 }
 
