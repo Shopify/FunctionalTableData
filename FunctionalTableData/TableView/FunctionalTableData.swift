@@ -413,9 +413,16 @@ public class FunctionalTableData {
 	///   - keyPath: A key path identifying a row in the table view.
 	///   - animated: `true` to animate to the new scroll position, or `false` to scroll immediately.
 	///   - scrollPosition: Specifies where the item specified by `keyPath` should be positioned once scrolling finishes.
-	public func scroll(to keyPath: ItemPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .bottom) {
+	///   - completion: Completion handler that will fire when the scroll (if necessary) has completed.
+	public func scroll(to keyPath: ItemPath, animated: Bool = true, scrollPosition: UITableView.ScrollPosition = .bottom, completion: ((UITableView) -> Void)? = nil) {
 		guard let tableView = tableView, let indexPath = indexPathFromKeyPath(keyPath) else { return }
-		tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
+		if tableView.indexPathsForVisibleRows?.contains(indexPath) == false {
+			delegate.scrollToRowAtIndexPathCompletion = completion
+			tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
+		} else {
+			tableView.scrollToRow(at: indexPath, at: .none, animated: animated)
+			completion?(tableView)
+		}
 	}
 	
 	/// Returns the currently highlighted row

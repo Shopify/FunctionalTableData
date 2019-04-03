@@ -215,5 +215,19 @@ extension FunctionalTableData {
 			let cellConfig = sections[indexPath]
 			return cellConfig?.actions.trailingActionConfiguration?.asSwipeActionsConfiguration()
 		}
+		
+		// MARK: -
+		internal var scrollToRowAtIndexPathCompletion: ((UITableView) -> Void)? = nil
+		public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+			if let scrollToRowAtIndexPathCompletion = scrollToRowAtIndexPathCompletion, let tableView = scrollView as? UITableView {
+				scrollToRowAtIndexPathCompletion(tableView)
+				self.scrollToRowAtIndexPathCompletion = nil
+			}
+			if let scrollViewDidEndScrollingAnimation = scrollViewDelegate?.scrollViewDidEndScrollingAnimation {
+				scrollViewDidEndScrollingAnimation(scrollView)
+			} else {
+				backwardsCompatScrollViewDelegate.scrollViewDidEndScrollingAnimation?(scrollView)
+			}
+		}
 	}
 }
