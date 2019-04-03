@@ -30,19 +30,19 @@ class TableExampleController: UITableViewController {
 	}
 	
 	private func render() {
-		let rows: [CellConfigType] = items.enumerated().map { index, item in
+		let rows: [CellConfigType] = items.enumerated().map { item in
 			return LabelCell(
-				key: "id-\(index)",
+				key: "id-\(item.offset)",
 				actions: CellActions(
 					selectionAction: { _ in
-						print("\(item) selected")
+						print("\(item.offset) selected")
 						return .selected
 				},
 					deselectionAction: { _ in
-						print("\(item) deselected")
+						print("\(item.offset) deselected")
 						return .deselected
 				}),
-				state: LabelState(text: item),
+				state: LabelState(text: .plain(item.element)),
 				cellUpdater: LabelState.updateView)
 		}
 		
