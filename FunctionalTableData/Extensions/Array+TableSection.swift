@@ -40,6 +40,14 @@ extension Array where Element: TableSectionType {
 		let section = self[indexPath.section]
 		let row = section.rows[indexPath.row]
 		return FunctionalTableData.KeyPath(sectionKey: section.key, rowKey: row.key)
+	
+	func itemPaths(from indexPaths: [IndexPath]) -> [ItemPath] {
+		return indexPaths.map { itemPath(from: $0) }
+	}
+	
+	subscript(itemPath: ItemPath) -> CellConfigType? {
+		guard let indexPath = indexPath(from: itemPath) else { return nil }
+		return self[indexPath.section].rows[indexPath.row]
 	}
 }
 
