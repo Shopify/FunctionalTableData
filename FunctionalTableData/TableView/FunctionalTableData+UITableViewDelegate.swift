@@ -190,11 +190,6 @@ extension FunctionalTableData {
 			// required
 		}
 		
-		public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-			let cellConfig = sections[indexPath]
-			return cellConfig?.actions.rowActions != nil ? .delete : .none
-		}
-		
 		public func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
 			return false
 		}
@@ -205,7 +200,7 @@ extension FunctionalTableData {
 		
 		public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 			let cellConfig = sections[indexPath]
-			return cellConfig?.actions.trailingActionConfiguration?.asRowActions(in: tableView) ?? cellConfig?.actions.rowActions
+			return cellConfig?.actions.trailingActionConfiguration?.asRowActions(in: tableView)
 		}
 		
 		@available(iOSApplicationExtension 11.0, *)

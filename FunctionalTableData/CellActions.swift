@@ -66,7 +66,9 @@ public struct CellActions {
 					let cell = tableView.cellForRow(at: indexPath)
 					handler(cell ?? tableView) { _ in } // UITableViewRowAction doesn't support the callback based approach, so fake it instead
 				}
-				rowAction.backgroundColor = backgroundColor
+				if let backgroundColor = backgroundColor {
+					rowAction.backgroundColor = backgroundColor
+				}
 				return rowAction
 			}
 			
@@ -141,9 +143,6 @@ public struct CellActions {
 	/// The action to perform when the cell is deselected
 	public let deselectionAction: SelectionAction?
 	
-	/// All the available row actions this cell can perform. See [UITableViewRowAction](https://developer.apple.com/documentation/uikit/uitableviewrowaction) for more info.
-	public let rowActions: [UITableViewRowAction]?
-	
 	/// The swipe actions to display on the leading edge of the row.
 	///
 	/// Use this method to return a set of actions to display when the user swipes the row. The actions you return are displayed on the leading edge of the row. For example, in a left-to-right language environment, they are displayed on the left side of the row when the user swipes from left to right.
@@ -176,7 +175,6 @@ public struct CellActions {
 		self.canSelectAction = canSelectAction
 		self.selectionAction = selectionAction
 		self.deselectionAction = deselectionAction
-		self.rowActions = nil
 		self.leadingActionConfiguration = leadingActionConfiguration
 		self.trailingActionConfiguration = trailingActionConfiguration
 		self.canPerformAction = canPerformAction
@@ -186,43 +184,19 @@ public struct CellActions {
 	}
 	
 	internal var hasEditActions: Bool {
-		return leadingActionConfiguration != nil || trailingActionConfiguration != nil || rowActions != nil
+		return leadingActionConfiguration != nil || trailingActionConfiguration != nil
 	}
 }
 
 // MARK: - Backwards Compatible Initializers
 
 public extension CellActions {
-	/// Backwards compatible initializer that accepts `rowActions` instead of `leadingActionConfiguration` and `trailingActionConfiguration`
-	@available(*, deprecated, message: "Use init with `trailingActionConfiguration` instead.")
-	init(
-		canSelectAction: CanSelectAction? = nil,
-		selectionAction: SelectionAction? = nil,
-		deselectionAction: DeselectionAction? = nil,
-		rowActions: [UITableViewRowAction]?,
-		canPerformAction: CanPerformAction? = nil,
-		canBeMoved: Bool = false,
-		visibilityAction: VisibilityAction? = nil,
-		previewingViewControllerAction: PreviewingViewControllerAction? = nil) {
-		self.canSelectAction = canSelectAction
-		self.selectionAction = selectionAction
-		self.deselectionAction = deselectionAction
-		self.rowActions = rowActions
-		self.leadingActionConfiguration = nil
-		self.trailingActionConfiguration = nil
-		self.canPerformAction = canPerformAction
-		self.canBeMoved = canBeMoved
-		self.visibilityAction = visibilityAction
-		self.previewingViewControllerAction = previewingViewControllerAction
-	}
-	
 	/// Backwards compatible initializer that wraps the `previewingViewControllerAction` to the new form.
 	@available(*, deprecated, message: "Use init with previewingViewControllerAction of type `PreviewingViewControllerAction`")
 	init(
 		canSelectAction: CanSelectAction? = nil,
 		selectionAction: SelectionAction? = nil,
 		deselectionAction: DeselectionAction? = nil,
-		rowActions: [UITableViewRowAction]? = nil,
 		canPerformAction: CanPerformAction? = nil,
 		canBeMoved: Bool = false,
 		visibilityAction: VisibilityAction? = nil,
@@ -235,7 +209,8 @@ public extension CellActions {
 			canSelectAction: canSelectAction,
 			selectionAction: selectionAction,
 			deselectionAction: deselectionAction,
-			rowActions: rowActions,
+			leadingActionConfiguration: nil,
+			trailingActionConfiguration: nil,
 			canPerformAction: canPerformAction,
 			canBeMoved: canBeMoved,
 			visibilityAction: visibilityAction,
