@@ -12,9 +12,14 @@ extension FunctionalTableData {
 	class Delegate: NSObject, UITableViewDelegate {
 		var sections: [TableSection] = []
 		private var heightAtIndexKeyPath: [ItemPath: CGFloat] = [:]
+		private var cellStyler: CellStyler
 		
 		weak var scrollViewDelegate: UIScrollViewDelegate?
 		var backwardsCompatScrollViewDelegate = ScrollViewDelegate()
+		
+		init(cellStyler: CellStyler) {
+			self.cellStyler = cellStyler
+		}
 		
 		public override func responds(to aSelector: Selector!) -> Bool {
 			if class_respondsToSelector(type(of: self), aSelector) {
@@ -83,36 +88,27 @@ extension FunctionalTableData {
 				return nil
 			}
 			
-			guard let cellConfig = sections[indexPath], let selectionAction = cellConfig.actions.selectionAction else {
+			guard let cellConfig = sections[indexPath] else {
 				return nil
 			}
 			
-			let currentSelection = tableView.indexPathForSelectedRow
+			let keyPath = sections.itemPath(from: indexPath)
 			
-			if let canSelectAction = cellConfig.actions.canSelectAction, let selectedCell = tableView.cellForRow(at: indexPath) {
+			if let canSelectAction = cellConfig.actions.canSelectAction {
 				let canSelectResult: (Bool) -> Void = { selected in
 					if #available(iOSApplicationExtension 10.0, *) {
 						dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
 					}
 					if selected {
-						selectedCell.setHighlighted(false, animated: false)
-						
-						if selectionAction(selectedCell) == .selected {
-							tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-						} else {
-							tableView.deselectRow(at: indexPath, animated: false)
-						}
-						
-						if !tableView.allowsMultipleSelection, let currentSelection = currentSelection {
-							tableView.cellForRow(at: currentSelection)?.setHighlighted(false, animated: false)
-							tableView.deselectRow(at: currentSelection, animated: false)
-						}
+						tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+						self.tableView(tableView, didSelectRowAt: indexPath)
+						NotificationCenter.default.post(name: UITableView.selectionDidChangeNotification, object: tableView)
 					} else {
-						selectedCell.setHighlighted(false, animated: true)
+						self.cellStyler.highlightRow(at: keyPath, animated: false, in: tableView)
 					}
 				}
 				DispatchQueue.main.async {
-					selectedCell.setHighlighted(true, animated: false)
+					self.cellStyler.highlightRow(at: keyPath, animated: false, in: tableView)
 					canSelectAction(canSelectResult)
 				}
 				return nil

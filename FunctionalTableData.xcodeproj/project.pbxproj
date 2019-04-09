@@ -46,6 +46,7 @@
 		4CCCE8481F8AA7F400C73258 /* TableItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */; };
 		4CD535031F9E3A010041A3F9 /* CellStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */; };
 		6C421788224D42C500D64AE2 /* ItemPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C421787224D42C500D64AE2 /* ItemPath.swift */; };
+		6C507AF62249268900D04521 /* FunctionalTableData+Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C507AF52249268900D04521 /* FunctionalTableData+Cells.swift */; };
 		6C5F34C12231B91C00D57BEA /* ScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C02231B91C00D57BEA /* ScrollViewDelegate.swift */; };
 		6C5F34C52232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */; };
 		6C5F34C72232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F34C62232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift */; };
@@ -130,6 +131,7 @@
 		4CCCE8471F8AA7F400C73258 /* TableItemLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemLayout.swift; sourceTree = "<group>"; };
 		4CD535021F9E3A010041A3F9 /* CellStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellStyleTests.swift; sourceTree = "<group>"; };
 		6C421787224D42C500D64AE2 /* ItemPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPath.swift; sourceTree = "<group>"; };
+		6C507AF52249268900D04521 /* FunctionalTableData+Cells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+Cells.swift"; sourceTree = "<group>"; };
 		6C5F34C02231B91C00D57BEA /* ScrollViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewDelegate.swift; sourceTree = "<group>"; };
 		6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		6C5F34C62232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UITableViewDataSource.swift"; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				4C7A27701F2FB55D00360E9B /* CellConfigType.swift */,
 				4C7A27761F2FB55D00360E9B /* CellStyle.swift */,
 				4C7A27721F2FB55D00360E9B /* HostCell.swift */,
+				6C421787224D42C500D64AE2 /* ItemPath.swift */,
 				4C7A27731F2FB55D00360E9B /* ObjCExceptionRethrower.swift */,
 				4C7A27741F2FB55D00360E9B /* Reusable.swift */,
 				6C5F34C02231B91C00D57BEA /* ScrollViewDelegate.swift */,
@@ -243,7 +246,6 @@
 				4CCCE83E1F8AA7B200C73258 /* CollectionView */,
 				4C7A27871F2FB68400360E9B /* Extensions */,
 				4CCCE8431F8AA7CD00C73258 /* TableView */,
-				6C421787224D42C500D64AE2 /* ItemPath.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -275,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				4C7A27711F2FB55D00360E9B /* FunctionalTableData.swift */,
+				6C507AF52249268900D04521 /* FunctionalTableData+Cells.swift */,
 				6C5F34C62232D15500D57BEA /* FunctionalTableData+UITableViewDataSource.swift */,
 				6C5F34C42232D14B00D57BEA /* FunctionalTableData+UITableViewDelegate.swift */,
 				4CCCE8441F8AA7CD00C73258 /* TableCell.swift */,
@@ -489,6 +492,7 @@
 				4C7A27891F2FB69C00360E9B /* UIView+AutoLayout.swift in Sources */,
 				4C6325121F8AA8A400B2B74B /* UICollectionView+Reusable.swift in Sources */,
 				6C5F34C92232E8D300D57BEA /* FunctionalCollectionData+UICollectionViewDelegate.swift in Sources */,
+				6C507AF62249268900D04521 /* FunctionalTableData+Cells.swift in Sources */,
 				4C6325111F8AA8A400B2B74B /* CollectionCell.swift in Sources */,
 				4C7A27841F2FB55D00360E9B /* TableSection.swift in Sources */,
 				6C421788224D42C500D64AE2 /* ItemPath.swift in Sources */,

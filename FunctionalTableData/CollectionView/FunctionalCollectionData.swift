@@ -95,7 +95,7 @@ public class FunctionalCollectionData {
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
 	public func rowForKeyPath(_ keyPath: KeyPath) -> CellConfigType? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.itemKey }) {
+		if let sectionIndex = sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey }) {
 			return sections[sectionIndex].rows[rowIndex]
 		}
 		
@@ -351,7 +351,7 @@ public class FunctionalCollectionData {
 	/// - Parameter keyPath: The path representing the desired indexPath.
 	/// - Returns: The IndexPath of the item at the provided keyPath.
 	public func indexPathFromKeyPath(_ keyPath: ItemPath) -> IndexPath? {
-		if let sectionIndex = sections.index(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.index(where: { $0.key == keyPath.itemKey }) {
+		if let sectionIndex = sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey }) {
 			return IndexPath(item: rowIndex, section: sectionIndex)
 		}
 		
