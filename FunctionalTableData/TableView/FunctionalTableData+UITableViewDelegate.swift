@@ -190,6 +190,12 @@ extension FunctionalTableData {
 			// required
 		}
 		
+		public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+			let cellConfig = sections[indexPath]
+			// FIXME: This is a temporary revert of a semi-breaking change. Having actions associated with row shouldn't dictate if the delete action is available when the UITableView is in edit mode. Having a `canDelete` property, or a `deleteAction` would better serve the intent here
+			return cellConfig?.actions.leadingActionConfiguration != nil || cellConfig?.actions.trailingActionConfiguration != nil ? .delete : .none
+		}
+		
 		public func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
 			return false
 		}
