@@ -63,7 +63,7 @@ class StyleTests: XCTestCase {
 		separator = cell.viewWithTag(Separator.Tag.bottom.rawValue)
 		cell.layoutIfNeeded()
 		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - Separator.Style.moreInset.insetDistance)
+		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 3 * Separator.inset)
 		
 		style.bottomSeparator = nil
 		style.configure(cell: cell, in: table)
@@ -91,7 +91,7 @@ class StyleTests: XCTestCase {
 		separator = cell.viewWithTag(Separator.Tag.top.rawValue)
 		cell.layoutIfNeeded()
 		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - Separator.Style.moreInset.insetDistance)
+		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 3 * Separator.inset)
 		
 		style.topSeparator = nil
 		style.configure(cell: cell, in: table)
