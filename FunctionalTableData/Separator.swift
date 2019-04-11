@@ -21,20 +21,25 @@ public class Separator: UIView {
 	
 	/// The style for table cells used as separators.
 	///
-	/// The options are `full`, `inset`, and `moreInset`
-	public enum Style {
+	/// The options are `full`, `inset`, `moreInset`, `custom`
+	public enum Style: Equatable {
 		case full
 		case inset
 		case moreInset
+		case custom(leadingInset: CGFloat, trailingInset: CGFloat, layoutMarginsRelative: Bool)
 		
-		public var insetDistance: CGFloat {
-			switch self {
-			case .inset:
-				return Separator.inset
-			case .full:
-				return 0
-			case .moreInset:
-				return 3 * Separator.inset
+		public static func ==(lhs: Style, rhs: Style) -> Bool {
+			switch (lhs, rhs) {
+			case let (.custom(lhsLeadingInset, lhsTrailingInset, lhsLayoutMargins), .custom(rhsLeadingInset, rhsTrailingInset, rhsLayoutMargins)):
+				return lhsLeadingInset == rhsLeadingInset && lhsTrailingInset == rhsTrailingInset && lhsLayoutMargins == rhsLayoutMargins
+			case (.full, .full):
+				return true
+			case (.inset, .inset):
+				return true
+			case (.moreInset, .moreInset):
+				return true
+			default:
+				return false
 			}
 		}
 	}
@@ -72,12 +77,30 @@ public class Separator: UIView {
 	}
 
 	private func applyHorizontalConstraints(_ view: UIView) {
-		trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 		switch style {
-		case .full, .moreInset:
-			leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: style.insetDistance).isActive = true
+		case .full, .inset, .moreInset:
+			trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+		case .custom(_, let trailingInset, let layoutMarginsRelative):
+			if layoutMarginsRelative {
+				trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -trailingInset).isActive = true
+			} else {
+				trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -trailingInset).isActive = true
+			}
+		}
+		
+		switch style {
+		case .full:
+			leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+		case .moreInset:
+			leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 3 * Separator.inset).isActive = true
 		case .inset:
 			leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+		case .custom(let leadingInset, _, let layoutMarginsRelative):
+			if layoutMarginsRelative {
+				leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: leadingInset).isActive = true
+			} else {
+				leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingInset).isActive = true
+			}
 		}
 	}
 }
