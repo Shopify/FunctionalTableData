@@ -49,7 +49,7 @@ public protocol CellConfigType: TableItemConfigType, CollectionItemConfigType {
 	/// Compares self against another `CellConfigType` to determine if they should be counted as being the same type.
 	///
 	/// - note: This should almost never need to be implemented. The default version of it, provided as a protocol extension,
-	///   does the expected thing (and compares `type(of:)` to `type(of:)`. This is inteded for test cases to be able to override.
+	///   does the expected thing (and compares `type(of:)` to `type(of:)`. This is intended for test cases to be able to override.
 	///
 	/// - Parameter other: The other `CellConfigType` to compare against.
 	/// - Returns: `true` if the same type, `false` otherwise
