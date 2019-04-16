@@ -45,4 +45,19 @@ public protocol CellConfigType: TableItemConfigType, CollectionItemConfigType {
 	/// - Returns: `true` when both values are the same, `false` otherwise.
 	func isEqual(_ other: CellConfigType) -> Bool
 	func debugInfo() -> [String: Any]
+	
+	/// Compares self against another `CellConfigType` to determine if they should be counted as being the same type.
+	///
+	/// - note: This should almost never need to be implemented. The default version of it, provided as a protocol extension,
+	///   does the expected thing (and compares `type(of:)` to `type(of:)`. This is inteded for test cases to be able to override.
+	///
+	/// - Parameter other: The other `CellConfigType` to compare against.
+	/// - Returns: `true` if the same type, `false` otherwise
+	func isSameKind(as other: CellConfigType) -> Bool
+}
+
+public extension CellConfigType {
+	func isSameKind(as other: CellConfigType) -> Bool {
+		return type(of: self) == type(of: other)
+	}
 }

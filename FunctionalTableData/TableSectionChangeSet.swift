@@ -225,7 +225,7 @@ public final class TableSectionChangeSet {
 						let newRow = newSection[newRowIndex]
 						// Compare existing row
 						if visibleIndexPaths.contains(IndexPath(row: oldRowIndex, section: oldSectionIndex)) && !isRow(new: (section: newSection, row: newRowIndex), equalTo: (section: oldSection, row: oldRowIndex)) {
-							if type(of: newRow) == type(of: oldSection[oldRowIndex]) {
+							if newRow.isSameKind(as: oldSection[oldRowIndex]) {
 								updates.append(Update(
 									index: IndexPath(row: newRowIndex, section: newSectionIndex),
 									cellConfig: newRow
@@ -249,7 +249,7 @@ public final class TableSectionChangeSet {
 						from: IndexPath(row: oldRowIndexLocation, section: oldSectionIndex),
 						to: IndexPath(row: newRowIndex, section: newSectionIndex)))
 					if visibleIndexPaths.contains(IndexPath(row: oldRowIndexLocation, section: oldSectionIndex)) && !isRow(new: (section: newSection, row: newRowIndex), equalTo: (section: oldSection, row: oldRowIndexLocation)) {
-						if type(of: newRow) == type(of: oldSection[oldRowIndex]) {
+						if newRow.isSameKind(as: oldSection[oldRowIndex]) {
 							updates.append(Update(
 								index: IndexPath(row: newRowIndex, section: newSectionIndex),
 								cellConfig: newRow

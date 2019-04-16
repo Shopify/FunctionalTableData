@@ -101,7 +101,7 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 	}
 	
 	public func debugInfo() -> [String: Any] {
-		let debugInfo: [String: Any] = ["key": key]
+		let debugInfo: [String: Any] = ["key": key, "type": String(describing: type(of: self))]
 		return debugInfo
 	}
 }
