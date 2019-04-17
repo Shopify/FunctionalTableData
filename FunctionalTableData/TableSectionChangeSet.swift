@@ -231,7 +231,7 @@ public final class TableSectionChangeSet {
 									cellConfig: newRow
 								))
 							} else {
-								reloadedRows.append(IndexPath(row: newRowIndex, section: newSectionIndex))
+								reloadedRows.append(IndexPath(row: oldRowIndex, section: oldSectionIndex))
 							}
 						}
 						oldRowIndex += 1
@@ -249,13 +249,13 @@ public final class TableSectionChangeSet {
 						from: IndexPath(row: oldRowIndexLocation, section: oldSectionIndex),
 						to: IndexPath(row: newRowIndex, section: newSectionIndex)))
 					if visibleIndexPaths.contains(IndexPath(row: oldRowIndexLocation, section: oldSectionIndex)) && !isRow(new: (section: newSection, row: newRowIndex), equalTo: (section: oldSection, row: oldRowIndexLocation)) {
-						if newRow.isSameKind(as: oldSection[oldRowIndex]) {
+						if newRow.isSameKind(as: oldSection[oldRowIndexLocation]) {
 							updates.append(Update(
 								index: IndexPath(row: newRowIndex, section: newSectionIndex),
 								cellConfig: newRow
 							))
 						} else {
-							reloadedRows.append(IndexPath(row: newRowIndex, section: newSectionIndex))
+							reloadedRows.append(IndexPath(row: oldRowIndexLocation, section: oldSectionIndex))
 						}
 					}
 					newRowIndex += 1
