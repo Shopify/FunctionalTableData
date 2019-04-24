@@ -45,11 +45,14 @@ public class FunctionalTableData {
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	private var sections: [TableSection] = [] {
-		didSet {
-			cellStyler.sections = sections
-			dataSource.sections = sections
-			delegate.sections = sections
+	var sections: [TableSection] {
+		get {
+			return dataSource.sections
+		}
+		set {
+			cellStyler.sections = newValue
+			dataSource.sections = newValue
+			delegate.sections = newValue
 		}
 	}
 	private static let reloadEntireTableThreshold = 20
