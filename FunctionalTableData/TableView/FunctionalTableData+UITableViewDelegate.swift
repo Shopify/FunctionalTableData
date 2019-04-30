@@ -10,7 +10,7 @@ import Foundation
 
 extension FunctionalTableData {
 	class Delegate: NSObject, UITableViewDelegate {
-		var data: TableData
+		private let data: TableData
 		private var heightAtIndexKeyPath: [ItemPath: CGFloat] = [:]
 		private var cellStyler: CellStyler
 		

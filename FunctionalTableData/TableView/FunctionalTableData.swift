@@ -45,14 +45,7 @@ public class FunctionalTableData {
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	private var data: TableData {
-		didSet {
-			cellStyler.data = data
-			dataSource.data = data
-			delegate.data = data
-		}
-	}
-
+	private let data: TableData
 	private static let reloadEntireTableThreshold = 20
 	
 	private let renderAndDiffQueue: OperationQueue

@@ -10,7 +10,7 @@ import Foundation
 
 extension FunctionalTableData {
 	class CellStyler {
-		var data: TableData
+		let data: TableData
 		var highlightedRow: ItemPath?
 		
 		init(data: TableData) {

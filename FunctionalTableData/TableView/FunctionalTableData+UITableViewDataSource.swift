@@ -10,7 +10,7 @@ import Foundation
 
 extension FunctionalTableData {
 	class DataSource: NSObject, UITableViewDataSource {
-		var data: TableData
+		private let data: TableData
 		private var cellStyler: CellStyler
 		
 		init(cellStyler: CellStyler) {
