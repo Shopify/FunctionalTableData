@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		
-		Separator.appearance().backgroundColor = UITableView().separatorColor
+		Separator.appearance().backgroundColor = UIColor.lightGray
 		UIButton.appearance().setTitleColor(.blue, for: .normal)
 		UIButton.appearance().setTitleColor(UIColor.blue.withAlphaComponent(0.5), for: .highlighted)
 		
