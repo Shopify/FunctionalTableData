@@ -31,9 +31,9 @@ class CollectionExampleController: UICollectionViewController {
 	}
 	
 	private func render() {
-		let rows: [CellConfigType] = items.enumerated().map { index, item in
+		let rows: [CellConfigType] = items.enumerated().map { item in
 			return LabelCell(
-				key: "id-\(index)",
+				key: "id-\(item.offset)",
 				style: CellStyle(backgroundColor: .lightGray),
 				actions: CellActions(
 					selectionAction: { _ in
@@ -44,7 +44,7 @@ class CollectionExampleController: UICollectionViewController {
 						print("\(item) deselected")
 						return .deselected
 				}),
-				state: LabelState(text: item),
+				state: LabelState(text: .plain(item.element)),
 				cellUpdater: LabelState.updateView)
 		}
 		
