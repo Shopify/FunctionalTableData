@@ -41,17 +41,11 @@ public class FunctionalTableData {
 	
 	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
 		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
-		let exception = Exception(name: name, newSections: sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: tableView?.frame ?? .zero, reason: exceptionReason, userInfo: exceptionUserInfo)
+		let exception = Exception(name: name, newSections: data.sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: tableView?.frame ?? .zero, reason: exceptionReason, userInfo: exceptionUserInfo)
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	private var sections: [TableSection] = [] {
-		didSet {
-			cellStyler.sections = sections
-			dataSource.sections = sections
-			delegate.sections = sections
-		}
-	}
+	private let data: TableData
 	private static let reloadEntireTableThreshold = 20
 	
 	private let renderAndDiffQueue: OperationQueue
@@ -77,7 +71,7 @@ public class FunctionalTableData {
 	}
 	
 	public subscript(indexPath: IndexPath) -> CellConfigType? {
-		return sections[indexPath]
+		return data.sections[indexPath]
 	}
 	
 	/// An object to receive various [UIScrollViewDelegate](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate) related events
@@ -136,8 +130,9 @@ public class FunctionalTableData {
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name
 		renderAndDiffQueue.maxConcurrentOperationCount = 1
-		
-		let cellStyler = CellStyler()
+		let data = TableData()
+		let cellStyler = CellStyler(data: data)
+		self.data = data
 		self.cellStyler = cellStyler
 		self.dataSource = DataSource(cellStyler: cellStyler)
 		self.delegate = Delegate(cellStyler: cellStyler)
@@ -152,8 +147,8 @@ public class FunctionalTableData {
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
 	public func rowForKeyPath(_ keyPath: ItemPath) -> CellConfigType? {
-		if let sectionIndex = sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey }) {
-			return sections[sectionIndex].rows[rowIndex]
+		if let sectionIndex = data.sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = data.sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey }) {
+			return data.sections[sectionIndex].rows[rowIndex]
 		}
 		
 		return nil
@@ -164,7 +159,7 @@ public class FunctionalTableData {
 	/// - Parameter key: String identifier to lookup.
 	/// - Returns: A `ItemPath` that matches the key or `nil` if there is no match.
 	public func keyPathForRowKey(_ key: String) -> ItemPath? {
-		for section in sections {
+		for section in data.sections {
 			for row in section where row.key == key {
 				return ItemPath(sectionKey: section.key, itemKey: row.key)
 			}
@@ -180,7 +175,7 @@ public class FunctionalTableData {
 	/// - Parameter indexPath: A key path identifying where the key path is located.
 	/// - Returns: The key representation of the supplied `IndexPath`.
 	public func keyPathForIndexPath(indexPath: IndexPath) -> ItemPath {
-		let section = sections[indexPath.section]
+		let section = data.sections[indexPath.section]
 		let row = section.rows[indexPath.row]
 		return ItemPath(sectionKey: section.key, itemKey: row.key)
 	}
@@ -243,7 +238,7 @@ public class FunctionalTableData {
 						guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
 						let changes = TableSectionChangeSet()
 						let viewFrame = DispatchQueue.main.sync { strongSelf.tableView?.frame ?? .zero }
-						let exception = Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: viewFrame, reason: $0.reason, userInfo: $0.userInfo)
+						let exception = Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.data.sections, changes: changes, visible: [], viewFrame: viewFrame, reason: $0.reason, userInfo: $0.userInfo)
 						exceptionHandler.handle(exception: exception)
 					}
 				})
@@ -264,7 +259,7 @@ public class FunctionalTableData {
 			return
 		}
 		
-		let oldSections = sections
+		let oldSections = data.sections
 		
 		let visibleIndexPaths = DispatchQueue.main.sync {
 			tableView.indexPathsForVisibleRows?.filter {
@@ -287,7 +282,7 @@ public class FunctionalTableData {
 			strongSelf.renderAndDiffQueue.isSuspended = true
 			tableView.registerCellsForSections(localSections)
 			if oldSections.isEmpty || changes.count > FunctionalTableData.reloadEntireTableThreshold || tableView.isDecelerating || !animated {
-				strongSelf.sections = localSections
+				strongSelf.data.sections = localSections
 				CATransaction.begin()
 				CATransaction.setCompletionBlock {
 					strongSelf.finishRenderAndDiff()
@@ -326,7 +321,7 @@ public class FunctionalTableData {
 		}
 		
 		if changes.isEmpty {
-			sections = localSections
+			data.sections = localSections
 			if let completion = completion {
 				DispatchQueue.main.async(execute: completion)
 			}
@@ -375,7 +370,7 @@ public class FunctionalTableData {
 		tableView.beginUpdates()
 		// #4629 - There is an issue where on some occasions calling beginUpdates() will cause a heightForRowAtIndexPath() call to be made. If the sections have been changed already we may no longer find the cells
 		// in the model causing a crash. To prevent this from happening, only load the new model AFTER beginUpdates() has run
-		sections = localSections
+		data.sections = localSections
 		applyTableSectionChanges(changes)
 		tableView.endUpdates()
 		
@@ -444,7 +439,7 @@ public class FunctionalTableData {
 	}
 	
 	public func indexPathFromKeyPath(_ keyPath: ItemPath) -> IndexPath? {
-		return sections.indexPath(from: keyPath)
+		return data.sections.indexPath(from: keyPath)
 	}
 	
 	internal func calculateTableChanges(oldSections: [TableSection], newSections: [TableSection], visibleIndexPaths: [IndexPath]) -> TableSectionChangeSet {

@@ -10,7 +10,7 @@ import Foundation
 
 extension FunctionalTableData {
 	class Delegate: NSObject, UITableViewDelegate {
-		var sections: [TableSection] = []
+		private let data: TableData
 		private var heightAtIndexKeyPath: [ItemPath: CGFloat] = [:]
 		private var cellStyler: CellStyler
 		
@@ -19,6 +19,7 @@ extension FunctionalTableData {
 		
 		init(cellStyler: CellStyler) {
 			self.cellStyler = cellStyler
+			self.data = cellStyler.data
 		}
 		
 		public override func responds(to aSelector: Selector!) -> Bool {
@@ -44,7 +45,7 @@ extension FunctionalTableData {
 		}
 		
 		public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-			guard let header = sections[section].header else {
+			guard let header = data.sections[section].header else {
 				// When given a height of zero grouped style UITableView's use their default value instead of zero. By returning CGFloat.min we get around this behavior and force UITableView to end up using a height of zero after all.
 				return tableView.style == .grouped ? CGFloat.leastNormalMagnitude : 0
 			}
@@ -52,7 +53,7 @@ extension FunctionalTableData {
 		}
 		
 		public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-			guard let footer = sections[section].footer else {
+			guard let footer = data.sections[section].footer else {
 				// When given a height of zero grouped style UITableView's use their default value instead of zero. By returning CGFloat.min we get around this behavior and force UITableView to end up using a height of zero after all.
 				return tableView.style == .grouped ? CGFloat.leastNormalMagnitude : 0
 			}
@@ -60,8 +61,8 @@ extension FunctionalTableData {
 		}
 		
 		public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-			guard indexPath.section < sections.count else { return UITableView.automaticDimension }
-			if let indexKeyPath = sections[indexPath.section].sectionKeyPathForRow(indexPath.row), let height = heightAtIndexKeyPath[indexKeyPath] {
+			guard indexPath.section < data.sections.count else { return UITableView.automaticDimension }
+			if let indexKeyPath = data.sections[indexPath.section].sectionKeyPathForRow(indexPath.row), let height = heightAtIndexKeyPath[indexKeyPath] {
 				return height
 			} else {
 				return UITableView.automaticDimension
@@ -69,17 +70,17 @@ extension FunctionalTableData {
 		}
 		
 		public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-			guard let header = sections[section].header else { return nil }
+			guard let header = data.sections[section].header else { return nil }
 			return header.dequeueHeaderFooter(from: tableView)
 		}
 		
 		public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-			guard let footer = sections[section].footer else { return nil }
+			guard let footer = data.sections[section].footer else { return nil }
 			return footer.dequeueHeaderFooter(from: tableView)
 		}
 		
 		public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-			let cellConfig = sections[indexPath]
+			let cellConfig = data.sections[indexPath]
 			return cellConfig?.actions.selectionAction != nil
 		}
 		
@@ -88,11 +89,11 @@ extension FunctionalTableData {
 				return nil
 			}
 			
-			guard let cellConfig = sections[indexPath] else {
+			guard let cellConfig = data.sections[indexPath] else {
 				return nil
 			}
 			
-			let keyPath = sections.itemPath(from: indexPath)
+			let keyPath = data.sections.itemPath(from: indexPath)
 			
 			if let canSelectAction = cellConfig.actions.canSelectAction {
 				let canSelectResult: (Bool) -> Void = { selected in
@@ -119,7 +120,7 @@ extension FunctionalTableData {
 		
 		public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 			guard let cell = tableView.cellForRow(at: indexPath) else { return }
-			let cellConfig = sections[indexPath]
+			let cellConfig = data.sections[indexPath]
 			
 			let selectionState = cellConfig?.actions.selectionAction?(cell) ?? .deselected
 			if selectionState == .deselected {
@@ -131,7 +132,7 @@ extension FunctionalTableData {
 		
 		public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
 			guard let cell = tableView.cellForRow(at: indexPath) else { return }
-			let cellConfig = sections[indexPath]
+			let cellConfig = data.sections[indexPath]
 			
 			let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
 			if selectionState == .selected {
@@ -142,43 +143,43 @@ extension FunctionalTableData {
 		}
 		
 		public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-			guard indexPath.section < sections.count else { return }
+			guard indexPath.section < data.sections.count else { return }
 			
-			if let indexKeyPath = sections[indexPath.section].sectionKeyPathForRow(indexPath.row) {
+			if let indexKeyPath = data.sections[indexPath.section].sectionKeyPathForRow(indexPath.row) {
 				heightAtIndexKeyPath[indexKeyPath] = cell.bounds.height
 			}
 			
-			if let cellConfig = sections[indexPath] {
+			if let cellConfig = data.sections[indexPath] {
 				cellConfig.actions.visibilityAction?(cell, true)
 				return
 			}
 		}
 		
 		public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-			if let cellConfig = sections[indexPath] {
+			if let cellConfig = data.sections[indexPath] {
 				cellConfig.actions.visibilityAction?(cell, false)
 				return
 			}
 		}
 		
 		public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-			let tableSection = sections[section]
+			let tableSection = data.sections[section]
 			tableSection.headerVisibilityAction?(view, true)
 		}
 		
 		public func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
-			guard section < sections.count else { return }
-			let tableSection = sections[section]
+			guard section < data.sections.count else { return }
+			let tableSection = data.sections[section]
 			tableSection.headerVisibilityAction?(view, false)
 		}
 		
 		public func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
-			let cellConfig = sections[indexPath]
+			let cellConfig = data.sections[indexPath]
 			return cellConfig?.actions.canPerformAction != nil
 		}
 		
 		public func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-			let cellConfig = sections[indexPath]
+			let cellConfig = data.sections[indexPath]
 			return cellConfig?.actions.canPerformAction?(action) ?? false
 		}
 		
@@ -187,7 +188,7 @@ extension FunctionalTableData {
 		}
 		
 		public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-			let cellConfig = sections[indexPath]
+			let cellConfig = data.sections[indexPath]
 			// FIXME: This is a temporary revert of a semi-breaking change. Having actions associated with row shouldn't dictate if the delete action is available when the UITableView is in edit mode. Having a `canDelete` property, or a `deleteAction` would better serve the intent here
 			return cellConfig?.actions.leadingActionConfiguration != nil || cellConfig?.actions.trailingActionConfiguration != nil ? .delete : .none
 		}
@@ -201,19 +202,19 @@ extension FunctionalTableData {
 		}
 		
 		public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-			let cellConfig = sections[indexPath]
+			let cellConfig = data.sections[indexPath]
 			return cellConfig?.actions.trailingActionConfiguration?.asRowActions(in: tableView)
 		}
 		
 		@available(iOSApplicationExtension 11.0, *)
 		public func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-			let cellConfig = sections[indexPath]
+			let cellConfig = data.sections[indexPath]
 			return cellConfig?.actions.leadingActionConfiguration?.asSwipeActionsConfiguration()
 		}
 
 		@available(iOSApplicationExtension 11.0, *)
 		public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-			let cellConfig = sections[indexPath]
+			let cellConfig = data.sections[indexPath]
 			return cellConfig?.actions.trailingActionConfiguration?.asSwipeActionsConfiguration()
 		}
 	}
