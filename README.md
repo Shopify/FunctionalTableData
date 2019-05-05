@@ -123,103 +123,14 @@ LabelCell(key: "company", state: LabelState(text: "Shopify",
 
 At the end of the day `HostCell` is just one of the possible implementations of `CellConfigType`, that's the underlying power of this framework.
 
-### Building custom Cells
+For examples of more complex cells, check out the [demo app](https://github.com/Shopify/FunctionalTableData/blob/master/FunctionalTableDataDemo).
 
-In order to build custom cells we will need:
+## Other resources
 
-1. A custom view class
-2. An object to manage the view state
+- [Building Apps with FunctionalTableData](https://medium.com/@raulriera/building-apps-with-functionaltabledata-c99bfaa7e2e5).
+- [FunctionalTableData and Interface Builder 🎨✨](https://medium.com/@raulriera/using-interface-builder-and-code-%EF%B8%8F-d9db30269d1d).
 
-Let's build a view replicating a new iMessage cell
-
-<img src="https://user-images.githubusercontent.com/7354919/54960747-30073200-4f1b-11e9-86c2-bb4b4fc4c5c1.png" />
-
-The first step is to build the custom view:
-
-```swift
-class MessageView: UIView {
-    let profilePicture = UIImageView()
-    let nameLabel = UILabel()
-    let messageLabel = UILabel()
-    let timeStampLabel = UILabel()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .white
-        setupConstraints()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setupConstraints() {
-        // implement your auto layout code
-    }
-}
-```
-
-Next, we'll build the `MessageViewState` struct that will take care of setting all the views properties:
-
-```swift
-struct Message {
-    let name: String
-    let image: UIImage
-    let date: Date
-    let text: String
-    let id: String
-}
-
-struct MessageViewState: Equatable {
-    let date: Date
-    let name: String
-    let message: String
-    let image: UIImage
-
-    init(message: Message) {
-        self.date = message.date
-        self.name = message.name
-        self.message = message.text
-        self.image = message.image
-    }
-
-    static func updateView(_ view: MessageView, state: MessageViewState?) {
-        guard let state = state else { return }
-        view.timeStampLabel.text = "\(state.date)"
-        view.nameLabel.text = state.name
-        view.messageLabel.text = state.message
-        view.profilePicture.image = state.image
-    }
-}
-```
-
-Finally, we build the rows with our array of  `Message` and the table section using `renderAndDiff` 
-
-```swift
-private typealias MessageCell = HostCell<MessageView, MessageViewState, LayoutMarginsTableItemLayout>
-
-private func render() {
-    let rows: [CellConfigType] = messages.enumerated().map { index, message in
-        return MessageCell(
-            key: "message.id-\(index)",
-            actions: CellActions(
-                selectionAction: { _ in
-                    print("\(message) selected")
-                    return .selected
-            },
-                deselectionAction: { _ in
-                    print("\(message) deselected")
-                    return .deselected
-            }),
-            state: MessageViewState(message: message),
-            cellUpdater: MessageViewState.updateView)
-    }
-
-    functionalData.renderAndDiff([TableSection(key: "section", rows: rows)])
-}
-```
-
-The power of FunctionalTableData is made obvious when your table/collection view includes many different types of cells. Rather than have a massive `if-else` in `cellForRowAtIndexPath`. Since all cells are implementations of `CellConfigType`, it makes it incredbly easy to manage many different types of views and states.
+Seen other articles in the wild? Feel free to open a [pull request](https://github.com/Shopify/FunctionalTableData/pulls).
 
 ## License
 Functional Table Data is under the [MIT License](https://github.com/Shopify/FunctionalTableData/blob/master/LICENSE.txt)
