@@ -24,19 +24,17 @@ public class FunctionalCollectionData {
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	private var sections: [TableSection] = [] {
-		didSet {
-			dataSource.sections = sections
-			delegate.sections = sections
-		}
+	private let data = TableData()
+	private var sections: [TableSection] {
+		return data.sections
 	}
 	private static let reloadEntireTableThreshold = 20
 	
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
 	
-	let dataSource = DataSource()
-	let delegate = Delegate()
+	let dataSource: DataSource
+	let delegate: Delegate
 	
 	/// Enclosing `UICollectionView` that presents all the `TableSection` data.
 	///
@@ -84,6 +82,9 @@ public class FunctionalCollectionData {
 		renderAndDiffQueue = OperationQueue()
 		renderAndDiffQueue.name = self.name
 		renderAndDiffQueue.maxConcurrentOperationCount = 1
+		
+		self.dataSource = DataSource(data: data)
+		self.delegate = Delegate(data: data)
 	}
 	
 	deinit {
@@ -204,35 +205,35 @@ public class FunctionalCollectionData {
 		// Use dispatch_sync because the collection updates have to be processed before this function returns
 		// or another queued renderAndDiff could get the incorrect state to diff against.
 		DispatchQueue.main.sync { [weak self] in
-			guard let strongSelf = self else {
+			guard let self = self else {
 				completion?()
 				return
 			}
 			
-			strongSelf.renderAndDiffQueue.isSuspended = true
+			self.renderAndDiffQueue.isSuspended = true
 			collectionView.registerCellsForSections(localSections)
 			if oldSections.isEmpty || changes.count > FunctionalCollectionData.reloadEntireTableThreshold || collectionView.isDecelerating || !animated {
 				
-				strongSelf.sections = localSections
+				self.data.sections = localSections
 				
 				collectionView.reloadData()
-				strongSelf.finishRenderAndDiff()
+				self.finishRenderAndDiff()
 				completion?()
 			} else {
-				if strongSelf.unitTesting {
-					strongSelf.applyTableChanges(changes, localSections: localSections, completion: {
-						strongSelf.finishRenderAndDiff()
+				if self.unitTesting {
+					self.applyTableChanges(changes, localSections: localSections, completion: {
+						self.finishRenderAndDiff()
 						completion?()
 					})
 				} else {
 					NSException.catchAndRethrow({
-						strongSelf.applyTableChanges(changes, localSections: localSections, completion: {
-							strongSelf.finishRenderAndDiff()
+						self.applyTableChanges(changes, localSections: localSections, completion: {
+							self.finishRenderAndDiff()
 							completion?()
 						})
 					}, failure: { exception in
 						if exception.name == NSExceptionName.internalInconsistencyException {
-							strongSelf.dumpDebugInfoForChanges(changes, previousSections: oldSections, visibleIndexPaths: visibleIndexPaths, exceptionReason: exception.reason, exceptionUserInfo: exception.userInfo)
+							self.dumpDebugInfoForChanges(changes, previousSections: oldSections, visibleIndexPaths: visibleIndexPaths, exceptionReason: exception.reason, exceptionUserInfo: exception.userInfo)
 						}
 					})
 				}
@@ -249,7 +250,7 @@ public class FunctionalCollectionData {
 		}
 		
 		if changes.isEmpty {
-			sections = localSections
+			data.sections = localSections
 			if let completion = completion {
 				DispatchQueue.main.async(execute: completion)
 			}
@@ -297,7 +298,7 @@ public class FunctionalCollectionData {
 		}
 		
 		collectionView.performBatchUpdates({
-			sections = localSections
+			data.sections = localSections
 			applyTableSectionChanges(changes)
 		}) { finished in
 			applyTransitionChanges(changes)

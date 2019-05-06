@@ -10,18 +10,22 @@ import Foundation
 
 extension FunctionalCollectionData {
 	class DataSource: NSObject, UICollectionViewDataSource {
-		var sections: [TableSection] = []
+		private let data: TableData
+		
+		init(data: TableData) {
+			self.data = data
+		}
 		
 		public func numberOfSections(in collectionView: UICollectionView) -> Int {
-			return sections.count
+			return data.sections.count
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-			return sections[section].rows.count
+			return data.sections[section].rows.count
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-			let sectionData = sections[indexPath.section]
+			let sectionData = data.sections[indexPath.section]
 			let row = indexPath.item
 			let cellConfig = sectionData[row]
 			let cell = cellConfig.dequeueCell(from: collectionView, at: indexPath)
@@ -38,14 +42,14 @@ extension FunctionalCollectionData {
 			assert(sourceIndexPath.section == destinationIndexPath.section)
 			
 			// Update internal state to match move
-			let cell = sections[sourceIndexPath.section].rows.remove(at: sourceIndexPath.item)
-			sections[destinationIndexPath.section].rows.insert(cell, at: destinationIndexPath.item)
+			let cell = data.sections[sourceIndexPath.section].rows.remove(at: sourceIndexPath.item)
+			data.sections[destinationIndexPath.section].rows.insert(cell, at: destinationIndexPath.item)
 			
-			sections[sourceIndexPath.section].didMoveRow?(sourceIndexPath.item, destinationIndexPath.item)
+			data.sections[sourceIndexPath.section].didMoveRow?(sourceIndexPath.item, destinationIndexPath.item)
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-			return sections[indexPath]?.actions.canBeMoved ?? false
+			return data.sections[indexPath]?.actions.canBeMoved ?? false
 		}
 	}
 }

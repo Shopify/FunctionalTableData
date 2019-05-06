@@ -1,5 +1,5 @@
 //
-//  FunctionalTableData+Data.swift
+//  TableData.swift
 //  FunctionalTableData
 //
 //  Created by Pierre Oleo on 2019-04-29.
@@ -7,8 +7,7 @@
 //
 
 import Foundation
-extension FunctionalTableData {
-	class TableData {
-		var sections: [TableSection] = []
-	}
+
+class TableData {
+	var sections: [TableSection] = []
 }

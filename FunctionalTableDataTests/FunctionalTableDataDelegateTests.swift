@@ -26,7 +26,7 @@ class FunctionalTableDataDelegateTests: XCTestCase {
 			)
 		)
 		let cell = HostCell<UIView, String, LayoutMarginsTableItemLayout>(key: "actions", actions: actions, state: "Actions") { (_, _) in }
-		let data = FunctionalTableData.TableData()
+		let data = TableData()
 		data.sections = [TableSection(key: "Section", rows: [cell])]
 		let delegate = FunctionalTableData.Delegate(
 			cellStyler: FunctionalTableData.CellStyler(
