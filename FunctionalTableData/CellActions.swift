@@ -160,6 +160,8 @@ public struct CellActions {
 	/// The action to perform when the cell becomes visible.
 	public let visibilityAction: VisibilityAction?
 	/// The action to perform when the cell is 3D touched by the user.
+	/// - note: By default the `UIViewControllerPreviewing` will have its `sourceRect` configured to be the entire cells frame.
+	/// The given `previewingViewControllerAction` however can override this as it sees fit.
 	public let previewingViewControllerAction: PreviewingViewControllerAction?
 	
 	public init(
@@ -180,7 +182,14 @@ public struct CellActions {
 		self.canPerformAction = canPerformAction
 		self.canBeMoved = canBeMoved
 		self.visibilityAction = visibilityAction
-		self.previewingViewControllerAction = previewingViewControllerAction
+		if let previewingViewControllerAction = previewingViewControllerAction {
+			self.previewingViewControllerAction = { (cell, point, context) in
+				context.sourceRect = context.sourceView.convert(cell.bounds, from: cell)
+				return previewingViewControllerAction(cell, point, context)
+			}
+		} else {
+			self.previewingViewControllerAction = nil
+		}
 	}
 	
 	internal var hasEditActions: Bool {
