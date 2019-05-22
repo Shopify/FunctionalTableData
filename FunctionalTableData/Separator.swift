@@ -18,11 +18,11 @@ public class Separator: UIView {
 	public struct Style: Equatable {
 		/// The inset used in the separators.
 		public struct Inset: Equatable {
-			/// Specifies the amount of spacing to apply to the separator
+			/// Specifies the amount of spacing to apply to the separator.
 			public let value: CGFloat
 			/// Specifies if the inset is relative to the layout margins.
 			public let respectingLayoutMargins: Bool
-			
+
 			public static let none: Inset = Inset(value: 0, respectingLayoutMargins: false)
 			
 			public init(value: CGFloat, respectingLayoutMargins: Bool) {
@@ -37,10 +37,17 @@ public class Separator: UIView {
 		public let trailingInset: Inset
 		/// Specifies the thickness of cell separators.
 		public let thickness: CGFloat
-		
+		/// A separator going from the leading edge to the trailing edge of the screen.
 		static public let full: Style = Style(leadingInset: .none, trailingInset: .none)
+		/// A separator going from the leading margin to the trailing edge of the screen.
 		static public let inset: Style = Style(leadingInset: .init(value: 0, respectingLayoutMargins: true), trailingInset: .none)
 		
+		/// Initializes and returns a newly separator style.
+		///
+		/// - Parameters:
+		///   - leadingInset: The spacing to use from the leading edge.
+		///   - trailingInset: The spacing to use from the trailing edge.
+		///   - thickness: The thickness in pixels of the separator. The screen scale is automatically applied to this value.
 		public init(leadingInset: Inset, trailingInset: Inset, thickness: CGFloat = 1.0) {
 			self.leadingInset = leadingInset
 			self.trailingInset = trailingInset
