@@ -47,11 +47,11 @@ public class Separator: UIView {
 		/// - Parameters:
 		///   - leadingInset: The spacing to use from the leading edge.
 		///   - trailingInset: The spacing to use from the trailing edge.
-		///   - thickness: The thickness in pixels of the separator. The screen scale is automatically applied to this value.
-		public init(leadingInset: Inset, trailingInset: Inset, thickness: CGFloat = 1.0) {
+		///   - thickness: The thickness of the separator.
+		public init(leadingInset: Inset, trailingInset: Inset, thickness: CGFloat = 1.0 / UIScreen.main.scale) {
 			self.leadingInset = leadingInset
 			self.trailingInset = trailingInset
-			self.thickness = thickness / UIScreen.main.scale
+			self.thickness = thickness
 		}
 	}
 	

@@ -71,7 +71,7 @@ class StyleTests: XCTestCase {
 		cell.layoutIfNeeded()
 		XCTAssertNotNil(separator)
 		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 10)
-		XCTAssertEqual(separator!.bounds.height, 20 / UIScreen.main.scale)
+		XCTAssertEqual(separator!.bounds.height, 20)
 	}
 	
 	func testTopSeparator() {
@@ -102,7 +102,7 @@ class StyleTests: XCTestCase {
 		cell.layoutIfNeeded()
 		XCTAssertNotNil(separator)
 		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 10)
-		XCTAssertEqual(separator!.bounds.height, 20 / UIScreen.main.scale)
+		XCTAssertEqual(separator!.bounds.height, 20)
 	}
 	
 	func testHighlight() {
