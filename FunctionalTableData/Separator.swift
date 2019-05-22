@@ -14,33 +14,37 @@ import UIKit
 ///
 /// Supported by `UITableView` only.
 public class Separator: UIView {
-	/// Specifies the default inset of cell separators.
-	public static var inset: CGFloat = 0.0
-	/// Specifies the default thickness of cell separators.
-	private let thickness: CGFloat = 1.0 / UIScreen.main.scale
-	
 	/// The style for table cells used as separators.
-	///
-	/// The options are `full`, `inset`, `moreInset`, `custom`
-	public enum Style: Equatable {
-		case full
-		case inset
-		case moreInset
-		case custom(leadingInset: CGFloat, trailingInset: CGFloat, layoutMarginsRelative: Bool)
-		
-		public static func ==(lhs: Style, rhs: Style) -> Bool {
-			switch (lhs, rhs) {
-			case let (.custom(lhsLeadingInset, lhsTrailingInset, lhsLayoutMargins), .custom(rhsLeadingInset, rhsTrailingInset, rhsLayoutMargins)):
-				return lhsLeadingInset == rhsLeadingInset && lhsTrailingInset == rhsTrailingInset && lhsLayoutMargins == rhsLayoutMargins
-			case (.full, .full):
-				return true
-			case (.inset, .inset):
-				return true
-			case (.moreInset, .moreInset):
-				return true
-			default:
-				return false
+	public struct Style: Equatable {
+		/// The inset used in the separators.
+		public struct Inset: Equatable {
+			/// Specifies the amount of spacing to apply to the separator
+			public let value: CGFloat
+			/// Specifies if the inset is relative to the layout margins.
+			public let respectingLayoutMargins: Bool
+			
+			public static let none: Inset = Inset(value: 0, respectingLayoutMargins: false)
+			
+			public init(value: CGFloat, respectingLayoutMargins: Bool) {
+				self.value = value
+				self.respectingLayoutMargins = respectingLayoutMargins
 			}
+		}
+		
+		/// Specifies the leading inset of the separators.
+		public let leadingInset: Inset
+		/// Specifies the trailing inset of the separators.
+		public let trailingInset: Inset
+		/// Specifies the thickness of cell separators.
+		public let thickness: CGFloat
+		
+		static public let full: Style = Style(leadingInset: .none, trailingInset: .none)
+		static public let inset: Style = Style(leadingInset: .init(value: 0, respectingLayoutMargins: true), trailingInset: .none)
+		
+		public init(leadingInset: Inset, trailingInset: Inset, thickness: CGFloat = 1.0) {
+			self.leadingInset = leadingInset
+			self.trailingInset = trailingInset
+			self.thickness = thickness / UIScreen.main.scale
 		}
 	}
 	
@@ -55,7 +59,7 @@ public class Separator: UIView {
 
 	public required init(style: Style) {
 		self.style = style
-		super.init(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: thickness))
+		super.init(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: style.thickness))
 	}
 	
 	public required init?(coder aDecoder: NSCoder) {
@@ -63,7 +67,7 @@ public class Separator: UIView {
 	}
 	
 	public override var intrinsicContentSize: CGSize {
-		return CGSize(width: UIView.noIntrinsicMetric, height: thickness)
+		return CGSize(width: UIView.noIntrinsicMetric, height: style.thickness)
 	}
 
 	public func constrainToTopOfView(_ view: UIView, constant: CGFloat = 0) {
@@ -77,30 +81,16 @@ public class Separator: UIView {
 	}
 
 	private func applyHorizontalConstraints(_ view: UIView) {
-		switch style {
-		case .full, .inset, .moreInset:
-			trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-		case .custom(_, let trailingInset, let layoutMarginsRelative):
-			if layoutMarginsRelative {
-				trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -trailingInset).isActive = true
-			} else {
-				trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -trailingInset).isActive = true
-			}
+		if style.leadingInset.respectingLayoutMargins {
+			leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: style.leadingInset.value).isActive = true
+		} else {
+			leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: style.leadingInset.value).isActive = true
 		}
 		
-		switch style {
-		case .full:
-			leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-		case .moreInset:
-			leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 3 * Separator.inset).isActive = true
-		case .inset:
-			leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-		case .custom(let leadingInset, _, let layoutMarginsRelative):
-			if layoutMarginsRelative {
-				leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: leadingInset).isActive = true
-			} else {
-				leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingInset).isActive = true
-			}
+		if style.trailingInset.respectingLayoutMargins {
+			trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -style.trailingInset.value).isActive = true
+		} else {
+			trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -style.trailingInset.value).isActive = true
 		}
 	}
 }
