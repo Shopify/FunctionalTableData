@@ -58,17 +58,20 @@ class StyleTests: XCTestCase {
 		XCTAssertNotNil(separator)
 		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - cell.layoutMarginsGuide.layoutFrame.minX)
 		
-		style.bottomSeparator = .moreInset
-		style.configure(cell: cell, in: table)
-		separator = cell.viewWithTag(Separator.Tag.bottom.rawValue)
-		cell.layoutIfNeeded()
-		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 3 * Separator.inset)
-		
 		style.bottomSeparator = nil
 		style.configure(cell: cell, in: table)
 		separator = cell.viewWithTag(Separator.Tag.bottom.rawValue)
 		XCTAssertNil(separator)
+	}
+	
+	func testCustomBottomSeparator() {
+		style.bottomSeparator = Separator.Style(leadingInset: .init(value: 10, respectingLayoutMargins: false), trailingInset: .none, thickness: 20)
+		style.configure(cell: cell, in: table)
+		let separator = cell.viewWithTag(Separator.Tag.bottom.rawValue)
+		cell.layoutIfNeeded()
+		XCTAssertNotNil(separator)
+		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 10)
+		XCTAssertEqual(separator!.bounds.height, 20)
 	}
 	
 	func testTopSeparator() {
@@ -86,17 +89,20 @@ class StyleTests: XCTestCase {
 		XCTAssertNotNil(separator)
 		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - cell.layoutMarginsGuide.layoutFrame.minX)
 		
-		style.topSeparator = .moreInset
-		style.configure(cell: cell, in: table)
-		separator = cell.viewWithTag(Separator.Tag.top.rawValue)
-		cell.layoutIfNeeded()
-		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 3 * Separator.inset)
-		
 		style.topSeparator = nil
 		style.configure(cell: cell, in: table)
 		separator = cell.viewWithTag(Separator.Tag.top.rawValue)
 		XCTAssertNil(separator)
+	}
+	
+	func testCustomTopSeparator() {
+		style.topSeparator = Separator.Style(leadingInset: .init(value: 10, respectingLayoutMargins: false), trailingInset: .none, thickness: 20)
+		style.configure(cell: cell, in: table)
+		let separator = cell.viewWithTag(Separator.Tag.top.rawValue)
+		cell.layoutIfNeeded()
+		XCTAssertNotNil(separator)
+		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 10)
+		XCTAssertEqual(separator!.bounds.height, 20)
 	}
 	
 	func testHighlight() {
