@@ -93,6 +93,7 @@ extension FunctionalTableData {
 				return nil
 			}
 			
+			let highlightRow = cellStyler.highlightedRow
 			let keyPath = data.sections.itemPath(from: indexPath)
 			
 			if let canSelectAction = cellConfig.actions.canSelectAction {
@@ -105,7 +106,7 @@ extension FunctionalTableData {
 						self.tableView(tableView, didSelectRowAt: indexPath)
 						NotificationCenter.default.post(name: UITableView.selectionDidChangeNotification, object: tableView)
 					} else {
-						self.cellStyler.highlightRow(at: keyPath, animated: false, in: tableView)
+						self.cellStyler.highlightRow(at: highlightRow, animated: false, in: tableView)
 					}
 				}
 				DispatchQueue.main.async {

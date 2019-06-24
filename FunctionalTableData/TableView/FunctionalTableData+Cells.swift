@@ -17,6 +17,12 @@ extension FunctionalTableData {
 			self.data = data
 		}
 		
+		/// Highlights the cell at `itemPath`, or removes highlighting if `itemPath` is nil
+		///
+		/// - Parameters:
+		///   - itemPath: The path of the item to highlight
+		///   - animated: Indicates if the highlight should be animated or not
+		///   - tableView: The table view containing the cell to highlight
 		func highlightRow(at itemPath: ItemPath?, animated: Bool, in tableView: UITableView) {
 			if let highlightedRow = highlightedRow, let currentlyHighlightedIndexPath = data.sections.indexPath(from: highlightedRow), let currentlyHighlightedCell = tableView.cellForRow(at: currentlyHighlightedIndexPath) {
 				currentlyHighlightedCell.setHighlighted(false, animated: animated)
