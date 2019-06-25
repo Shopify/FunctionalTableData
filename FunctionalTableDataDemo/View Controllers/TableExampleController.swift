@@ -28,6 +28,8 @@ class TableExampleController: UITableViewController {
 			networkSection(key: "network.section"),
 			spacerSection(key: "spacer.network"),
 			resetSection(key: "reset.section"),
+			spacerSection(key: "spacer.reset"),
+			highlightSection(key: "highlight.section"),
 		])
 	}
 	
@@ -96,6 +98,43 @@ class TableExampleController: UITableViewController {
 		let rows: [CellConfigType] = [
 			ButtonCell(key: "all.settings", state: ButtonState(title: "Reset All Settings", alignment: .left, action: { _ in }), cellUpdater: ButtonState.updateView),
 			ButtonCell(key: "all.content.settings", state: ButtonState(title: "Reset All Content and Settings", alignment: .left, action: { _ in }), cellUpdater: ButtonState.updateView),
+		]
+		return TableSection(key: key, rows: rows, style: SectionStyle(separators: .default))
+	}
+	
+	private func highlightSection(key: String) -> TableSection {
+		func confirmSelection(_ callback: @escaping (Bool) -> Void) {
+			let alert = UIAlertController(title: "Confirm selection", message: "Please confirm that you want to change the current selection", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+				callback(false)
+			}))
+			alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+				callback(true)
+			}))
+			present(alert, animated: true)
+		}
+		
+		func cellActions(key: String) -> CellActions {
+			return CellActions(
+				canSelectAction: { canSelectCallback in confirmSelection(canSelectCallback) },
+				selectionAction: { sender in return .selected },
+				deselectionAction: { sender in return .deselected }
+			)
+		}
+		
+		func labelCell(key: String, label: String) -> LabelCell {
+			return LabelCell(
+				key: key,
+				style: CellStyle(highlight: true),
+				actions: cellActions(key: key),
+				state: LabelState(text: .plain(label), font: UIFont.systemFont(ofSize: 16)),
+				cellUpdater: LabelState.updateView
+			)
+		}
+		let rows = [
+			labelCell(key: "highlight.cell.1", label: "Selectable Cell 1"),
+			labelCell(key: "highlight.cell.2", label: "Selectable Cell 2"),
+			labelCell(key: "highlight.cell.3", label: "Selectable Cell 3")
 		]
 		return TableSection(key: key, rows: rows, style: SectionStyle(separators: .default))
 	}
