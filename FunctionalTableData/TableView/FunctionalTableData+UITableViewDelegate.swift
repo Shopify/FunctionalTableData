@@ -127,6 +127,7 @@ extension FunctionalTableData {
 			if selectionState == .deselected {
 				DispatchQueue.main.async {
 					tableView.deselectRow(at: indexPath, animated: true)
+					self.cellStyler.highlightRow(at: nil, animated: false, in: tableView)
 				}
 			}
 		}
