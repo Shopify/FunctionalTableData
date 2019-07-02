@@ -19,13 +19,7 @@ public protocol TableHeaderFooterConfigType: TableItemConfigType {
 	var height: CGFloat { get }
 }
 
-public extension TableHeaderFooterConfigType {
-	func isEqual(_ other: TableHeaderFooterConfigType?) -> Bool {
-		return (other as? Self) != nil
-	}
-}
-
-public protocol TableHeaderFooterStateType {
+public protocol TableHeaderFooterStateType: Equatable {
 	var insets: UIEdgeInsets { get }
 	var height: CGFloat { get }
 	var topSeparatorHidden: Bool { get }
@@ -56,5 +50,12 @@ public struct TableSectionHeaderFooter<ViewType: UIView, Layout: TableItemLayout
 	
 	public var height: CGFloat {
 		return state?.height ?? 0
+	}
+
+	// MARK: - TableHeaderFooterConfigType
+
+	public func isEqual(_ other: TableHeaderFooterConfigType?) -> Bool {
+		guard let other = other as? TableSectionHeaderFooter<ViewType, Layout, S> else { return false }
+		return self.state == other.state
 	}
 }
