@@ -87,10 +87,6 @@ public class FunctionalCollectionData {
 		self.delegate = Delegate(data: data)
 	}
 	
-	deinit {
-		collectionView?.delegate = nil
-	}
-	
 	/// Returns the cell identified by a key path.
 	///
 	/// - Parameter keyPath: A key path identifying the cell to look up.
