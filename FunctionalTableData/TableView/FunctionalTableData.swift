@@ -138,10 +138,6 @@ public class FunctionalTableData {
 		self.delegate = Delegate(cellStyler: cellStyler)
 	}
 	
-	deinit {
-		tableView?.delegate = nil
-	}
-	
 	/// Returns the cell identified by a key path.
 	///
 	/// - Parameter keyPath: A key path identifying the cell to look up.
