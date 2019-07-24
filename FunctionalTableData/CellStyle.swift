@@ -65,6 +65,10 @@ public struct CellStyle {
 	public var layoutMargins: UIEdgeInsets?
 	/// The radius to use when drawing rounded corners in the view.
 	public var cornerRadius: CGFloat
+	/// Whether touch-down gestures on the cell should be delayed.
+	///
+	/// Supported by `UITableView` only.
+	public var delaysContentTouches: Bool?
 	
 	@available(*, deprecated, message: "The `backgroundView` argument is no longer available. Use backgroundViewProvider instead.")
 	public init(topSeparator: Separator.Style? = nil,
@@ -114,7 +118,8 @@ public struct CellStyle {
 				backgroundViewProvider: BackgroundViewProvider? = nil,
 				tintColor: UIColor? = nil,
 				layoutMargins: UIEdgeInsets? = nil,
-				cornerRadius: CGFloat = 0) {
+				cornerRadius: CGFloat = 0,
+				delaysContentTouches: Bool? = nil) {
 		self.bottomSeparator = bottomSeparator
 		self.topSeparator = topSeparator
 		self.separatorColor = separatorColor
@@ -126,6 +131,7 @@ public struct CellStyle {
 		self.tintColor = tintColor
 		self.layoutMargins = layoutMargins
 		self.cornerRadius = cornerRadius
+		self.delaysContentTouches = delaysContentTouches
 	}
 	
 	func configure(cell: UICollectionViewCell, in collectionView: UICollectionView) {
@@ -192,6 +198,14 @@ public struct CellStyle {
 		}
 		
 		cell.accessoryType = accessoryType
+		
+		// On iOS 7+, setting delaysContentTouches on the table view is no longer enough, each UITableViewCell has its own UIScrollView which needs to be treated.
+		// https://stackoverflow.com/a/22925576
+		if let delaysContentTouches = delaysContentTouches {
+			for case let view as UIScrollView in cell.subviews {
+				view.delaysContentTouches = delaysContentTouches
+			}
+		}
 	}
 }
 
@@ -207,6 +221,7 @@ extension CellStyle: Equatable {
 		equality = equality && lhs.tintColor == rhs.tintColor
 		equality = equality && lhs.layoutMargins == rhs.layoutMargins
 		equality = equality && lhs.cornerRadius == rhs.cornerRadius
+		equality = equality && lhs.delaysContentTouches == rhs.delaysContentTouches
 		equality = equality && lhs.backgroundViewProvider?.isEqualTo(rhs.backgroundViewProvider) ?? (rhs.backgroundViewProvider == nil)
 		return equality
 	}
