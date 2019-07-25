@@ -105,6 +105,16 @@ class StyleTests: XCTestCase {
 		XCTAssertEqual(separator!.bounds.height, 20)
 	}
 	
+	func testZeroHeightSeparatorsDoNotGetAddedToView() {
+		style.topSeparator = .hidden
+		style.bottomSeparator = .hidden
+		style.configure(cell: cell, in: table)
+		let topSeparator = cell.viewWithTag(Separator.Tag.top.rawValue)
+		let bottomSeparator = cell.viewWithTag(Separator.Tag.bottom.rawValue)
+		XCTAssertNil(topSeparator)
+		XCTAssertNil(bottomSeparator)
+	}
+	
 	func testHighlight() {
 		style.highlight = true
 		style.configure(cell: cell, in: table)

@@ -88,26 +88,29 @@ public struct TableSection: Sequence, TableSectionType {
 
 	/// Attempts to merge the separator's style provided by a `TableSection` with the separator's style provided by an instance of `CellConfigType`.
 	///
+	/// The styles applying to interitem separators are prioritized from top to bottom in the section. For each one, the priority is:
+	///  1. Row above's bottom separator
+	///  2. Row below's top separator
+	///  3. Section interitem separator
+	///
 	/// - Parameter row: Integer identifying the position of the row in the section.
 	/// - Returns: The `CellStyle` of the cell merged with the style of the section.
 	public func mergedStyle(for row: Int) -> CellStyle {
 		var rowStyle = rows[row].style ?? CellStyle()
 
 		let top = rowStyle.topSeparator ?? style?.separators.top
-		let bottom = rowStyle.bottomSeparator ?? style?.separators.bottom
-		let interitem = rowStyle.bottomSeparator ?? style?.separators.interitem
 		
 		switch (row, rows.index(after: row)) {
 		case (rows.startIndex, rows.endIndex):
 			rowStyle.topSeparator = top
-			rowStyle.bottomSeparator = bottom
-		case (rows.startIndex, _):
+			rowStyle.bottomSeparator = rowStyle.bottomSeparator ?? style?.separators.bottom
+		case (rows.startIndex, let nextRow):
 			rowStyle.topSeparator = top
-			rowStyle.bottomSeparator = interitem
+			rowStyle.bottomSeparator = rowStyle.bottomSeparator ?? rows[nextRow].style?.topSeparator ?? style?.separators.interitem
 		case (_, rows.endIndex):
-			rowStyle.bottomSeparator = bottom
-		case (_, _):
-			rowStyle.bottomSeparator = interitem
+			rowStyle.bottomSeparator = rowStyle.bottomSeparator ?? style?.separators.bottom
+		case (_, let nextRow):
+			rowStyle.bottomSeparator = rowStyle.bottomSeparator ?? rows[nextRow].style?.topSeparator ?? style?.separators.interitem
 		}
 
 		return rowStyle

@@ -156,13 +156,13 @@ public struct CellStyle {
 	}
 	
 	func configure(cell: UITableViewCell, in tableView: UITableView) {
-		if let separator = bottomSeparator {
+		if let separator = bottomSeparator, separator.thickness > 0.0 {
 			cell.applyBottomSeparator(separator, color: separatorColor)
 		} else {
 			cell.removeSeparator(Separator.Tag.bottom)
 		}
 		
-		if let separator = topSeparator {
+		if let separator = topSeparator, separator.thickness > 0.0 {
 			cell.applyTopSeparator(separator, color: separatorColor)
 		} else {
 			cell.removeSeparator(Separator.Tag.top)

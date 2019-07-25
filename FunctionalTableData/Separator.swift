@@ -37,10 +37,13 @@ public class Separator: UIView {
 		public let trailingInset: Inset
 		/// Specifies the thickness of cell separators.
 		public let thickness: CGFloat
+		
 		/// A separator going from the leading edge to the trailing edge of the screen.
 		static public let full: Style = Style(leadingInset: .none, trailingInset: .none)
 		/// A separator going from the leading margin to the trailing edge of the screen.
 		static public let inset: Style = Style(leadingInset: .init(value: 0, respectingLayoutMargins: true), trailingInset: .none)
+		/// No separator. Visually the same as a nil Style, but can used as an override to hide individual separators.
+		static public let hidden: Style = Style(leadingInset: .none, trailingInset: .none, thickness: 0.0)
 		
 		/// Initializes and returns a newly separator style.
 		///

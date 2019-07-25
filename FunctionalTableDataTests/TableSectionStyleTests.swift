@@ -70,4 +70,57 @@ class TableSectionStyleTests: XCTestCase {
 		let mergedStyle = section.mergedStyle(for: 0)
 		XCTAssertEqual(mergedStyle, CellStyle(topSeparator: .inset, bottomSeparator: .full))
 	}
+	
+	func testTableSectionStyleMergePriorityForFirstInteritemSeparator() {
+		var rows: [CellConfigType] = (0..<2).map { return cell(key: "\($0)", state: "\($0)") }
+		let style = SectionStyle(separators: .full)
+		var section = TableSection(key: "section", rows: rows, style: style)
+		
+		var styles = (0..<2).compactMap { section.mergedStyle(for: $0) }
+		XCTAssertEqual(styles[0].topSeparator, .full)
+		XCTAssertEqual(styles[0].bottomSeparator, .full)
+		XCTAssertEqual(styles[1].bottomSeparator, .full)
+		
+		rows[1].style = CellStyle(topSeparator: .inset)
+		section = TableSection(key: "section", rows: rows, style: style)
+		styles = (0..<2).compactMap { section.mergedStyle(for: $0) }
+		XCTAssertEqual(styles[0].topSeparator, .full)
+		XCTAssertEqual(styles[0].bottomSeparator, .inset)
+		XCTAssertEqual(styles[1].bottomSeparator, .full)
+		
+		rows[0].style = CellStyle(bottomSeparator: .hidden)
+		section = TableSection(key: "section", rows: rows, style: style)
+		styles = (0..<2).compactMap { section.mergedStyle(for: $0) }
+		XCTAssertEqual(styles[0].topSeparator, .full)
+		XCTAssertEqual(styles[0].bottomSeparator, .hidden)
+		XCTAssertEqual(styles[1].bottomSeparator, .full)
+	}
+	
+	func testTableSectionStyleMergePriorityForMiddleInteritemSeparator() {
+		var rows: [CellConfigType] = (0..<3).map { return cell(key: "\($0)", state: "\($0)") }
+		let style = SectionStyle(separators: .full)
+		var section = TableSection(key: "section", rows: rows, style: style)
+		
+		var styles = (0..<3).compactMap { section.mergedStyle(for: $0) }
+		XCTAssertEqual(styles[0].topSeparator, .full)
+		XCTAssertEqual(styles[0].bottomSeparator, .full)
+		XCTAssertEqual(styles[1].bottomSeparator, .full)
+		XCTAssertEqual(styles[2].bottomSeparator, .full)
+		
+		rows[2].style = CellStyle(topSeparator: .inset)
+		section = TableSection(key: "section", rows: rows, style: style)
+		styles = (0..<3).compactMap { section.mergedStyle(for: $0) }
+		XCTAssertEqual(styles[0].topSeparator, .full)
+		XCTAssertEqual(styles[0].bottomSeparator, .full)
+		XCTAssertEqual(styles[1].bottomSeparator, .inset)
+		XCTAssertEqual(styles[2].bottomSeparator, .full)
+		
+		rows[1].style = CellStyle(bottomSeparator: .hidden)
+		section = TableSection(key: "section", rows: rows, style: style)
+		styles = (0..<3).compactMap { section.mergedStyle(for: $0) }
+		XCTAssertEqual(styles[0].topSeparator, .full)
+		XCTAssertEqual(styles[0].bottomSeparator, .full)
+		XCTAssertEqual(styles[1].bottomSeparator, .hidden)
+		XCTAssertEqual(styles[2].bottomSeparator, .full)
+	}
 }
