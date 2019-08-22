@@ -103,6 +103,17 @@ public final class TableSectionChangeSet {
 	* Whenever a section was also in the previous list, we compare the sections and perform the exact same algorithm on the individual rows.
 	*/
 	private func calculateChanges() {
+		//Early return for empty cases
+		if old.isEmpty == true && new.isEmpty == true {
+			return
+		} else if old.isEmpty == true && new.isEmpty == false {
+			insertedSections.insert(integersIn: 0...(new.count - 1))
+			return
+		} else if old.isEmpty == false && new.isEmpty == true {
+			deletedSections.insert(integersIn: 0...(old.count - 1))
+			return
+		}
+		
 		let newSections = Set(new.map { $0.key })
 		var oldSections: [String: Int] = Dictionary(minimumCapacity: old.count)
 		for (oldSectionIndex, oldSection) in old.enumerated() {
