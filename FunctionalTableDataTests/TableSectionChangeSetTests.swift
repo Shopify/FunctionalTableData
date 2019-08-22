@@ -14,6 +14,10 @@ class TableSectionChangeSetTests: XCTestCase {
 		let changeset = TableSectionChangeSet()
 		XCTAssertTrue(changeset.isEmpty)
 		XCTAssertEqual(changeset.count, 0)
+		
+		let changesetNext = TableSectionChangeSet(useSwiftDiffing: true)
+		XCTAssertTrue(changesetNext.isEmpty)
+		XCTAssertEqual(changesetNext.count, 0)
 	}
 
 	func testAddingSectionsInsertsSections() {
@@ -25,6 +29,12 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertFalse(changes.isEmpty)
 		XCTAssertEqual(changes.count, 2)
 		XCTAssertEqual(changes.insertedSections, IndexSet([0, 1]))
+		
+		let changesNext = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [], useSwiftDiffing: true)
+
+		XCTAssertFalse(changesNext.isEmpty)
+		XCTAssertEqual(changesNext.count, 2)
+		XCTAssertEqual(changesNext.insertedSections, IndexSet([0, 1]))
 	}
 
 	func testInsertSectionBefore() {
@@ -39,6 +49,15 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertEqual(changes.insertedSections, IndexSet(integer: 0))
 		XCTAssertEqual(changes.reloadedSections, IndexSet())
 		XCTAssertEqual(changes.deletedSections, IndexSet())
+		
+		let changesNext = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [], useSwiftDiffing: true)
+
+		XCTAssertFalse(changesNext.isEmpty)
+		XCTAssertEqual(changesNext.count, 1)
+		XCTAssertEqual(changesNext.movedSections, [])
+		XCTAssertEqual(changesNext.insertedSections, IndexSet(integer: 0))
+		XCTAssertEqual(changesNext.reloadedSections, IndexSet())
+		XCTAssertEqual(changesNext.deletedSections, IndexSet())
 	}
 
 	func testInsertAndMoveDown() {
@@ -61,6 +80,16 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertEqual(changes.insertedSections, IndexSet([0, 1]))
 		XCTAssertEqual(changes.reloadedSections, IndexSet())
 		XCTAssertEqual(changes.deletedSections, IndexSet())
+		
+		let changesNext = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [], useSwiftDiffing: true)
+
+		XCTAssertFalse(changesNext.isEmpty)
+		XCTAssertEqual(changesNext.count, 3)
+		// TODO: is this moved section right?
+		XCTAssertEqual(changesNext.movedSections, [TableSectionChangeSet.MovedSection(from: 0, to: 3)])
+		XCTAssertEqual(changesNext.insertedSections, IndexSet([0, 1]))
+		XCTAssertEqual(changesNext.reloadedSections, IndexSet())
+		XCTAssertEqual(changesNext.deletedSections, IndexSet())
 	}
 
 	func testSectionNotReloadedWithEqualHeaders() {
@@ -73,6 +102,14 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertEqual(changes.insertedSections, IndexSet())
 		XCTAssertEqual(changes.reloadedSections, IndexSet())
 		XCTAssertEqual(changes.deletedSections, IndexSet())
+		
+		let changesNext = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [], useSwiftDiffing: true)
+
+		XCTAssertTrue(changesNext.isEmpty)
+		XCTAssertEqual(changesNext.movedSections, [])
+		XCTAssertEqual(changesNext.insertedSections, IndexSet())
+		XCTAssertEqual(changesNext.reloadedSections, IndexSet())
+		XCTAssertEqual(changesNext.deletedSections, IndexSet())
 	}
 
 	func testSectionNotReloadedWithEqualFooters() {
@@ -85,6 +122,14 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertEqual(changes.insertedSections, IndexSet())
 		XCTAssertEqual(changes.reloadedSections, IndexSet())
 		XCTAssertEqual(changes.deletedSections, IndexSet())
+		
+		let changesNext = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [], useSwiftDiffing: true)
+
+		XCTAssertTrue(changesNext.isEmpty)
+		XCTAssertEqual(changesNext.movedSections, [])
+		XCTAssertEqual(changesNext.insertedSections, IndexSet())
+		XCTAssertEqual(changesNext.reloadedSections, IndexSet())
+		XCTAssertEqual(changesNext.deletedSections, IndexSet())
 	}
 
 	func testRowsComparedIfHeadersEqual() {
@@ -99,6 +144,13 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertEqual(changes.count, 1)
 		XCTAssertEqual(changes.reloadedSections, IndexSet())
 		XCTAssertEqual(changes.insertedRows, [IndexPath(item: 0, section: 0)])
+		
+		let changesNext = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [], useSwiftDiffing: true)
+
+		XCTAssertFalse(changesNext.isEmpty)
+		XCTAssertEqual(changesNext.count, 1)
+		XCTAssertEqual(changesNext.reloadedSections, IndexSet())
+		XCTAssertEqual(changesNext.insertedRows, [IndexPath(item: 0, section: 0)])
 	}
 
 	func testSectionReloadedWithInequalHeaders() {
@@ -122,6 +174,18 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertEqual(changes.insertedRows, [])
 		XCTAssertEqual(changes.deletedRows, [])
 		XCTAssertEqual(changes.reloadedRows, [])
+		
+		let changesNext = TableSectionChangeSet(old: oldItems, new: newItems, visibleIndexPaths: [], useSwiftDiffing: true)
+
+		XCTAssertFalse(changesNext.isEmpty)
+		XCTAssertEqual(changesNext.count, 1)
+		XCTAssertEqual(changesNext.movedSections, [])
+		XCTAssertEqual(changesNext.insertedSections, IndexSet())
+		XCTAssertEqual(changesNext.reloadedSections, IndexSet([0]))
+		XCTAssertEqual(changesNext.deletedSections, IndexSet())
+		XCTAssertEqual(changesNext.insertedRows, [])
+		XCTAssertEqual(changesNext.deletedRows, [])
+		XCTAssertEqual(changesNext.reloadedRows, [])
 	}
 
 	func testSectionReloadedWithInequalFooters() {

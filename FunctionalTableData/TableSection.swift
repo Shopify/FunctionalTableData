@@ -167,3 +167,9 @@ extension TableSection: Equatable {
 		return lhs.key == rhs.key
 	}
 }
+
+extension TableSection: Hashable {
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.key)
+	}
+}

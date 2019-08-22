@@ -67,15 +67,68 @@ public final class TableSectionChangeSet {
 		total += updates.count
 		return total
 	}
+	
+	public var useSwiftDiffing: Bool
 
-	init(old: [TableSection] = [], new: [TableSection] = [], visibleIndexPaths: [IndexPath] = []) {
+	init(old: [TableSection] = [], new: [TableSection] = [], visibleIndexPaths: [IndexPath] = [], useSwiftDiffing: Bool = false) {
 		self.old = old
 		self.new = new
 		self.visibleIndexPaths = visibleIndexPaths
-
-		calculateChanges()
+		self.useSwiftDiffing = useSwiftDiffing
+		
+		if #available(iOSApplicationExtension 13, *), useSwiftDiffing {
+			calculateSwiftDiff()
+		} else {
+			calculateChanges()
+		}
 	}
 
+	@available(iOSApplicationExtension 13, *)
+	private func calculateSwiftDiff() {
+		let sectionDifference = new.difference(from: old) { (section1, section2) -> Bool in
+			return section1.key == section2.key
+		}
+		
+		for change in sectionDifference.inferringMoves() {
+			switch change {
+			case .insert(let offset, _, let associatedOffset):
+				if let associatedOffset = associatedOffset {
+					movedSections.append(TableSectionChangeSet.MovedSection(from: associatedOffset, to: offset))
+				} else {
+					insertedSections.insert(offset)
+				}
+			case .remove(let offset, _, let associatedOffset):
+				guard associatedOffset == nil else { continue }
+				deletedSections.insert(offset)
+			}
+		}
+		
+		for (sectionIndex, newSection) in new.enumerated() {
+			// TODO: find faster way of getting the associated oldSection
+			guard let oldSection = old.first(where: { $0.key == newSection.key }) else { continue }
+			let rowDifference = newSection.rows.difference(from: oldSection.rows) { (row1, row2) -> Bool in
+				row1.isEqual(row2)
+			}
+			for change in rowDifference {
+				switch change {
+				case .insert(let offset, _, let associatedOffset):
+					let indexPath = IndexPath(row: offset, section: sectionIndex)
+					if let associatedOffset = associatedOffset {
+						let associatedIndexPath = IndexPath(row: associatedOffset, section: sectionIndex)
+						movedRows.append(TableSectionChangeSet.MovedRow(from: associatedIndexPath, to: indexPath))
+					} else {
+						let indexPath = IndexPath(row: offset, section: sectionIndex)
+						insertedRows.append(indexPath)
+					}
+				case .remove(let offset, _, let associatedOffset):
+					guard associatedOffset == nil else { continue }
+					let indexPath = IndexPath(row: offset, section: sectionIndex)
+					deletedRows.append(indexPath)
+				}
+			}
+		}
+	}
+	
 	/*
 	* This method calculates what set of operations are needed to go from an old list of sections to a new list of sections.
 	* It does this through a greedy algorithm, that goes through both lists at the same time.

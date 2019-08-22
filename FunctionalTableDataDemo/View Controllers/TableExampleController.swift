@@ -15,6 +15,7 @@ class TableExampleController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		functionalData.useSwiftDiffing = true
 		functionalData.tableView = tableView
 		title = "Example View"
 		view.backgroundColor = .groupTableViewBackground

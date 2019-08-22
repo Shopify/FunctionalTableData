@@ -45,6 +45,8 @@ public class FunctionalTableData {
 		exceptionHandler.handle(exception: exception)
 	}
 	
+	public var useSwiftDiffing: Bool = false
+	
 	private let data: TableData
 	private static let reloadEntireTableThreshold = 20
 	
@@ -439,7 +441,11 @@ public class FunctionalTableData {
 	}
 	
 	internal func calculateTableChanges(oldSections: [TableSection], newSections: [TableSection], visibleIndexPaths: [IndexPath]) -> TableSectionChangeSet {
-		return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths)
+		if useSwiftDiffing {
+			return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths, useSwiftDiffing: true)
+		} else {
+			return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths)
+		}
 	}
 	
 	public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
