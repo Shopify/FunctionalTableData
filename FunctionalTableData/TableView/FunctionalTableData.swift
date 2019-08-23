@@ -34,6 +34,18 @@ public class FunctionalTableData {
 		public let userInfo: [AnyHashable: Any]?
 	}
 	
+	public struct DifferenceAlgorithm: Equatable {
+		let name: String
+		
+		public static let standard = DifferenceAlgorithm(name: "standard")
+		
+		@available(iOSApplicationExtension 13.0, *)
+		public static let swiftDifference = DifferenceAlgorithm(name: "swiftDifference")
+		
+		@available(iOSApplicationExtension 13.0, *)
+		public static let diffableDataSource = DifferenceAlgorithm(name: "diffableDataSource")
+	}
+	
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
 	
@@ -45,7 +57,7 @@ public class FunctionalTableData {
 		exceptionHandler.handle(exception: exception)
 	}
 	
-	public var useSwiftDiffing: Bool = false
+	public var differenceAlgorithm: DifferenceAlgorithm = .standard
 	
 	private let data: TableData
 	private static let reloadEntireTableThreshold = 20
@@ -54,7 +66,26 @@ public class FunctionalTableData {
 	private let name: String
 	
 	private let cellStyler: CellStyler
-	private let dataSource: DataSource
+	private var dataSource: UITableViewDataSource
+	
+	private func createDataSource() -> UITableViewDataSource {
+		if #available(iOSApplicationExtension 13.0, *), differenceAlgorithm == .diffableDataSource, let tableView = tableView {
+			let dataSource = UITableViewDiffableDataSource<TableSection, String>(tableView: tableView) { (tableView, indexPath, _) -> UITableViewCell? in
+				let sectionData = self.data.sections[indexPath.section]
+				let row = indexPath.row
+				let cellConfig = sectionData[row]
+				let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
+				cell.accessibilityIdentifier = ItemPath(sectionKey: sectionData.key, itemKey: cellConfig.key).description
+				
+				self.cellStyler.update(cell: cell, cellConfig: cellConfig, at: indexPath, in: tableView)
+				
+				return cell
+			}
+			self.dataSource = dataSource
+		}
+		return self.dataSource
+	}
+	
 	internal let delegate: Delegate
 	
 	/// Enclosing `UITableView` that presents all the `TableSection` data.
@@ -64,7 +95,7 @@ public class FunctionalTableData {
 	public var tableView: UITableView? {
 		didSet {
 			guard let tableView = tableView else { return }
-			tableView.dataSource = dataSource
+			tableView.dataSource = createDataSource()
 			tableView.delegate = delegate
 			tableView.rowHeight = UITableView.automaticDimension
 			tableView.tableFooterView = UIView(frame: .zero)
@@ -126,7 +157,7 @@ public class FunctionalTableData {
 	/// Initializes a FunctionalTableData. To configure its view, provide a UITableView after initialization.
 	///
 	/// - Parameter name: String identifying this instance of FunctionalTableData, useful when several instances are displayed on the same screen. This value also names the queue doing all the rendering work, useful for debugging.
-	public init(name: String? = nil) {
+	public init(name: String? = nil, differenceAlgorithm: DifferenceAlgorithm = .standard) {
 		self.name = name ?? "FunctionalTableDataRenderAndDiff"
 		unitTesting = NSClassFromString("XCTestCase") != nil
 		renderAndDiffQueue = OperationQueue()
@@ -144,9 +175,9 @@ public class FunctionalTableData {
 	///
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
-	public func rowForKeyPath(_ keyPath: ItemPath) -> CellConfigType? {
+	public func rowForKeyPath<T: CellConfigType>(_ keyPath: ItemPath) -> T? {
 		if let sectionIndex = data.sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = data.sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey }) {
-			return data.sections[sectionIndex].rows[rowIndex]
+			return data.sections[sectionIndex].rows[rowIndex] as? T
 		}
 		
 		return nil
@@ -360,24 +391,38 @@ public class FunctionalTableData {
 			}
 		}
 		
-		CATransaction.begin()
-		CATransaction.setCompletionBlock {
-			completion?()
+		if #available(iOSApplicationExtension 13.0, *) {
+			if differenceAlgorithm == .swiftDifference {
+				tableView.performBatchUpdates({
+					data.sections = localSections
+					applyTableSectionChanges(changes)
+					applyTransitionChanges(changes)
+				}) { completed in
+					completion?()
+				}
+			} else {
+				// UITableViewDiffableDataSource?
+			}
+		} else {
+			CATransaction.begin()
+			CATransaction.setCompletionBlock {
+				completion?()
+			}
+			
+			tableView.beginUpdates()
+			// #4629 - There is an issue where on some occasions calling beginUpdates() will cause a heightForRowAtIndexPath() call to be made. If the sections have been changed already we may no longer find the cells
+			// in the model causing a crash. To prevent this from happening, only load the new model AFTER beginUpdates() has run
+			data.sections = localSections
+			applyTableSectionChanges(changes)
+			tableView.endUpdates()
+			
+			// Apply transitions after we have commited section/row changes since transition indexPaths are in post-commit space
+			tableView.beginUpdates()
+			applyTransitionChanges(changes)
+			tableView.endUpdates()
+			
+			CATransaction.commit()
 		}
-		
-		tableView.beginUpdates()
-		// #4629 - There is an issue where on some occasions calling beginUpdates() will cause a heightForRowAtIndexPath() call to be made. If the sections have been changed already we may no longer find the cells
-		// in the model causing a crash. To prevent this from happening, only load the new model AFTER beginUpdates() has run
-		data.sections = localSections
-		applyTableSectionChanges(changes)
-		tableView.endUpdates()
-		
-		// Apply transitions after we have commited section/row changes since transition indexPaths are in post-commit space
-		tableView.beginUpdates()
-		applyTransitionChanges(changes)
-		tableView.endUpdates()
-		
-		CATransaction.commit()
 	}
 	
 	private func finishRenderAndDiff() {
@@ -441,8 +486,13 @@ public class FunctionalTableData {
 	}
 	
 	internal func calculateTableChanges(oldSections: [TableSection], newSections: [TableSection], visibleIndexPaths: [IndexPath]) -> TableSectionChangeSet {
-		if useSwiftDiffing {
-			return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths, useSwiftDiffing: true)
+		if #available(iOSApplicationExtension 13.0, *) {
+			if differenceAlgorithm == .swiftDifference {
+				return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths, differenceAlgorithm: .swiftDifference)
+			} else {
+				// UITableViewDiffableDataSource?
+				return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths)
+			}
 		} else {
 			return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths)
 		}

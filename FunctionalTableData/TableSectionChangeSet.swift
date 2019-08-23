@@ -68,25 +68,47 @@ public final class TableSectionChangeSet {
 		return total
 	}
 	
-	public var useSwiftDiffing: Bool
+	public var differenceAlgorithm: FunctionalTableData.DifferenceAlgorithm
 
-	init(old: [TableSection] = [], new: [TableSection] = [], visibleIndexPaths: [IndexPath] = [], useSwiftDiffing: Bool = false) {
+	init(old: [TableSection] = [], new: [TableSection] = [], visibleIndexPaths: [IndexPath] = [], differenceAlgorithm: FunctionalTableData.DifferenceAlgorithm = .standard) {
 		self.old = old
 		self.new = new
 		self.visibleIndexPaths = visibleIndexPaths
-		self.useSwiftDiffing = useSwiftDiffing
+		self.differenceAlgorithm = differenceAlgorithm
 		
-		if #available(iOSApplicationExtension 13, *), useSwiftDiffing {
-			calculateSwiftDiff()
+		if #available(iOSApplicationExtension 13, *) {
+			if differenceAlgorithm == .swiftDifference {
+				calculateSwiftDiff()
+			} else if differenceAlgorithm == .diffableDataSource {
+				calculateDiffableDataSource()
+			}
 		} else {
 			calculateChanges()
 		}
+	}
+	
+	@available(iOSApplicationExtension 13, *)
+	private func calculateDiffableDataSource() {
+		
 	}
 
 	@available(iOSApplicationExtension 13, *)
 	private func calculateSwiftDiff() {
 		let sectionDifference = new.difference(from: old) { (section1, section2) -> Bool in
 			return section1.key == section2.key
+		}
+		
+		let reloadDifference = new.difference(from: old) { (section1, section2) -> Bool in
+			let headersEqual = section1.header?.isEqual(section2.header) ?? (section1.header == nil)
+			let footersEqual = section1.footer?.isEqual(section2.footer) ?? (section1.footer == nil)
+			return headersEqual && footersEqual
+		}
+		
+		for change in reloadDifference {
+			switch change {
+			case .insert(let offset, _, _), .remove(let offset, _, _):
+				reloadedSections.insert(offset)
+			}
 		}
 		
 		for change in sectionDifference.inferringMoves() {
