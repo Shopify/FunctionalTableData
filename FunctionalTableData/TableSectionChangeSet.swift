@@ -107,10 +107,10 @@ public final class TableSectionChangeSet {
 		if old.isEmpty == true && new.isEmpty == true {
 			return
 		} else if old.isEmpty == true && new.isEmpty == false {
-			insertedSections.insert(integersIn: 0...(new.count - 1))
+			insertedSections.insert(integersIn: 0..<new.count)
 			return
 		} else if old.isEmpty == false && new.isEmpty == true {
-			deletedSections.insert(integersIn: 0...(old.count - 1))
+			deletedSections.insert(integersIn: 0..<old.count)
 			return
 		}
 		
