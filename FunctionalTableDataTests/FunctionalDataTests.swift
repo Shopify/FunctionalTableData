@@ -90,27 +90,6 @@ class FunctionalDataTests: XCTestCase {
 		let cell = tableData.tableView?.visibleCells.first
 		XCTAssertEqual(cell?.accessibilityIdentifier, "sectionKey.cellKey")
 	}
-	
-	func testPerformance() {
-		let functionalData = FunctionalTableData()
-		
-		var oldSections: [TableSection] = []
-		for i in 0..<10 {
-			oldSections.append(
-				TableSection(
-					key: "section\(i)",
-					rows: (0..<10_000).map {
-						TestCaseCell(key: "size\($0)", state: TestCaseState(data: "data-\(i)"), cellUpdater: TestCaseState.updateView)
-					}
-				)
-			)
-		}
-		let newSections: [TableSection] = oldSections
-		
-		measure {
-			_ = functionalData.calculateTableChanges(oldSections: oldSections, newSections: newSections, visibleIndexPaths: [])
-		}
-	}
 }
 
 typealias TestCaseCell = HostCell<UIView, TestCaseState, LayoutMarginsTableItemLayout>
