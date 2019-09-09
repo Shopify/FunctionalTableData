@@ -164,6 +164,20 @@ extension Array where Element: TableSectionType {
 
 extension TableSection: Equatable {
 	public static func ==(lhs: TableSection, rhs: TableSection) -> Bool {
-		return lhs.key == rhs.key
+		return lhs.key == rhs.key &&
+			(lhs.header == nil && rhs.header == nil || lhs.header?.isEqual(rhs.header) ?? false) &&
+			(lhs.footer == nil && rhs.footer == nil || lhs.footer?.isEqual(rhs.footer) ?? false) &&
+			isEqual(lhs: lhs.rows, rhs: rhs.rows) &&
+			lhs.style == rhs.style &&
+			(lhs.headerVisibilityAction == nil && rhs.headerVisibilityAction == nil || lhs.headerVisibilityAction != nil && rhs.headerVisibilityAction != nil) &&
+			(lhs.didMoveRow == nil && rhs.didMoveRow == nil || lhs.didMoveRow != nil && rhs.didMoveRow != nil)
+	}
+}
+
+private func isEqual(lhs: [CellConfigType], rhs: [CellConfigType]) -> Bool {
+	guard lhs.count == rhs.count else { return false }
+	
+	return zip(lhs, rhs).allSatisfy { (leftCell, rightCell) -> Bool in
+		return leftCell.isEqual(rightCell)
 	}
 }
