@@ -11,7 +11,7 @@ extension Array where Element: TableSectionType {
 		let sectionKeys = map { $0.key }
 		if Set(sectionKeys).count != count {
 			let dupKeys = duplicateKeys()
-			let reason = "\(senderName) : Duplicate Section keys"
+			let reason = "\(senderName) : Duplicate Section keys \(dupKeys)"
 			let userInfo: [String: Any] = ["Duplicates": dupKeys]
 			NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
 		}
@@ -20,7 +20,7 @@ extension Array where Element: TableSectionType {
 			let rowKeys = section.rows.map { $0.key }
 			if Set(rowKeys).count != section.rows.count {
 				let dupKeys = section.rows.duplicateKeys()
-				let reason = "\(senderName) : Duplicate Section.Row keys"
+				let reason = "\(senderName) : Duplicate Section.Row keys \(dupKeys)"
 				let userInfo: [String: Any] = ["Section": section.key, "Duplicates": dupKeys]
 				NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
 			}
