@@ -6,7 +6,7 @@
 //  Copyright © 2019 Shopify. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension FunctionalTableData {
 	class Delegate: NSObject, UITableViewDelegate {
@@ -98,7 +98,7 @@ extension FunctionalTableData {
 			
 			if let canSelectAction = cellConfig.actions.canSelectAction {
 				let canSelectResult: (Bool) -> Void = { selected in
-					if #available(iOSApplicationExtension 10.0, *) {
+					if #available(iOS 10.0, *) {
 						dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
 					}
 					if selected {
@@ -208,13 +208,13 @@ extension FunctionalTableData {
 			return cellConfig?.actions.trailingActionConfiguration?.asRowActions(in: tableView)
 		}
 		
-		@available(iOSApplicationExtension 11.0, *)
+		@available(iOS 11.0, *)
 		public func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 			let cellConfig = data.sections[indexPath]
 			return cellConfig?.actions.leadingActionConfiguration?.asSwipeActionsConfiguration()
 		}
 
-		@available(iOSApplicationExtension 11.0, *)
+		@available(iOS 11.0, *)
 		public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 			let cellConfig = data.sections[indexPath]
 			return cellConfig?.actions.trailingActionConfiguration?.asSwipeActionsConfiguration()

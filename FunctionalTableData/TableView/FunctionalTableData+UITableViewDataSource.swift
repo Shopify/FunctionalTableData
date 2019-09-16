@@ -6,7 +6,7 @@
 //  Copyright © 2019 Shopify. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension FunctionalTableData {
 	class DataSource: NSObject, UITableViewDataSource {

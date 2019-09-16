@@ -6,7 +6,6 @@
 //  Copyright © 2016 Shopify. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 /// A type that provides the debugging information when an exception occurs.

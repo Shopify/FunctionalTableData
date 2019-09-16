@@ -12,6 +12,7 @@ import XCTest
 class FunctionalTableDataDelegateTests: XCTestCase {
 	let tableView = UITableView(frame: .zero, style: .plain)
 	
+	@available(iOS 11.0, *)
 	func testLeadingTrailingRowActions() {
 		let actions = CellActions(
 			leadingActionConfiguration: CellActions.SwipeActionsConfiguration(

@@ -72,7 +72,7 @@ public struct CellActions {
 				return rowAction
 			}
 			
-			@available(iOSApplicationExtension 11.0, *)
+			@available(iOS 11.0, *)
 			internal func asContextualAction() -> UIContextualAction {
 				let style: UIContextualAction.Style
 				switch self.style {
@@ -110,7 +110,7 @@ public struct CellActions {
 			return actions.map { $0.asRowAction(in: tableView) }
 		}
 		
-		@available(iOSApplicationExtension 11.0, *)
+		@available(iOS 11.0, *)
 		func asSwipeActionsConfiguration() -> UISwipeActionsConfiguration {
 			let configuration = UISwipeActionsConfiguration(actions: actions.map { $0.asContextualAction() })
 			configuration.performsFirstActionWithFullSwipe = performsFirstActionWithFullSwipe

@@ -6,7 +6,6 @@
 //  Copyright © 2017 Raul Riera. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 /// A renderer for `UICollectionView`.

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Shopify. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 internal class ScrollViewDelegate: NSObject, UIScrollViewDelegate, UIScrollViewAccessibilityDelegate {
 	/// See UIScrollView's [documentation](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619392-scrollviewdidscroll) for more information.

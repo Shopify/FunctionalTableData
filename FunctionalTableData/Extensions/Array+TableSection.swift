@@ -6,6 +6,8 @@
 //  Copyright © 2018 Shopify. All rights reserved.
 //
 
+import UIKit
+
 extension Array where Element: TableSectionType {
 	func validateKeyUniqueness(senderName: String) {
 		let sectionKeys = map { $0.key }
