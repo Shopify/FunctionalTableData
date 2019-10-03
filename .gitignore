@@ -13,6 +13,8 @@ build/*
 xcuserdata
 profile
 *.moved-aside
+.build
+.swiftpm
 
 # Mac
 *.DS_Store
