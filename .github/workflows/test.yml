@@ -1,0 +1,15 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Generating project
+      run: swift package generate-xcodeproj
+    - name: Testing
+      run: xcodebuild clean test -project FunctionalTableData.xcodeproj -scheme FunctionalTableData -destination "platform=iOS Simulator,OS=12.2,name=iPhone X"
