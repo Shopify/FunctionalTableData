@@ -29,7 +29,8 @@ extension FunctionalCollectionData {
 			let row = indexPath.item
 			let cellConfig = sectionData[row]
 			let cell = cellConfig.dequeueCell(from: collectionView, at: indexPath)
-			
+			cell.accessibilityIdentifier = ItemPath(sectionKey: sectionData.key, itemKey: cellConfig.key).description
+
 			cellConfig.update(cell: cell, in: collectionView)
 			let style = cellConfig.style ?? CellStyle()
 			style.configure(cell: cell, in: collectionView)
