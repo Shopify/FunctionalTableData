@@ -26,6 +26,34 @@ public protocol TableSectionType {
 	subscript(index: Int) -> CellConfigType { get }
 }
 
+public struct SectionActions {
+	public struct Move {
+		public enum Position {
+			case before(ItemPath)
+			case after(ItemPath)
+		}
+		public struct Request {
+			public var items: [NSItemProvider]
+			public var position: ItemPath?
+			
+			public var sourceLocations: [ItemPath]
+		}
+		public var canMove: ((_ moveRequest: Request) -> Bool)? = nil
+		public var didMove: (_ moveRequest: Request) -> Void
+		
+		public init(canMove: ((_ moveRequest: Request) -> Bool)? = nil,
+					didMove: @escaping (_ moveRequest: Request) -> Void) {
+			self.canMove = canMove
+			self.didMove = didMove
+		}
+	}
+	public var move: Move?
+	
+	public init(move: Move? = nil) {
+		self.move = move
+	}
+}
+
 /// Defines the style, and state information of a section.
 ///
 /// `FunctionalTableData` deals in arrays of `TableSection` instances. Each section, at a minimum, has a string value unique within the table itself, and an array of `CellConfigType` instances that represent the items of the section. Additionally there may be a header and footer for the section.
@@ -39,6 +67,8 @@ public struct TableSection: Sequence, TableSectionType {
 	public var headerVisibilityAction: ((_ view: UIView, _ visible: Bool) -> Void)? = nil
 	/// Callback executed when a item is manually moved by the user. It specifies the before and after index position.
 	public var didMoveRow: ((_ from: Int, _ to: Int) -> Void)?
+	
+	public var actions: SectionActions? = nil
 
 	public init(key: String, rows: [CellConfigType] = [], header: TableHeaderFooterConfigType? = nil, footer: TableHeaderFooterConfigType? = nil, style: SectionStyle? = nil, didMoveRow: ((_ from: Int, _ to: Int) -> Void)? = nil) {
 		self.key = key

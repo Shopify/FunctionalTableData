@@ -164,6 +164,16 @@ public struct CellActions {
 	/// The given `previewingViewControllerAction` however can override this as it sees fit.
 	public let previewingViewControllerAction: PreviewingViewControllerAction?
 	
+	public struct DragAction {
+		var provider: () -> NSItemProvider?
+
+		public init(provider: @escaping () -> NSItemProvider?) {
+			self.provider = provider
+		}
+	}
+	
+	public var dragAction: DragAction?
+	
 	public init(
 		canSelectAction: CanSelectAction? = nil,
 		selectionAction: SelectionAction? = nil,
@@ -173,7 +183,9 @@ public struct CellActions {
 		canPerformAction: CanPerformAction? = nil,
 		canBeMoved: Bool = false,
 		visibilityAction: VisibilityAction? = nil,
-		previewingViewControllerAction: PreviewingViewControllerAction? = nil) {
+		previewingViewControllerAction: PreviewingViewControllerAction? = nil,
+		dragAction: DragAction? = nil
+		) {
 		self.canSelectAction = canSelectAction
 		self.selectionAction = selectionAction
 		self.deselectionAction = deselectionAction
@@ -190,6 +202,7 @@ public struct CellActions {
 		} else {
 			self.previewingViewControllerAction = nil
 		}
+		self.dragAction = dragAction
 	}
 	
 	internal var hasEditActions: Bool {

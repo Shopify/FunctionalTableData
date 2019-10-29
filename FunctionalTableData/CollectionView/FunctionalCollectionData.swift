@@ -36,6 +36,9 @@ public class FunctionalCollectionData {
 	let dataSource: DataSource
 	let delegate: Delegate
 	
+	private let dragDelegate: DragDelegate
+	private let dropDelegate: DropDelegate
+	
 	/// Enclosing `UICollectionView` that presents all the `TableSection` data.
 	///
 	/// `FunctionalCollectionData` will take care of setting its own `UICollectionViewDelegate` and
@@ -45,6 +48,11 @@ public class FunctionalCollectionData {
 			guard let collectionView = collectionView else { return }
 			collectionView.dataSource = dataSource
 			collectionView.delegate = delegate
+			if #available(iOSApplicationExtension 11.0, *) {
+				collectionView.dragDelegate = dragDelegate
+				collectionView.dropDelegate = dropDelegate
+				collectionView.dragInteractionEnabled = true
+			}
 		}
 	}
 	
@@ -85,6 +93,8 @@ public class FunctionalCollectionData {
 		
 		self.dataSource = DataSource(data: data)
 		self.delegate = Delegate(data: data)
+		self.dragDelegate = DragDelegate(data: data)
+		self.dropDelegate = DropDelegate(data: data)
 	}
 	
 	/// Returns the cell identified by a key path.
