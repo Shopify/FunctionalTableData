@@ -65,6 +65,10 @@ public struct CellStyle {
 	public var layoutMargins: UIEdgeInsets?
 	/// The radius to use when drawing rounded corners in the view.
 	public var cornerRadius: CGFloat
+	/// Whether the cell's layer is masked to bounds.
+	///
+	/// Supported by `UICollectionView` only.
+	public var masksToBounds: Bool
 	
 	@available(*, deprecated, message: "The `backgroundView` argument is no longer available. Use backgroundViewProvider instead.")
 	public init(topSeparator: Separator.Style? = nil,
@@ -77,7 +81,8 @@ public struct CellStyle {
 	            backgroundView: UIView?,
 	            tintColor: UIColor? = nil,
 	            layoutMargins: UIEdgeInsets? = nil,
-	            cornerRadius: CGFloat = 0) {
+	            cornerRadius: CGFloat = 0,
+				masksToBounds: Bool = true) {
 		self.bottomSeparator = bottomSeparator
 		self.topSeparator = topSeparator
 		self.separatorColor = separatorColor
@@ -88,6 +93,7 @@ public struct CellStyle {
 		self.tintColor = tintColor
 		self.layoutMargins = layoutMargins
 		self.cornerRadius = cornerRadius
+		self.masksToBounds = masksToBounds
 
 		struct DefaultBackgroundProvider: BackgroundViewProvider {
 			let view: UIView?
@@ -114,7 +120,8 @@ public struct CellStyle {
 				backgroundViewProvider: BackgroundViewProvider? = nil,
 				tintColor: UIColor? = nil,
 				layoutMargins: UIEdgeInsets? = nil,
-				cornerRadius: CGFloat = 0) {
+				cornerRadius: CGFloat = 0,
+				masksToBounds: Bool = true) {
 		self.bottomSeparator = bottomSeparator
 		self.topSeparator = topSeparator
 		self.separatorColor = separatorColor
@@ -126,6 +133,7 @@ public struct CellStyle {
 		self.tintColor = tintColor
 		self.layoutMargins = layoutMargins
 		self.cornerRadius = cornerRadius
+		self.masksToBounds = masksToBounds
 	}
 	
 	func configure(cell: UICollectionViewCell, in collectionView: UICollectionView) {
@@ -152,7 +160,7 @@ public struct CellStyle {
 		}
 		
 		cell.layer.cornerRadius = cornerRadius
-		cell.layer.masksToBounds = true
+		cell.layer.masksToBounds = masksToBounds
 	}
 	
 	func configure(cell: UITableViewCell, in tableView: UITableView) {
@@ -207,6 +215,7 @@ extension CellStyle: Equatable {
 		equality = equality && lhs.tintColor == rhs.tintColor
 		equality = equality && lhs.layoutMargins == rhs.layoutMargins
 		equality = equality && lhs.cornerRadius == rhs.cornerRadius
+		equality = equality && lhs.masksToBounds == rhs.masksToBounds
 		equality = equality && lhs.backgroundViewProvider?.isEqualTo(rhs.backgroundViewProvider) ?? (rhs.backgroundViewProvider == nil)
 		return equality
 	}
