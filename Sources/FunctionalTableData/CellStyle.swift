@@ -82,7 +82,7 @@ public struct CellStyle {
 	            tintColor: UIColor? = nil,
 	            layoutMargins: UIEdgeInsets? = nil,
 	            cornerRadius: CGFloat = 0,
-				masksToBounds: Bool = true) {
+	            masksToBounds: Bool = true) {
 		self.bottomSeparator = bottomSeparator
 		self.topSeparator = topSeparator
 		self.separatorColor = separatorColor
