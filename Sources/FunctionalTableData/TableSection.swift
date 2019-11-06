@@ -155,7 +155,20 @@ extension TableSection {
 
 extension Array where Element: TableSectionType {
 	subscript(key: IndexPath) -> CellConfigType? {
-		guard key.section < count else { return nil }
+		/// Accessing `.section` or `.row` from an `IndexPath` causes a crash
+		/// if it doesn't have exactly two elements.
+		///
+		/// This can occur with the following steps:
+		///
+		/// - Enable Voice Control from the iOS Settings app
+		///
+		/// - Navigate to a view controller that uses `FunctionalTableData`.
+		/// The `tableView(_:leadingSwipeActionsConfigurationForRowAt:)` delegate
+		/// method gets called with an empty index path.
+		///
+		/// - The FunctionalTableData implementation then calls this subscript
+		/// with an empty index path.
+		guard key.count == 2, key.section < count else { return nil }
 		let row = key.row
 		let section: TableSectionType = self[key.section]
 		return (row < section.rows.count) ? section[row] : nil
