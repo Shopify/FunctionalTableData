@@ -200,7 +200,15 @@ extension FunctionalTableData {
 		}
 		
 		public func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-			return sourceIndexPath.section == proposedDestinationIndexPath.section ? proposedDestinationIndexPath : sourceIndexPath
+			guard sourceIndexPath.section == proposedDestinationIndexPath.section else {
+				return sourceIndexPath
+			}
+			
+			guard let proposedCell = data.sections[proposedDestinationIndexPath], proposedCell.actions.canBeMoved else {
+				return sourceIndexPath
+			}
+			
+			return proposedDestinationIndexPath
 		}
 		
 		public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

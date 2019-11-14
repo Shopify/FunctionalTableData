@@ -103,7 +103,15 @@ extension FunctionalCollectionData {
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
-			return originalIndexPath.section == proposedIndexPath.section ? proposedIndexPath : originalIndexPath
+			guard originalIndexPath.section == proposedIndexPath.section else {
+				return originalIndexPath
+			}
+			
+			guard let proposedCell = data.sections[proposedIndexPath], proposedCell.actions.canBeMoved else {
+				return originalIndexPath
+			}
+			
+			return proposedIndexPath
 		}
 	}
 }
