@@ -21,7 +21,7 @@ public protocol CellConfigType: TableItemConfigType, CollectionItemConfigType {
 	/// Indicates a cell style. See `CellStyle` for more information.
 	var style: CellStyle? { get set }
 	/// Indicates all the possible actions a cell can perform. See `CellActions` for more information.
-	var actions: CellActions { get }
+	var actions: CellActions { get set }
 	
 	/// Update the view state of a `UITableViewCell`. It is up to implementors of the protocol to determine what this means.
 	///

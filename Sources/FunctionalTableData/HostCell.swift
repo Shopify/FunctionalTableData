@@ -16,7 +16,7 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 	
 	public let key: String
 	public var style: CellStyle?
-	public let actions: CellActions
+	public var actions: CellActions
 	/// Contains the state information of a cell.
 	public let state: State
 	/// A function that updates a cell's view to match the current state. It receives two values, the view instance and an optional state instance. The purpose of this function is to update the view to reflect that of the given state. The reason that the state is optional is because cells may move into the reuse queue. When this happens they no longer have a state and the updater function is called giving the opportunity to reset the view to its default value.
