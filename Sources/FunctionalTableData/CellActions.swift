@@ -137,32 +137,32 @@ public struct CellActions {
 	
 	/// The action to perform when the cell will be selected.
 	/// - Important: When the `canSelectAction` is called, it is passed a `CanSelectCallback` closure. It is the responsibility of the action to eventually call the passed in closure providing either a `true` or `false` value to it. This passed in value determines if the selection will be performed or not.
-	public let canSelectAction: CanSelectAction?
+	public var canSelectAction: CanSelectAction?
 	/// The action to perform when the cell is selected
-	public let selectionAction: SelectionAction?
+	public var selectionAction: SelectionAction?
 	/// The action to perform when the cell is deselected
-	public let deselectionAction: SelectionAction?
+	public var deselectionAction: SelectionAction?
 	
 	/// The swipe actions to display on the leading edge of the row.
 	///
 	/// Use this method to return a set of actions to display when the user swipes the row. The actions you return are displayed on the leading edge of the row. For example, in a left-to-right language environment, they are displayed on the left side of the row when the user swipes from left to right.
-	public let leadingActionConfiguration: SwipeActionsConfiguration?
+	public var leadingActionConfiguration: SwipeActionsConfiguration?
 	
 	/// The swipe actions to display next to the trailing edge of the row. Return nil if you want the table to display the default set of actions.
 	///
 	/// Use this method to return a set of actions to display when the user swipes the row. The actions you return are displayed on the trailing edge of the row. For example, in a left-to-right language environment, they are displayed on the right side of the row when the user swipes from right to left.
-	public let trailingActionConfiguration: SwipeActionsConfiguration?
+	public var trailingActionConfiguration: SwipeActionsConfiguration?
 	
 	/// Indicates if the cell can perform a given action.
-	public let canPerformAction: CanPerformAction?
+	public var canPerformAction: CanPerformAction?
 	/// Indicates if the cell can be manually moved by the user.
-	public let canBeMoved: Bool
+	public var canBeMoved: Bool
 	/// The action to perform when the cell becomes visible.
-	public let visibilityAction: VisibilityAction?
+	public var visibilityAction: VisibilityAction?
 	/// The action to perform when the cell is 3D touched by the user.
 	/// - note: By default the `UIViewControllerPreviewing` will have its `sourceRect` configured to be the entire cells frame.
 	/// The given `previewingViewControllerAction` however can override this as it sees fit.
-	public let previewingViewControllerAction: PreviewingViewControllerAction?
+	public var previewingViewControllerAction: PreviewingViewControllerAction?
 	
 	public init(
 		canSelectAction: CanSelectAction? = nil,
