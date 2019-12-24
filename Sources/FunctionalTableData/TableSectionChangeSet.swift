@@ -11,10 +11,6 @@ import Foundation
 struct Moved<T: Equatable>: Equatable {
 	let from: T
 	let to: T
-
-	static func ==(lhs: Moved<T>, rhs: Moved<T>) -> Bool {
-		return lhs.from == lhs.from && lhs.to == rhs.to
-	}
 }
 
 // Compares two arrays of TableSections and produces the operations
