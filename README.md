@@ -39,7 +39,7 @@ Check out the [demo app](https://github.com/Shopify/FunctionalTableData/blob/mas
 
 Any time you want to update the data currently being displayed you generate the new state and pass it off to your instance of the Functional Table Data. The FTD is then responsible for computing the differences between the previous state and the next state and updating itself as necessary.
 
-The `FunctionalTableData` holds onto an array of sections where each section has a key. This key must be unique across all sections but should be deterministic so that its possible to adjust the rows contained within that section without replacing the entire section itself.
+The `FunctionalTableData` holds onto an array of sections where each section has a key. This key must be unique across all sections but should be deterministic so that it's possible to adjust the rows contained within that section without replacing the entire section itself.
 
 ```swift
 let section = TableSection(key: "header-unique-key", rows: [])
