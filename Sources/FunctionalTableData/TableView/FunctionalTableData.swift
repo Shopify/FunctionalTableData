@@ -53,6 +53,7 @@ public class FunctionalTableData {
 	private let cellStyler: CellStyler
 	private let dataSource: DataSource
 	internal let delegate: Delegate
+	private let prefetchingDataSource: DataSourcePrefetching
 	
 	/// Enclosing `UITableView` that presents all the `TableSection` data.
 	///
@@ -63,6 +64,9 @@ public class FunctionalTableData {
 			guard let tableView = tableView else { return }
 			tableView.dataSource = dataSource
 			tableView.delegate = delegate
+			if #available(iOS 10.0, *) {
+				tableView.prefetchDataSource = prefetchingDataSource
+			}
 			tableView.rowHeight = UITableView.automaticDimension
 			tableView.tableFooterView = UIView(frame: .zero)
 			tableView.separatorStyle = .none
@@ -116,8 +120,14 @@ public class FunctionalTableData {
 	private let unitTesting: Bool
 	
 	/// A Boolean value that returns `true` when a `renderAndDiff` pass is currently running.
-	public var isRendering: Bool {
-		return renderAndDiffQueue.isSuspended
+	public private(set) var isRendering: Bool {
+		get {
+			return renderAndDiffQueue.isSuspended
+		}
+		set {
+			renderAndDiffQueue.isSuspended = newValue
+			prefetchingDataSource.isSuspended = newValue
+		}
 	}
 	
 	/// Initializes a FunctionalTableData. To configure its view, provide a UITableView after initialization.
@@ -135,6 +145,7 @@ public class FunctionalTableData {
 		self.cellStyler = cellStyler
 		self.dataSource = DataSource(cellStyler: cellStyler)
 		self.delegate = Delegate(cellStyler: cellStyler)
+		self.prefetchingDataSource = DataSourcePrefetching(data: data)
 	}
 	
 	/// Returns the cell identified by a key path.
@@ -274,7 +285,8 @@ public class FunctionalTableData {
 				return
 			}
 			
-			strongSelf.renderAndDiffQueue.isSuspended = true
+			strongSelf.isRendering = true
+			
 			tableView.registerCellsForSections(localSections)
 			if oldSections.isEmpty || changes.count > FunctionalTableData.reloadEntireTableThreshold || tableView.isDecelerating || !animated {
 				strongSelf.data.sections = localSections
@@ -362,6 +374,8 @@ public class FunctionalTableData {
 			completion?()
 		}
 		
+		prefetchingDataSource.invalidatePrefetch(changes: changes, newSections: localSections)
+		
 		tableView.beginUpdates()
 		// #4629 - There is an issue where on some occasions calling beginUpdates() will cause a heightForRowAtIndexPath() call to be made. If the sections have been changed already we may no longer find the cells
 		// in the model causing a crash. To prevent this from happening, only load the new model AFTER beginUpdates() has run
@@ -378,7 +392,7 @@ public class FunctionalTableData {
 	}
 	
 	private func finishRenderAndDiff() {
-		renderAndDiffQueue.isSuspended = false
+		isRendering = false
 	}
 	
 	/// Selects a row in the table view identified by a key path.

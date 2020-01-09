@@ -94,7 +94,7 @@ extension FunctionalTableData {
 			}
 			
 			let highlightRow = cellStyler.highlightedRow
-			let keyPath = data.sections.itemPath(from: indexPath)
+			guard let keyPath = data.sections.itemPath(from: indexPath) else { return nil }
 			
 			if let canSelectAction = cellConfig.actions.canSelectAction {
 				let canSelectResult: (Bool) -> Void = { selected in
