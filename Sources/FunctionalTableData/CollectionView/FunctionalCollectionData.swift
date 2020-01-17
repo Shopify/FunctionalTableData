@@ -32,8 +32,9 @@ public class FunctionalCollectionData {
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
 	
-	let dataSource: DataSource
-	let delegate: Delegate
+	private let dataSource: DataSource
+	internal let delegate: Delegate
+	private let prefetchingDataSource: DataSourcePrefetching
 	
 	/// Enclosing `UICollectionView` that presents all the `TableSection` data.
 	///
@@ -44,6 +45,9 @@ public class FunctionalCollectionData {
 			guard let collectionView = collectionView else { return }
 			collectionView.dataSource = dataSource
 			collectionView.delegate = delegate
+			if #available(iOS 10.0, *) {
+				collectionView.prefetchDataSource = prefetchingDataSource
+			}
 		}
 	}
 	
@@ -84,6 +88,7 @@ public class FunctionalCollectionData {
 		
 		self.dataSource = DataSource(data: data)
 		self.delegate = Delegate(data: data)
+		self.prefetchingDataSource = DataSourcePrefetching(data: data)
 	}
 	
 	/// Returns the cell identified by a key path.
@@ -291,6 +296,8 @@ public class FunctionalCollectionData {
 				}
 			}
 		}
+		
+		prefetchingDataSource.invalidatePrefetch(changes: changes, newSections: localSections)
 		
 		collectionView.performBatchUpdates({
 			data.sections = localSections

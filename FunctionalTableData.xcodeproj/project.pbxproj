@@ -50,6 +50,8 @@
 		6C27C0BE2372014100EA73F9 /* TableSectionStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C27C0A92372008900EA73F9 /* TableSectionStyleTests.swift */; };
 		6C27C0BF2372014100EA73F9 /* TableSectionsValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C27C0AA2372008900EA73F9 /* TableSectionsValidationTests.swift */; };
 		6C27C0C02372014100EA73F9 /* TableSectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C27C0AB2372008900EA73F9 /* TableSectionTests.swift */; };
+		6C27C0EB237338BF00EA73F9 /* DataSourcePrefetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C27C0EA237338BF00EA73F9 /* DataSourcePrefetching.swift */; };
+		6C27C0EE2373390300EA73F9 /* DataPrefetchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C27C0EC237338DC00EA73F9 /* DataPrefetchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +111,8 @@
 		6C27C0AA2372008900EA73F9 /* TableSectionsValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionsValidationTests.swift; sourceTree = "<group>"; };
 		6C27C0AB2372008900EA73F9 /* TableSectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionTests.swift; sourceTree = "<group>"; };
 		6C27C0B6237200DC00EA73F9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		6C27C0EA237338BF00EA73F9 /* DataSourcePrefetching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourcePrefetching.swift; sourceTree = "<group>"; };
+		6C27C0EC237338DC00EA73F9 /* DataPrefetchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPrefetchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +157,7 @@
 		6C27C04A2371FFB000EA73F9 /* FunctionalTableData */ = {
 			isa = PBXGroup;
 			children = (
+				6C27C0EA237338BF00EA73F9 /* DataSourcePrefetching.swift */,
 				6C27C06E2372007A00EA73F9 /* BackgroundViewProvider.swift */,
 				6C27C0702372007A00EA73F9 /* CellActions.swift */,
 				6C27C0712372007A00EA73F9 /* CellConfigType.swift */,
@@ -181,6 +186,7 @@
 		6C27C0552371FFB000EA73F9 /* FunctionalTableDataTests */ = {
 			isa = PBXGroup;
 			children = (
+				6C27C0EC237338DC00EA73F9 /* DataPrefetchTests.swift */,
 				6C27C0A72372008900EA73F9 /* CellStyleTests.swift */,
 				6C27C0A42372008900EA73F9 /* FunctionalDataTests.swift */,
 				6C27C0A82372008900EA73F9 /* FunctionalTableDataDelegateTests.swift */,
@@ -367,6 +373,7 @@
 				6C27C0862372007B00EA73F9 /* UICollectionView+Reusable.swift in Sources */,
 				6C27C09A2372007B00EA73F9 /* FunctionalTableData+Cells.swift in Sources */,
 				6C27C0842372007B00EA73F9 /* ObjCExceptionRethrower.swift in Sources */,
+				6C27C0EB237338BF00EA73F9 /* DataSourcePrefetching.swift in Sources */,
 				6C27C0872372007B00EA73F9 /* FunctionalCollectionData.swift in Sources */,
 				6C27C0932372007B00EA73F9 /* TableSection.swift in Sources */,
 				6C27C0A12372007B00EA73F9 /* Separator.swift in Sources */,
@@ -389,6 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C27C0EE2373390300EA73F9 /* DataPrefetchTests.swift in Sources */,
 				6C27C0BD2372014100EA73F9 /* TableSectionChangeSetTests.swift in Sources */,
 				6C27C0BA2372014100EA73F9 /* FunctionalTableDataDelegateTests.swift in Sources */,
 				6C27C0BC2372014100EA73F9 /* TableCellReuseTests.swift in Sources */,

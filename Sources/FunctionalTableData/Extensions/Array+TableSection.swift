@@ -38,10 +38,21 @@ extension Array where Element: TableSectionType {
 		return nil
 	}
 	
-	func itemPath(from indexPath: IndexPath) -> ItemPath {
+	func itemPath(from indexPath: IndexPath) -> ItemPath? {
+		guard indexPath.section < count else { return nil }
 		let section = self[indexPath.section]
+		guard indexPath.row < section.rows.count else { return nil }
 		let row = section.rows[indexPath.row]
 		return ItemPath(sectionKey: section.key, itemKey: row.key)
+	}
+	
+	func itemPaths(from indexPaths: [IndexPath]) -> [ItemPath] {
+		return indexPaths.compactMap { itemPath(from: $0) }
+	}
+	
+	subscript(itemPath: ItemPath) -> CellConfigType? {
+		guard let indexPath = indexPath(from: itemPath) else { return nil }
+		return self[indexPath.section].rows[indexPath.row]
 	}
 }
 

@@ -135,6 +135,9 @@ public struct CellActions {
 	/// - parameter context: The instance of `UIViewControllerPreviewing` that is participating in the 3D-touch
 	public typealias PreviewingViewControllerAction = (_ cell: UIView, _ point: CGPoint, _ context: UIViewControllerPreviewing) -> UIViewController?
 	
+	/// A closure that returns an `Operation` to run as the cells prefetch action.
+	public typealias PrefetchAction = () -> Operation
+	
 	/// The action to perform when the cell will be selected.
 	/// - Important: When the `canSelectAction` is called, it is passed a `CanSelectCallback` closure. It is the responsibility of the action to eventually call the passed in closure providing either a `true` or `false` value to it. This passed in value determines if the selection will be performed or not.
 	public var canSelectAction: CanSelectAction?
@@ -163,6 +166,8 @@ public struct CellActions {
 	/// - note: By default the `UIViewControllerPreviewing` will have its `sourceRect` configured to be the entire cells frame.
 	/// The given `previewingViewControllerAction` however can override this as it sees fit.
 	public var previewingViewControllerAction: PreviewingViewControllerAction?
+	/// The prefetch action to run when the `UITableView` or `UICollectionView` request it.
+	public var prefetchAction: PrefetchAction?
 	
 	public init(
 		canSelectAction: CanSelectAction? = nil,
@@ -173,7 +178,9 @@ public struct CellActions {
 		canPerformAction: CanPerformAction? = nil,
 		canBeMoved: Bool = false,
 		visibilityAction: VisibilityAction? = nil,
-		previewingViewControllerAction: PreviewingViewControllerAction? = nil) {
+		previewingViewControllerAction: PreviewingViewControllerAction? = nil,
+		prefetchAction: PrefetchAction? = nil
+		) {
 		self.canSelectAction = canSelectAction
 		self.selectionAction = selectionAction
 		self.deselectionAction = deselectionAction
@@ -190,6 +197,7 @@ public struct CellActions {
 		} else {
 			self.previewingViewControllerAction = nil
 		}
+		self.prefetchAction = prefetchAction
 	}
 	
 	internal var hasEditActions: Bool {
