@@ -75,7 +75,8 @@ public class FunctionalCollectionData {
 	/// Initializes a FunctionalCollectionData. To configure its view, provide a UICollectionView after initialization.
 	///
 	/// - Parameter name: String identifying this instance of FunctionalCollectionData, useful when several instances are displayed on the same screen. This also value names the queue doing all the rendering work, useful for debugging.
-	public init(name: String? = nil) {
+	/// - Parameter enableContextMenus: Boolean denoting if context menus should be enabled. If true and on iOS 13+ context menus will be supported via cell actions. This will disable Peek and Pop interactions. Default value is `false`
+	public init(name: String? = nil, enableContextMenus: Bool = false) {
 		self.name = name ?? "FunctionalCollectionDataRenderAndDiff"
 		unitTesting = NSClassFromString("XCTestCase") != nil
 		renderAndDiffQueue = OperationQueue()
@@ -83,7 +84,11 @@ public class FunctionalCollectionData {
 		renderAndDiffQueue.maxConcurrentOperationCount = 1
 		
 		self.dataSource = DataSource(data: data)
-		self.delegate = Delegate(data: data)
+		if enableContextMenus, #available(iOS 13.0, *) {
+			self.delegate = CollectionViewContextMenuDelegate(data: data)
+		} else {
+			self.delegate = Delegate(data: data)
+		}
 	}
 	
 	/// Returns the cell identified by a key path.
