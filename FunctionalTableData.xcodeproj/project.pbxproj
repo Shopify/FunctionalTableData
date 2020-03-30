@@ -50,8 +50,6 @@
 		6C27C0BE2372014100EA73F9 /* TableSectionStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C27C0A92372008900EA73F9 /* TableSectionStyleTests.swift */; };
 		6C27C0BF2372014100EA73F9 /* TableSectionsValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C27C0AA2372008900EA73F9 /* TableSectionsValidationTests.swift */; };
 		6C27C0C02372014100EA73F9 /* TableSectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C27C0AB2372008900EA73F9 /* TableSectionTests.swift */; };
-		DE92320124081D3800F10604 /* FunctionalTableData+UIContextMenuInteractionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE92320024081D3700F10604 /* FunctionalTableData+UIContextMenuInteractionDelegate.swift */; };
-		DEFD2C4424168FD9001E1CB1 /* FunctionalCollectionData+UIContextMenuInteractionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFD2C4324168FD9001E1CB1 /* FunctionalCollectionData+UIContextMenuInteractionDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,8 +109,6 @@
 		6C27C0AA2372008900EA73F9 /* TableSectionsValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionsValidationTests.swift; sourceTree = "<group>"; };
 		6C27C0AB2372008900EA73F9 /* TableSectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionTests.swift; sourceTree = "<group>"; };
 		6C27C0B6237200DC00EA73F9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		DE92320024081D3700F10604 /* FunctionalTableData+UIContextMenuInteractionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+UIContextMenuInteractionDelegate.swift"; sourceTree = "<group>"; };
-		DEFD2C4324168FD9001E1CB1 /* FunctionalCollectionData+UIContextMenuInteractionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalCollectionData+UIContextMenuInteractionDelegate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,7 +205,6 @@
 				6C27C0672372007A00EA73F9 /* FunctionalCollectionData+UICollectionViewDataSource.swift */,
 				6C27C0682372007A00EA73F9 /* CollectionItemConfigType.swift */,
 				6C27C0692372007A00EA73F9 /* FunctionalCollectionData+UICollectionViewDelegate.swift */,
-				DEFD2C4324168FD9001E1CB1 /* FunctionalCollectionData+UIContextMenuInteractionDelegate.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -234,7 +229,6 @@
 				6C27C07C2372007B00EA73F9 /* FunctionalTableData+UITableViewDataSource.swift */,
 				6C27C07D2372007B00EA73F9 /* TableItemConfigType.swift */,
 				6C27C07E2372007B00EA73F9 /* UITableView+Reusable.swift */,
-				DE92320024081D3700F10604 /* FunctionalTableData+UIContextMenuInteractionDelegate.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -365,8 +359,6 @@
 				6C27C08A2372007B00EA73F9 /* FunctionalCollectionData+UICollectionViewDelegate.swift in Sources */,
 				6C27C0952372007B00EA73F9 /* TableItemLayout.swift in Sources */,
 				6C27C0902372007B00EA73F9 /* CellActions.swift in Sources */,
-				DE92320124081D3800F10604 /* FunctionalTableData+UIContextMenuInteractionDelegate.swift in Sources */,
-				DEFD2C4424168FD9001E1CB1 /* FunctionalCollectionData+UIContextMenuInteractionDelegate.swift in Sources */,
 				6C27C08C2372007B00EA73F9 /* UIView+AutoLayout.swift in Sources */,
 				6C27C0942372007B00EA73F9 /* TableSectionChangeSet.swift in Sources */,
 				6C27C0A22372007B00EA73F9 /* CellStyle.swift in Sources */,

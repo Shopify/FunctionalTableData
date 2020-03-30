@@ -113,5 +113,20 @@ extension FunctionalCollectionData {
 			
 			return proposedIndexPath
 		}
+		
+		@available(iOS 13.0, *)
+		public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+			let cellConfig = data.sections[indexPath]
+			return cellConfig?.actions.contextMenuConfiguration?.asUIContextMenuConfiguration(with: indexPath)
+		}
+		
+		@available(iOS 13.0, *)
+		public func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+			guard let indexPath = configuration.identifier as? IndexPath else { return }
+			let cellConfig = data.sections[indexPath]
+			animator.addCompletion {
+				cellConfig?.actions.contextMenuConfiguration?.previewContentCommitter?(animator.previewViewController)
+			}
+		}
 	}
 }

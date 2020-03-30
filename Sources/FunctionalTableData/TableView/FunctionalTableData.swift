@@ -123,8 +123,7 @@ public class FunctionalTableData {
 	/// Initializes a FunctionalTableData. To configure its view, provide a UITableView after initialization.
 	///
 	/// - Parameter name: String identifying this instance of FunctionalTableData, useful when several instances are displayed on the same screen. This value also names the queue doing all the rendering work, useful for debugging.
-	/// - Parameter enableContextMenus: Boolean denoting if context menus should be enabled. If true and on iOS 13+ context menus will be supported via cell actions. This will disable Peek and Pop interactions. Default value is `false`
-	public init(name: String? = nil, enableContextMenus: Bool = false) {
+	public init(name: String? = nil) {
 		self.name = name ?? "FunctionalTableDataRenderAndDiff"
 		unitTesting = NSClassFromString("XCTestCase") != nil
 		renderAndDiffQueue = OperationQueue()
@@ -135,12 +134,7 @@ public class FunctionalTableData {
 		self.data = data
 		self.cellStyler = cellStyler
 		self.dataSource = DataSource(cellStyler: cellStyler)
-		
-		if enableContextMenus, #available(iOS 13.0, *) {
-			self.delegate = TableViewContextMenuDelegate(cellStyler: cellStyler)
-		} else {
-			self.delegate = Delegate(cellStyler: cellStyler)
-		}
+		self.delegate = Delegate(cellStyler: cellStyler)
 	}
 	
 	/// Returns the cell identified by a key path.

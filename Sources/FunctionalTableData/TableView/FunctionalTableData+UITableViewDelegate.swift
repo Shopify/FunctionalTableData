@@ -227,5 +227,20 @@ extension FunctionalTableData {
 			let cellConfig = data.sections[indexPath]
 			return cellConfig?.actions.trailingActionConfiguration?.asSwipeActionsConfiguration()
 		}
+		
+		@available(iOS 13.0, *)
+		public func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+			let cellConfig = data.sections[indexPath]
+			return cellConfig?.actions.contextMenuConfiguration?.asUIContextMenuConfiguration(with: indexPath)
+		}
+		
+		@available(iOS 13.0, *)
+		public func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+			guard let indexPath = configuration.identifier as? IndexPath else { return }
+			let cellConfig = data.sections[indexPath]
+			animator.addCompletion {
+				cellConfig?.actions.contextMenuConfiguration?.previewContentCommitter?(animator.previewViewController)
+			}
+		}
 	}
 }
