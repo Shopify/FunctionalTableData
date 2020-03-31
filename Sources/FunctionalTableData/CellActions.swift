@@ -197,17 +197,17 @@ public struct CellActions {
 		///   - previewContentProvider: Closure that provides an custom preview view controller for the context menu. Defaults to `nil`.
 		///   - previewContentComitter: Closure that is executed when the user taps the context menu preview and should navigate to that screen. Defaults to `nil`.
 		///   - menuActionsProvider: Closure that is executed when the system needs the actions to use in the context menu.
-		public init(title: String = "", preivewContentProvider: PreviewContentProvider? = nil, previewContentCommitter: PreviewContentCommitter? = nil, menuActionsProvider: @escaping MenuActionsProvider) {
+		public init(title: String = "", previewContentProvider: PreviewContentProvider? = nil, previewContentCommitter: PreviewContentCommitter? = nil, menuActionsProvider: @escaping MenuActionsProvider) {
 			self.title = title
-			self.previewContentProvider = preivewContentProvider
+			self.previewContentProvider = previewContentProvider
 			self.previewContentCommitter = previewContentCommitter
 			self.menuActionsProvider = menuActionsProvider
 		}
 		
 		@available(iOS 13.0, *)
-		internal func asUIContextMenuConfiguration(with identifier: IndexPath? = nil) -> UIContextMenuConfiguration {
+		internal func asUIContextMenuConfiguration(with identifier: NSCopying? = nil) -> UIContextMenuConfiguration {
 			UIContextMenuConfiguration(
-				identifier: identifier as NSCopying?,
+				identifier: identifier,
 				previewProvider: { self.previewContentProvider?() },
 				actionProvider: { _ in
 					let menuElements: [UIMenuElement] = self.menuActionsProvider().map { $0.asUIMenuElement() }

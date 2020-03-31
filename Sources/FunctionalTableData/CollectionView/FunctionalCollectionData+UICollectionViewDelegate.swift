@@ -116,16 +116,23 @@ extension FunctionalCollectionData {
 		
 		@available(iOS 13.0, *)
 		public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+			let section = data.sections[indexPath.section]
+			let row = section.rows[indexPath.row]
+			let itemPath = ItemPath(sectionKey: section.key, itemKey: row.key)
 			let cellConfig = data.sections[indexPath]
-			return cellConfig?.actions.contextMenuConfiguration?.asUIContextMenuConfiguration(with: indexPath)
+			return cellConfig?.actions.contextMenuConfiguration?.asUIContextMenuConfiguration(with: ItemPathCopyable(itemPath: itemPath))
 		}
 		
 		@available(iOS 13.0, *)
 		public func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-			guard let indexPath = configuration.identifier as? IndexPath else { return }
-			let cellConfig = data.sections[indexPath]
+			guard let itemPathCopyable = configuration.identifier as? ItemPathCopyable else { return }
+			let keyPath = itemPathCopyable.itemPath
+			
+			guard let sectionIndex = data.sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = data.sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey })  else { return }
+			let cellConfig = data.sections[sectionIndex].rows[rowIndex]
+			
 			animator.addCompletion {
-				cellConfig?.actions.contextMenuConfiguration?.previewContentCommitter?(animator.previewViewController)
+				cellConfig.actions.contextMenuConfiguration?.previewContentCommitter?(animator.previewViewController)
 			}
 		}
 	}
