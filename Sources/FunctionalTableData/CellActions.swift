@@ -258,6 +258,7 @@ public struct CellActions {
 	public var canBeMoved: Bool
 	/// The action to perform when the cell becomes visible.
 	public var visibilityAction: VisibilityAction?
+	@available(iOS, deprecated: 13.0, message: "Use `ContextMenuConfiguration` for Context Menus instead.")
 	/// The action to perform when the cell is 3D touched by the user.
 	/// - note: By default the `UIViewControllerPreviewing` will have its `sourceRect` configured to be the entire cells frame.
 	/// The given `previewingViewControllerAction` however can override this as it sees fit.
