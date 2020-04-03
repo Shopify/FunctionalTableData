@@ -166,11 +166,11 @@ public struct CellActions {
 				
 				switch self.type {
 				case .action(let action):
-					return UIAction(title: title, image: image, identifier: nil, attributes: style, handler: { _ in action() } )
+					return UIAction(title: title, image: image, attributes: style, handler: { _ in action() } )
 				case .submenuParent(let inlined, let children):
 					let options = inlined ? UIMenu.Options.displayInline : []
 					let submenuChildren = children.map { $0.asUIMenuElement() }
-					return UIMenu(title: title, image: image, identifier: nil, options: options, children: submenuChildren)
+					return UIMenu(title: title, image: image, options: options, children: submenuChildren)
 				}
 			}
 		}
@@ -192,11 +192,10 @@ public struct CellActions {
 		
 		/// Creates a context menu configuration object with the specified set of actions.
 		///
-		/// - Parameters:
-		///   - title: The title of the context menu. Defaults to `""`.
-		///   - previewContentProvider: Closure that provides an custom preview view controller for the context menu. Defaults to `nil`.
-		///   - previewContentComitter: Closure that is executed when the user taps the context menu preview and should navigate to that screen. Defaults to `nil`.
-		///   - menuActionsProvider: Closure that is executed when the system needs the actions to use in the context menu.
+		///   - parameter title: The title of the context menu. Defaults to `""`.
+		///   - parameter previewContentProvider: Closure that provides an custom preview view controller for the context menu. Defaults to `nil`.
+		///   - parameter previewContentComitter: Closure that is executed when the user taps the context menu preview and should navigate to that screen. Defaults to `nil`.
+		///   - parameter menuActionsProvider: Closure that is executed when the system needs the actions to use in the context menu.
 		public init(title: String = "", previewContentProvider: PreviewContentProvider? = nil, previewContentCommitter: PreviewContentCommitter? = nil, menuActionsProvider: @escaping MenuActionsProvider) {
 			self.title = title
 			self.previewContentProvider = previewContentProvider
@@ -208,7 +207,7 @@ public struct CellActions {
 		internal func asUIContextMenuConfiguration(with identifier: NSCopying? = nil) -> UIContextMenuConfiguration {
 			UIContextMenuConfiguration(
 				identifier: identifier,
-				previewProvider: { self.previewContentProvider?() },
+				previewProvider: previewContentProvider,
 				actionProvider: { _ in
 					let menuElements: [UIMenuElement] = self.menuActionsProvider().map { $0.asUIMenuElement() }
 					return UIMenu(title: self.title, children: menuElements)

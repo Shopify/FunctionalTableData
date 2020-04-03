@@ -45,7 +45,7 @@ public extension ItemPath {
 /// An `ItemPath` class that implements NSCopying.
 ///
 /// This is a requirement to use ItemPath as an identifier for context menus.
-class ItemPathCopyable: NSCopying {
+final class ItemPathCopyable: NSCopying {
 	let sectionKey: String
 	let itemKey: String
 	
@@ -65,7 +65,7 @@ class ItemPathCopyable: NSCopying {
 	}
 	
 	func copy(with zone: NSZone? = nil) -> Any {
-		// Since the properties are immutable, we can return ourselves without copying: https://developer.apple.com/documentation/foundation/nscopying
+		// Implement `NSCopying` by retaining the original instead of creating a new copy because the contents of `ItemPathCopyable` are immutable, per: https://developer.apple.com/documentation/foundation/nscopying
 		return self
 	}
 }

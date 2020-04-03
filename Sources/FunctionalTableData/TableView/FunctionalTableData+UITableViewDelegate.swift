@@ -230,6 +230,10 @@ extension FunctionalTableData {
 		
 		@available(iOS 13.0, *)
 		public func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+			guard data.sections.indices.contains(indexPath.section),
+				data.sections[indexPath.section].rows.indices.contains(indexPath.row)
+				else { return nil }
+			
 			let section = data.sections[indexPath.section]
 			let row = section.rows[indexPath.row]
 			let itemPath = ItemPath(sectionKey: section.key, itemKey: row.key)
@@ -242,7 +246,9 @@ extension FunctionalTableData {
 			guard let itemPathCopyable = configuration.identifier as? ItemPathCopyable else { return }
 			let keyPath = itemPathCopyable.itemPath
 
-			guard let sectionIndex = data.sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = data.sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey })  else { return }
+			guard let sectionIndex = data.sections.firstIndex(where: { $0.key == keyPath.sectionKey }),
+				let rowIndex = data.sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey })
+				else { return }
 			let cellConfig = data.sections[sectionIndex].rows[rowIndex]
 
 			animator.addCompletion {
