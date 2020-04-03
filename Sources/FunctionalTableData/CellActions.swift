@@ -117,6 +117,104 @@ public struct CellActions {
 			return configuration
 		}
 	}
+	
+	public struct ContextMenuConfiguration {
+		public struct MenuItem {
+			/// Constants indicating the type of `MenuItem`
+			///
+			/// - action: Menu item is an action that invokes a callback when tapped
+			/// - submenuParent: Menu item links to a submenu with child MenuItems. Inlined submenu's appear as a separated section on the root context menu.
+			public enum ItemType {
+				case action(_ action: () -> Void)
+				case submenuParent(inlined: Bool, children: [MenuItem])
+			}
+			
+			/// Constants indicating the style information that is applied to the menu option.
+			///
+			/// - normal: A normal action.
+			/// - destructive: An action that deletes data or performs some type of destructive task.
+			/// - disabled: An action that is visible but not accessible.
+			public enum Style {
+				case normal
+				case destructive
+				case disabled
+			}
+			
+			let type: ItemType
+			let title: String
+			let style: Style
+			let image: UIImage?
+			
+			public init(type: ItemType, title: String, style: Style = .normal, image: UIImage? = nil) {
+				self.type = type
+				self.title = title
+				self.style = style
+				self.image = image
+			}
+			
+			@available(iOS 13.0, *)
+			fileprivate func asUIMenuElement() -> UIMenuElement {
+				let style: UIMenuElement.Attributes
+				switch self.style {
+				case .disabled:
+					style = .disabled
+				case .destructive:
+					style = .destructive
+				default:
+					style = UIMenuElement.Attributes()
+				}
+				
+				switch self.type {
+				case .action(let action):
+					return UIAction(title: title, image: image, attributes: style, handler: { _ in action() } )
+				case .submenuParent(let inlined, let children):
+					let options = inlined ? UIMenu.Options.displayInline : []
+					let submenuChildren = children.map { $0.asUIMenuElement() }
+					return UIMenu(title: title, image: image, options: options, children: submenuChildren)
+				}
+			}
+		}
+		
+		/// Closure type that is executed when the system needs a view controller to preview with the context menu.
+		///
+		/// __Note:__ If this value is nil or returns nil, the system will default to using the entire cell as a preview.
+		public typealias PreviewContentProvider = () -> UIViewController?
+		/// Closure type that is executed when the user taps on the context menu preview.
+		/// - parameter previewingViewController: The view controller currently being previewed. If the `PreviewContentProvider` returns nil, this parameter will be nil.
+		public typealias PreviewContentCommitter = (_ previewingViewController: UIViewController?) -> Void
+		/// Closure type that is executed  when the system needs the elements for the context menu.
+		public typealias MenuActionsProvider = () -> [MenuItem]
+		
+		let title: String
+		let previewContentProvider: PreviewContentProvider?
+		let previewContentCommitter: PreviewContentCommitter?
+		let menuActionsProvider: MenuActionsProvider
+		
+		/// Creates a context menu configuration object with the specified set of actions.
+		///
+		///   - parameter title: The title of the context menu. Defaults to `""`.
+		///   - parameter previewContentProvider: Closure that provides an custom preview view controller for the context menu. Defaults to `nil`.
+		///   - parameter previewContentComitter: Closure that is executed when the user taps the context menu preview and should navigate to that screen. Defaults to `nil`.
+		///   - parameter menuActionsProvider: Closure that is executed when the system needs the actions to use in the context menu.
+		public init(title: String = "", previewContentProvider: PreviewContentProvider? = nil, previewContentCommitter: PreviewContentCommitter? = nil, menuActionsProvider: @escaping MenuActionsProvider) {
+			self.title = title
+			self.previewContentProvider = previewContentProvider
+			self.previewContentCommitter = previewContentCommitter
+			self.menuActionsProvider = menuActionsProvider
+		}
+		
+		@available(iOS 13.0, *)
+		internal func asUIContextMenuConfiguration(with identifier: NSCopying? = nil) -> UIContextMenuConfiguration {
+			UIContextMenuConfiguration(
+				identifier: identifier,
+				previewProvider: previewContentProvider,
+				actionProvider: { _ in
+					let menuElements: [UIMenuElement] = self.menuActionsProvider().map { $0.asUIMenuElement() }
+					return UIMenu(title: self.title, children: menuElements)
+			})
+		}
+	}
+	
 	/// The possible states a cell can be when a selection action is performed on it.
 	public enum SelectionState {
 		case selected
@@ -159,10 +257,16 @@ public struct CellActions {
 	public var canBeMoved: Bool
 	/// The action to perform when the cell becomes visible.
 	public var visibilityAction: VisibilityAction?
+	@available(iOS, deprecated: 13.0, message: "Use `ContextMenuConfiguration` for Context Menus instead.")
 	/// The action to perform when the cell is 3D touched by the user.
 	/// - note: By default the `UIViewControllerPreviewing` will have its `sourceRect` configured to be the entire cells frame.
 	/// The given `previewingViewControllerAction` however can override this as it sees fit.
 	public var previewingViewControllerAction: PreviewingViewControllerAction?
+	/// The context menu configuration to use when a haptic touch is used on a cell.
+	///
+	/// Use this struct to define a preview and set of menu items to display when a context menu is requested.
+	/// UIContextMenus were introduced in iOS 13. This property is not used on earlier versions of iOS.
+	public var contextMenuConfiguration: ContextMenuConfiguration?
 	
 	public init(
 		canSelectAction: CanSelectAction? = nil,
@@ -173,7 +277,8 @@ public struct CellActions {
 		canPerformAction: CanPerformAction? = nil,
 		canBeMoved: Bool = false,
 		visibilityAction: VisibilityAction? = nil,
-		previewingViewControllerAction: PreviewingViewControllerAction? = nil) {
+		previewingViewControllerAction: PreviewingViewControllerAction? = nil,
+		contextMenuConfiguration: ContextMenuConfiguration? = nil) {
 		self.canSelectAction = canSelectAction
 		self.selectionAction = selectionAction
 		self.deselectionAction = deselectionAction
@@ -190,6 +295,7 @@ public struct CellActions {
 		} else {
 			self.previewingViewControllerAction = nil
 		}
+		self.contextMenuConfiguration = contextMenuConfiguration
 	}
 	
 	internal var hasEditActions: Bool {
