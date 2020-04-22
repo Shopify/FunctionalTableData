@@ -129,6 +129,8 @@ extension FunctionalTableData {
 					tableView.deselectRow(at: indexPath, animated: true)
 					self.cellStyler.highlightRow(at: nil, animated: false, in: tableView)
 				}
+			} else {
+				self.cellStyler.highlightRow(at: nil, animated: false, in: tableView)
 			}
 		}
 		
