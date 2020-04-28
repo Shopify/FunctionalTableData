@@ -31,8 +31,8 @@ extension FunctionalTableData {
 			let row = indexPath.row
 			let cellConfig = sectionData[row]
 			let cell = cellConfig.dequeueCell(from: tableView, at: indexPath)
-			cell.accessibilityIdentifier = ItemPath(sectionKey: sectionData.key, itemKey: cellConfig.key).description
-			
+			let accessibilityIdentifier = ItemPath(sectionKey: sectionData.key, itemKey: cellConfig.key).description
+			cellConfig.accessibility.with(defaultIdentifier: accessibilityIdentifier).apply(to: cell)
 			cellStyler.update(cell: cell, cellConfig: cellConfig, at: indexPath, in: tableView)
 			
 			return cell

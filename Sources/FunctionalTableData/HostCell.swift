@@ -17,15 +17,17 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 	public let key: String
 	public var style: CellStyle?
 	public var actions: CellActions
+	public var accessibility: Accessibility
 	/// Contains the state information of a cell.
 	public let state: State
 	/// A function that updates a cell's view to match the current state. It receives two values, the view instance and an optional state instance. The purpose of this function is to update the view to reflect that of the given state. The reason that the state is optional is because cells may move into the reuse queue. When this happens they no longer have a state and the updater function is called giving the opportunity to reset the view to its default value.
 	public let cellUpdater: (_ view: View, _ state: State?) -> Void
 	
-	public init(key: String, style: CellStyle? = nil, actions: CellActions = CellActions(), state: State, cellUpdater: @escaping (_ view: View, _ state: State?) -> Void) {
+	public init(key: String, style: CellStyle? = nil, actions: CellActions = CellActions(), accessibility: Accessibility = Accessibility(), state: State, cellUpdater: @escaping (_ view: View, _ state: State?) -> Void) {
 		self.key = key
 		self.style = style
 		self.actions = actions
+		self.accessibility = accessibility
 		self.state = state
 		self.cellUpdater = cellUpdater
 	}
@@ -95,7 +97,7 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 	
 	public func isEqual(_ other: CellConfigType) -> Bool {
 		if let other = other as? HostCell<View, State, Layout> {
-			return state == other.state
+			return state == other.state && accessibility == other.accessibility
 		}
 		return false
 	}
@@ -107,7 +109,7 @@ public struct HostCell<View, State, Layout>: CellConfigType where View: UIView, 
 }
 
 extension HostCell {
-	public init<T: RawRepresentable>(key: T, style: CellStyle? = nil, actions: CellActions = CellActions(), state: State, cellUpdater: @escaping (_ view: View, _ state: State?) -> Void) where T.RawValue == String {
-		self.init(key: key.rawValue, style: style, actions: actions, state: state, cellUpdater: cellUpdater)
+	public init<T: RawRepresentable>(key: T, style: CellStyle? = nil, actions: CellActions = CellActions(), accessibility: Accessibility = Accessibility(), state: State, cellUpdater: @escaping (_ view: View, _ state: State?) -> Void) where T.RawValue == String {
+		self.init(key: key.rawValue, style: style, actions: actions, accessibility: accessibility, state: state, cellUpdater: cellUpdater)
 	}
 }

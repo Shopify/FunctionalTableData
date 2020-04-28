@@ -23,6 +23,8 @@ public protocol CellConfigType: TableItemConfigType, CollectionItemConfigType {
 	/// Indicates all the possible actions a cell can perform. See `CellActions` for more information.
 	var actions: CellActions { get set }
 	
+	var accessibility: Accessibility { get set }
+	
 	/// Update the view state of a `UITableViewCell`. It is up to implementors of the protocol to determine what this means.
 	///
 	/// - Parameters:
