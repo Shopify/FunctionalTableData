@@ -9,12 +9,12 @@ jobs:
     runs-on: macOS-latest
     
     steps:
-    - uses: actions/checkout@v1
-    - name: Xcode select
-      run: |
-        sudo xcode-select -s /Applications/Xcode_11.app/Contents/Developer
-    - name: Generating project
-      run: swift package generate-xcodeproj
-    - name: Testing
-      run: |
-        xcodebuild clean test -project FunctionalTableData.xcodeproj -scheme FunctionalTableData-Package -destination "platform=iOS Simulator,OS=13.0,name=iPhone 8"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Generating project
+        run: swift package generate-xcodeproj
+      - name: Testing
+        run: |
+          xcodebuild clean test -project FunctionalTableData.xcodeproj -scheme FunctionalTableData-Package -destination "platform=iOS Simulator,OS=13.0,name=iPhone 8"
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_11.4.1.app/Contents/Developer
