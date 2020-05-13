@@ -573,6 +573,24 @@ class TableSectionChangeSetTests: XCTestCase {
 		XCTAssertEqual(changes.count, 1)
 		XCTAssertEqual(changes.reloadedRows, [IndexPath(row: 0, section: 0)])
 	}
+	
+	func testAccessibilityChange() {
+		let oldSection = TableSection(key: "section1", rows: [
+			TestCaseCell(key: "row1", accessibility: Accessibility(identifier: "initial", userInputLabels: ["row1"]), state: TestCaseState(data: "red"), cellUpdater: TestCaseState.updateView)
+		])
+		
+		let newSection = TableSection(key: "section1", rows: [
+			TestCaseCell(key: "row1", accessibility: Accessibility(identifier: "new", userInputLabels: ["row1"]), state: TestCaseState(data: "red"), cellUpdater: TestCaseState.updateView)
+		])
+		
+		let changes = TableSectionChangeSet(
+			old: [oldSection],
+			new: [newSection],
+			visibleIndexPaths: [IndexPath(row: 0, section: 0)]
+		)
+		XCTAssertEqual(changes.count, 1)
+		XCTAssertEqual(changes.updates.map { $0.index }, [IndexPath(row: 0, section: 0)])
+	}
 }
 
 fileprivate typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
