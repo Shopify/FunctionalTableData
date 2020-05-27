@@ -14,6 +14,9 @@ import UIKit
 public class FunctionalCollectionData {
 	/// Specifies the desired exception handling behaviour.
 	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
+
+	/// Specifies the minimum amount of table changes that will trigger a reload of the entire table.
+	public static var reloadEntireTableThreshold = 20
 	
 	public typealias KeyPath = ItemPath
 	
@@ -27,7 +30,6 @@ public class FunctionalCollectionData {
 	private var sections: [TableSection] {
 		return data.sections
 	}
-	private static let reloadEntireTableThreshold = 20
 	
 	private let renderAndDiffQueue: OperationQueue
 	private let name: String
