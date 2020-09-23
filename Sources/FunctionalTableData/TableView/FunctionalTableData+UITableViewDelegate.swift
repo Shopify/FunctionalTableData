@@ -12,6 +12,8 @@ extension FunctionalTableData {
 	class Delegate: NSObject, UITableViewDelegate {
 		private let data: TableData
 		private var heightAtIndexKeyPath: [ItemPath: CGFloat] = [:]
+		private var headerHeightAtIndexKeyPath: [Int: CGFloat] = [:]
+		private var footerHeightAtIndexKeyPath: [Int: CGFloat] = [:]
 		private var cellStyler: CellStyler
 		
 		weak var scrollViewDelegate: UIScrollViewDelegate?
@@ -60,9 +62,27 @@ extension FunctionalTableData {
 			return footer.height
 		}
 		
+		func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+			guard section < data.sections.count else { return UITableView.automaticDimension }
+			if let height = headerHeightAtIndexKeyPath[section] {
+				return height
+			} else {
+				return UITableView.automaticDimension
+			}
+		}
+		
 		public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 			guard indexPath.section < data.sections.count else { return UITableView.automaticDimension }
 			if let indexKeyPath = data.sections[indexPath.section].sectionKeyPathForRow(indexPath.row), let height = heightAtIndexKeyPath[indexKeyPath] {
+				return height
+			} else {
+				return UITableView.automaticDimension
+			}
+		}
+		
+		func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+			guard section < data.sections.count else { return UITableView.automaticDimension }
+			if let height = footerHeightAtIndexKeyPath[section] {
 				return height
 			} else {
 				return UITableView.automaticDimension
@@ -166,6 +186,7 @@ extension FunctionalTableData {
 		
 		public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 			let tableSection = data.sections[section]
+			headerHeightAtIndexKeyPath[section] = view.bounds.height
 			tableSection.headerVisibilityAction?(view, true)
 		}
 		
@@ -173,6 +194,10 @@ extension FunctionalTableData {
 			guard section < data.sections.count else { return }
 			let tableSection = data.sections[section]
 			tableSection.headerVisibilityAction?(view, false)
+		}
+		
+		func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+			footerHeightAtIndexKeyPath[section] = view.bounds.height
 		}
 		
 		public func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
