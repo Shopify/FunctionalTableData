@@ -19,6 +19,10 @@ No longer do you have to manually track the number of sections, cells, and indic
 
 Simply drag and drop `FunctionalTableData/FunctionalTableData.xcodeproj` into your Xcode project.
 
+### Swift Package Manager (SPM)
+
+Add `https://github.com/Shopify/FunctionalTableData` to your package dependencies.
+
 ### Carthage
 
 Add the following to your `Cartfile`:
