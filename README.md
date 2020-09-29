@@ -19,6 +19,10 @@ No longer do you have to manually track the number of sections, cells, and indic
 
 Simply drag and drop `FunctionalTableData/FunctionalTableData.xcodeproj` into your Xcode project.
 
+### Swift Package Manager (SPM)
+
+Add `https://github.com/Shopify/FunctionalTableData` to your package dependencies.
+
 ### Carthage
 
 Add the following to your `Cartfile`:
@@ -34,8 +38,6 @@ To use the Functional Table Data (FTD) two things are required, one instance of 
 For more information, read our [documentation](https://shopify.github.io/FunctionalTableData/).
 
 ## Usage
-
-Check out the [demo app](https://github.com/Shopify/FunctionalTableData/blob/master/FunctionalTableDataDemo) for a fully interactive example.
 
 Any time you want to update the data currently being displayed you generate the new state and pass it off to your instance of the Functional Table Data. The FTD is then responsible for computing the differences between the previous state and the next state and updating itself as necessary.
 
@@ -72,8 +74,6 @@ functionalTableData.renderAndDiff([section])
 ```
 
 <img src="https://github.com/Shopify/FunctionalTableData/raw/master/Images/Example1.png" />
-
-Check out the [demo app](https://github.com/Shopify/FunctionalTableData/blob/master/FunctionalTableDataDemo) for a fully interactive example.
 
 ### Building new Cells
 Knowing that a cell consists of a view and state let's start with a simple example, a cell that displays a label. By specifying the generic requirements of `HostCell`, the simplest possible example is one that takes an `UILabel` as its view, a `String` as its state and `LayoutMarginsTableItemLayout` as the layout (See `TableItemLayout` for more info).
@@ -120,8 +120,6 @@ LabelCell(key: "company", state: LabelState(text: "Shopify",
 ```
 
 At the end of the day `HostCell` is just one of the possible implementations of `CellConfigType`, that's the underlying power of this framework.
-
-For examples of more complex cells, check out the [demo app](https://github.com/Shopify/FunctionalTableData/blob/master/FunctionalTableDataDemo).
 
 ## Other resources
 
