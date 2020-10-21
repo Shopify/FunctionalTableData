@@ -150,6 +150,16 @@ class StyleTests: XCTestCase {
 		XCTAssertNil(viewCell.selectedBackgroundView?.backgroundColor)
 	}
 	
+	func testSelectionBackgroundProvider() {
+		cell.style?.selectionColor = .red
+		applyStyle()
+		XCTAssertEqual(.red, viewCell.selectedBackgroundView?.backgroundColor)
+		let selectedBackgroundViewProvider = ColoredBackgroundProvider(color: .orange)
+		cell.style?.selectionBackgroundViewProvider = selectedBackgroundViewProvider
+		applyStyle()
+		XCTAssertEqual(.orange, viewCell.selectedBackgroundView?.backgroundColor)
+	}
+	
 	func testBackground() {
 		applyStyle()
 		XCTAssertEqual(viewCell.backgroundColor, CellStyle.defaultBackgroundColor)
