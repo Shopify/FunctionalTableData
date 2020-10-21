@@ -255,5 +255,25 @@ extension FunctionalTableData {
 				cellConfig.actions.contextMenuConfiguration?.previewContentCommitter?(animator.previewViewController)
 			}
 		}
+		
+		/// Requires iOS 13.0+
+		/// Whether multi selection is available when editing mode is enabled.
+		/// Based on the tableView's `allowsMultipleSelectionDuringEditing` property.
+		/// https://developer.apple.com/documentation/uikit/uitableviewdelegate/selecting_multiple_items_with_a_two-finger_pan_gesture
+		@available(iOS 13.0, *)
+		public func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+			return tableView.allowsMultipleSelectionDuringEditing
+		}
+		
+		/// Requires iOS 13.0+
+		/// Called when a multi item selection gesture has begun.
+		/// - Handler forwarded to `CellActions` via `beginMultiSelectAction`
+		@available(iOS 13.0, *)
+		public func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+			tableView.setEditing(true, animated: true)
+			
+			let cellConfig = data.sections[indexPath]
+			cellConfig?.actions.beginMultiSelectAction?()
+		}
 	}
 }

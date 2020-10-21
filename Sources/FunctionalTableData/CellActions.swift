@@ -227,6 +227,7 @@ public struct CellActions {
 	public typealias DeselectionAction = (_ sender: UIView) -> SelectionState
 	public typealias CanPerformAction = (_ selector: Selector) -> Bool
 	public typealias VisibilityAction = (_ cell: UIView, _ visible: Bool) -> Void
+	public typealias BeginMultiSelectAction = () -> Void
 	/// Closure type that is executed when the user 3D-touches on a cell
 	/// - parameter cell: the cell in which the 3D-touch occured
 	/// - parameter point: The point where the 3D-touch occured, translated to the coordinate space of the cell
@@ -268,6 +269,11 @@ public struct CellActions {
 	/// UIContextMenus were introduced in iOS 13. This property is not used on earlier versions of iOS.
 	public var contextMenuConfiguration: ContextMenuConfiguration?
 	
+	/// Action performed when multi list selection has begun on this cell.
+	/// This automatically enables the tableView's editing mode _before_ this closure is called.
+	/// Require's the tableview's `allowsMultipleSelectionDuringEditing` property be set to `true`.
+	public var beginMultiSelectAction: BeginMultiSelectAction?
+	
 	public init(
 		canSelectAction: CanSelectAction? = nil,
 		selectionAction: SelectionAction? = nil,
@@ -278,7 +284,8 @@ public struct CellActions {
 		canBeMoved: Bool = false,
 		visibilityAction: VisibilityAction? = nil,
 		previewingViewControllerAction: PreviewingViewControllerAction? = nil,
-		contextMenuConfiguration: ContextMenuConfiguration? = nil) {
+		contextMenuConfiguration: ContextMenuConfiguration? = nil,
+		beginMultiSelectAction: BeginMultiSelectAction? = nil) {
 		self.canSelectAction = canSelectAction
 		self.selectionAction = selectionAction
 		self.deselectionAction = deselectionAction
@@ -296,6 +303,7 @@ public struct CellActions {
 			self.previewingViewControllerAction = nil
 		}
 		self.contextMenuConfiguration = contextMenuConfiguration
+		self.beginMultiSelectAction = beginMultiSelectAction
 	}
 	
 	internal var hasEditActions: Bool {
