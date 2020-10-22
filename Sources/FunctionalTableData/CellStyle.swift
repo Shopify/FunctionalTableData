@@ -161,12 +161,11 @@ public struct CellStyle {
 			cell.contentView.insetsLayoutMarginsFromSafeArea = false
 		}
 		
+		cell.selectedBackgroundView = nil
 		if let selectionColor = selectionColor {
 			let selectedBackgroundView = UIView()
 			selectedBackgroundView.backgroundColor = selectionColor
 			cell.selectedBackgroundView = selectedBackgroundView
-		} else {
-			cell.selectedBackgroundView = nil
 		}
 		
 		if let selectedBackgroundView = selectionBackgroundViewProvider?.backgroundView() {
@@ -205,12 +204,12 @@ public struct CellStyle {
 		cell.tintColor = tintColor
 		
 		cell.selectionStyle = (highlight ?? false) ? .default : .none
+		
+		cell.selectedBackgroundView = nil
 		if let selectionColor = selectionColor {
 			let selectedBackgroundView = UIView()
 			selectedBackgroundView.backgroundColor = selectionColor
 			cell.selectedBackgroundView = selectedBackgroundView
-		} else {
-			cell.selectedBackgroundView = nil
 		}
 		
 		if let selectedBackgroundView = selectionBackgroundViewProvider?.backgroundView() {
