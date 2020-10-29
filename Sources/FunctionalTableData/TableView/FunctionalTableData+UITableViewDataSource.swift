@@ -54,7 +54,7 @@ extension FunctionalTableData {
 		
 		public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 			guard let cellConfig = data.sections[indexPath] else { return false }
-			return cellConfig.actions.hasEditActions || self.tableView(tableView, canMoveRowAt: indexPath)
+			return cellConfig.actions.hasEditActions || self.tableView(tableView, canMoveRowAt: indexPath) || cellConfig.style?.selected != nil
 		}
 	}
 }

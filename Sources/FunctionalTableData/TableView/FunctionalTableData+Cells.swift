@@ -47,7 +47,7 @@ extension FunctionalTableData {
 			let section = data.sections[indexPath.section]
 			cellConfig.update(cell: cell, in: tableView)
 			let style = section.mergedStyle(for: indexPath.row)
-			style.configure(cell: cell, in: tableView)
+			style.configure(cell: cell, at: indexPath, in: tableView)
 			if cell.isHighlighted == false, let highlightedRow = highlightedRow, highlightedRow == KeyPath(sectionKey: section.key, rowKey: cellConfig.key) {
 				cell.isHighlighted = true
 			}

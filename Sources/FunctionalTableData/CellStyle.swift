@@ -70,6 +70,10 @@ public struct CellStyle {
 	/// Supported by `UICollectionView` only.
 	public var masksToBounds: Bool
 	
+	/// Whether the cell is initially in a selected state when it is first displayed
+	/// Supported by `UITableView` only.
+	public var selected: Bool?
+	
 	@available(*, deprecated, message: "The `backgroundView` argument is no longer available. Use backgroundViewProvider instead.")
 	public init(topSeparator: Separator.Style? = nil,
 	            bottomSeparator: Separator.Style? = nil,
@@ -121,7 +125,8 @@ public struct CellStyle {
 				tintColor: UIColor? = nil,
 				layoutMargins: UIEdgeInsets? = nil,
 				cornerRadius: CGFloat = 0,
-				masksToBounds: Bool = true) {
+				masksToBounds: Bool = true,
+				selected: Bool? = nil) {
 		self.bottomSeparator = bottomSeparator
 		self.topSeparator = topSeparator
 		self.separatorColor = separatorColor
@@ -134,9 +139,10 @@ public struct CellStyle {
 		self.layoutMargins = layoutMargins
 		self.cornerRadius = cornerRadius
 		self.masksToBounds = masksToBounds
+		self.selected = selected
 	}
 	
-	func configure(cell: UICollectionViewCell, in collectionView: UICollectionView) {
+	func configure(cell: UICollectionViewCell, at indexPath: IndexPath, in collectionView: UICollectionView) {
 		cell.backgroundColor = backgroundColor
 		cell.backgroundView = backgroundViewProvider?.backgroundView()
 
@@ -163,7 +169,7 @@ public struct CellStyle {
 		cell.layer.masksToBounds = masksToBounds
 	}
 	
-	func configure(cell: UITableViewCell, in tableView: UITableView) {
+	func configure(cell: UITableViewCell, at indexPath: IndexPath, in tableView: UITableView) {
 		if let separator = bottomSeparator {
 			cell.applyBottomSeparator(separator, color: separatorColor)
 		} else {
@@ -200,6 +206,16 @@ public struct CellStyle {
 		}
 		
 		cell.accessoryType = accessoryType
+		switch selected {
+		case true?:
+			tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+			cell.isSelected = true
+		case false?:
+			tableView.deselectRow(at: indexPath, animated: false)
+			cell.isSelected = false
+		case .none:
+			break
+		}
 	}
 }
 
@@ -217,6 +233,7 @@ extension CellStyle: Equatable {
 		equality = equality && lhs.cornerRadius == rhs.cornerRadius
 		equality = equality && lhs.masksToBounds == rhs.masksToBounds
 		equality = equality && lhs.backgroundViewProvider?.isEqualTo(rhs.backgroundViewProvider) ?? (rhs.backgroundViewProvider == nil)
+		equality = equality && lhs.selected == rhs.selected
 		return equality
 	}
 }
