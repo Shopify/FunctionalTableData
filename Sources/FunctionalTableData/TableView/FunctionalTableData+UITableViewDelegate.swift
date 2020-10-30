@@ -264,7 +264,7 @@ extension FunctionalTableData {
 		public func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
 			let cellConfig = data.sections[indexPath]
 			
-			let shouldBeginMultiSelect = cellConfig?.actions.shouldBeginMultiSelectAction?() ?? false
+			let shouldBeginMultiSelect = cellConfig?.actions.shouldBeginMultiSelectGestureAction?() ?? false
 			return tableView.allowsMultipleSelectionDuringEditing && shouldBeginMultiSelect
 		}
 		
@@ -276,7 +276,7 @@ extension FunctionalTableData {
 			tableView.setEditing(true, animated: true)
 			
 			let cellConfig = data.sections[indexPath]
-			cellConfig?.actions.didBeginMultiSelectAction?()
+			cellConfig?.actions.didBeginMultiSelectGestureAction?()
 		}
 	}
 }

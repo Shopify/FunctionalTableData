@@ -287,7 +287,7 @@ public class FunctionalCollectionData {
 					
 					let section = sections[update.index.section]
 					let style = section.mergedStyle(for: update.index.item)
-					style.configure(cell: cell, in: collectionView)
+					style.configure(cell: cell, at: update.index, in: collectionView)
 				}
 			}
 		}

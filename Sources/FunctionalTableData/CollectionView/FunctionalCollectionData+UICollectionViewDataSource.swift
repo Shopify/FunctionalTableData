@@ -33,7 +33,7 @@ extension FunctionalCollectionData {
 			cellConfig.accessibility.with(defaultIdentifier: accessibilityIdentifier).apply(to: cell)
 			cellConfig.update(cell: cell, in: collectionView)
 			let style = cellConfig.style ?? CellStyle()
-			style.configure(cell: cell, in: collectionView)
+			style.configure(cell: cell, at: indexPath, in: collectionView)
 			
 			return cell
 		}

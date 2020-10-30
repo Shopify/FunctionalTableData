@@ -227,8 +227,8 @@ public struct CellActions {
 	public typealias DeselectionAction = (_ sender: UIView) -> SelectionState
 	public typealias CanPerformAction = (_ selector: Selector) -> Bool
 	public typealias VisibilityAction = (_ cell: UIView, _ visible: Bool) -> Void
-	public typealias ShouldBeginMultiSelectAction = () -> Bool
-	public typealias DidBeginMultiSelectAction = () -> Void
+	public typealias ShouldBeginMultiSelectGestureAction = () -> Bool
+	public typealias DidBeginMultiSelectGestureAction = () -> Void
 	/// Closure type that is executed when the user 3D-touches on a cell
 	/// - parameter cell: the cell in which the 3D-touch occured
 	/// - parameter point: The point where the 3D-touch occured, translated to the coordinate space of the cell
@@ -272,12 +272,13 @@ public struct CellActions {
 	
 	/// Whether the multi select drag gesture can begin from this cell.
 	/// Also require's the tableview's `allowsMultipleSelectionDuringEditing` property be set to `true`.
-	public var shouldBeginMultiSelectAction: ShouldBeginMultiSelectAction?
+	public var shouldBeginMultiSelectGestureAction: ShouldBeginMultiSelectGestureAction?
 	
-	/// Action performed when multi list selection has begun on this cell.
+	/// Action performed when a multi list selection gesture has begun on this cell.
+	/// A multi selection gesture is either a two finger tap or scroll on the cell, or a drag gesture from the checkbox selection accessory to another cell.
 	/// This automatically enables the tableView's editing mode _before_ this closure is called.
 	/// Require's the tableview's `allowsMultipleSelectionDuringEditing` property be set to `true`.
-	public var didBeginMultiSelectAction: DidBeginMultiSelectAction?
+	public var didBeginMultiSelectGestureAction: DidBeginMultiSelectGestureAction?
 	
 	public init(
 		canSelectAction: CanSelectAction? = nil,
@@ -290,8 +291,8 @@ public struct CellActions {
 		visibilityAction: VisibilityAction? = nil,
 		previewingViewControllerAction: PreviewingViewControllerAction? = nil,
 		contextMenuConfiguration: ContextMenuConfiguration? = nil,
-		shouldBeginMultiSelectAction: ShouldBeginMultiSelectAction? = nil,
-		didBeginMultiSelectAction: DidBeginMultiSelectAction? = nil) {
+		shouldBeginMultiSelectGestureAction: ShouldBeginMultiSelectGestureAction? = nil,
+		didBeginMultiSelectGestureAction: DidBeginMultiSelectGestureAction? = nil) {
 		self.canSelectAction = canSelectAction
 		self.selectionAction = selectionAction
 		self.deselectionAction = deselectionAction
@@ -309,8 +310,8 @@ public struct CellActions {
 			self.previewingViewControllerAction = nil
 		}
 		self.contextMenuConfiguration = contextMenuConfiguration
-		self.shouldBeginMultiSelectAction = shouldBeginMultiSelectAction
-		self.didBeginMultiSelectAction = didBeginMultiSelectAction
+		self.shouldBeginMultiSelectGestureAction = shouldBeginMultiSelectGestureAction
+		self.didBeginMultiSelectGestureAction = didBeginMultiSelectGestureAction
 	}
 	
 	internal var hasEditActions: Bool {

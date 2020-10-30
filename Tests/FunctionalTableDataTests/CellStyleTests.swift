@@ -10,9 +10,13 @@ import XCTest
 @testable import FunctionalTableData
 
 class StyleTests: XCTestCase {
-	var cell: UITableViewCell!
-	var table: UITableView!
-	var style: CellStyle!
+
+	static let indexPath = IndexPath(row: 0, section: 0)
+	
+	var tableData: FunctionalTableData!
+	var tableView: UITableView!
+	var cell: TestCaseCell!
+	var viewCell: UITableViewCell!
 
 	struct ColoredBackgroundProvider: BackgroundViewProvider {
 		let color: UIColor
@@ -31,147 +35,169 @@ class StyleTests: XCTestCase {
 	
 	override func setUp() {
 		super.setUp()
-		cell = UITableViewCell()
-		table = UITableView()
-		style = CellStyle()
+		cell = TestCaseCell(key: "first", style: CellStyle(), state: TestCaseState(data: "first"), cellUpdater: TestCaseState.updateView)
+		tableData = FunctionalTableData()
+		tableView = UITableView()
+		tableData.tableView = tableView
+		applyStyle()
 	}
 	
 	override func tearDown() {
 		super.tearDown()
+		tableData = nil
+		tableView = nil
 		cell = nil
-		table = nil
-		style = nil
+		viewCell = nil
+	}
+	
+	func applyStyle() {
+		let expectation1 = expectation(description: "applyStyle")
+		tableData.renderAndDiff([TableSection(key: "first", rows: [cell])], animated: false) { [weak self] in
+			guard let self = self else { return }
+			self.viewCell = self.tableView.dataSource?.tableView(self.tableView, cellForRowAt: Self.indexPath)
+			self.viewCell.layoutIfNeeded()
+			expectation1.fulfill()
+		}
+		wait(for: [expectation1], timeout: 1000)
 	}
 	
 	func testBottomSeparator() {
-		style.bottomSeparator = .full
-		style.configure(cell: cell, in: table)
-		var separator = cell.viewWithTag(Separator.Tag.bottom.rawValue)
-		cell.layoutIfNeeded()
+		cell.style?.bottomSeparator = .full
+		applyStyle()
+		var separator = viewCell.viewWithTag(Separator.Tag.bottom.rawValue)
 		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width)
+		XCTAssertEqual(separator!.bounds.width, viewCell.bounds.width)
 		
-		style.bottomSeparator = .inset
-		style.configure(cell: cell, in: table)
-		separator = cell.viewWithTag(Separator.Tag.bottom.rawValue)
-		cell.layoutIfNeeded()
+		cell.style?.bottomSeparator = .inset
+		applyStyle()
+		separator = viewCell.viewWithTag(Separator.Tag.bottom.rawValue)
 		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - cell.layoutMarginsGuide.layoutFrame.minX)
+		XCTAssertEqual(separator!.bounds.width, viewCell.bounds.width - viewCell.layoutMarginsGuide.layoutFrame.minX)
 		
-		style.bottomSeparator = nil
-		style.configure(cell: cell, in: table)
-		separator = cell.viewWithTag(Separator.Tag.bottom.rawValue)
+		cell.style?.bottomSeparator = nil
+		applyStyle()
+		separator = viewCell.viewWithTag(Separator.Tag.bottom.rawValue)
 		XCTAssertNil(separator)
 	}
 	
 	func testCustomBottomSeparator() {
-		style.bottomSeparator = Separator.Style(leadingInset: .init(value: 10, respectingLayoutMargins: false), trailingInset: .none, thickness: 20)
-		style.configure(cell: cell, in: table)
-		let separator = cell.viewWithTag(Separator.Tag.bottom.rawValue)
-		cell.layoutIfNeeded()
+		cell.style?.bottomSeparator = Separator.Style(leadingInset: .init(value: 10, respectingLayoutMargins: false), trailingInset: .none, thickness: 20)
+		applyStyle()
+		let separator = viewCell.viewWithTag(Separator.Tag.bottom.rawValue)
 		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 10)
+		XCTAssertEqual(separator!.bounds.width, viewCell.bounds.width - 10)
 		XCTAssertEqual(separator!.bounds.height, 20)
 	}
 	
 	func testTopSeparator() {
-		style.topSeparator = .full
-		style.configure(cell: cell, in: table)
-		var separator = cell.viewWithTag(Separator.Tag.top.rawValue)
-		cell.layoutIfNeeded()
+		cell.style?.topSeparator = .full
+		applyStyle()
+		var separator = viewCell.viewWithTag(Separator.Tag.top.rawValue)
 		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width)
+		XCTAssertEqual(separator!.bounds.width, viewCell.bounds.width)
 		
-		style.topSeparator = .inset
-		style.configure(cell: cell, in: table)
-		separator = cell.viewWithTag(Separator.Tag.top.rawValue)
-		cell.layoutIfNeeded()
+		cell.style?.topSeparator = .inset
+		applyStyle()
+		separator = viewCell.viewWithTag(Separator.Tag.top.rawValue)
 		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - cell.layoutMarginsGuide.layoutFrame.minX)
+		XCTAssertEqual(separator!.bounds.width, viewCell.bounds.width - viewCell.layoutMarginsGuide.layoutFrame.minX)
 		
-		style.topSeparator = nil
-		style.configure(cell: cell, in: table)
-		separator = cell.viewWithTag(Separator.Tag.top.rawValue)
+		cell.style?.topSeparator = nil
+		applyStyle()
+		separator = viewCell.viewWithTag(Separator.Tag.top.rawValue)
 		XCTAssertNil(separator)
 	}
 	
 	func testCustomTopSeparator() {
-		style.topSeparator = Separator.Style(leadingInset: .init(value: 10, respectingLayoutMargins: false), trailingInset: .none, thickness: 20)
-		style.configure(cell: cell, in: table)
-		let separator = cell.viewWithTag(Separator.Tag.top.rawValue)
-		cell.layoutIfNeeded()
+		cell.style?.topSeparator = Separator.Style(leadingInset: .init(value: 10, respectingLayoutMargins: false), trailingInset: .none, thickness: 20)
+		applyStyle()
+		let separator = viewCell.viewWithTag(Separator.Tag.top.rawValue)
 		XCTAssertNotNil(separator)
-		XCTAssertEqual(separator!.bounds.width, cell.bounds.width - 10)
+		XCTAssertEqual(separator!.bounds.width, viewCell.bounds.width - 10)
 		XCTAssertEqual(separator!.bounds.height, 20)
 	}
 	
 	func testHighlight() {
-		style.highlight = true
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.selectionStyle, .default)
-		style.highlight = false
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.selectionStyle, .none)
-		style.highlight = nil
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.selectionStyle, .none)
+		cell.style?.highlight = true
+		applyStyle()
+		XCTAssertEqual(viewCell.selectionStyle, .default)
+		cell.style?.highlight = false
+		applyStyle()
+		XCTAssertEqual(viewCell.selectionStyle, .none)
+		cell.style?.highlight = nil
+		applyStyle()
+		XCTAssertEqual(viewCell.selectionStyle, .none)
 	}
 	
 	func testAccessoryType() {
-		style.accessoryType = .disclosureIndicator
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.accessoryType, .disclosureIndicator)
-		style.accessoryType = .checkmark
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.accessoryType, .checkmark)
-		style.accessoryType = .none
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.accessoryType, .none)
+		cell.style?.accessoryType = .disclosureIndicator
+		applyStyle()
+		XCTAssertEqual(viewCell.accessoryType, .disclosureIndicator)
+		cell.style?.accessoryType = .checkmark
+		applyStyle()
+		XCTAssertEqual(viewCell.accessoryType, .checkmark)
+		cell.style?.accessoryType = .none
+		applyStyle()
+		XCTAssertEqual(viewCell.accessoryType, .none)
 	}
 	
 	func testSelectionColor() {
-		style.selectionColor = .red
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(.red, cell.selectedBackgroundView?.backgroundColor)
-		style.selectionColor = nil
-		style.configure(cell: cell, in: table)
-		XCTAssertNil(cell.selectedBackgroundView?.backgroundColor)
+		cell.style?.selectionColor = .red
+		applyStyle()
+		XCTAssertEqual(.red, viewCell.selectedBackgroundView?.backgroundColor)
+		cell.style?.selectionColor = nil
+		applyStyle()
+		XCTAssertNil(viewCell.selectedBackgroundView?.backgroundColor)
 	}
 	
 	func testBackground() {
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.backgroundColor, CellStyle.defaultBackgroundColor)
-		style.backgroundColor = .red
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.backgroundColor, .red)
+		applyStyle()
+		XCTAssertEqual(viewCell.backgroundColor, CellStyle.defaultBackgroundColor)
+		cell.style?.backgroundColor = .red
+		applyStyle()
+		XCTAssertEqual(viewCell.backgroundColor, .red)
 		let backgroundViewProvider = ColoredBackgroundProvider(color: .yellow)
-		style.backgroundViewProvider = backgroundViewProvider
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.backgroundView?.backgroundColor, .yellow)
-		style.backgroundViewProvider = nil
-		style.backgroundColor = nil
-		style.configure(cell: cell, in: table)
-		XCTAssertNil(cell.backgroundColor)
-		XCTAssertNil(cell.backgroundView?.backgroundColor)
+		cell.style?.backgroundViewProvider = backgroundViewProvider
+		applyStyle()
+		XCTAssertEqual(viewCell.backgroundView?.backgroundColor, .yellow)
+		cell.style?.backgroundViewProvider = nil
+		cell.style?.backgroundColor = nil
+		applyStyle()
+		XCTAssertNil(viewCell.backgroundColor)
+		XCTAssertNil(viewCell.backgroundView?.backgroundColor)
 	}
 	
 	func testTintColor() {
-		let ogTint = cell.tintColor
-		style.tintColor = .red
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.tintColor, .red)
-		style.tintColor = nil
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.tintColor, ogTint)
+		let ogTint = viewCell.tintColor
+		cell.style?.tintColor = .red
+		applyStyle()
+		XCTAssertEqual(viewCell.tintColor, .red)
+		cell.style?.tintColor = nil
+		applyStyle()
+		XCTAssertEqual(viewCell.tintColor, ogTint)
 	}
 	
 	func testLayoutMargin() {
 		let margins = UIEdgeInsets(top: 13, left: 13, bottom: 13, right: 13)
-		style.layoutMargins = margins
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.contentView.layoutMargins, margins)
-		style.layoutMargins = nil
-		style.configure(cell: cell, in: table)
-		XCTAssertEqual(cell.contentView.layoutMargins, UIView().layoutMargins)
+		cell.style?.layoutMargins = margins
+		applyStyle()
+		XCTAssertEqual(viewCell.contentView.layoutMargins, margins)
+		cell.style?.layoutMargins = nil
+		applyStyle()
+		XCTAssertEqual(viewCell.contentView.layoutMargins, UIView().layoutMargins)
+	}
+	
+	func testSelected() {
+		cell.style?.selected = true
+		applyStyle()
+		XCTAssertEqual(viewCell.isSelected, true)
+		XCTAssertTrue(tableView.indexPathForSelectedRow == Self.indexPath)
+		XCTAssertTrue(tableView.indexPathsForSelectedRows?.contains(Self.indexPath) == true)
+		cell.style?.selected = false
+		applyStyle()
+		XCTAssertEqual(viewCell.isSelected, false)
+		XCTAssertTrue(tableView.indexPathForSelectedRow == nil)
+		XCTAssertTrue(tableView.indexPathsForSelectedRows == nil)
+
 	}
 }
