@@ -136,6 +136,11 @@ extension FunctionalTableData {
 			guard let cell = tableView.cellForRow(at: indexPath) else { return }
 			let cellConfig = data.sections[indexPath]
 			
+			let keyPath = data.sections.itemPath(from: indexPath)
+			if cellStyler.highlightedRow == keyPath {
+				self.cellStyler.highlightRow(at: nil, animated: false, in: tableView)
+			}
+			
 			let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
 			if selectionState == .selected {
 				DispatchQueue.main.async {
