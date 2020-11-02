@@ -52,6 +52,8 @@ public struct CellStyle {
 	public var accessoryType: UITableViewCell.AccessoryType
 	/// The view's selection color.
 	public var selectionColor: UIColor?
+	/// Provide the view that is displayed behind the selected cell's other content.
+	public var selectionBackgroundViewProvider: BackgroundViewProvider?
 	/// The view's background color.
 	public var backgroundColor: UIColor?
 	/// The view that is displayed behind the cell's other content.
@@ -120,6 +122,7 @@ public struct CellStyle {
 				highlight: Bool? = nil,
 				accessoryType: UITableViewCell.AccessoryType = .none,
 				selectionColor: UIColor? = CellStyle.defaultSelectionColor,
+				selectionBackgroundViewProvider: BackgroundViewProvider? = nil,
 				backgroundColor: UIColor? = CellStyle.defaultBackgroundColor,
 				backgroundViewProvider: BackgroundViewProvider? = nil,
 				tintColor: UIColor? = nil,
@@ -133,6 +136,7 @@ public struct CellStyle {
 		self.highlight = highlight
 		self.accessoryType = accessoryType
 		self.selectionColor = selectionColor
+		self.selectionBackgroundViewProvider = selectionBackgroundViewProvider
 		self.backgroundColor = backgroundColor
 		self.backgroundViewProvider = backgroundViewProvider
 		self.tintColor = tintColor
@@ -157,12 +161,15 @@ public struct CellStyle {
 			cell.contentView.insetsLayoutMarginsFromSafeArea = false
 		}
 		
+		cell.selectedBackgroundView = nil
 		if let selectionColor = selectionColor {
 			let selectedBackgroundView = UIView()
 			selectedBackgroundView.backgroundColor = selectionColor
 			cell.selectedBackgroundView = selectedBackgroundView
-		} else {
-			cell.selectedBackgroundView = nil
+		}
+		
+		if let selectedBackgroundView = selectionBackgroundViewProvider?.backgroundView() {
+			cell.selectedBackgroundView = selectedBackgroundView
 		}
 		
 		cell.layer.cornerRadius = cornerRadius
@@ -197,12 +204,16 @@ public struct CellStyle {
 		cell.tintColor = tintColor
 		
 		cell.selectionStyle = (highlight ?? false) ? .default : .none
+		
+		cell.selectedBackgroundView = nil
 		if let selectionColor = selectionColor {
 			let selectedBackgroundView = UIView()
 			selectedBackgroundView.backgroundColor = selectionColor
 			cell.selectedBackgroundView = selectedBackgroundView
-		} else {
-			cell.selectedBackgroundView = nil
+		}
+		
+		if let selectedBackgroundView = selectionBackgroundViewProvider?.backgroundView() {
+			cell.selectedBackgroundView = selectedBackgroundView
 		}
 		
 		cell.accessoryType = accessoryType
