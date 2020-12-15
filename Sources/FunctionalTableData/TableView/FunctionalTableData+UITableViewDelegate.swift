@@ -278,8 +278,6 @@ extension FunctionalTableData {
 		/// - Handler forwarded to `CellActions` via `beginMultiSelectAction`
 		@available(iOS 13.0, *)
 		public func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
-			tableView.setEditing(true, animated: true)
-			
 			let cellConfig = data.sections[indexPath]
 			cellConfig?.actions.didBeginMultiSelectGestureAction?()
 		}
