@@ -63,3 +63,82 @@ public extension CellConfigType {
 		return type(of: self) == type(of: other)
 	}
 }
+
+public struct AnyCellConfigType: CellConfigType, Hashable {
+
+	public static func ==(lhs: AnyCellConfigType, rhs: AnyCellConfigType) -> Bool {
+		return lhs.sectionKey == rhs.sectionKey && lhs.key == rhs.key 
+	}
+	
+	public var key: String {
+		return base.key
+	}
+	
+	public var style: CellStyle? {
+		get { return base.style }
+		set { base.style = newValue }
+	}
+	
+	public var actions: CellActions {
+		get { return base.actions }
+		set { base.actions = newValue }
+	}
+	
+	public var accessibility: Accessibility {
+		get { return base.accessibility }
+		set { base.accessibility = newValue }
+	}
+	
+	public var base: CellConfigType
+	private let sectionKey: String
+	
+	init(_ base: CellConfigType, sectionKey: String) {
+		self.base = base
+		self.sectionKey = sectionKey
+	}
+	
+	public init(_ base: CellConfigType) {
+		self.init(base, sectionKey: "")
+	}
+	
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(key)
+		hasher.combine(sectionKey)
+		hasher.combine(style)
+	}
+	
+	public func dequeueCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+		return base.dequeueCell(from: tableView, at: indexPath)
+	}
+	
+	public func update(cell: UITableViewCell, in tableView: UITableView) {
+		base.update(cell: cell, in: tableView)
+	}
+	
+	public func update(cell: UICollectionViewCell, in collectionView: UICollectionView) {
+		base.update(cell: cell, in: collectionView)
+	}
+	
+	public func isEqual(_ other: CellConfigType) -> Bool {
+		guard let other = other as? AnyCellConfigType else { return false }
+		return sectionKey == other.sectionKey && key == other.key
+	}
+	
+	public func isSameKind(as other: CellConfigType) -> Bool {
+		return base.isSameKind(as: other)
+	}
+	
+	public func debugInfo() -> [String : Any] {
+		return base.debugInfo()
+	}
+	
+	public func register(with tableView: UITableView) {
+		base.register(with: tableView)
+	}
+	
+	public func register(with collectionView: UICollectionView) {
+		base.register(with: collectionView)
+	}
+	
+	
+}

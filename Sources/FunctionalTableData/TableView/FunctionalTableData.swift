@@ -8,6 +8,21 @@
 
 import UIKit
 
+/// The type of diffing strategy to use to determine changes.
+public enum DiffingStrategy {
+	/// Classic functional table data, as it's always been. This is the default.
+	case classic
+	/// Use UITableViewDiffableDataSource to determine changes. This is experimental.
+	case diffableDataSource
+}
+
+
+protocol FunctionalTableDataImpl {
+	var tableView: UITableView? { get set }
+	var isRendering: Bool { get }
+	func renderAndDiff(_ newSections: [TableSection], animated: Bool, animations: FunctionalTableData.TableAnimations, completion: (() -> Void)?)
+}
+
 /// A type that provides the debugging information when an exception occurs.
 public protocol FunctionalTableDataExceptionHandler {
 	/// Handles the exception. This is only for debugging purposes, and commonly used
@@ -38,21 +53,14 @@ public class FunctionalTableData {
 	
 	public typealias KeyPath = ItemPath
 	
-	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
-		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
-		let exception = Exception(name: name, newSections: data.sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: tableView?.frame ?? .zero, reason: exceptionReason, userInfo: exceptionUserInfo)
-		exceptionHandler.handle(exception: exception)
-	}
-	
 	private let data: TableData
-	private static let reloadEntireTableThreshold = 20
+	static let reloadEntireTableThreshold = 20
 	
-	private let renderAndDiffQueue: OperationQueue
 	private let name: String
 	
 	private let cellStyler: CellStyler
-	private let dataSource: DataSource
 	internal let delegate: Delegate
+	private let strategy: DiffingStrategy
 	
 	/// Enclosing `UITableView` that presents all the `TableSection` data.
 	///
@@ -61,8 +69,8 @@ public class FunctionalTableData {
 	public var tableView: UITableView? {
 		didSet {
 			guard let tableView = tableView else { return }
-			tableView.dataSource = dataSource
 			tableView.delegate = delegate
+			impl.tableView = tableView
 			tableView.rowHeight = UITableView.automaticDimension
 			tableView.tableFooterView = UIView(frame: .zero)
 			tableView.separatorStyle = .none
@@ -113,28 +121,30 @@ public class FunctionalTableData {
 		}
 	}
 	
-	private let unitTesting: Bool
-	
 	/// A Boolean value that returns `true` when a `renderAndDiff` pass is currently running.
 	public var isRendering: Bool {
-		return renderAndDiffQueue.isSuspended
+		return impl.isRendering
 	}
+	
+	private lazy var impl: FunctionalTableDataImpl = {
+		if #available(iOS 13.0, *), self.strategy == .diffableDataSource {
+			return DiffableDataSourceFunctionalTableDataImpl(name: self.name, cellStyler: self.cellStyler)
+		}
+		return ClassicFunctionalTableDataImpl(name: self.name, cellStyler: self.cellStyler)
+	}()
 	
 	/// Initializes a FunctionalTableData. To configure its view, provide a UITableView after initialization.
 	///
 	/// - Parameter name: String identifying this instance of FunctionalTableData, useful when several instances are displayed on the same screen. This value also names the queue doing all the rendering work, useful for debugging.
-	public init(name: String? = nil) {
+	/// - Parameter diffingStrategy: Identifies the strategy to use for determing the change set and updating the UITableView instance. `.diffableDataSource` is only valid for iOS 13 or greater; if passed on iOS 12 or lower, a classic strategy is used. Default is `.classic`.
+	public init(name: String? = nil, diffingStrategy: DiffingStrategy = .classic) {
 		self.name = name ?? "FunctionalTableDataRenderAndDiff"
-		unitTesting = NSClassFromString("XCTestCase") != nil
-		renderAndDiffQueue = OperationQueue()
-		renderAndDiffQueue.name = self.name
-		renderAndDiffQueue.maxConcurrentOperationCount = 1
 		let data = TableData()
 		let cellStyler = CellStyler(data: data)
 		self.data = data
 		self.cellStyler = cellStyler
-		self.dataSource = DataSource(cellStyler: cellStyler)
 		self.delegate = Delegate(cellStyler: cellStyler)
+		self.strategy = diffingStrategy
 	}
 	
 	/// Returns the cell identified by a key path.
@@ -215,170 +225,8 @@ public class FunctionalTableData {
 	///   - animations: Type of animation to perform. See `FunctionalTableData.TableAnimations` for more info.
 	///   - completion: Callback that will be called on the main thread once the `UITableView` has finished updating and animating any changes.
 	public func renderAndDiff(_ newSections: [TableSection], animated: Bool = true, animations: TableAnimations = .default, completion: (() -> Void)? = nil) {
-		let blockOperation = BlockOperation { [weak self] in
-			guard let strongSelf = self else {
-				if let completion = completion {
-					DispatchQueue.main.async(execute: completion)
-				}
-				return
-			}
-			
-			if strongSelf.unitTesting {
-				newSections.validateKeyUniqueness(senderName: strongSelf.name)
-			} else {
-				NSException.catchAndRethrow({
-					newSections.validateKeyUniqueness(senderName: strongSelf.name)
-				}, failure: {
-					if $0.name == NSExceptionName.internalInconsistencyException {
-						guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
-						let changes = TableSectionChangeSet()
-						let viewFrame = DispatchQueue.main.sync { strongSelf.tableView?.frame ?? .zero }
-						let exception = Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.data.sections, changes: changes, visible: [], viewFrame: viewFrame, reason: $0.reason, userInfo: $0.userInfo)
-						exceptionHandler.handle(exception: exception)
-					}
-				})
-			}
-			
-			strongSelf.doRenderAndDiff(newSections, animated: animated, animations: animations, completion: completion)
-		}
-		//cancel waiting operations since only the last state needs to be rendered
-		renderAndDiffQueue.operations.lazy.filter { !$0.isExecuting }.forEach { $0.cancel() }
-		renderAndDiffQueue.addOperation(blockOperation)
-	}
-	
-	private func doRenderAndDiff(_ newSections: [TableSection], animated: Bool, animations: TableAnimations, completion: (() -> Void)?) {
-		guard let tableView = tableView else {
-			if let completion = completion {
-				DispatchQueue.main.async(execute: completion)
-			}
-			return
-		}
-		
-		let oldSections = data.sections
-		
-		let visibleIndexPaths = DispatchQueue.main.sync {
-			tableView.indexPathsForVisibleRows?.filter {
-				let section = oldSections[$0.section]
-				return $0.row < section.rows.count
-				} ?? []
-		}
-		
-		let localSections = newSections.filter { $0.rows.count > 0 }
-		let changes = calculateTableChanges(oldSections: oldSections, newSections: localSections, visibleIndexPaths: visibleIndexPaths)
-		
-		// Use dispatch_sync because the table updates have to be processed before this function returns
-		// or another queued renderAndDiff could get the incorrect state to diff against.
-		DispatchQueue.main.sync { [weak self] in
-			guard let strongSelf = self else {
-				completion?()
-				return
-			}
-			
-			strongSelf.renderAndDiffQueue.isSuspended = true
-			tableView.registerCellsForSections(localSections)
-			if oldSections.isEmpty || changes.count > FunctionalTableData.reloadEntireTableThreshold || tableView.isDecelerating || !animated {
-				strongSelf.data.sections = localSections
-				CATransaction.begin()
-				CATransaction.setCompletionBlock {
-					strongSelf.finishRenderAndDiff()
-					completion?()
-				}
-				tableView.reloadData()
-				CATransaction.commit()
-			} else {
-				if strongSelf.unitTesting {
-					strongSelf.applyTableChanges(changes, localSections: localSections, animations: animations, completion: {
-						strongSelf.finishRenderAndDiff()
-						completion?()
-					})
-				} else {
-					NSException.catchAndRethrow({
-						strongSelf.applyTableChanges(changes, localSections: localSections, animations: animations, completion: {
-							strongSelf.finishRenderAndDiff()
-							completion?()
-						})
-					}, failure: { exception in
-						if exception.name == NSExceptionName.internalInconsistencyException {
-							strongSelf.dumpDebugInfoForChanges(changes, previousSections: oldSections, visibleIndexPaths: visibleIndexPaths, exceptionReason: exception.reason, exceptionUserInfo: exception.userInfo)
-						}
-					})
-				}
-			}
-		}
-	}
-	
-	private func applyTableChanges(_ changes: TableSectionChangeSet, localSections: [TableSection], animations: TableAnimations, completion: (() -> Void)?) {
-		guard let tableView = tableView else {
-			if let completion = completion {
-				DispatchQueue.main.async(execute: completion)
-			}
-			return
-		}
-		
-		if changes.isEmpty {
-			data.sections = localSections
-			if let completion = completion {
-				DispatchQueue.main.async(execute: completion)
-			}
-			return
-		}
-		
-		func applyTableSectionChanges(_ changes: TableSectionChangeSet) {
-			if !changes.insertedSections.isEmpty {
-				tableView.insertSections(changes.insertedSections, with: animations.sections.insert)
-			}
-			if !changes.deletedSections.isEmpty {
-				tableView.deleteSections(changes.deletedSections, with: animations.sections.delete)
-			}
-			for movedSection in changes.movedSections {
-				tableView.moveSection(movedSection.from, toSection: movedSection.to)
-			}
-			if !changes.reloadedSections.isEmpty {
-				tableView.reloadSections(changes.reloadedSections, with: animations.sections.reload)
-			}
-			
-			if !changes.insertedRows.isEmpty {
-				tableView.insertRows(at: changes.insertedRows, with: animations.rows.insert)
-			}
-			if !changes.deletedRows.isEmpty {
-				tableView.deleteRows(at: changes.deletedRows, with: animations.rows.delete)
-			}
-			for movedRow in changes.movedRows {
-				tableView.moveRow(at: movedRow.from, to: movedRow.to)
-			}
-			if !changes.reloadedRows.isEmpty {
-				tableView.reloadRows(at: changes.reloadedRows, with: animations.rows.reload)
-			}
-		}
-		
-		func applyTransitionChanges(_ changes: TableSectionChangeSet) {
-			for update in changes.updates {
-				cellStyler.update(cellConfig: update.cellConfig, at: update.index, in: tableView)
-			}
-		}
-		
-		CATransaction.begin()
-		CATransaction.setCompletionBlock {
-			completion?()
-		}
-		
-		tableView.beginUpdates()
-		// #4629 - There is an issue where on some occasions calling beginUpdates() will cause a heightForRowAtIndexPath() call to be made. If the sections have been changed already we may no longer find the cells
-		// in the model causing a crash. To prevent this from happening, only load the new model AFTER beginUpdates() has run
-		data.sections = localSections
-		applyTableSectionChanges(changes)
-		tableView.endUpdates()
-		
-		// Apply transitions after we have commited section/row changes since transition indexPaths are in post-commit space
-		tableView.beginUpdates()
-		applyTransitionChanges(changes)
-		tableView.endUpdates()
-		
-		CATransaction.commit()
-	}
-	
-	private func finishRenderAndDiff() {
-		renderAndDiffQueue.isSuspended = false
+		impl.renderAndDiff(newSections, animated: animated, animations: animations, completion: completion)
+
 	}
 	
 	/// Selects a row in the table view identified by a key path.
@@ -450,7 +298,7 @@ public class FunctionalTableData {
 }
 
 extension UITableView {
-	fileprivate func registerCellsForSections(_ sections: [TableSection]) {
+	 func registerCellsForSections(_ sections: [TableSection]) {
 		for section in sections {
 			for cellConfig in section {
 				cellConfig.register(with: self)

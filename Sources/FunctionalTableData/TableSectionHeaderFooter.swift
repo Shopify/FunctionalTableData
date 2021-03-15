@@ -27,6 +27,10 @@ public protocol TableHeaderFooterStateType: Equatable {
 }
 
 public struct TableSectionHeaderFooter<ViewType: UIView, Layout: TableItemLayout, S: TableHeaderFooterStateType>: TableHeaderFooterConfigType {
+	public func dequeueCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+		return UITableViewCell()
+	}
+	
 	public typealias ViewUpdater = (_ header: TableHeaderFooter<ViewType, Layout>, _ state: S) -> Void
 	public let state: S?
 	let updateView: ViewUpdater?
