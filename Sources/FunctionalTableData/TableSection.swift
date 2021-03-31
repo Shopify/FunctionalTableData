@@ -114,8 +114,8 @@ public struct TableSection: Sequence, TableSectionType {
 	}
 }
 
-public struct SectionStyle: Equatable {
-	public struct Separators: Equatable {
+public struct SectionStyle: Equatable, Hashable {
+	public struct Separators: Equatable, Hashable {
 		public static let `default` = Separators(top: .full, bottom: .full, interitem: .inset)
 		public static let topAndBottom = Separators(top: .full, bottom: .full, interitem: nil)
 		public static let full = Separators(top: .full, bottom: .full, interitem: .full)
@@ -194,3 +194,27 @@ private func isEqual(lhs: [CellConfigType], rhs: [CellConfigType]) -> Bool {
 		return leftCell.isEqual(rightCell)
 	}
 }
+
+struct DiffableTableSection: Equatable, Hashable {
+	static func ==(lhs: DiffableTableSection, rhs: DiffableTableSection) -> Bool {
+		return lhs.key == rhs.key
+	}
+	
+	let tableSection: TableSection
+	var key: String { tableSection.key }
+	
+	var anyRows: [AnyCellConfigType] {
+		return tableSection.rows.map { AnyCellConfigType($0, sectionKey: key) }
+	}
+	
+	init(_ section: TableSection) {
+		self.tableSection = section
+	}
+	
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(key)
+		hasher.combine(tableSection.style)
+	}
+}
+
+

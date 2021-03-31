@@ -52,6 +52,11 @@
 		6C27C0C02372014100EA73F9 /* TableSectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C27C0AB2372008900EA73F9 /* TableSectionTests.swift */; };
 		6CB4D378246B904B00BFD647 /* AccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4D377246B904B00BFD647 /* AccessibilityTests.swift */; };
 		6CEFBC462458902400E6AF19 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEFBC452458902400E6AF19 /* Accessibility.swift */; };
+		EC42534926025A2A00EDE934 /* DiffableDataSourceTableCellReuseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42534626025A2A00EDE934 /* DiffableDataSourceTableCellReuseTests.swift */; };
+		EC42534A26025A2A00EDE934 /* DiffableDataSourceFunctionalDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42534726025A2A00EDE934 /* DiffableDataSourceFunctionalDataTests.swift */; };
+		EC42534B26025A2A00EDE934 /* DiffableDataSourceFunctionalTableDataPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42534826025A2A00EDE934 /* DiffableDataSourceFunctionalTableDataPerformanceTests.swift */; };
+		ECE4BD6C2613AD0D00BCAB6E /* FunctionalTableData+DiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE4BD6B2613AD0D00BCAB6E /* FunctionalTableData+DiffableDataSource.swift */; };
+		ECE4BD702613B1C900BCAB6E /* FunctionalTableData+Classic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE4BD6F2613B1C900BCAB6E /* FunctionalTableData+Classic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +118,11 @@
 		6C27C0B6237200DC00EA73F9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6CB4D377246B904B00BFD647 /* AccessibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTests.swift; sourceTree = "<group>"; };
 		6CEFBC452458902400E6AF19 /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+		EC42534626025A2A00EDE934 /* DiffableDataSourceTableCellReuseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffableDataSourceTableCellReuseTests.swift; sourceTree = "<group>"; };
+		EC42534726025A2A00EDE934 /* DiffableDataSourceFunctionalDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffableDataSourceFunctionalDataTests.swift; sourceTree = "<group>"; };
+		EC42534826025A2A00EDE934 /* DiffableDataSourceFunctionalTableDataPerformanceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffableDataSourceFunctionalTableDataPerformanceTests.swift; sourceTree = "<group>"; };
+		ECE4BD6B2613AD0D00BCAB6E /* FunctionalTableData+DiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+DiffableDataSource.swift"; sourceTree = "<group>"; };
+		ECE4BD6F2613B1C900BCAB6E /* FunctionalTableData+Classic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunctionalTableData+Classic.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +196,9 @@
 		6C27C0552371FFB000EA73F9 /* FunctionalTableDataTests */ = {
 			isa = PBXGroup;
 			children = (
+				EC42534726025A2A00EDE934 /* DiffableDataSourceFunctionalDataTests.swift */,
+				EC42534826025A2A00EDE934 /* DiffableDataSourceFunctionalTableDataPerformanceTests.swift */,
+				EC42534626025A2A00EDE934 /* DiffableDataSourceTableCellReuseTests.swift */,
 				6CB4D377246B904B00BFD647 /* AccessibilityTests.swift */,
 				6C27C0A72372008900EA73F9 /* CellStyleTests.swift */,
 				6C27C0A42372008900EA73F9 /* FunctionalDataTests.swift */,
@@ -235,6 +248,8 @@
 				6C27C07C2372007B00EA73F9 /* FunctionalTableData+UITableViewDataSource.swift */,
 				6C27C07D2372007B00EA73F9 /* TableItemConfigType.swift */,
 				6C27C07E2372007B00EA73F9 /* UITableView+Reusable.swift */,
+				ECE4BD6B2613AD0D00BCAB6E /* FunctionalTableData+DiffableDataSource.swift */,
+				ECE4BD6F2613B1C900BCAB6E /* FunctionalTableData+Classic.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -380,10 +395,12 @@
 				6C27C08B2372007B00EA73F9 /* UIView+Extensions.swift in Sources */,
 				6C27C08E2372007B00EA73F9 /* BackgroundViewProvider.swift in Sources */,
 				6CEFBC462458902400E6AF19 /* Accessibility.swift in Sources */,
+				ECE4BD6C2613AD0D00BCAB6E /* FunctionalTableData+DiffableDataSource.swift in Sources */,
 				6C27C09F2372007B00EA73F9 /* Reusable.swift in Sources */,
 				6C27C09C2372007B00EA73F9 /* TableItemConfigType.swift in Sources */,
 				6C27C09E2372007B00EA73F9 /* TableData.swift in Sources */,
 				6C27C0992372007B00EA73F9 /* TableCell.swift in Sources */,
+				ECE4BD702613B1C900BCAB6E /* FunctionalTableData+Classic.swift in Sources */,
 				6C27C0982372007B00EA73F9 /* FunctionalTableData+UITableViewDelegate.swift in Sources */,
 				6C27C0852372007B00EA73F9 /* CollectionCell.swift in Sources */,
 				6C27C09B2372007B00EA73F9 /* FunctionalTableData+UITableViewDataSource.swift in Sources */,
@@ -400,7 +417,10 @@
 				6C27C0BA2372014100EA73F9 /* FunctionalTableDataDelegateTests.swift in Sources */,
 				6C27C0BC2372014100EA73F9 /* TableCellReuseTests.swift in Sources */,
 				6C27C0B92372014100EA73F9 /* FunctionalDataTests.swift in Sources */,
+				EC42534B26025A2A00EDE934 /* DiffableDataSourceFunctionalTableDataPerformanceTests.swift in Sources */,
+				EC42534926025A2A00EDE934 /* DiffableDataSourceTableCellReuseTests.swift in Sources */,
 				6C27C0BE2372014100EA73F9 /* TableSectionStyleTests.swift in Sources */,
+				EC42534A26025A2A00EDE934 /* DiffableDataSourceFunctionalDataTests.swift in Sources */,
 				6C27C0BB2372014100EA73F9 /* FunctionaltableDataPerformanceTests.swift in Sources */,
 				6C27C0C02372014100EA73F9 /* TableSectionTests.swift in Sources */,
 				6C27C0B82372014100EA73F9 /* CellStyleTests.swift in Sources */,

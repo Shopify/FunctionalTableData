@@ -248,3 +248,19 @@ extension CellStyle: Equatable {
 		return equality
 	}
 }
+
+extension CellStyle: Hashable {
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(bottomSeparator)
+		hasher.combine(topSeparator)
+		hasher.combine(separatorColor)
+		hasher.combine(highlight)
+		hasher.combine(accessoryType)
+		hasher.combine(selectionColor)
+		hasher.combine(backgroundColor)
+		hasher.combine(tintColor)
+		hasher.combine(cornerRadius)
+		hasher.combine(masksToBounds)
+		hasher.combine(selected)
+	}
+}

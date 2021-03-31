@@ -15,9 +15,9 @@ import UIKit
 /// Supported by `UITableView` only.
 public class Separator: UIView {
 	/// The style for table cells used as separators.
-	public struct Style: Equatable {
+	public struct Style: Equatable, Hashable {
 		/// The inset used in the separators.
-		public struct Inset: Equatable {
+		public struct Inset: Equatable, Hashable {
 			/// Specifies the amount of spacing to apply to the separator.
 			public let value: CGFloat
 			/// Specifies if the inset is relative to the layout margins.

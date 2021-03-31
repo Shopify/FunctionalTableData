@@ -133,6 +133,10 @@ fileprivate struct TestHeaderFooter: TableHeaderFooterConfigType {
 	func register(with tableView: UITableView) {
 		tableView.registerReusableHeaderFooterView(HeaderFooter.self)
 	}
+	
+	func dequeueCell(from tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+		UITableViewCell()
+	}
 
 	func dequeueHeaderFooter(from tableView: UITableView) -> UITableViewHeaderFooterView? {
 		return tableView.dequeueReusableHeaderFooterView(HeaderFooter.self)

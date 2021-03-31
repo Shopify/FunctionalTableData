@@ -10,8 +10,8 @@ import UIKit
 
 extension FunctionalTableData {
 	class DataSource: NSObject, UITableViewDataSource {
-		private let data: TableData
-		private var cellStyler: CellStyler
+		let data: TableData
+		private(set) var cellStyler: CellStyler
 		
 		init(cellStyler: CellStyler) {
 			self.cellStyler = cellStyler
@@ -56,5 +56,5 @@ extension FunctionalTableData {
 			guard let cellConfig = data.sections[indexPath] else { return false }
 			return cellConfig.actions.hasEditActions || self.tableView(tableView, canMoveRowAt: indexPath) || cellConfig.style?.selected != nil
 		}
-	}
+	}	
 }
