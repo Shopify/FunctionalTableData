@@ -91,7 +91,7 @@ extension FunctionalTableData {
 			if let snapshot = datasource?.snapshot(), snapshot.numberOfSections == 0 {
 				isFirstRender = false
 			}
-			let shouldAnimate = animated && isFirstRender
+			let shouldAnimate = animated && !isFirstRender
 			NSException.catchAndHandle {
 				self.datasource.apply(snapshot, animatingDifferences: shouldAnimate, completion: completion)
 			} failure: { (exception) in
