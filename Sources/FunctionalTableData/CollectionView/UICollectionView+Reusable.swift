@@ -18,7 +18,15 @@ public extension UICollectionView {
 			fatalError("Failed to dequeue a cell with identifier \(cellType.reuseIdentifier) matching type \(cellType.self)")
 		}
 		return cell
-	}	
+	}
+	
+	func register(viewClass: AnyClass?, forSupplementaryViewOfKind kind: ReusableKind, withReuseIdentifier reuseIdentifier: String) {
+		register(viewClass, forSupplementaryViewOfKind: kind.rawValue, withReuseIdentifier: reuseIdentifier)
+	}
+	
+	func dequeueReusableSupplementaryView(ofKind kind: ReusableKind, withReuseIdentifier reuseIdentifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
+		return dequeueReusableSupplementaryView(ofKind: kind.rawValue, withReuseIdentifier: reuseIdentifier, for: indexPath)
+	}
 }
 
-extension UICollectionViewCell: Reusable { }
+extension UICollectionReusableView: Reusable { }

@@ -31,9 +31,11 @@ public protocol TableSectionType {
 /// `FunctionalTableData` deals in arrays of `TableSection` instances. Each section, at a minimum, has a string value unique within the table itself, and an array of `CellConfigType` instances that represent the items of the section. Additionally there may be a header and footer for the section.
 public struct TableSection: Sequence, TableSectionType {
 	public let key: String
-	public var header: TableHeaderFooterConfigType? = nil
-	public var footer: TableHeaderFooterConfigType? = nil
+	public var header: TableHeaderFooterConfigType?
+	public var footer: TableHeaderFooterConfigType?
+	
 	public var rows: [CellConfigType]
+	
 	/// Specifies visual attributes to be applied to the section. This includes item separators to use at the top, bottom, and between items of the section.
 	public var style: SectionStyle?
 	public var headerVisibilityAction: ((_ view: UIView, _ visible: Bool) -> Void)? = nil
@@ -111,6 +113,53 @@ public struct TableSection: Sequence, TableSectionType {
 		}
 
 		return rowStyle
+	}
+}
+
+extension TableSection: CollectionSection {
+	public var items: [CellConfigType] {
+		get { rows }
+		set { rows = newValue }
+	}
+	
+	public var supplementaries: [CollectionSupplementaryItemConfig] {
+		get {
+			var supps: [CollectionSupplementaryItemConfig] = []
+			if let header = header as? CollectionSupplementaryItemConfig {
+				supps.append(header)
+			}
+			if let footer = self.footer as? CollectionSupplementaryItemConfig {
+				supps.append(footer)
+			}
+			if hasSeparators {
+				let separator = IndexableSupplementaryConfig<SeparatorView, SeparatorState>(kind: ReusableKind.separator, state: self.mergeStyles().map { SeparatorState(style: $0.bottomSeparator ?? nil, color: separatorColor($0)) })
+				supps.append(separator)
+			}
+			return supps
+		}
+		set {
+			
+		}
+	}
+	
+	public func supplementaryConfig(ofKind kind: ReusableKind) -> CollectionSupplementaryItemConfig? {
+		return supplementaries.first(where: { $0.kind == kind })
+	}
+	
+	public var hasSeparators: Bool {
+		mergeStyles().contains { $0.bottomSeparator != nil }
+	}
+	
+	public func prepareCell(_ cell: UICollectionViewCell, in collectionView: UICollectionView, for indexPath: IndexPath) {
+		// intentionally blank
+	}
+	
+	private func separatorColor(_ style: CellStyle) -> UIColor {
+		style.separatorColor ?? Separator.appearance().backgroundColor ?? .clear
+	}
+	
+	private func mergeStyles() -> [CellStyle] {
+		rows.indices.map(mergedStyle)
 	}
 }
 
@@ -203,8 +252,8 @@ struct DiffableTableSection: Equatable, Hashable {
 	let tableSection: TableSection
 	var key: String { tableSection.key }
 	
-	var anyRows: [AnyCellConfigType] {
-		return tableSection.rows.map { AnyCellConfigType($0, sectionKey: key) }
+	var anyRows: [AnyHashableConfig] {
+		return tableSection.rows.map { AnyHashableConfig($0, sectionKey: key) }
 	}
 	
 	init(_ section: TableSection) {

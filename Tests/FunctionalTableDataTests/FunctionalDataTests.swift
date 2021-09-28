@@ -94,7 +94,7 @@ class FunctionalDataTests: XCTestCase {
 
 typealias TestCaseCell = HostCell<UIView, TestCaseState, LayoutMarginsTableItemLayout>
 
-struct TestCaseState: Equatable {
+struct TestCaseState: Hashable {
 	var data: String
 	
 	static func ==(lhs: TestCaseState, rhs: TestCaseState) -> Bool {

@@ -10,7 +10,7 @@ import UIKit
 
 extension FunctionalTableData {
 	@available(iOS 13.0, *)
-	class DiffableDataSource: UITableViewDiffableDataSource<DiffableTableSection, AnyCellConfigType> {
+	class DiffableDataSource: UITableViewDiffableDataSource<DiffableTableSection, AnyHashableConfig> {
 		let cellStyler: CellStyler
 		
 		var data: TableData {
@@ -81,7 +81,7 @@ extension FunctionalTableData {
 			let changeSet = TableSectionChangeSet(old: oldSections, new: localSections, visibleIndexPaths: indexPaths)
 			datasource.data.sections = localSections
 			
-			var snapshot = NSDiffableDataSourceSnapshot<DiffableTableSection, AnyCellConfigType>()
+			var snapshot = NSDiffableDataSourceSnapshot<DiffableTableSection, AnyHashableConfig>()
 			let diffableSections = localSections.map { DiffableTableSection($0) }
 			snapshot.appendSections(diffableSections)
 			for newSection in diffableSections {
