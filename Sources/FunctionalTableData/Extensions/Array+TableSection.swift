@@ -30,6 +30,28 @@ extension Array where Element: TableSectionType {
 	}
 }
 
+extension Array where Element == CollectionSection {
+	func validateKeyUniqueness(senderName: String) {
+		let sectionKeys = map { $0.key }
+		if Set(sectionKeys).count != count {
+			let dupKeys = map{ $0.key }.duplicates()
+			let reason = "\(senderName) : Duplicate Section keys"
+			let userInfo: [String: Any] = ["Duplicates": dupKeys]
+			NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
+		}
+		
+		for section in self {
+			let itemKeys = section.items.map { $0.key }
+			if Set(itemKeys).count != section.items.count {
+				let dupKeys = section.items.duplicateKeys()
+				let reason = "\(senderName) : Duplicate Section.Row keys"
+				let userInfo: [String: Any] = ["Section": section.key, "Duplicates": dupKeys]
+				NSException(name: NSExceptionName.internalInconsistencyException, reason: reason, userInfo: userInfo).raise()
+			}
+		}
+	}
+}
+
 extension Array where Element: TableSectionType {
 	func indexPath(from itemPath: ItemPath) -> IndexPath? {
 		if let sectionIndex = self.firstIndex(where: { $0.key == itemPath.sectionKey }), let rowIndex = self[sectionIndex].rows.firstIndex(where: { $0.key == itemPath.rowKey }) {
@@ -59,6 +81,12 @@ private extension Array where Element: TableSectionType {
 }
 
 private extension Array where Element == CellConfigType {
+	func duplicateKeys() -> [String] {
+		return map { $0.key }.duplicates()
+	}
+}
+
+private extension Array where Element: HashableCellConfigType {
 	func duplicateKeys() -> [String] {
 		return map { $0.key }.duplicates()
 	}

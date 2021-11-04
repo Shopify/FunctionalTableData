@@ -8,31 +8,44 @@
 
 import UIKit
 
+public protocol FunctionalCollectionDataExceptionHandler {
+	func handle(exception: FunctionalCollectionData.Exception)
+}
+
+protocol FunctionalCollectionDataDiffer {
+	var collectionView: UICollectionView? { get set }
+	var isRendering: Bool { get }
+	func renderAndDiff(_ newSections: [CollectionSection], animated: Bool, completion: (() -> Void)?)
+}
+
 /// A renderer for `UICollectionView`.
 ///
 /// By providing a complete description of your view state using an array of `TableSection`. `FunctionalCollectionData` compares it with the previous render call to insert, update, and remove everything that have changed. This massively simplifies state management of complex UI.
 public class FunctionalCollectionData {
+	/// A type that provides the information about an exception.
+	public struct Exception {
+		public let name: String
+		public let newSections: [CollectionSection]
+		public let oldSections: [CollectionSection]
+		public let changes: CollectionSectionChangeSet
+		public let visible: [IndexPath]
+		public let viewFrame: CGRect
+		public let reason: String?
+		public let userInfo: [AnyHashable: Any]?
+	}
 	/// Specifies the desired exception handling behaviour.
-	public static var exceptionHandler: FunctionalTableDataExceptionHandler?
+	public static var exceptionHandler: FunctionalCollectionDataExceptionHandler?
 	
 	public typealias KeyPath = ItemPath
-	
-	private func dumpDebugInfoForChanges(_ changes: TableSectionChangeSet, previousSections: [TableSection], visibleIndexPaths: [IndexPath], exceptionReason: String?, exceptionUserInfo: [AnyHashable: Any]?) {
-		guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
-		let exception = FunctionalTableData.Exception(name: name, newSections: sections, oldSections: previousSections, changes: changes, visible: visibleIndexPaths, viewFrame: collectionView?.frame ?? .zero, reason: exceptionReason, userInfo: exceptionUserInfo)
-		exceptionHandler.handle(exception: exception)
-	}
-	
-	private let data = TableData()
-	private var sections: [TableSection] {
+		
+	private let data = CollectionData()
+	var sections: [CollectionSection] {
 		return data.sections
 	}
-	private static let reloadEntireTableThreshold = 20
+	static let reloadEntireTableThreshold = 20
 	
-	private let renderAndDiffQueue: OperationQueue
 	private let name: String
 	
-	let dataSource: DataSource
 	let delegate: Delegate
 	
 	/// Enclosing `UICollectionView` that presents all the `TableSection` data.
@@ -42,13 +55,15 @@ public class FunctionalCollectionData {
 	public var collectionView: UICollectionView? {
 		didSet {
 			guard let collectionView = collectionView else { return }
-			collectionView.dataSource = dataSource
+			differ.collectionView = collectionView
 			collectionView.delegate = delegate
+			data.header?.register(with: collectionView)
+			data.footer?.register(with: collectionView)
 		}
 	}
 	
 	public subscript(indexPath: IndexPath) -> CellConfigType? {
-		return sections[indexPath]
+		return sections[indexPath.section].items[indexPath.item]
 	}
 	
 	/// An object to receive various [UIScrollViewDelegate](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate) related events
@@ -65,24 +80,25 @@ public class FunctionalCollectionData {
 		}
 	}
 	
-	private let unitTesting: Bool
-	
 	/// A Boolean value that returns `true` when a `renderAndDiff` pass is currently running.
-	public var isRendering: Bool {
-		return renderAndDiffQueue.isSuspended
-	}
+	public var isRendering: Bool { differ.isRendering }
+	
+	private let diffingStrategy: DiffingStrategy
+	
+	private lazy var differ: FunctionalCollectionDataDiffer = {
+		if #available(iOS 13.0, *), self.diffingStrategy == .diffableDataSource {
+			return DiffableDataSourceFunctionalCollectionDataDiffer(name: self.name, data: data)
+		}
+		return ClassicFunctionalCollectionDataDiffer(name: self.name, data: data)
+	}()
 	
 	/// Initializes a FunctionalCollectionData. To configure its view, provide a UICollectionView after initialization.
 	///
 	/// - Parameter name: String identifying this instance of FunctionalCollectionData, useful when several instances are displayed on the same screen. This also value names the queue doing all the rendering work, useful for debugging.
-	public init(name: String? = nil) {
+	public init(name: String? = nil, diffingStrategy: DiffingStrategy = .classic) {
 		self.name = name ?? "FunctionalCollectionDataRenderAndDiff"
-		unitTesting = NSClassFromString("XCTestCase") != nil
-		renderAndDiffQueue = OperationQueue()
-		renderAndDiffQueue.name = self.name
-		renderAndDiffQueue.maxConcurrentOperationCount = 1
+		self.diffingStrategy = diffingStrategy
 		
-		self.dataSource = DataSource(data: data)
 		self.delegate = Delegate(data: data)
 	}
 	
@@ -91,8 +107,8 @@ public class FunctionalCollectionData {
 	/// - Parameter keyPath: A key path identifying the cell to look up.
 	/// - Returns: A `CellConfigType` instance corresponding to the key path or `nil` if the key path is invalid.
 	public func rowForKeyPath(_ keyPath: KeyPath) -> CellConfigType? {
-		if let sectionIndex = sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey }) {
-			return sections[sectionIndex].rows[rowIndex]
+		if let sectionIndex = sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].items.firstIndex(where: { $0.key == keyPath.itemKey }) {
+			return sections[sectionIndex].items[rowIndex]
 		}
 		
 		return nil
@@ -104,8 +120,8 @@ public class FunctionalCollectionData {
 	/// - Returns: A `ItemPath` that matches the key or `nil` if there is no match.
 	public func keyPathForRowKey(_ key: String) -> ItemPath? {
 		for section in sections {
-			for row in section where row.key == key {
-				return ItemPath(sectionKey: section.key, itemKey: row.key)
+			for item in section.items where item.key == key {
+				return ItemPath(sectionKey: section.key, itemKey: item.key)
 			}
 		}
 		
@@ -120,25 +136,20 @@ public class FunctionalCollectionData {
 	/// - Returns: The key representation of the supplied `IndexPath`.
 	public func keyPathForIndexPath(indexPath: IndexPath) -> ItemPath {
 		let section = sections[indexPath.section]
-		let row = section.rows[indexPath.item]
-		return ItemPath(sectionKey: section.key, itemKey: row.key)
+		let item = section.items[indexPath.item]
+		return ItemPath(sectionKey: section.key, itemKey: item.key)
+	}
+		
+	public func registerCollectionHeader(_ config: CollectionSupplementaryItemConfig) {
+		data.header = config
+		guard let collectionView = collectionView else { return }
+		config.register(with: collectionView)
 	}
 	
-	/// Populates the collection with the specified sections, and asynchronously updates the collection view to reflect the cells and sections that have changed.
-	///
-	/// - Parameters:
-	///   - newSections: An array of TableSection instances to populate the collection with. These will replace the previous sections and update any cells that have changed between the old and new sections.
-	///   - keyPath: The key path identifying which cell to scroll into view after the render occurs.
-	///   - animated: `true` to animate the changes to the collection cells, or `false` if the `UICollectionView` should be updated with no animation.
-	///   - completion: Callback that will be called on the main thread once the `UICollectionView` has finished updating and animating any changes.
-	@available(*, deprecated, message: "Call `scroll(to:animated:scrollPosition:)` in the completion handler instead.")
-	public func renderAndDiff(_ newSections: [TableSection], keyPath: ItemPath?, animated: Bool = true, completion: (() -> Void)? = nil) {
-		renderAndDiff(newSections, animated: animated) { [weak self] in
-			if let strongSelf = self, let keyPath = keyPath {
-				strongSelf.scroll(to: keyPath)
-			}
-			completion?()
-		}
+	public func registerCollectionFooter(_ config: CollectionSupplementaryItemConfig) {
+		data.footer = config
+		guard let collectionView = collectionView else { return }
+		config.register(with: collectionView)
 	}
 	
 	/// Populates the collection with the specified sections, and asynchronously updates the collection view to reflect the cells and sections that have changed.
@@ -147,163 +158,11 @@ public class FunctionalCollectionData {
 	///   - newSections: An array of TableSection instances to populate the collection with. These will replace the previous sections and update any cells that have changed between the old and new sections.
 	///   - animated: `true` to animate the changes to the collection cells, or `false` if the `UICollectionView` should be updated with no animation.
 	///   - completion: Callback that will be called on the main thread once the `UICollectionView` has finished updating and animating any changes.
-	public func renderAndDiff(_ newSections: [TableSection], animated: Bool = true, completion: (() -> Void)? = nil) {
-		let blockOperation = BlockOperation { [weak self] in
-			guard let strongSelf = self else {
-				if let completion = completion {
-					DispatchQueue.main.async(execute: completion)
-				}
-				return
-			}
-			
-			if strongSelf.unitTesting {
-				newSections.validateKeyUniqueness(senderName: strongSelf.name)
-			} else {
-				NSException.catchAndRethrow({
-					newSections.validateKeyUniqueness(senderName: strongSelf.name)
-				}, failure: {
-					if $0.name == NSExceptionName.internalInconsistencyException {
-						guard let exceptionHandler = FunctionalTableData.exceptionHandler else { return }
-						let changes = TableSectionChangeSet()
-						let viewFrame = DispatchQueue.main.sync { strongSelf.collectionView?.frame ?? .zero }
-						let exception = FunctionalTableData.Exception(name: $0.name.rawValue, newSections: newSections, oldSections: strongSelf.sections, changes: changes, visible: [], viewFrame: viewFrame, reason: $0.reason, userInfo: $0.userInfo)
-						exceptionHandler.handle(exception: exception)
-					}
-				})
-			}
-			
-			strongSelf.doRenderAndDiff(newSections, animated: animated, completion: completion)
-		}
-		renderAndDiffQueue.addOperation(blockOperation)
+	public func renderAndDiff(_ newSections: [CollectionSection], animated: Bool = true, completion: (() -> Void)? = nil) {
+		differ.renderAndDiff(newSections, animated: animated, completion: completion)
 	}
 	
-	private func doRenderAndDiff(_ newSections: [TableSection], animated: Bool, completion: (() -> Void)?) {
-		guard let collectionView = collectionView else {
-			if let completion = completion {
-				DispatchQueue.main.async(execute: completion)
-			}
-			return
-		}
-		
-		let oldSections = sections
-		
-		let visibleIndexPaths = DispatchQueue.main.sync {
-			collectionView.indexPathsForVisibleItems.filter {
-				let section = oldSections[$0.section]
-				return $0.item < section.rows.count
-			}
-		}
-		
-		let localSections = newSections.filter { $0.rows.count > 0 }
-		let changes = calculateTableChanges(oldSections: oldSections, newSections: localSections, visibleIndexPaths: visibleIndexPaths)
-		
-		// Use dispatch_sync because the collection updates have to be processed before this function returns
-		// or another queued renderAndDiff could get the incorrect state to diff against.
-		DispatchQueue.main.sync { [weak self] in
-			guard let self = self else {
-				completion?()
-				return
-			}
-			
-			self.renderAndDiffQueue.isSuspended = true
-			collectionView.registerCellsForSections(localSections)
-			if oldSections.isEmpty || changes.count > FunctionalCollectionData.reloadEntireTableThreshold || collectionView.isDecelerating || !animated {
-				
-				self.data.sections = localSections
-				
-				collectionView.reloadData()
-				self.finishRenderAndDiff()
-				completion?()
-			} else {
-				if self.unitTesting {
-					self.applyTableChanges(changes, localSections: localSections, completion: {
-						self.finishRenderAndDiff()
-						completion?()
-					})
-				} else {
-					NSException.catchAndRethrow({
-						self.applyTableChanges(changes, localSections: localSections, completion: {
-							self.finishRenderAndDiff()
-							completion?()
-						})
-					}, failure: { exception in
-						if exception.name == NSExceptionName.internalInconsistencyException {
-							self.dumpDebugInfoForChanges(changes, previousSections: oldSections, visibleIndexPaths: visibleIndexPaths, exceptionReason: exception.reason, exceptionUserInfo: exception.userInfo)
-						}
-					})
-				}
-			}
-		}
-	}
 	
-	private func applyTableChanges(_ changes: TableSectionChangeSet, localSections: [TableSection], completion: (() -> Void)?) {
-		guard let collectionView = collectionView else {
-			if let completion = completion {
-				DispatchQueue.main.async(execute: completion)
-			}
-			return
-		}
-		
-		if changes.isEmpty {
-			data.sections = localSections
-			if let completion = completion {
-				DispatchQueue.main.async(execute: completion)
-			}
-			return
-		}
-		
-		func applyTableSectionChanges(_ changes: TableSectionChangeSet) {
-			if !changes.insertedSections.isEmpty {
-				collectionView.insertSections(changes.insertedSections)
-			}
-			if !changes.deletedSections.isEmpty {
-				collectionView.deleteSections(changes.deletedSections)
-			}
-			for movedSection in changes.movedSections {
-				collectionView.moveSection(movedSection.from, toSection: movedSection.to)
-			}
-			if !changes.reloadedSections.isEmpty {
-				collectionView.reloadSections(changes.reloadedSections)
-			}
-			
-			if !changes.insertedRows.isEmpty {
-				collectionView.insertItems(at: changes.insertedRows)
-			}
-			if !changes.deletedRows.isEmpty {
-				collectionView.deleteItems(at: changes.deletedRows)
-			}
-			for movedRow in changes.movedRows {
-				collectionView.moveItem(at: movedRow.from, to: movedRow.to)
-			}
-			if !changes.reloadedRows.isEmpty {
-				collectionView.reloadItems(at: changes.reloadedRows)
-			}
-		}
-		
-		func applyTransitionChanges(_ changes: TableSectionChangeSet) {
-			for update in changes.updates {
-				if let cell = collectionView.cellForItem(at: update.index) {
-					update.cellConfig.update(cell: cell, in: collectionView)
-					
-					let section = sections[update.index.section]
-					let style = section.mergedStyle(for: update.index.item)
-					style.configure(cell: cell, at: update.index, in: collectionView)
-				}
-			}
-		}
-		
-		collectionView.performBatchUpdates({
-			data.sections = localSections
-			applyTableSectionChanges(changes)
-		}) { finished in
-			applyTransitionChanges(changes)
-			completion?()
-		}
-	}
-	
-	private func finishRenderAndDiff() {
-		renderAndDiffQueue.isSuspended = false
-	}
 	
 	/// Selects a row in the collection view identified by a key path.
 	///
@@ -347,15 +206,21 @@ public class FunctionalCollectionData {
 	/// - Parameter keyPath: The path representing the desired indexPath.
 	/// - Returns: The IndexPath of the item at the provided keyPath.
 	public func indexPathFromKeyPath(_ keyPath: ItemPath) -> IndexPath? {
-		if let sectionIndex = sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey }) {
+		if let sectionIndex = sections.firstIndex(where: { $0.key == keyPath.sectionKey }), let rowIndex = sections[sectionIndex].items.firstIndex(where: { $0.key == keyPath.itemKey }) {
 			return IndexPath(item: rowIndex, section: sectionIndex)
 		}
 		
 		return nil
 	}
 	
-	internal func calculateTableChanges(oldSections: [TableSection], newSections: [TableSection], visibleIndexPaths: [IndexPath]) -> TableSectionChangeSet {
-		return TableSectionChangeSet(old: oldSections, new: newSections, visibleIndexPaths: visibleIndexPaths)
+	/// Returns the drawing area for a row identified by key path.
+	///
+	/// - Parameter keyPath: A key path identifying the cell to look up.
+	/// - Returns: A rectangle defining the area in which the table view draws the row or `nil` if the key path is invalid.
+	public func rectForKeyPath(_ keyPath: ItemPath) -> CGRect? {
+		guard let indexPath = indexPathFromKeyPath(keyPath) else { return nil }
+		guard let layoutAttr = collectionView?.layoutAttributesForItem(at: indexPath) else { return nil }
+		return layoutAttr.frame
 	}
 	
 	public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
@@ -367,12 +232,16 @@ public class FunctionalCollectionData {
 }
 
 extension UICollectionView {
-	fileprivate func registerCellsForSections(_ sections: [TableSection]) {
+	func registerCellsForSections(_ sections: [CollectionSection]) {
 		for section in sections {
-			for cellConfig in section {
+			for cellConfig in section.items {
 				cellConfig.register(with: self)
 			}
+			for supplementaryConfig in section.supplementaries {
+				supplementaryConfig.register(with: self)
+			}
 		}
+		
 	}
 	
 	/// Initiates a layout pass of UICollectionView and its items. Necessary for calculating new

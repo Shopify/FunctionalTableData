@@ -43,7 +43,6 @@ public struct CellStyle {
 	public var separatorColor: UIColor?
 	/// Whether the cell is highlighted or not.
 	///
-	/// Supported by `UITableView` only.
 	public var highlight: Bool?
 	/// The type of standard accessory control used by a cell.
 	/// You use these constants when setting the value of the [accessoryType](apple-reference-documentation://hspQPOCGHb) property.
@@ -162,7 +161,7 @@ public struct CellStyle {
 		}
 		
 		cell.selectedBackgroundView = nil
-		if let selectionColor = selectionColor {
+		if let highlight = highlight, highlight, let selectionColor = selectionColor {
 			let selectedBackgroundView = UIView()
 			selectedBackgroundView.backgroundColor = selectionColor
 			cell.selectedBackgroundView = selectedBackgroundView

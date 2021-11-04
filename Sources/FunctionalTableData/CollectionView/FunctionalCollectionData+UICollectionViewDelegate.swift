@@ -13,9 +13,9 @@ extension FunctionalCollectionData {
 		weak var scrollViewDelegate: UIScrollViewDelegate?
 		var backwardsCompatScrollViewDelegate = ScrollViewDelegate()
 		
-		private let data: TableData
+		private let data: CollectionData
 		
-		init(data: TableData) {
+		init(data: CollectionData) {
 			self.data = data
 		}
 		
@@ -47,12 +47,12 @@ extension FunctionalCollectionData {
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-			return data.sections[indexPath]?.actions.selectionAction != nil
+			return data[indexPath]?.actions.selectionAction != nil
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 			guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-			let cellConfig = data.sections[indexPath]
+			let cellConfig = data[indexPath]
 			
 			let selectionState = cellConfig?.actions.selectionAction?(cell) ?? .deselected
 			if selectionState == .deselected {
@@ -64,7 +64,7 @@ extension FunctionalCollectionData {
 		
 		public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 			guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-			let cellConfig = data.sections[indexPath]
+			let cellConfig = data[indexPath]
 			
 			let selectionState = cellConfig?.actions.deselectionAction?(cell) ?? .deselected
 			if selectionState == .selected {
@@ -77,25 +77,25 @@ extension FunctionalCollectionData {
 		public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 			guard indexPath.section < data.sections.count else { return }
 			
-			if let cellConfig = data.sections[indexPath] {
+			if let cellConfig = data[indexPath] {
 				cellConfig.actions.visibilityAction?(cell, true)
 				return
 			}
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-			if let cellConfig = data.sections[indexPath] {
+			if let cellConfig = data[indexPath] {
 				cellConfig.actions.visibilityAction?(cell, false)
 				return
 			}
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-			return data.sections[indexPath]?.actions.canPerformAction != nil
+			return data[indexPath]?.actions.canPerformAction != nil
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-			return data.sections[indexPath]?.actions.canPerformAction?(action) ?? false
+			return data[indexPath]?.actions.canPerformAction?(action) ?? false
 		}
 		
 		public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
@@ -107,7 +107,7 @@ extension FunctionalCollectionData {
 				return originalIndexPath
 			}
 			
-			guard let proposedCell = data.sections[proposedIndexPath], proposedCell.actions.canBeMoved else {
+			guard let proposedCell = data[proposedIndexPath], proposedCell.actions.canBeMoved else {
 				return originalIndexPath
 			}
 			
@@ -117,13 +117,13 @@ extension FunctionalCollectionData {
 		@available(iOS 13.0, *)
 		public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 			guard data.sections.indices.contains(indexPath.section),
-				data.sections[indexPath.section].rows.indices.contains(indexPath.row)
+				  data.sections[indexPath.section].items.indices.contains(indexPath.row)
 				else { return nil }
 			
 			let section = data.sections[indexPath.section]
-			let row = section.rows[indexPath.row]
-			let itemPath = ItemPath(sectionKey: section.key, itemKey: row.key)
-			let cellConfig = data.sections[indexPath]
+			let item = section.items[indexPath.row]
+			let itemPath = ItemPath(sectionKey: section.key, itemKey: item.key)
+			let cellConfig = data[indexPath]
 			return cellConfig?.actions.contextMenuConfiguration?.asUIContextMenuConfiguration(with: ItemPathCopyable(itemPath: itemPath))
 		}
 		
@@ -133,9 +133,9 @@ extension FunctionalCollectionData {
 			let keyPath = itemPathCopyable.itemPath
 			
 			guard let sectionIndex = data.sections.firstIndex(where: { $0.key == keyPath.sectionKey }),
-				let rowIndex = data.sections[sectionIndex].rows.firstIndex(where: { $0.key == keyPath.itemKey })
+				let rowIndex = data.sections[sectionIndex].items.firstIndex(where: { $0.key == keyPath.itemKey })
 				else { return }
-			let cellConfig = data.sections[sectionIndex].rows[rowIndex]
+			let cellConfig = data.sections[sectionIndex].items[rowIndex]
 			
 			animator.addCompletion {
 				cellConfig.actions.contextMenuConfiguration?.previewContentCommitter?(animator.previewViewController)
