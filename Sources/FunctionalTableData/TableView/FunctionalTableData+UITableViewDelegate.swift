@@ -85,6 +85,10 @@ extension FunctionalTableData {
 		}
 		
 		public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+            
+            //This fixes bug when selecting cells quickly in list view; without this could sometimes get behaviour where tableview cell was selected on the screen, but cell state selection status was not update. This may be due to the fact that state status is updated when cellConfig?.actions.selectionAction function is called. This function is only called in didSelectRowAt function, and could potentially not always fire.
+            guard tableView.cellForRow(at: indexPath) != nil else { return nil }
+            
 			if tableView.indexPathForSelectedRow == indexPath {
 				return nil
 			}
