@@ -74,9 +74,7 @@ class DiffableDataSourceFunctionalDataTests: XCTestCase {
 	
 	func testCellAccessibilityIdentifiers() {
 		let tableData = FunctionalTableData(name: nil, diffingStrategy: .diffableDataSource)
-		let tableView = UITableView()
-		
-		tableData.tableView = tableView
+		tableData.tableView = WindowWithTableViewMounted().tableView
 		let expectation1 = expectation(description: "rendered")
 		let cellConfig = TestCaseCell(key: "cellKey", state: TestCaseState(data: "red"), cellUpdater: TestCaseState.updateView)
 		let section = TableSection(key: "sectionKey", rows: [cellConfig])
