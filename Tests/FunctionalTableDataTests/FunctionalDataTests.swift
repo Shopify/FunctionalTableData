@@ -75,7 +75,7 @@ class FunctionalDataTests: XCTestCase {
 	
 	func testCellAccessibilityIdentifiers() {
 		let tableData = FunctionalTableData()
-		let tableView = UITableView()
+		let tableView = WindowWithTableViewMounted().tableView
 		
 		tableData.tableView = tableView
 		let expectation1 = expectation(description: "rendered")

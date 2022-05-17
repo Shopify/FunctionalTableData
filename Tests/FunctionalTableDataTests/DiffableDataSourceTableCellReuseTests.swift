@@ -12,19 +12,19 @@ import Foundation
 class DiffableDataSourceTableCellReuseTests: XCTestCase {
 	private typealias LabelCell = HostCell<UILabel, String, LayoutMarginsTableItemLayout>
 	
-	private var tableView: UITableView!
+	private var window: WindowWithTableViewMounted!
 	private var tableModel: FunctionalTableData!
 	
 	override func setUp() {
 		super.setUp()
-		tableView = UITableView()
+		window = WindowWithTableViewMounted()
 		tableModel = FunctionalTableData()
-		tableModel.tableView = tableView
+		tableModel.tableView = window.tableView
 	}
 	
 	override func tearDown() {
-		tableView = nil
 		tableModel = nil
+		window.tearDownWindow()
 		super.tearDown()
 	}
 	
@@ -42,7 +42,7 @@ class DiffableDataSourceTableCellReuseTests: XCTestCase {
 				renderedDisclosureCell.fulfill()
 			}
 			
-			guard let cellView = self.tableView.visibleCells.first else {
+			guard let cellView = self.window.tableView.visibleCells.first else {
 				XCTFail("Tableview has no cell views")
 				return
 			}
@@ -62,7 +62,7 @@ class DiffableDataSourceTableCellReuseTests: XCTestCase {
 				renderedUnstyledCell.fulfill()
 			}
 			
-			guard let cellView = self.tableView.visibleCells.first else {
+			guard let cellView = self.window.tableView.visibleCells.first else {
 				XCTFail("Tableview has no cell views")
 				return
 			}
