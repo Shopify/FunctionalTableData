@@ -119,7 +119,7 @@
         <section>
           <section class="section">
             
-            <p><img src="https://github.com/Shopify/FunctionalTableData/raw/master/Images/Banner.png" /></p>
+            <p><img src="https://github.com/Shopify/FunctionalTableData/raw/main/Images/Banner.png" /></p>
 
 <p><a href="https://travis-ci.org/Shopify/FunctionalTableData"><img src="https://travis-ci.org/Shopify/FunctionalTableData.svg" alt="Build Status"></a></p>
 
@@ -175,8 +175,6 @@
 <p>For more information, read our <a href="https://shopify.github.io/FunctionalTableData/">documentation</a>.</p>
 <h2 id='usage' class='heading'>Usage</h2>
 
-<p>Check out the <a href="https://github.com/Shopify/FunctionalTableData/blob/master/FunctionalTableDataDemo">demo app</a> for a fully interactive example.</p>
-
 <p>Any time you want to update the data currently being displayed you generate the new state and pass it off to your instance of the Functional Table Data. The FTD is then responsible for computing the differences between the previous state and the next state and updating itself as necessary.</p>
 
 <p>The <code><a href="Classes/FunctionalTableData.html">FunctionalTableData</a></code> holds onto an array of sections where each section has a key. This key must be unique across all sections but should be deterministic so that its possible to adjust the rows contained within that section without replacing the entire section itself.</p>
@@ -205,9 +203,8 @@ Additionally, each <code>CellConfig</code> type implements an isEqual function t
 <pre class="highlight swift"><code><span class="n">functionalTableData</span><span class="o">.</span><span class="nf">renderAndDiff</span><span class="p">([</span><span class="n">section</span><span class="p">])</span>
 </code></pre>
 
-<p><img src="https://github.com/Shopify/FunctionalTableData/raw/master/Images/Example1.png" /></p>
+<p><img src="https://github.com/Shopify/FunctionalTableData/raw/main/Images/Example1.png" /></p>
 
-<p>Check out the <a href="https://github.com/Shopify/FunctionalTableData/blob/master/FunctionalTableDataDemo">demo app</a> for a fully interactive example.</p>
 <h3 id='building-new-cells' class='heading'>Building new Cells</h3>
 
 <p>Knowing that a cell consists of a view and state let&rsquo;s start with a simple example, a cell that displays a label. By specifying the generic requirements of <code><a href="Structs/HostCell.html">HostCell</a></code>, the simplest possible example is one that takes an <code>UILabel</code> as its view, a <code>String</code> as its state and <code>LayoutMarginsTableItemLayout</code> as the layout (See <code>TableItemLayout</code> for more info).</p>
@@ -252,7 +249,7 @@ Additionally, each <code>CellConfig</code> type implements an isEqual function t
 <p>At the end of the day <code><a href="Structs/HostCell.html">HostCell</a></code> is just one of the possible implementations of <code><a href="Protocols/CellConfigType.html">CellConfigType</a></code>, that&rsquo;s the underlying power of this framework.</p>
 <h2 id='license' class='heading'>License</h2>
 
-<p>Functional Table Data is under the <a href="https://github.com/Shopify/FunctionalTableData/blob/master/LICENSE.txt">MIT License</a></p>
+<p>Functional Table Data is under the <a href="https://github.com/Shopify/FunctionalTableData/blob/main/LICENSE.txt">MIT License</a></p>
 
           </section>
         </section>

@@ -1,4 +1,4 @@
-<img src="https://github.com/Shopify/FunctionalTableData/raw/master/Images/Banner.png" />
+<img src="https://github.com/Shopify/FunctionalTableData/raw/main/Images/Banner.png" />
 
 Functional Table Data implements a functional renderer for UITableView. You pass it a complete description of your table state, and Functional Table Data compares it with the previous render call to insert, update, and remove the sections and cells that have changed. This massively simplifies state management of complex UI.
 
@@ -73,7 +73,7 @@ After assigning the variable `rows` to our previously created `section`, all tha
 functionalTableData.renderAndDiff([section])
 ```
 
-<img src="https://github.com/Shopify/FunctionalTableData/raw/master/Images/Example1.png" />
+<img src="https://github.com/Shopify/FunctionalTableData/raw/main/Images/Example1.png" />
 
 ### Building new Cells
 Knowing that a cell consists of a view and state let's start with a simple example, a cell that displays a label. By specifying the generic requirements of `HostCell`, the simplest possible example is one that takes an `UILabel` as its view, a `String` as its state and `LayoutMarginsTableItemLayout` as the layout (See `TableItemLayout` for more info).
@@ -129,4 +129,4 @@ At the end of the day `HostCell` is just one of the possible implementations of 
 Seen other articles in the wild? Feel free to open a [pull request](https://github.com/Shopify/FunctionalTableData/pulls).
 
 ## License
-Functional Table Data is under the [MIT License](https://github.com/Shopify/FunctionalTableData/blob/master/LICENSE.txt)
+Functional Table Data is under the [MIT License](https://github.com/Shopify/FunctionalTableData/blob/main/LICENSE.txt)
