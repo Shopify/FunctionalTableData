@@ -654,7 +654,7 @@ fileprivate struct TestHeaderFooter: TableHeaderFooterConfigType, CollectionSupp
 		guard let other = other as? TestHeaderFooter else { return false }
 		return state == other.state
 	}
-
+	
 	var height: CGFloat {
 		return state?.height ?? 0
 	}

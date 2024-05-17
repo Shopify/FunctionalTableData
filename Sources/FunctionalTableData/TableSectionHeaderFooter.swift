@@ -17,6 +17,13 @@ public protocol TableHeaderFooterConfigType: TableItemConfigType {
 	func dequeueHeaderFooter(from tableView: UITableView) -> UITableViewHeaderFooterView?
 	func isEqual(_ other: TableHeaderFooterConfigType?) -> Bool
 	var height: CGFloat { get }
+	func height(given width: CGFloat) -> CGFloat?
+}
+
+extension TableHeaderFooterConfigType {
+	public func height(given width: CGFloat) -> CGFloat? {
+		nil
+	}
 }
 
 public protocol TableHeaderFooterStateType: Equatable {
@@ -24,6 +31,14 @@ public protocol TableHeaderFooterStateType: Equatable {
 	var height: CGFloat { get }
 	var topSeparatorHidden: Bool { get }
 	var bottomSeparatorHidden: Bool { get }
+	
+	func height(given width: CGFloat) -> CGFloat?
+}
+
+extension TableHeaderFooterStateType {
+	public func height(given width: CGFloat) -> CGFloat? {
+		nil
+	}
 }
 
 public struct TableSectionHeaderFooter<ViewType: UIView, Layout: TableItemLayout, S: TableHeaderFooterStateType>: TableHeaderFooterConfigType {
@@ -53,7 +68,11 @@ public struct TableSectionHeaderFooter<ViewType: UIView, Layout: TableItemLayout
 	}
 	
 	public var height: CGFloat {
-		return state?.height ?? 0
+		state?.height ?? 0
+	}
+	
+	public func height(given width: CGFloat) -> CGFloat? {
+		return state?.height(given: width) ?? height
 	}
 
 	// MARK: - TableHeaderFooterConfigType
