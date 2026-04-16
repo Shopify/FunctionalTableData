@@ -230,8 +230,8 @@ public struct CellActions {
 	public typealias ShouldBeginMultiSelectGestureAction = () -> Bool
 	public typealias DidBeginMultiSelectGestureAction = () -> Void
 	/// Closure type that is executed when the user 3D-touches on a cell
-	/// - parameter cell: the cell in which the 3D-touch occured
-	/// - parameter point: The point where the 3D-touch occured, translated to the coordinate space of the cell
+	/// - parameter cell: the cell in which the 3D-touch occurred
+	/// - parameter point: The point where the 3D-touch occurred, translated to the coordinate space of the cell
 	/// - parameter context: The instance of `UIViewControllerPreviewing` that is participating in the 3D-touch
 	public typealias PreviewingViewControllerAction = (_ cell: UIView, _ point: CGPoint, _ context: UIViewControllerPreviewing) -> UIViewController?
 	
