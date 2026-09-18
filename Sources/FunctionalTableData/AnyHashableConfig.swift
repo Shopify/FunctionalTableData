@@ -28,6 +28,11 @@ public struct AnyHashableConfig: Hashable, HashableCellConfigType {
 		}
 	}
 	
+	init(_ base: CellConfigType, itemPath: ItemPath) {
+		self.base = base
+		self.hashable = AnyHashable(itemPath)
+	}
+
 	public init(_ base: HashableCellConfigType) {
 		self.base = base
 		self.hashable = base.hashable
