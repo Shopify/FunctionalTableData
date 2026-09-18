@@ -15,14 +15,14 @@ struct AnyCollectionSection: Hashable {
 	private var impl: CollectionSection
 	
 	public var key: String { impl.key }
-	public var items: [HashableCellConfigType]
+	public var items: [AnyHashableConfig]
 	public var supplementaries: [CollectionSupplementaryItemConfig] {
 		get { impl.supplementaries }
 		set { impl.supplementaries = newValue }
 	}
 			
 	public init(_ section: CollectionSection) {
-		items = section.items.map { AnyHashableConfig($0, sectionKey: section.key) }
+		items = section.items.map { AnyHashableConfig($0, itemPath: ItemPath(sectionKey: section.key, itemKey: $0.key)) }
 		impl = section
 	}
 	

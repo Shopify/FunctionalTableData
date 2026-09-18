@@ -19,6 +19,7 @@ final class DiffableDataSourceFunctionalCollectionDataDiffer: FunctionalCollecti
 			guard let collectionView = collectionView else { return }
 			let dataSource = UICollectionViewDiffableDataSource<AnyCollectionSection, AnyHashableConfig>(collectionView: collectionView) { collectionView, indexPath, cellConfig in
 				let section = self.data.sections[indexPath.section]
+				guard let cellConfig = section.items.first(where: { $0.key == cellConfig.key }) else { return nil }
 				let cell = cellConfig.dequeueCell(from: collectionView, at: indexPath)
 				let accessibilityIdentifier = ItemPath(sectionKey: section.key, itemKey: cellConfig.key).description
 				cellConfig.accessibility.with(defaultIdentifier: accessibilityIdentifier).apply(to: cell)
@@ -63,18 +64,23 @@ final class DiffableDataSourceFunctionalCollectionDataDiffer: FunctionalCollecti
 		let changeSet = CollectionSectionChangeSet(old: oldSections, new: localSections, visibleIndexPaths: indexPaths)
 		data.sections = localSections
 		
-		var snapshot = NSDiffableDataSourceSnapshot<AnyCollectionSection, AnyHashableConfig>()
-		let sections = localSections.map { AnyCollectionSection($0) }
-		snapshot.appendSections(sections)
-		for newSection in sections {
-			snapshot.appendItems(newSection.items.map { AnyHashableConfig($0) }, toSection: newSection)
-		}
 		var isFirstRender: Bool = false
 		if let snapshot = dataSource?.snapshot(), snapshot.numberOfSections == 0 {
 			isFirstRender = true
 		}
 		let shouldAnimate = animated && !isFirstRender
 		NSException.catchAndHandle {
+			var snapshot = NSDiffableDataSourceSnapshot<AnyCollectionSection, AnyHashableConfig>()
+			let sections = localSections.map { AnyCollectionSection($0) }
+			snapshot.appendSections(sections)
+			let oldItems = Dictionary(uniqueKeysWithValues: (self.dataSource?.snapshot().itemIdentifiers ?? []).map { ($0, $0) })
+			for newSection in sections {
+				snapshot.appendItems(newSection.items, toSection: newSection)
+				snapshot.reloadItems(newSection.items.filter { item in
+					guard let oldItem = oldItems[item] else { return false }
+					return !item.isEqual(oldItem) || item.style != oldItem.style
+				})
+			}
 			self.dataSource?.apply(snapshot, animatingDifferences: shouldAnimate, completion: completion)
 		} failure: { exception in
 			if exception.name == NSExceptionName.internalInconsistencyException {
